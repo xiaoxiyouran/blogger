@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>swap</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="swap">swap</h1>
+<h2 id="1-">1- 最通用的模板交换函数模式：<strong>创建临时对象</strong>，调用<strong>对象的赋值操作符</strong></h2>
+<p>在标准头文件 <code>&lt;algorithm&gt;</code>中，C++ 11中定义如下。</p>
+<pre><code class="cpp">template &lt;class T&gt; void swap ( T&amp; a, T&amp; b )
+{
+  T c(a); a=b; b=c; /// 构建临时对象，一次拷贝构造，两次赋值操作
+}
+</code></pre>
+
+<p>上面开销很大，在很多STL容器中，进行了优化。 只需要内部的指针交换，防止大量的赋值操作，这样交换在常数时间内。</p>
+<p>在相同的命名空间<code>std</code>中自定义重载swap函数，提高效率。</p>
+<p><strong>以下举例：</strong></p>
+<p>交换两个vector容器。</p>
+<pre><code class="cpp">// swap algorithm example (C++98)
+#include &lt;iostream&gt;     // std::cout
+#include &lt;algorithm&gt;    // std::swap
+#include &lt;vector&gt;       // std::vector
+
+int main () {
+
+  int x=10, y=20;                              // x:10 y:20
+  std::swap(x,y);                              // x:20 y:10
+
+  std::vector&lt;int&gt; foo (4,x), bar (6,y);       // foo:4x20 bar:6x10
+  std::swap(foo,bar);                          // foo:6x10 bar:4x20
+
+  std::cout &lt;&lt; &quot;foo contains:&quot;;
+  for (std::vector&lt;int&gt;::iterator it=foo.begin(); it!=foo.end(); ++it)
+	std::cout &lt;&lt; ' ' &lt;&lt; *it;
+  std::cout &lt;&lt; '\n';
+
+  return 0;
+}
+
+// foo contains: 10 10 10 10 10 10
+</code></pre>
+
+<h2 id="2-int">2- 针对int型优化— 异或</h2>
+<p>无需构造临时对象，异或</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;ctime&gt;
+using namespace std;
+void swap(int &amp; __restrict a, int &amp; __restrict b)   // restrict 关键字？
+{
+	a ^= b;
+	b ^= a;
+	a ^= b;
+}
+
+int main()
+{
+	int a =10, b= 20;
+	swap(a,b);
+	cout&lt;&lt;a&lt;&lt; &quot; &quot; &lt;&lt; b &lt;&lt;endl;      // 20 10
+	return 0;
+}
+</code></pre>
+
+<h2 id="3-">3- 交换指针</h2>
+<p>因为指针是int，所以基于这个思路可以优化1：</p>
+<pre><code class="cpp">template &lt;typename T&gt; void Swap(T &amp; obj1,T &amp; obj2)  
+{  
+	/// 对每个对象的指针进行操作
+	unsigned char * pObj1 = reinterpret_cast&lt;unsigned char *&gt;(&amp;obj1);  
+	unsigned char * pObj2 = reinterpret_cast&lt;unsigned char *&gt;(&amp;obj2);  
+	for (unsigned long x = 0; x &lt; sizeof(T); ++x)  
+	{  
+		pObj1[x] ^= pObj2[x];  
+		pObj2[x] ^= pObj1[x];  
+		pObj1[x] ^= pObj2[x];  
+	}  
+}  
+</code></pre>
+
+<h2 id="4-">4- 针对内建类型进行优化</h2>
+<p>内建类型的优化：  int, flaot, double 等，甚至重载运算符的用户自定义类型：向量，矩阵，图像等。。。</p>
+<pre><code class="cpp">type  a; -- e.g 10
+type  b; -- e.g 5
+
+a = a+b ; -- a=15,b=5
+b = a-b ; -- a=15,b=10
+a= a -b ; -- a= 5,b=10
+</code></pre>
+
+<p>// 无需构造临时变量。使用基本运算操作符。</p>
+<pre><code>Ok, let's see.  
+a = a + b;  
+b = a - b;  
+a = a - b;  
+Let's introduce new names, 引入临时变量进行证明  
+c = a + b;  
+d = c - b;  
+e = c - d;  
+And we want to prove that d == a and e == b.  
+d = (a + b) - b = a, proved.  
+e = (a + b) - ((a + b) - b) = (a + b) - a = b, proved.  
+For all real numbers
+</code></pre>
+
+<h2 id="5-swap">5- swap的一些特化</h2>
+<p>std::string, std::vector各自实现了swap函数，</p>
+<h3 id="51-string">5.1- <strong>string</strong></h3>
+<p>第二个swap(Right)进行判断，如果使用了相同的分配器，则直接交换控制信息，否则调用string::operator=进行拷贝赋值。。。所以建议优先使用swap函数，而不是赋值操作符。</p>
+<pre><code class="cpp">emplate&lt;class _Elem,  
+	class _Traits,  
+	class _Alloc&gt; inline  
+	void __CLRCALL_OR_CDECL swap(basic_string&lt;_Elem, _Traits, _Alloc&gt;&amp; _Left,  
+		basic_string&lt;_Elem, _Traits, _Alloc&gt;&amp; _Right)  
+	{   // swap _Left and _Right strings  
+	_Left.swap(_Right);  
+	}  
+	void __CLR_OR_THIS_CALL swap(_Myt&amp; _Right)  
+		{   // exchange contents with _Right  
+		if (this == &amp;_Right)  
+			;   // same object, do nothing  
+		else if (_Mybase::_Alval == _Right._Alval)  
+			{   // same allocator, swap control information  
+ #if _HAS_ITERATOR_DEBUGGING  
+			this-&gt;_Swap_all(_Right);  
+ #endif /* _HAS_ITERATOR_DEBUGGING */  
+			_Bxty _Tbx = _Bx;  
+			_Bx = _Right._Bx, _Right._Bx = _Tbx;  
+			size_type _Tlen = _Mysize;  
+			_Mysize = _Right._Mysize, _Right._Mysize = _Tlen;  
+			size_type _Tres = _Myres;  
+			_Myres = _Right._Myres, _Right._Myres = _Tres;  
+			}  
+		else  
+			{   // different allocator, do multiple assigns  
+			_Myt _Tmp = *this;  
+			*this = _Right;  
+			_Right = _Tmp;  
+			}  
+		}  
+</code></pre>
+
+<h3 id="52-vector">5.2 vector 中</h3>
+<p>vector的swap原理跟string完全一致，只有当当使用了不同分配器才进行字节拷贝。其余情况直接交换控制信息。</p>
+<pre><code class="cpp">template&lt;class _Ty,  
+	class _Alloc&gt; inline  
+	void swap(vector&lt;_Ty, _Alloc&gt;&amp; _Left, vector&lt;_Ty, _Alloc&gt;&amp; _Right)  
+	{   // swap _Left and _Right vectors  
+	_Left.swap(_Right);  
+	}  
+	void swap(_Myt&amp; _Right)  
+		{   // exchange contents with _Right  
+		if (this == &amp;_Right)  
+			;   // same object, do nothing  
+		else if (this-&gt;_Alval == _Right._Alval)  
+			{   // same allocator, swap control information  
+ #if _HAS_ITERATOR_DEBUGGING  
+			this-&gt;_Swap_all(_Right);  
+ #endif /* _HAS_ITERATOR_DEBUGGING */  
+			this-&gt;_Swap_aux(_Right);  
+			_STD swap(_Myfirst, _Right._Myfirst);  
+			_STD swap(_Mylast, _Right._Mylast);  
+			_STD swap(_Myend, _Right._Myend);  
+			}  
+		else  
+			{   // different allocator, do multiple assigns  
+			this-&gt;_Swap_aux(_Right);  
+			_Myt _Ts = *this;  
+			*this = _Right;  
+			_Right = _Ts;  
+			}  
+		}  
+
+</code></pre>
+
+<h2 id="6-smart_ptr">6- smart_ptr</h2>
+<p>C++异常有三个级别：基本，强，没有异常。通过创建临时对象然后交换，能够实现重载赋值操作符的强异常安全的执行。</p>
+<p>Loki中智能指针 临时变量跟this交换，临时变量自动销毁~</p>
+<pre><code class="cpp">SmartPtr&amp; operator=(SmartPtr&lt;T1, OP1, CP1, KP1, SP1, CNP1 &gt;&amp; rhs)  
+{  
+	SmartPtr temp(rhs);  
+	temp.Swap(*this);  
+	return *this;  
+}  
+</code></pre>
+
+<h2 id="7-shared_ptr">7- shared_ptr</h2>
+<p>boost::shared_ptr，share_ptr定义了自己的swap函数。</p>
+<pre><code class="cpp">shared_ptr &amp; operator=( shared_ptr const &amp; r ) // never throws  
+{  
+	this_type(r).swap(*this);  
+	return *this;  
+}  
+
+void swap(shared_ptr&lt;T&gt; &amp; other) // never throws  
+{  
+	std::swap(px, other.px);  
+	pn.swap(other.pn);  
+}  
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

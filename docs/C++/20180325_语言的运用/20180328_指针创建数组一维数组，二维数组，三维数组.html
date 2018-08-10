@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180328_指针创建数组_一维数组，二维数组，三维数组</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180328__">20180328_指针创建数组_一维数组，二维数组，三维数组</h1>
+<pre><code class="cpp">1- 用这种就够了，其它的都比较复杂
+#include&lt;stdlib.h&gt;
+//申请一个3*4*5的整型数组
+	int (*a)[4][5] = (int(*)[4][5])malloc(sizeof(int)*3*4*5);
+
+
+</code></pre>
+
+<h2 id="1-">1- 一维数组的创建</h2>
+<pre><code class="cpp">int * arr = new int[10]();  // 创建大小为10 的一维数组
+
+delete [] arr;
+</code></pre>
+
+<pre><code class="Cpp"> int *v = new int[n]();
+
+ for (int i = 0; i &lt; n; i++)
+		cin &gt;&gt; v[i];
+</code></pre>
+
+<h2 id="2-">2- 二维数组的创建</h2>
+<pre><code class="cpp">int ** arr;
+arr = new *int[10](); // 前面加一个 *, 就是二维指针了。 10 行
+
+for(int j=0 ; j &lt; m; j ++)
+	arr[0] = new int [m](); // m 列
+
+delete [] arr;
+</code></pre>
+
+<pre><code class="cpp">long long **dp;
+dp = new long long *[n+1]();
+for (int k = 0; k &lt;= n; ++k) {
+	dp[k] = new long long [w+1]();
+}
+</code></pre>
+
+<h2 id="3-">3- 三维数组的创建</h2>
+<p>创建一个数组<code>arr[2][3][4]</code></p>
+<p>这种就比较难创建了。下面的创建的有点问题。</p>
+<pre><code class="cpp">int *** arr;
+arr = new **int[2];
+
+for( int i=0; i&lt;2;i++ )
+	arr[i] = new int(*)[3]();
+
+for(int i=0; i&lt;2; i++)
+	for( int j = 0; j &lt; 3;j++ )
+		arr[i][j] = new int[4];
+</code></pre>
+
+<hr />
+<p>另外几种动态创建数组的方式。</p>
+<h2 id="4-">4- 用数组指针形式申请三维数组</h2>
+<pre><code class="cpp">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+	int i,j,k;
+	int value = 1;
+	//申请一个3*4*5的整型数组
+	int (*a)[4][5] = (int(*)[4][5])malloc(sizeof(int)*3*4*5);
+
+	// 遍历三维数组 打印元素地址
+	for(i = 0; i &lt; 3; i++)
+		for(j = 0; j &lt; 4; j++)
+			for(k = 0; k &lt; 5; k++)
+				printf(&quot;&amp;a[%d][%d][%d] = %p\n&quot;,i,j,k,&amp;a[i][j][k]);
+	//输出数组每个元素地址，每个元素的地址是连续的
+
+	// 遍历三维数组赋值
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 4; j++)
+			for (k = 0; k &lt; 5; k++)
+				*(*(*(a + i) + j) + k) = value++;
+
+	// 遍历三维数组 打印元素值
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 4; j++)
+			for (k = 0; k &lt; 5; k++)
+				printf(&quot;values[%d][%d][%d] = %d\n&quot;, i, j, k, a[i][j][k]);
+
+	// 堆空间回收
+	free(a);
+	return 0;
+}
+int main()
+{
+	int i,j,k;
+	int value = 1;
+	//申请一个3*4*5的整型数组
+	int (*a)[4][5] = (int(*)[4][5])malloc(sizeof(int)*3*4*5);
+
+	// 遍历三维数组 打印元素地址
+	for(i = 0; i &lt; 3; i++)
+		for(j = 0; j &lt; 4; j++)
+			for(k = 0; k &lt; 5; k++)
+				printf(&quot;&amp;a[%d][%d][%d] = %p\n&quot;,i,j,k,&amp;a[i][j][k]);
+	//输出数组每个元素地址，每个元素的地址是连续的
+
+	// 遍历三维数组赋值
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 4; j++)
+			for (k = 0; k &lt; 5; k++)
+				*(*(*(a + i) + j) + k) = value++;
+
+	// 遍历三维数组 打印元素值
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 4; j++)
+			for (k = 0; k &lt; 5; k++)
+				printf(&quot;values[%d][%d][%d] = %d\n&quot;, i, j, k, a[i][j][k]);
+
+	// 堆空间回收
+	free(a);
+	return 0;
+}
+</code></pre>
+
+<h2 id="5-">5-  利用三级指针申请一个三维数组。思路是先申请后分配</h2>
+<p>这种需要<code>malloc.h</code> 头文件</p>
+<pre><code class="cpp">#include &lt;stdio.h&gt;
+#include &lt;malloc.h&gt;
+
+int*** CreateGrid(int m,int n,int t)
+{
+	int i = 0;
+	int k = 0;
+	int*** result = NULL;
+	if((m &gt; 0) &amp;&amp; (n &gt; 0) &amp;&amp; (t &gt; 0))
+	{
+		int** pp = NULL;
+		int* p = NULL;
+		result = (int***)malloc(m * sizeof(int**));     // key
+		pp = (int**)malloc(m * n * sizeof(int*));      // key
+		p = (int*)malloc(m * n * t * sizeof(int));     // key
+		if((result != NULL) &amp;&amp; (pp != NULL) &amp;&amp; (p != NULL))
+		{
+			for(i = 0;i &lt; m;i++)
+			{
+				result[i] = pp + i * n; // 三维元素存二维地址
+				for (k = 0;k &lt; n;k++)
+				{
+					result[i][k] = p + k * t; // // 二维元素存一维地址
+				}
+				p = p + n*t;
+			}
+		}
+		else
+		{
+			free(result);
+			free(pp);
+			free(p);
+			result = NULL;
+			pp = NULL;
+			p = NULL;
+		}
+	}
+	return result;
+}
+void FreeGrid(int*** p)
+{
+	if(*p != NULL)
+	{
+		if(**p != NULL)
+		{
+			free(**p);
+			**p = NULL;
+		}
+		free(*p);
+		*p = NULL;
+	}
+	free(p);
+	p = NULL;
+}
+
+int main(void)
+{
+	int*** a = CreateGrid(3, 3, 3);
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	int value = 1;
+
+// 遍历三维数组赋值
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 3; j++)
+			for (k = 0; k &lt; 3; k++)
+				*(*(*(a + i) + j) + k) = value++;
+
+// 遍历三维数组 打印元素地址
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 3; j++)
+			for (k = 0; k &lt; 3; k++)
+				printf(&quot;values[%d][%d][%d] = %p\n&quot;, i, j, k, &amp;a[i][j][k]);
+// 地址是连续的
+
+// 遍历三维数组 打印元素值
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 3; j++)
+			for (k = 0; k &lt; 3; k++)
+				printf(&quot;values[%d][%d][%d] = %d\n&quot;, i, j, k, a[i][j][k]);
+
+// 堆空间回收
+	if(a != NULL)
+		FreeGrid(a);
+	return 0;
+}
+</code></pre>
+
+<h2 id="6-">6-  三级指针申请一个三维数组</h2>
+<p><strong>方法三：利用三级指针申请一个三维数组。思路是一边申请一边分配。</strong></p>
+<p><strong>看到很多都是使用这种方法，严格来讲这种方法是不准确的。因为可以看到申请出来的数组元素的地址不是连续的。我们都知道数组是一片连续的内存空间。所以这个并不叫一个数组。</strong></p>
+<pre><code class="cpp">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int*** CreateGrid(int m,int n,int t)
+{
+	int i = 0;
+	int k = 0;
+	int*** tt = NULL; 
+	if((m &gt; 0) &amp;&amp; (n &gt; 0) &amp;&amp; (t &gt; 0))
+	{
+		/// 一边申请，一边分配
+		tt = (int***)malloc(sizeof(int)*m);
+		for(i = 0;i &lt; m;i++)
+		{
+			tt[i] = (int**)malloc(sizeof(int)*n);
+			for (k = 0;k &lt; n;k++)
+			{
+				tt[i][k] = (int*)malloc(sizeof(int)*t);
+			}
+		}
+	}
+	return tt;
+}
+
+void FreeGrid(int*** tt,int m,int n,int t)
+{
+	int i = 0;
+	int j = 0;
+	if(tt != NULL)
+	{
+		for(i = 0;i &lt; m;i++)
+		{
+			for (j = 0;j &lt; n;j++)
+			{
+				free((tt[i][j]));
+			}
+			free(tt[i]);
+		}
+		free(tt);
+		tt = NULL;
+	}
+}
+
+int main(void)
+{
+   int*** a = CreateGrid(3, 3, 3);
+   int i = 0;
+   int j = 0;
+   int k = 0;
+   int value = 0;
+// 遍历三维数组赋值
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 3; j++)
+			for (k = 0; k &lt; 3; k++)
+				*(*(*(a + i) + j) + k) = value++; 
+// 遍历三维数组 打印元素地址
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 3; j++)
+			for (k = 0; k &lt; 3; k++)
+				printf(&quot;values[%d][%d][%d] = %p\n&quot;, i, j, k, &amp;a[i][j][k]); 
+ // 地址不是连续的
+
+// 遍历三维数组 打印输出
+	for (i = 0; i &lt; 3; i++)
+		for (j = 0; j &lt; 3; j++)
+			for (k = 0; k &lt; 3; k++)
+				printf(&quot;values[%d][%d][%d] = %d\n&quot;, i, j, k, a[i][j][k]);  
+
+// 堆空间回收
+	if(a != NULL)
+		FreeGrid(a,3,3,3);
+	return 0;
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

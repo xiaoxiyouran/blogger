@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180418 KVM</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180418-kvm">20180418 KVM</h1>
+<p>Linux 下的开源虚拟机。还有一本书</p>
+<p>xen 是半虚拟化技术</p>
+<hr />
+<h2 id="ypervisor">ypervisor</h2>
+<p>虚拟化已经成为互联网时代的主角，从云计算，容器技术，无不彰显着虚拟化技术的广阔前景，我们常见的虚拟化技术的有vmware，kvm，xen，qemu等，就目前而言vmware在虚拟化技术中份额应该是最大的，但相对的价格也是最贵的，而就开源的实现来说kvm和xen应该为我们提供了最佳的技术实践。
+虚拟化的技术分类：</p>
+<ol>
+<li>
+<p>主机虚拟化：</p>
+</li>
+<li>
+<p>完全虚拟化：vware，kvm，xen(hvm)</p>
+</li>
+<li>半虚拟化：xen，umi</li>
+<li>
+<p>模拟：qemu</p>
+</li>
+<li>
+<p>用户空间虚拟化(容器)：
+   docker，lxc，openvz</p>
+</li>
+<li>库虚拟化：
+   wine，cywin</li>
+<li>应用程序虚拟化：
+   jvm，pvm</li>
+</ol>
+<p>虚拟化技术有两种类型：</p>
+<ul>
+<li>Type-I:hypervisor–&gt;vm</li>
+<li>Type-II:host–&gt;vmm–&gt;vm</li>
+</ul>
+<h2 id="kvm">kvm</h2>
+<p>KVM是基于内核的虚拟机，是一种用于Linux内核中的虚拟化基础设施，可以将Linux内核装换为一个hypervisor：
+<a href="http://www.jusene.me/image/78.jpg"><img alt="img" src="http://www.jusene.me/image/78.jpg" /></a></p>
+<p>关于kvm：</p>
+<ol>
+<li>kvm是开源软件，全称kernel-based virtual machine，<strong>基于内核的虚拟机</strong>。</li>
+<li>是x86架构且硬件支持全虚拟化的Linux全虚拟化解决方案。</li>
+<li>它包含一个为处理器提供底层虚拟化，可加载内核模块kvm.ko(kvm-intel.ko或kvm-amd.ko)。</li>
+<li>kvm还必须一个经过修改的QEMU软件（qemu-kvm），作为虚拟机上层控制和界面。</li>
+<li>kvm能在不修改操作系统镜像的情况下同时运行多个虚拟机。</li>
+<li>在主流的linux内核中，大都奖kvm编译进内核模块。</li>
+</ol>
+<p>kvm组件：</p>
+<ul>
+<li>/dev/kvm:工作于hypervisor，在用户空间可通过ioctl()系统调用来完成vm的管理工作；是一个字符设备
+  功能：创建vm，为vm分配内存、读写vcpu的寄存器、向vcpu注入中断、运行vcpu等</li>
+<li>qemu进程：工作于用户空间，主要用于实现模拟vm的IO设备</li>
+</ul>
+<p>kvm的工具栈：</p>
+<ol>
+<li>qemu：
+   qemu-kvm
+   qemu-img</li>
+<li>
+<p>libvirt：
+   kvm hypervisor:libvirtd
+   管理接口：</p>
+</li>
+<li>
+<p>GUI:virt-manager,virt-viewer</p>
+</li>
+<li>CLI:virt-install,virtsh</li>
+</ol>
+<p>QEMU主要提供了以下几个组件：</p>
+<ul>
+<li>处理器模拟器</li>
+<li>仿真io设备</li>
+<li>关联模拟的设备至真实设备</li>
+<li>调试器</li>
+<li>与模拟器交互的用户接口</li>
+</ul>
+<h2 id="gui-kvm">GUI KVM安装配置</h2>
+<p>前提：
+（1）确保CPU支持HVM
+grep -r -E “(vmx|svm)” /proc/cpuinfo
+（2）内核编译提供kvm模块
+modprode kvm
+modprode kvm-intel
+modinfo kvm
+（3）验证
+ll /dev/kvm</p>
+<pre><code>~]# yum install -y libvirt virt-manager virt-viewer virt-install qemu-kvm
+~]# systemctl start libvirtd
+~]# virt-manager
+</code></pre>
+
+<p><a href="http://www.jusene.me/image/80.png"><img alt="img" src="http://www.jusene.me/image/80.png" /></a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>01 第一章 使用泛型</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="01">01 第一章 使用泛型</h1>
+<p>1- 泛型在C# 2.0 中引入</p>
+<p>与传统的弱类型（依赖于 System.Object）, 泛型更能够保证 <mark>编译期类型</mark> 安全；</p>
+<p><br></p>
+<p>2- 泛型常用于： 集合， 创建接口， 事件处理程序 以及 常用算法；</p>
+<p>3- 为c# 添加泛型，需要修改C#编译器、 JIT(Just in time) 编译器 以及 CLR（Common language Runtime, 公共语言运行时）；</p>
+<ul>
+<li>C# 编译器 以代码生成 微软中间语言（Microsoft Intermediate Language, MSIL 或IL）表示的泛型类型定义。</li>
+<li>JIT 编译器则会把泛型类型定义与一系列的类型参数组合起来， 从而创建出封闭的泛型类型。</li>
+<li>CLR 将在运行时同时支持上述两种概念</li>
+</ul>
+<p><br></p>
+<p>4- 封闭泛型类型（closed generic type）: 所有类型参数已经明确给出的泛型类型；</p>
+<p>开放泛型类型（open generic type）: 仅给出了部分类型参数；</p>
+<p>5- 泛型的工作过程：</p>
+<ul>
+<li>1） IL 为初始化某个完整的泛型烈性预留了占位符（降低了硬件存储）；</li>
+<li>2） JIT 编译器在运行时生成机器码时 补全该封闭泛型类型的定义（多个封装泛型类型会增大处理代码的开销）；</li>
+</ul>
+<p>在生成多个封闭泛型类型时， JIT 编译器和CLR会对过程进行优化， 以便降低对内存的压力；</p>
+<p>只有JIT编译器将IL转换成 <mark>机器指令</mark>之后， 生成的机器码才会被放置于只读的代码页中。</p>
+<p><mark>无论是否泛型， 每个类型都会执行上述过程</mark>。</p>
+<ul>
+<li>对于非泛型类型： 类的IL 和 其生成的机器码之间是  <mark>一对一</mark>关系；</li>
+<li>泛型， JIT编译器将检查当前的类型参数，并根据参数生成特定的指令；</li>
+</ul>
+<p>JIT编译器会对该过程进行一系列的优化， 以便让 <mark>不同的类型参数能使用同样的机器码</mark>。</p>
+<p>首先也是最重要的， JIT编译器将专门 <mark>为所有引用类型生成泛型类的一个机器码版本</mark>。</p>
+<p><br></p>
+<p>一下实例化代码在运行时的机器码均完全相同；</p>
+<pre><code class="csharp">List&lt;string&gt; stringList = new List&lt;string&gt;();
+List&lt;Stream&gt; OpenFiles = new List&lt;Stream&gt;();
+List&lt;MyClassType&gt; anotherList = new List&lt;MyClassType&gt;();
+</code></pre>
+
+<p>C# 编译器将在编译期保证类型安全， 有了这种保证后， JIT 编译器即可生成更加优化的机器码。</p>
+<p><br></p>
+<p>6- 如果某个封装类型中使用了 <mark>至少一个值类型的类型参数</mark>， JIT 编译器将采用不同的策略。 这种， JIT 编译器将为不同的类型参数创建<mark>不同版本的机器指令</mark>。</p>
+<p>以下三种类型生成的机器码将各不相同：</p>
+<pre><code class="csharp">List&lt;double&gt; doubleList = new List&lt;double&gt;();
+List&lt;int&gt; markers = new List&lt;int&gt;();
+List&lt;MyStruct&gt; values = new List&lt;MyStruct&gt;();
+</code></pre>
+
+<p>使用多个 <mark>引用类型</mark> 参数的泛型类型并不会影响程序的内存占用， 其被JIT编译后 <mark>只生成一份代码</mark>；</p>
+<p>若是封闭泛型类型中包含 <mark>值类型</mark> 作为参数， 那么JIT编译后的代码则会 <mark>各不相同</mark>；</p>
+<p><br></p>
+<p>7- 当JIT编译一个泛型定义（泛型方法或泛型类），其至少有一个类型参数为 值类型时， 该过程分为两个步骤：</p>
+<ul>
+<li>1)   编译器将创建一个新的 IL 类， 用来表示该封闭泛型类型； 如 将泛型定义中的 T 用 int 或者其它值类型替换；</li>
+<li>2)   随后， JIT 把该代码编译成 x86 指令；</li>
+</ul>
+<p>分为两个步骤很重要， 这样JIT并不是在类加载时 就为其生成完整的 x86 指令， 而是 <mark>在类中的每个方法被第一次调用时才开始编译的</mark>；</p>
+<ul>
+<li>第一步： 在IL代码上执行一个替换操作；</li>
+<li>第二步： 像普通类定义一样按需编译；</li>
+</ul>
+<p><br></p>
+<p>8- 运行时的额外内存分为如下两个部分：</p>
+<ul>
+<li>1） 为每种用值类型作为参数的封闭泛型类型 保存一份 <mark>IL定义的副本</mark>；</li>
+<li>2） 为每种用值类型作为参数的封闭泛型类型 保存一份 <mark>所调用方法的机器码的副本</mark>；</li>
+</ul>
+<p><br></p>
+<p>9- 使用值类型作为泛型参数的好处：</p>
+<ul>
+<li>1） 避免了对值类型的装箱和拆箱， 也就降低了值类型的代码/数据所占用的空间；</li>
+<li>2） 类型安全由编译器保证， 也将让框架不必忙于 进行时检查，进一步降低了代码量提高了程序性能；</li>
+</ul>
+<p>10- <mark>与创建泛型类相比，泛型方法</mark> 有助于降低为支持不同实例而需要额外生成的IL代码量（条目8介绍）。</p>
+<p>只有实际用到的方法才会被实例化， 非泛型类中定义的泛型方法将不会被JIT编译。</p>
+<p><br></p>
+<p>本章将介绍如何把 .NET 1.x 的类型（使用 System.Object） 迁移至使用泛型的 .NET 2.0 类型；</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

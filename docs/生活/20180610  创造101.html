@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180610  创造101</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180610-101">20180610  创造101</h1>
+<p>两眼一抹黑，苍天绕过谁</p>
+<p>你是可以拒绝的</p>
+<p>外表腼腆的犬系学长</p>
+<p>暖男，治愈系学长</p>
+<p>选择OPPO R16 还需要理由吗？</p>
+<p>声优吗</p>
+<p>以后我要尊称你为“您”了，因为你在我心上？</p>
+<p>你进来有没有闻到什么味道。我们觉得空气变清甜了呀（你进来以后）。</p>
+<p>你应该不存在在A班</p>
+<p>选哪个？我觉得这是一个全选题。</p>
+<p>强装坚强</p>
+<p>现在感觉我是这个世界上最幸福的男生</p>
+<p>谁是我的梦中女神</p>
+<p>存在即合理啊</p>
+<p>我们是土小孩</p>
+<p>“王菊” 冲啊！！！</p>
+<p>正青春的你们</p>
+<p>每个队的C位</p>
+<p>我是彩虹贫穷路人粉</p>
+<p>团魂很重要</p>
+<p>show time</p>
+<p>放开这只胡一天，让我来</p>
+<p>你还有爆发的机会吗? 少女心，你还有少妇心？</p>
+<p>Pick me,</p>
+<p>如果你觉得难选，可以加上我。</p>
+<p>气笑了，</p>
+<p>你有热度，才会有人去提你。</p>
+<p>可存在，可不存在的一个人。</p>
+<p>你来到这里，我们都是你的队员。</p>
+<p>吃的青春饭了。</p>
+<p>吃得苦，耐得烦，霸得蛮</p>
+<p>就是脑子一片空白。</p>
+<p>Time is up.</p>
+<p>看到你我还是蛮开心的，因为我希望这首歌给有能力的人唱。</p>
+<p>可爱，弱弱，小小，瘦瘦</p>
+<p>简单就是我的快乐。</p>
+<p>逆风翻盘，向阳而生</p>
+<p>校草选拔比赛</p>
+<p>请大家把掌声送给他们</p>
+<p>啥都不怕，毛毛带你闯天下</p>
+<p>你会吗？客气了</p>
+<p>wave很难的</p>
+<p>如果以后谁说你不会跳舞，我打他</p>
+<p>别人的idol 在台上闪闪发光，自己的idol在台上瑟瑟发抖。</p>
+<p>希望你以后的青春里有我，或者我的青春里有你</p>
+<p>来自你啥都不怕的隔壁同学</p>
+<p>神曲旋涡，为什么我老是跌进这种深渊</p>
+<p>圈粉了</p>
+<p>魔道祖师CP</p>
+<p>话很少，不争不吵不抢 </p>
+<p>最没有偶像包袱的邻家暖男；</p>
+<p>你想多了，都不是主动选你的，你心里有点数吧。</p>
+<p>暴击！！！</p>
+<p>邻居家的傻儿子那种</p>
+<p>劈叉勾手臂的</p>
+<p>每个人的眼里都能看到亮光</p>
+<p>魏大勋替我喊声Show  time</p>
+<p>虽然没那么完美，但是看得出来你是练过的</p>
+<p>你们变了，</p>
+<p>不是王菊就行了，不是王菊就放心了。</p>
+<p>群众的眼光还是雪亮的。。</p>
+<p>还不能下班吗？</p>
+<p>随便尬聊的</p>
+<p>把你吃了，妹妹们说把你吃了，今天是你如梦的一天，那你梦醒了吗？</p>
+<p>最近忙什么呢？</p>
+<p>忙着想你。</p>
+<p>对我而言，没有辜负的时光就是在101.</p>
+<p>孟美岐：“我不撩妹就已经是在撩妹了”</p>
+<p>说对不起，错不在你。</p>
+<p>朋友妻不客气</p>
+<p>名人是非多</p>
+<p>对不起，还有谢谢你。</p>
+<p>我想回“云深不知处”</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

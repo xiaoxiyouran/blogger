@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>C sharp 语法糖</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="c-sharp">C sharp 语法糖</h1>
+<p>1- internel 权限：该应用程序类的其他类或函数都能访问；</p>
+<p>2- 按引用传递 <code>void func( ref int a)</code></p>
+<p>```c#
+using System;
+namespace CalculatorApplication
+{
+   class NumberManipulator
+   {
+	  public void swap(ref int x, ref int y)
+	  {
+		 int temp;</p>
+<pre><code>     temp = x; /* 保存 x 的值 */
+	 x = y;    /* 把 y 赋值给 x */
+	 y = temp; /* 把 temp 赋值给 y */
+   }
+
+  static void Main(string[] args)
+  {
+	 NumberManipulator n = new NumberManipulator();
+	 /* 局部变量定义 */
+	 int a = 100;
+	 int b = 200;
+
+	 Console.WriteLine("在交换之前，a 的值： {0}", a);
+	 Console.WriteLine("在交换之前，b 的值： {0}", b);
+
+	 /* 调用函数来交换值 */
+	 n.swap(ref a, ref b);
+
+	 Console.WriteLine("在交换之后，a 的值： {0}", a);
+	 Console.WriteLine("在交换之后，b 的值： {0}", b);
+
+	 Console.ReadLine();
+
+  }
+</code></pre>
+<p>}
+}
+当上面的代码被编译和执行时，它会产生下列结果：</p>
+<p>在交换之前，a 的值：100
+在交换之前，b 的值：200
+在交换之后，a 的值：200
+在交换之后，b 的值：100</p>
+<pre><code>
+3- 输出多个参数：
+
+return 语句可用于只从函数中返回一个值。但是，可以使用 **输出参数** 来从函数中返回两个值。输出参数会把方法输出的数据赋给自己，其他方面与引用参数相似。
+
+下面的实例演示了这点：
+
+```c#
+using System;
+
+namespace CalculatorApplication
+{
+   class NumberManipulator
+   {
+	  public void getValue(out int x )
+	  {
+		 int temp = 5;
+		 x = temp;
+	  }
+
+	  static void Main(string[] args)
+	  {
+		 NumberManipulator n = new NumberManipulator();
+		 /* 局部变量定义 */
+		 int a = 100;
+
+		 Console.WriteLine(&quot;在方法调用之前，a 的值： {0}&quot;, a);
+
+		 /* 调用函数来获取值 */
+		 n.getValue(out a);
+
+		 Console.WriteLine(&quot;在方法调用之后，a 的值： {0}&quot;, a);
+		 Console.ReadLine();
+
+	  }
+   }
+}
+</code></pre>
+
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code>在方法调用之前，a 的值： 100
+在方法调用之后，a 的值： 5
+</code></pre>
+
+<p>提供给输出参数的变量不需要赋值。当需要从一个参数<mark>没有指定初始值的方法中返回值时</mark>，输出参数特别有用。请看下面的实例，来理解这一点：</p>
+<p>```c#
+using System;</p>
+<p>namespace CalculatorApplication
+{
+   class NumberManipulator
+   {
+	  public void getValues(out int x, out int y )
+	  {
+		  Console.WriteLine("请输入第一个值： ");
+		  x = Convert.ToInt32(Console.ReadLine());
+		  Console.WriteLine("请输入第二个值： ");
+		  y = Convert.ToInt32(Console.ReadLine());
+	  }</p>
+<pre><code>  static void Main(string[] args)
+  {
+	 NumberManipulator n = new NumberManipulator();
+	 /* 局部变量定义 */
+	 int a , b;
+
+	 /* 调用函数来获取值 */
+	 n.getValues(out a, out b);
+
+	 Console.WriteLine("在方法调用之后，a 的值： {0}", a);
+	 Console.WriteLine("在方法调用之后，b 的值： {0}", b);
+	 Console.ReadLine();
+  }
+</code></pre>
+<p>}
+}</p>
+<pre><code>
+当上面的代码被编译和执行时，它会产生下列结果（取决于用户输入）：
+
+```c#
+请输入第一个值：
+7
+请输入第二个值：
+8
+在方法调用之后，a 的值： 7
+在方法调用之后，b 的值： 8
+</code></pre>
+
+<p>4- 可空运算符</p>
+<h2 id="c">C# 单问号 ? 与 双问号 ??</h2>
+<p>? : 单问号用于对 int,double,bool 等无法直接赋值为 null 的数据类型进行 null 的赋值，意思是这个数据类型是 NullAble 类型的。</p>
+<pre><code>int? i = 3 
+等同于
+Nullable&lt;int&gt; i = new Nullable&lt;int&gt;(3);
+
+int i; //默认值0
+int? ii; //默认值null
+</code></pre>
+
+<p>?? : 双问号 可用于判断一个变量在为 null 时返回一个指定的值。</p>
+<p>接下来我们详细说明。</p>
+<h2 id="c-nullable">C# 可空类型（Nullable）</h2>
+<p>C# 提供了一个特殊的数据类型，<strong>nullable</strong> 类型（可空类型），可空类型可以表示其基础值类型正常范围内的值，再加上一个 null 值。</p>
+<p>例如，Nullable&lt; Int32 &gt;，读作"可空的 Int32"，可以被赋值为 -2,147,483,648 到 2,147,483,647 之间的任意值，也可以被赋值为 null 值。类似的，Nullable&lt; bool &gt; 变量可以被赋值为 true 或 false 或 null。</p>
+<p>在处理数据库和其他包含可能未赋值的元素的数据类型时，将 null 赋值给数值类型或布尔型的功能特别有用。例如，数据库中的布尔型字段可以存储值 true 或 false，或者，该字段也可以未定义。</p>
+<p>声明一个 <strong>nullable</strong> 类型（可空类型）的语法如下：</p>
+<pre><code>&lt; data_type&gt; ? &lt;variable_name&gt; = null;
+</code></pre>
+
+<p>下面的实例演示了可空数据类型的用法：</p>
+<pre><code class="csharp">using System;
+namespace CalculatorApplication
+{
+   class NullablesAtShow
+   {
+	  static void Main(string[] args)
+	  {
+		 int? num1 = null;
+		 int? num2 = 45;
+		 double? num3 = new double?();
+		 double? num4 = 3.14157;
+
+		 bool? boolval = new bool?();
+
+		 // 显示值
+
+		 Console.WriteLine(&quot;显示可空类型的值： {0}, {1}, {2}, {3}&quot;, 
+							num1, num2, num3, num4);
+		 Console.WriteLine(&quot;一个可空的布尔值： {0}&quot;, boolval);
+		 Console.ReadLine();
+
+	  }
+   }
+}
+</code></pre>
+
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code class="csharp">显示可空类型的值： , 45,  , 3.14157
+一个可空的布尔值：
+</code></pre>
+
+<h2 id="null">Null 合并运算符（ ?? ）</h2>
+<p>Null 合并运算符用于定义可空类型和引用类型的默认值。Null 合并运算符为类型转换定义了一个预设值，以防可空类型的值为 Null。Null 合并运算符把操作数类型隐式转换为另一个可空（或不可空）的值类型的操作数的类型。</p>
+<p>如果第一个操作数的值为 null，则运算符返回第二个操作数的值，否则返回第一个操作数的值。下面的实例演示了这点：</p>
+<pre><code>using System;
+namespace CalculatorApplication
+{
+   class NullablesAtShow
+   {
+
+	  static void Main(string[] args)
+	  {
+
+		 double? num1 = null;
+		 double? num2 = 3.14157;
+		 double num3;
+		 num3 = num1 ?? 5.34;      // num1 如果为空值则返回 5.34
+		 Console.WriteLine(&quot;num3 的值： {0}&quot;, num3);
+		 num3 = num2 ?? 5.34;
+		 Console.WriteLine(&quot;num3 的值： {0}&quot;, num3);
+		 Console.ReadLine();
+
+	  }
+   }
+}
+</code></pre>
+
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code>num3 的值： 5.34
+num3 的值： 3.14157
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180412 正则化</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180412">20180412 正则化</h1>
+<p>总结： L2 正则化， 在代价函数上添加二阶项，使最终的w减小，更小的权值，网络复杂度会更低</p>
+<p>L1 正则化， 代价函数加上一阶 绝对值项，使w 向 0 靠近（有正有负）， 更小的w，网络复杂度会更低。</p>
+<p>Dropout： 输入层和输出层不变，每次随机扔掉一半的隐藏层，最终所有这些半数的隐藏层决定了最终结果，正确的结果会在最后取到 越来越重要的作用，而非 正确的结果， 对结果的影响是越来越小的。 </p>
+<p>数据集的扩增： 对图片进行旋转，加入随机噪声， 弹性的畸变， 将图片截取为一个个的小 patch。 可增大数据集。</p>
+<hr />
+<p>原文：http://wepon.me/2015/03/14/%E6%AD%A3%E5%88%99%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9AL1%E5%92%8CL2%20regularization%E3%80%81%E6%95%B0%E6%8D%AE%E9%9B%86%E6%89%A9%E5%A2%9E%E3%80%81dropout/</p>
+<h2 id="_1"><strong>正则化方法：防止过拟合，提高泛化能力</strong></h2>
+<p>在训练数据不够多时，或者overtraining时，常常会导致overfitting（过拟合）。其直观的表现如下图所示，随着训练过程的进行，模型复杂度增加，<strong>在training data上的error渐渐减小，但是在验证集上的error却反而渐渐增大</strong>——因为训练出来的网络过拟合了训练集，对训练集外的数据却不work。</p>
+<p><a href="http://i.imgur.com/OhX9eFQ.jpg"><img alt="img" src="http://i.imgur.com/OhX9eFQ.jpg" /></a></p>
+<p>为了防止overfitting，可以用的方法有很多，下文就将以此展开。有一个概念需要先说明，在机器学习算法中，我们常常将原始数据集分为三部分：</p>
+<p>training data、validation data，testing data。</p>
+<p>这个validation data是什么？它其实就是用来<strong>避免过拟合的</strong>，在训练过程中，我们通常用它来<strong>确定一些超参数</strong>（比如根据validation data上的accuracy来确定early stopping的<strong>epoch</strong>大小、根据validation data确定<strong>learning rate</strong>等等）。</p>
+<p>那为啥不直接在testing data上做这些呢？因为如果在testing data做这些，那么随着训练的进行，我们的网络实际上就是在一点一点地overfitting我们的testing data，导致最后得到的testing accuracy没有任何参考意义。</p>
+<p>因此，<strong>training data的作用是计算梯度更新权重</strong>，<strong>validation data（防止过拟合）</strong>如上所述，testing data则给出<strong>一个accuracy以判断网络的好坏</strong>。</p>
+<p>避免过拟合的方法有很多：<strong>early stopping、数据集扩增（Data augmentation）、正则化（Regularization）包括L1、L2</strong>（L2 regularization也叫weight decay），dropout。</p>
+<hr />
+<h2 id="l2-regularization"><strong>L2 regularization（权重衰减）</strong></h2>
+<p>L2正则化就是<strong>在代价函数后面再加上一个正则化项</strong>：</p>
+<p><a href="http://i.imgur.com/9WnBBu1.jpg"><img alt="img" src="http://i.imgur.com/9WnBBu1.jpg" /></a></p>
+<p>C0代表原始的代价函数，后面那一项就是<strong>L2正则化项</strong>，它是这样来的：所有参数w的平方的和，除以训练集的样本大小n。<strong>λ就是正则项系数</strong>，权衡正则项与C0项的比重。另外还有一个系数1/2，1/2经常会看到，主要是为了后面求导的结果方便，后面那一项求导会产生一个2，与1/2相乘刚好凑整。</p>
+<p>L2正则化项是怎么避免overfitting的呢？我们推导一下看看，先求导：</p>
+<p><a href="http://i.imgur.com/mebEC90.jpg"><img alt="img" src="http://i.imgur.com/mebEC90.jpg" /></a></p>
+<p>可以发现L2正则化项<strong>对b的更新没有影响，但是对于w的更新有影响</strong>:</p>
+<p><a href="http://i.imgur.com/qM83geg.jpg"><img alt="img" src="http://i.imgur.com/qM83geg.jpg" /></a></p>
+<p>在不使用L2正则化时，求导结果中w前系数为1，现在w前面系数为 1−ηλ/n ，因为η、λ、n都是正的，所以 1−ηλ/n小于1，它的效果是<strong>减小w，这也就是权重衰减</strong>（weight decay）的由来。当然<strong>考虑到后面的导数项，w最终的值可能增大也可能减小。</strong></p>
+<p>另外，需要提一下，对于基于mini-batch的随机梯度下降，w和b更新的公式跟上面给出的有点不同：</p>
+<p><a href="http://i.imgur.com/Xs2p2EN.jpg"><img alt="img" src="http://i.imgur.com/Xs2p2EN.jpg" /></a></p>
+<p><a href="http://i.imgur.com/yDETU7x.jpg"><img alt="img" src="http://i.imgur.com/yDETU7x.jpg" /></a></p>
+<p>对比上面w的更新公式，可以发现<strong>后面那一项变了，变成所有导数加和</strong>，乘以η再除以m，m是一个mini-batch中样本的个数。</p>
+<p>到目前为止，我们只是解释了L2正则化项有让w“变小”的效果，但是还没解释<strong>为什么w“变小”可以防止overfitting</strong>？一个所谓“显而易见”的解释就是：<strong>更小的权值w，从某种意义上说，表示网络的复杂度更低，对数据的拟合刚刚好（这个法则也叫做奥卡姆剃刀），而在实际应用中，也验证了这一点，L2正则化的效果往往好于未经正则化的效果</strong>。当然，对于很多人（包括我）来说，这个解释似乎不那么显而易见，所以这里添加一个稍微数学一点的解释（引自知乎）：</p>
+<p>过拟合的时候，拟合函数的系数往往非常大，为什么？如下图所示，过拟合，就是拟合函数需要顾忌每一个点，最终形成的拟合函数波动很大。在某些很小的区间里，函数值的变化很剧烈。这就意味着函数在某些小区间里的导数值（绝对值）非常大，由于自变量值可大可小，所以只有系数足够大，才能保证导数值很大。</p>
+<p><a href="http://i.imgur.com/RsR5cOK.png"><img alt="img" src="http://i.imgur.com/RsR5cOK.png" /></a></p>
+<p>而<strong>正则化是通过约束参数的范数使其不要太大</strong>，所以可以在一定程度上减少过拟合情况。</p>
+<hr />
+<h2 id="l1-regularization"><strong>L1 regularization</strong></h2>
+<p>在原始的代价函数后面加上一个<strong>L1正则化项，即所有权重w的绝对值的和，乘以λ/n</strong>（这里不像L2正则化项那样，需要再乘以1/2，具体原因上面已经说过。）</p>
+<p><a href="http://i.imgur.com/6jbxq15.jpg"><img alt="img" src="http://i.imgur.com/6jbxq15.jpg" /></a></p>
+<p>同样先计算导数：</p>
+<p><a href="http://i.imgur.com/kju5RTZ.jpg"><img alt="img" src="http://i.imgur.com/kju5RTZ.jpg" /></a></p>
+<p>上式中sgn(w)表示w的符号。那么权重w的更新规则为：</p>
+<p><a href="http://i.imgur.com/HCkJZYl.jpg"><img alt="img" src="http://i.imgur.com/HCkJZYl.jpg" /></a></p>
+<p>比原始的更新规则多出了<code>η *λ *sgn(w)/n</code>这一项。当w为正时，更新后的w变小。当w为负时，更新后的w变大——因此它的效果就是<strong>让w往0靠，使网络中的权重尽可能为0</strong>，也就相当于减小了网络复杂度，防止过拟合。</p>
+<p>另外，上面没有提到一个问题，当w为0时怎么办？当w等于0时，<code>|W|</code>是不可导的，所以我们只能按照原始的未经正则化的方法去更新w，这就相当于去掉<code>η*λ*sgn(w)/n</code>这一项，所以我们可以规定<code>sgn(0)=0</code>，这样就把w=0的情况也统一进来了。（在编程的时候，令<code>sgn(0)=0,sgn(w&gt;0)=1,sgn(w&lt;0)=-1</code>）</p>
+<hr />
+<h2 id="dropout"><strong>Dropout</strong></h2>
+<p>L1、L2正则化是通过<strong>修改代价函数</strong>来实现的，而Dropout则是通过<strong>修改神经网络本身</strong>来实现的，它是在训练网络时用的一种技巧（trike）。它的流程如下：</p>
+<p><a href="http://i.imgur.com/ZQvkoMn.png"><img alt="img" src="http://i.imgur.com/ZQvkoMn.png" /></a></p>
+<p>假设我们要训练上图这个网络，在训练开始时，我们<strong>随机地“删除”一半的隐层单元</strong>，视它们为不存在，得到如下的网络：</p>
+<p><a href="http://i.imgur.com/G9QTbi9.png"><img alt="img" src="http://i.imgur.com/G9QTbi9.png" /></a></p>
+<p>保持输入输出层不变，按照BP算法更新上图神经网络中的权值（<strong>虚线连接的单元不更新</strong>，因为它们被“临时删除”了）。</p>
+<p>以上就是一次迭代的过程，在第二次迭代中，也用同样的方法，只不过<strong>这次删除的那一半隐层单元，跟上一次删除掉的肯定是不一样</strong>的，因为我们每一次迭代都是<strong>“随机”地去删掉一半。第三次、第四次……</strong>都是这样，直至训练结束。</p>
+<p>以上就是Dropout，它为什么有助于防止过拟合呢？可以简单地这样解释，运用了dropout的训练过程，<strong>相当于训练了很多个只有半数隐层单元的神经网络（后面简称为“半数网络”），每一个这样的半数网络，都可以给出一个分类结果，这些结果有的是正确的，有的是错误的。随着训练的进行，大部分半数网络都可以给出正确的分类结果，</strong>那么少数的错误分类结果就不会对最终结果造成大的影响。</p>
+<p>更加深入地理解，可以看看Hinton和Alex两牛2012的论文《ImageNet Classification with Deep Convolutional Neural Networks》</p>
+<hr />
+<h2 id="data-augmentation"><strong>数据集扩增（data augmentation）</strong></h2>
+<p>“有时候不是因为算法好赢了，而是因为<strong>拥有更多的数据才赢了</strong>。”</p>
+<p>不记得原话是哪位大牛说的了，hinton？从中可见训练数据有多么重要，特别是在深度学习方法中，<strong>更多的训练数据，意味着可以用更深的网络，训练出更好的模型。</strong></p>
+<p>既然这样，收集更多的数据不就行啦？如果能够收集更多可以用的数据，当然好。但是很多时候，收集更多的数据意味着需要耗费更多的人力物力，有弄过人工标注的同学就知道，效率特别低，简直是粗活。</p>
+<p>所以，可以在原始数据上做些改动，得到更多的数据，<strong>以图片数据集举例，可以做各种变换</strong>，如：</p>
+<ul>
+<li><strong>将原始图片旋转一个小角度</strong></li>
+<li><strong>添加随机噪声</strong></li>
+<li><strong>一些有弹性的畸变</strong>（elastic distortions），论文《Best practices for convolutional neural networks applied to visual document analysis》对MNIST做了各种变种扩增。</li>
+<li><strong>截取</strong>（crop）原始图片的一部分。比如DeepID中，<strong>从一副人脸图中，截取出了100个小patch作为训练数据</strong>，极大地增加了数据集。感兴趣的可以看《Deep learning face representation from predicting 10,000 classes》.</li>
+</ul>
+<p><em>更多数据意味着什么？</em></p>
+<p>用50000个MNIST的样本训练SVM得出的accuracy94.48%，用5000个MNIST的样本训练NN得出accuracy为93.24%，所以<strong>更多的数据可以使算法表现得更好</strong>。在机器学习中，算法本身并不能决出胜负，不能武断地说这些算法谁优谁劣，因为数据对算法性能的影响很大。</p>
+<p><a href="http://i.imgur.com/VHRFgh6.png"><img alt="img" src="http://i.imgur.com/VHRFgh6.png" /></a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

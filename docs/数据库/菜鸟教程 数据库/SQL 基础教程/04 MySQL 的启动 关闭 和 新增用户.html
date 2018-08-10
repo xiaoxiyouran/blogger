@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>04 MySQL 的启动 关闭 和 新增用户</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="04-mysql">04 MySQL 的启动 关闭 和 新增用户</h1>
+<p><strong>1- 注意：</strong>在 MySQL5.7 中 user 表的 password 已换成了<strong>authentication_string</strong>。</p>
+<p>2-  查询统计信息是针对数据库的。</p>
+<p>mysql&gt; SHOW TABLE STATUS from RUNOOB LIKE 'runoob%'\G;   # 加上 \G，查询结果按列打印</p>
+<hr />
+<p>2- 启动</p>
+<p>终端界面下输入</p>
+<pre><code>sudo /usr/local/mysql/support-files/mysql.server start
+</code></pre>
+
+<p>启动mysql服务,启动成功后继续输入</p>
+<pre><code>mysql -u root -p
+</code></pre>
+
+<p>此时终端将让你输入密码12345678</p>
+<hr />
+<p>下面这些好像不太好用。</p>
+<h2 id="mysql">启动及关闭 MySQL 服务器</h2>
+<p>首先，我们需要通过以下命令来检查MySQL服务器是否启动：</p>
+<pre><code>ps -ef | grep mysqld
+</code></pre>
+
+<p>如果MySql已经启动，以上命令将输出mysql进程列表， 如果mysql未启动，你可以使用以下命令来启动mysql服务器:</p>
+<pre><code>root@host# cd /usr/bin
+./mysqld_safe &amp;
+</code></pre>
+
+<p>如果你想关闭目前运行的 MySQL 服务器, 你可以执行以下命令:</p>
+<pre><code>root@host# cd /usr/bin
+./mysqladmin -u root -p shutdown
+Enter password: ******
+</code></pre>
+
+<h2 id="_1">添加一个新用户</h2>
+<p>如果你需要添加 MySQL 用户，你只需要在 mysql 数据库中的 user 表添加新用户即可。</p>
+<p>以下为添加用户的的实例，用户名为guest，密码为guest123，并授权用户可进行 SELECT, INSERT 和 UPDATE操作权限：</p>
+<pre><code class="mysql">root@host# mysql -u root -p
+Enter password:*******
+mysql&gt; use mysql;
+Database changed
+
+# 这里有一个问题，后面再弄吧。password 应该换成authentication_string 字段应该就可以了。
+mysql&gt; INSERT INTO user 
+		  (host, user, password, 
+		   select_priv, insert_priv, update_priv) 
+		   VALUES ('localhost', 'guest', 
+		   PASSWORD('guest123'), 'Y', 'Y', 'Y');
+Query OK, 1 row affected (0.20 sec)
+
+mysql&gt; FLUSH PRIVILEGES;
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; SELECT host, user, password FROM user WHERE user = 'guest';
++-----------+---------+------------------+
+| host      | user    | password         |
++-----------+---------+------------------+
+| localhost | guest | 6f8c114b58f2ce9e |
++-----------+---------+------------------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<p>在添加用户时，请注意使用MySQL提供的 PASSWORD() 函数来对密码进行加密。 你可以在以上实例看到用户密码加密后为： 6f8c114b58f2ce9e.</p>
+<p><strong>注意：</strong>在 MySQL5.7 中 user 表的 password 已换成了<strong>authentication_string</strong>。</p>
+<p><strong>注意：</strong>在注意需要执行 <strong>FLUSH PRIVILEGES</strong> 语句。 这个命令执行后会重新载入授权表。</p>
+<p>如果你不使用该命令，你就无法使用新创建的用户来连接mysql服务器，除非你重启mysql服务器。</p>
+<p>你可以在创建用户时，为用户指定权限，在对应的权限列中，在插入语句中设置为 'Y' 即可，用户权限列表如下：</p>
+<ul>
+<li>Select_priv</li>
+<li>Insert_priv</li>
+<li>Update_priv</li>
+<li>Delete_priv</li>
+<li>Create_priv</li>
+<li>Drop_priv</li>
+<li>Reload_priv</li>
+<li>Shutdown_priv</li>
+<li>Process_priv</li>
+<li>File_priv</li>
+<li>Grant_priv</li>
+<li>References_priv</li>
+<li>Index_priv</li>
+<li>Alter_priv</li>
+</ul>
+<p>另外一种添加用户的方法为通过SQL的 GRANT 命令，以下命令会给指定数据库TUTORIALS添加用户 zara ，密码为 zara123 。</p>
+<pre><code class="shell">root@host# mysql -u root -p
+Enter password:*******
+mysql&gt; use mysql;
+Database changed
+
+mysql&gt; GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP
+	-&gt; ON TUTORIALS.*
+	-&gt; TO 'zara'@'localhost'
+	-&gt; IDENTIFIED BY 'zara123';
+</code></pre>
+
+<p>以上命令会在mysql数据库中的user表创建一条用户信息记录。</p>
+<p><strong>注意:</strong> MySQL 的SQL语句以分号 (;) 作为结束标识。</p>
+<hr />
+<h2 id="etcmycnf">/etc/my.cnf 文件配置</h2>
+<p>一般情况下，你不需要修改该配置文件，该文件默认配置如下：</p>
+<pre><code>[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+[mysql.server]
+user=mysql
+basedir=/var/lib
+
+[safe_mysqld]
+err-log=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+</code></pre>
+
+<p>在配置文件中，你可以指定不同的错误日志文件存放的目录，一般你不需要改动这些配置。</p>
+<hr />
+<h2 id="mysql_1">管理MySQL的命令</h2>
+<p>以下列出了使用Mysql数据库过程中常用的命令：</p>
+<ul>
+<li><strong>USE 数据库名</strong> :
+  选择要操作的Mysql数据库，使用该命令后所有Mysql命令都只针对该数据库。</li>
+</ul>
+<p><code>shell
+  mysql&gt; use RUNOOB;
+  Database changed</code></p>
+<ul>
+<li><strong>SHOW DATABASES:</strong> 
+  列出 MySQL 数据库管理系统的数据库列表。</li>
+</ul>
+<p><code>Shell
+  mysql&gt; SHOW DATABASES;
+  +--------------------+
+  | Database           |
+  +--------------------+
+  | information_schema |
+  | RUNOOB             |
+  | cdcol              |
+  | mysql              |
+  | onethink           |
+  | performance_schema |
+  | phpmyadmin         |
+  | test               |
+  | wecenter           |
+  | wordpress          |
+  +--------------------+
+  10 rows in set (0.02 sec)</code></p>
+<ul>
+<li><strong>SHOW TABLES:</strong>
+  显示指定数据库的所有表，使用该命令前需要使用 use 命令来选择要操作的数据库。</li>
+</ul>
+<p><code>Shell
+  mysql&gt; use RUNOOB;
+  Database changed
+  mysql&gt; SHOW TABLES;
+  +------------------+
+  | Tables_in_runoob |
+  +------------------+
+  | employee_tbl     |
+  | runoob_tbl       |
+  | tcount_tbl       |
+  +------------------+
+  3 rows in set (0.00 sec)</code></p>
+<ul>
+<li><strong>SHOW COLUMNS FROM 数据表:</strong>
+  显示数据表的属性，属性类型，主键信息 ，是否为 NULL，默认值等其他信息。</li>
+</ul>
+<p><code>shell
+  mysql&gt; SHOW COLUMNS FROM runoob_tbl;
+  +-----------------+--------------+------+-----+---------+-------+
+  | Field           | Type         | Null | Key | Default | Extra |
+  +-----------------+--------------+------+-----+---------+-------+
+  | runoob_id       | int(11)      | NO   | PRI | NULL    |       |
+  | runoob_title    | varchar(255) | YES  |     | NULL    |       |
+  | runoob_author   | varchar(255) | YES  |     | NULL    |       |
+  | submission_date | date         | YES  |     | NULL    |       |
+  +-----------------+--------------+------+-----+---------+-------+
+  4 rows in set (0.01 sec)</code></p>
+<ul>
+<li><strong>SHOW INDEX FROM 数据表:</strong>
+  显示数据表的详细索引信息，包括PRIMARY KEY（主键）。</li>
+</ul>
+<p><code>shell
+  mysql&gt; SHOW INDEX FROM runoob_tbl;
+  +------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+  | Table      | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
+  +------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+  | runoob_tbl |          0 | PRIMARY  |            1 | runoob_id   | A         |           2 |     NULL | NULL   |      | BTREE      |         |               |
+  +------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+  1 row in set (0.00 sec)</code></p>
+<ul>
+<li><strong>SHOW TABLE STATUS LIKE [FROM db_name][LIKE 'pattern'] \G:</strong> 
+  该命令将输出Mysql<strong>数据库</strong>管理系统的性能及统计信息。</li>
+</ul>
+<p><strong>注意，这个是查询数据库的。</strong></p>
+<p>```Shell
+  mysql&gt; SHOW TABLE STATUS  FROM RUNOOB;   # 显示数据库 RUNOOB 中所有表的信息</p>
+<p>mysql&gt; SHOW TABLE STATUS from RUNOOB LIKE 'runoob%';     # 表名以runoob开头的表的信息
+  mysql&gt; SHOW TABLE STATUS from RUNOOB LIKE 'runoob%'\G;   # 加上 \G，查询结果按列打印
+  ```</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

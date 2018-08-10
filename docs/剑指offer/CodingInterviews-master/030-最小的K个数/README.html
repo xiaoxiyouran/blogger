@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/6a296eb82cf844ca8539b57c23e6e9bf?tpId=13&amp;tqId=11182&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">最小的K个数</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1371</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/030-最小的K个数">030-最小的K个数</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51277505">剑指Offer--030-最小的K个数</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="center">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/6a296eb82cf844ca8539b57c23e6e9bf?tpId=13&amp;tqId=11182&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">最小的K个数</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1371">1371-最小的K个数</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51277505">剑指Offer--030-最小的K个数</a></td>
+<td align="center"><a href="https://github.com/gatieme/CodingInterviews/tree/master/030-最小的K个数">030-最小的K个数</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入n个整数，找出其中最小的K个数。</p>
+</blockquote>
+<p>例如输入4,5,1,6,2,7,3,8这8个数字，
+则最小的4个数字是1,2,3,4,。</p>
+<h1 id="_3">分析</h1>
+<hr />
+<h2 id="-">方法一--排序</h2>
+<hr />
+<ul>
+<li>
+<p>要求一个序列中最小的K个数，按照惯有的思维方式，很简单，先对这个序列从小到大排序，然后输出前面的最小的K个数即可；</p>
+</li>
+<li>
+<p>至于选取什么样的排序方法，第一时间应该想到的是快速排序，我们知道，快速排序平均时间复杂度为O(nlogn)，然后再遍历序列中前K个元素输出，即可，总的时间复杂度为O(nlogn + k) = O(nlogn)；——方法一</p>
+</li>
+</ul>
+<h2 id="-_1">方法二--选择或者交换排序</h2>
+<hr />
+<ul>
+<li>再进一步想想，题目并没有要求要查找的k个数，甚至是后面的n-k个数是有序的，既然这样，咱们又何必对所有的n个数都进行排序呢？
+	这个时候，想到了选择或交换排序，即遍历n个数，先把最先遍历到的K个数存入大小为k的数组之中，对这k个数，利用选择或交换排序，找到k个数中的最大数Kmax(Kmax为这K个元素的数组中最大的元素)，用时间为O(k)（你应该知道，插入或选择排序查找操作需要O(k)的时间），后再继续遍历后n-k个数，x与Kmax比较：如果x&lt; Kmax，则x代替Kmax，并再次重新找出K个元素的数组中的最大元素Kmax'；如果x&gt;Kmax，则不更新数组。这样每次更新和不更新数组所用的时间为O(k)或O(0)，整趟下来，总的时间复杂度平均下来为：n<em>O(k) = O(n</em>k)；——方法二</li>
+</ul>
+<h2 id="-_2">方法三--最小堆</h2>
+<hr />
+<p>当然，更好的办法是维护k个元素的最大堆，原理与上述第2个方案一致，即用容量为K的最大堆存储最先遍历的K个数，并假设它们即是最小的K个数，建堆需要O(k)后，有k1）。继续遍历数列，每次遍历一个元素x，与堆顶元素比较，x），否则不更新堆。这样下来，总费时O(k+(n-k)<em>logk) = O(nlogk)。此方法得益于在堆中，查找等各项操作时间复杂度均为logk（不然，就如上述思路2所述：直接用数组也可以找出前k个小的元素，用时O(n</em>k)）；</p>
+<h2 id="-_3">方法四--快速排序的分治划分（中位数作为枢轴）</h2>
+<hr />
+<p>按编程之美第141页上解法二的所述，类似快速排序的划分方法，N个数存储在数组S中，再从数组中随机选取一个数X（随机选取枢纽元，可做到线性期望时间O(N)的复杂度），把数组划分为Sa和Sb两部分，Sa&lt;= X &lt;=Sb，如果要查找的K个小的元素小于Sa中的元素个数，则返回Sa中较小的K个元素，否则返回Sa中K个小的元素 + Sb中小的K-|Sa|个元素。像上述过程一样，这个运用类似快速排序的partition的快速选择Select算法寻找最小的K个元素，在最坏的情况下亦能做到O(N)的复杂度。</p>
+<p>不过值得一提的是，这个快速选择Select算法是选择数组中“中位数的中位数”作为枢纽元，而非随机选择枢纽元；</p>
+<h2 id="-_4">方法五--快速排序的分治划分（随机枢轴）</h2>
+<hr />
+<p>Randomized-Select，每次都是随机选择数列中的一个元素作为主元，在O(n)的时间内找到第K小的元素，然后遍历输出前面的K个小的元素。如果能的话，那么总的时间复杂度为线性期望时间：O(n+k) = O(n)（当n比较小时）；</p>
+<h2 id="-_5">方法六--线性排序</h2>
+<hr />
+<p>线性时间的排序，即计数排序，时间复杂度虽能达到O(n)，但是，限制条件太多了，不常用；</p>
+<h2 id="-_6">方法七--最小堆与优先队列</h2>
+<hr />
+<p>”可以用最小堆初始化数组，然后取这个优先队列前k个值。复杂度为O(n)+k<em>O(logn)“。意思是针对整个数组序列建立最小堆，建堆所用时间为O(n)，然后取堆中的前k个数，即总的时间复杂度为：O(n+k</em>logn)。</p>
+<h2 id="-_7">方法八--提取最小堆的元素</h2>
+<hr />
+<p>与上述思路7类似，不同的是在对元素数组原地建立最小堆O(n)后，然后提取K次，但是每次提取时，换到顶部的元素只需要下移顶多K次就足够了，下移次数逐次减少（而上述思路7每次提取都需要logn，所有提取K次，思路7需要K*logn，而本思路8只需要K^2）；</p>
+<h1 id="_4">代码</h1>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+class Solution
+{
+protected:
+	vector&lt;int&gt; m_res;
+public:
+
+	vector&lt;int&gt; GetLeastNumbers_Solution(vector&lt;int&gt; numbers, int k)
+	{
+		m_res.clear( );
+
+		if(numbers.size( ) == 0 || numbers.size() &lt; k)
+		{
+			return m_res;
+		}
+//        m_res.clear( );
+//        LeastKNumbers_BySort(numbers, k);
+//
+//        m_res.clear( );
+//        LeastKNumbers_BySelectSort(numbers, k);
+//
+//        m_res.clear( );
+//        LeastKNumbers_ByBubbleSort(numbers, k);
+
+
+		LeastKNumbers_ByCountSort(numbers, k);
+
+
+		return m_res;
+	}
+
+	///  排序后输出前K个数字
+	vector&lt;int&gt; LeastKNumbers_BySort(vector&lt;int&gt; numbers, int k)
+	{
+		debug &lt;&lt;endl &lt;&lt;&quot;line &quot; &lt;&lt;__LINE__ &lt;&lt;&quot;in function : &quot;&lt;&lt;__func__ &lt;&lt;endl &lt;&lt;endl;
+
+		//vector&lt;int&gt; res;
+
+		sort(numbers.begin( ), numbers.end( ));
+		for(int i = 0; i &lt; k; i++)
+		{
+			debug &lt;&lt;numbers[i] &lt;&lt;&quot; &quot;;
+			m_res.push_back(numbers[i]);
+		}
+		debug &lt;&lt;endl;
+
+		return m_res;
+	}
+
+	///  采用选择排序法, K趟找出前K个数字
+	///  由于选择排序每趟结束后前i个数字都有序，因此K趟即可找出前K小的数字
+	vector&lt;int&gt; LeastKNumbers_BySelectSort(vector&lt;int&gt; numbers, int k)
+	{
+		debug &lt;&lt;endl &lt;&lt;&quot;line &quot; &lt;&lt;__LINE__ &lt;&lt;&quot; in function : &quot;&lt;&lt;__func__ &lt;&lt;endl &lt;&lt;endl;
+
+		int i, j, index;
+		int length = numbers.size( ) -1;
+		for(i = 0; i &lt; k/*length*/; i++)             // 循环每趟排序
+		{
+			index = i;
+			for(j = i + 1; j &lt; length; j++)
+			{
+				if(numbers[j] &lt; numbers[index])
+				{
+					index  = j;                 // 找到当前极值元素的下标
+				}
+			}
+			if(index != i)
+			{
+				swap(numbers[i], numbers[index]);     // 将极值保存到应该填入的位置
+			}
+			m_res.push_back(numbers[i]);
+
+#ifdef __tmain
+
+			debug &lt;&lt;&quot;pos = &quot; &lt;&lt;index &lt;&lt;&quot;, num = &quot; &lt;&lt;numbers[i] &lt;&lt;endl;
+			debug &lt;&lt;&quot;when &quot; &lt;&lt;i &lt;&lt;&quot; select sort, the least &quot; &lt;&lt;i &lt;&lt;&quot; numbers is sorted&quot; &lt;&lt;endl;
+
+			for(int pos = 0; pos &lt;= i; pos++)
+			{
+				debug &lt;&lt;numbers[pos] &lt;&lt;&quot; &quot;;
+			}
+			debug &lt;&lt;endl;
+
+#endif  //  __tmain
+
+		}
+
+		return m_res;
+	}
+
+	///  采用冒泡排序法, K趟找出前K个数字
+	vector&lt;int&gt; LeastKNumbers_ByBubbleSort(vector&lt;int&gt; numbers, int k)
+	{
+		debug &lt;&lt;endl &lt;&lt;&quot;line &quot; &lt;&lt;__LINE__ &lt;&lt;&quot; in function : &quot;&lt;&lt;__func__ &lt;&lt;endl &lt;&lt;endl;
+
+		int j/*控制每趟循环*/, i/*控制相邻数据的比较循环*/;
+		// 排序过程
+		int length = numbers.size( );
+		for(i = 0; i &lt; k/*length - 1*/; i++)        // 共计进行length-1趟循环
+		{
+			for(j = length - i - 1; j &gt; 0; j--)   // 每趟循环比较length-1-j次
+			{
+				if(numbers[j - 1] &gt; numbers[j])    // 如果当前的元素与后一个元素不满足排序规则
+				{
+					swap(numbers[j - 1], numbers[j]);
+				}
+
+			}
+			m_res.push_back(numbers[i]);
+
+#ifdef __tmain
+			debug &lt;&lt;&quot;pos = &quot; &lt;&lt;i &lt;&lt;&quot;, num = &quot; &lt;&lt;numbers[i] &lt;&lt;endl;
+			debug &lt;&lt;&quot;when &quot; &lt;&lt;i &lt;&lt;&quot; bubble sort, the least &quot; &lt;&lt;i &lt;&lt;&quot; numbers is sorted&quot; &lt;&lt;endl;
+
+			for(int pos = 0; pos &lt;= i; pos++)
+			{
+				debug &lt;&lt;numbers[pos] &lt;&lt;&quot; &quot;;
+			}
+			debug &lt;&lt;endl;
+
+#endif  //  __tmain
+		}
+
+		return m_res;
+	}
+
+
+	///  采用计数排序
+	vector&lt;int&gt; LeastKNumbers_ByCountSort(vector&lt;int&gt; numbers, int k)
+	{
+		int i, count;
+		int num[1000];
+		memset(num, '\0', 1000);
+
+		for(i = 0; i &lt; numbers.size( ); i++)
+		{
+			num[numbers[i]]++;
+			debug &lt;&lt;numbers[i] &lt;&lt;endl;
+		}
+		for(i = 0, count = 0; i &lt; 1000 &amp;&amp; count &lt; k; i++)
+		{
+			if(num[i] != 0)
+			{
+				count++;
+				debug &lt;&lt;i &lt;&lt;&quot; &quot;;
+				m_res.push_back(i);
+			}
+		}
+		debug &lt;&lt;endl;
+
+		return m_res;
+	}
+
+	vector&lt;int&gt; GetLeastNumbers_ByFindKth(vector&lt;int&gt; numbers, int k)
+	{
+		int kth;
+		vector&lt;int&gt; res;
+
+		for(int i = 0; i &lt; k; i++)
+		{
+			kth = FindKth(numbers, 0, numbers.size( ) - 1, i);
+
+			debug &lt;&lt;i &lt;&lt;&quot; th is &quot; &lt;&lt;kth &lt;&lt;endl;
+			res.push_back(kth);
+		}
+
+		return res;
+	}
+
+
+	/**
+	 * [Partition 快速排序的划分函数, 返回枢轴(left下标元素)在排序的数组中应该所处的位置,
+	  即下标为left的元素是第几大的元素
+	 * @Author    gatieme
+	 * @DateTime  2016-04-26T11:11:34+0800
+	 * @param     numbers                  [待划分的数组]
+	 * @param     left                     [待划分数据的起始位置]
+	 * @param     right                    [待划分数据的结束位置]
+	 * @return                             [返回枢轴在排序后数组中应该在的位置]
+	 */
+	int Partition(vector&lt;int&gt; &amp;numbers, int left, int right)
+	{
+		int i = left, j = right;
+
+		///  我们选择第一个元素作为基准
+		///  这个也可以随机选择
+		int pivotIndex = left, pivotNum = numbers[pivotIndex];
+
+		ddebug &lt;&lt;&quot;pivotNum = &quot; &lt;&lt;pivotNum &lt;&lt;endl;
+		while(i &lt; j)
+		{
+			while(i &lt; j &amp;&amp; numbers[j] &gt;= pivotNum)
+			{
+				ddebug &lt;&lt;&quot;[&quot; &lt;&lt;i &lt;&lt;&quot;, &quot; &lt;&lt;j &lt;&lt;&quot;] &quot; &lt;&lt;numbers[j] &lt;&lt;&quot; &gt;= &quot; &lt;&lt;pivotNum &lt;&lt;endl;
+				j--;
+			}
+			ddebug &lt;&lt;&quot;now we find i = &quot; &lt;&lt;i &lt;&lt;&quot;, posJ = &quot; &lt;&lt;j &lt;&lt;&quot;, num = &quot; &lt;&lt;numbers[j] &lt;&lt;&quot; &lt; &quot; &lt;&lt;pivotNum &lt;&lt;endl;;
+			numbers[i] = numbers[j];        // 将找到的那个比枢轴小的数，放在枢轴左侧I的位置
+			//swap(numbers[i], numbers[j]); // 也可以使用交换, 但是没有必要, 因为枢轴的位置并没有最后确定
+
+			while(i &lt; j &amp;&amp; numbers[i] &lt;= pivotNum)
+			{
+				ddebug &lt;&lt;&quot;[&quot; &lt;&lt;i &lt;&lt;&quot;, &quot; &lt;&lt;j &lt;&lt;&quot;] &quot; &lt;&lt;numbers[i] &lt;&lt;&quot; &lt;= &quot; &lt;&lt;pivotNum &lt;&lt;endl;
+				i++;
+			}
+
+			ddebug &lt;&lt;&quot;now we find j = &quot; &lt;&lt;i &lt;&lt;&quot;, posI = &quot; &lt;&lt;j &lt;&lt;&quot;, num = &quot; &lt;&lt;numbers[i] &lt;&lt;&quot; &gt; &quot; &lt;&lt;pivotNum &lt;&lt;endl;;
+			numbers[j] = numbers[i];        // 将找到的那个比枢轴大的数，放在枢轴右侧J的位置
+			//swap(numbers[i], numbers[j]); // 也可以使用交换, 但是没有必要, 因为枢轴的位置并没有最后确定
+		}
+
+		numbers[i] = pivotNum;              //  最后的位置 i == j 就是枢轴的位置
+
+#ifdef __tmain
+
+		ddebug &lt;&lt;pivotNum &lt;&lt;&quot; 's post is&quot; &lt;&lt;i &lt;&lt;endl;
+		for(int pos = left; pos &lt;= right; pos++)
+		{
+			ddebug &lt;&lt;numbers[pos] &lt;&lt;&quot; &quot;;
+		}
+		ddebug &lt;&lt;endl;
+		//system(&quot;PAUSE&quot;);
+
+#endif // __tmain
+
+		return i;
+	}
+
+	/**
+	 * [FindKth 查找数组中第K大的元素]
+	 * @Author    gatieme
+	 * @DateTime  2016-04-26T11:18:00+0800
+	 * @param     numbers                  [待查找元素所在的数组]
+	 * @param     left                     [数据起始元素的位置]
+	 * @param     right                    [数据终止元素的位置]
+	 * @param     k                        [第K大的元素]
+	 * @return                             [数组中第K大的元素的值]
+	 */
+	int FindKth(vector&lt;int&gt; &amp;numbers, int left, int right, int k)
+	{
+		int res;
+		int pivotIndex = left + 1;
+
+		if(left == right)
+		{
+			ddebug &lt;&lt;&quot;left == right&quot; &lt;&lt;numbers[left] &lt;&lt;endl;
+			return numbers[left];
+		}
+
+		pivotIndex = Partition(numbers, left, right);
+
+
+		if(pivotIndex &lt; k)          //  当前查找到的比第K个数小
+		{
+			// 第K大的的在pivot之前, 在[pivotIndex + 1, right]之间查找
+			ddebug &lt;&lt;&quot;K is in [&quot; &lt;&lt;pivotIndex + 1 &lt;&lt;&quot;, &quot; &lt;&lt;right &lt;&lt;&quot;]&quot; &lt;&lt;endl;
+			return FindKth(numbers, pivotIndex + 1, right, k);
+		}
+		else if(pivotIndex &gt; k)     //  当前查找到的比第K个数大
+		{
+			// 第K小的在pivot之前, 在[left, pivotIndex - 1]之间查找
+			ddebug &lt;&lt;&quot;K is in [&quot; &lt;&lt;left &lt;&lt;&quot;, &quot; &lt;&lt;pivotIndex - 1 &lt;&lt;&quot;]&quot; &lt;&lt;endl;
+			return FindKth(numbers, left, pivotIndex - 1, k);
+		}
+		else      //  这里返回的是其位置
+		{
+			/// return pivotIndex; ///  error
+			ddebug &lt;&lt;&quot;pivotIndex == k, &quot; &lt;&lt;numbers[pivotIndex] &lt;&lt;endl;
+			return numbers[pivotIndex];
+		}
+	}
+
+
+	/**
+	 * [CheckMoerThanHalf 检查num元素在数组numbers中出现的次数是否超过一半]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-26T11:20:35+0800
+	 * @param     numbers                  [待处理的数组]
+	 * @param     num                      [待查询的元素]
+	 * @return                             [如果元素num在数组numbers中出现的次数超过数组长度的一半则返回true, 否则返回false]
+	 */
+	bool CheckMoerThanHalf(vector&lt;int&gt; numbers, int num)
+	{
+		int count = 0;
+		for(int i = 0; i &lt; numbers.size( ); i++)
+		{
+			if(numbers[i] == num)
+			{
+				count++;
+			}
+		}
+		ddebug &lt;&lt;&quot;num = &quot; &lt;&lt;num &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+
+		if(count &gt; numbers.size( ) / 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	class greater_class
+	{
+	public:
+
+		bool operator()(int a, int b)
+		{
+			return a &gt; b;
+		}
+	};
+
+
+	vector&lt;int&gt; GetLeastNumbers_Solution(vector&lt;int&gt; numbers, int k)
+	{
+		return LeastKNumbers_ByMinHeap(numbers, k);
+	}
+
+	vector&lt;int&gt; LeastKNumbers_ByMinHeap(vector&lt;int&gt; numbers, int k)
+	{
+		vector&lt;int&gt; res;
+
+
+
+		if(numbers.size( ) == 0 || numbers.size( ) &lt; k)
+		{
+			return res;
+		}
+		make_heap(numbers.begin( ), numbers.end( ), greater_class());
+
+		for(int i = 0; i &lt; k; i++)
+		{
+			//  最小的元素在栈顶
+			debug &lt;&lt;numbers[0] &lt;&lt;&quot; &quot;;
+			res.push_back(numbers[0]);
+
+			///  一下两种操作均可以
+			// [1]  --  清除它, 然后重新排序堆
+			//numbers.erase(numbers.begin( ));
+			//sort_heap(numbers.begin( ), numbers.end( ));
+
+			// [2]  --  当然从堆出弹出这个栈顶元素
+			pop_heap(numbers.begin( ), numbers.end( ), greater_class( ));   // 弹出一个元素后，剩下的又重建了 heap，仍保持heap的性质
+			numbers.pop_back();         // vector 删除末尾元素
+		}
+
+		return res;
+	}
+
+};
+
+
+int __tmain( )
+{
+
+	int arr[ ] = { 4, 5, 1, 6, 2, 7, 3, 8 };
+	std::vector&lt;int&gt; vec(arr, arr + 8);
+
+	Solution solu;
+	solu.GetLeastNumbers_Solution(vec, 4);
+	return 0;
+}
+
+</code></pre>
+
+<h1 id="_5">参考</h1>
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6370650">程序员编程艺术：第三章、寻找最小的k个数</a></p>
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6403777">程序员编程艺术：第三章续、Top K算法问题的实现</a></p>
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6234929">关于查找数组中最小的k个元素的解答、updated</a></p>
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6452100">程序员编程艺术：三之三续、求数组中给定下标区间内的第K小（大）元素</a></p>
+<p><a href="http://blog.chinaunix.net/uid-26548237-id-3513260.html">寻找最小的K个数</a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,122 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_0180731创建一个简单的登录界面1 = tree.createNode('0180731 创建一个简单的登录界面',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_0180731创建一个简单的登录界面_html2 = _0180731创建一个简单的登录界面1.createChildNode("<a href = './0180731 创建一个简单的登录界面/0180731 创建一个简单的登录界面.html' target = 'right'>0180731 创建一个简单的登录界面.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180413activity的生命周期1 = tree.createNode('20180413 activity 的生命周期',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180413activity的生命周期_html2 = _20180413activity的生命周期1.createChildNode("<a href = './20180413 activity 的生命周期/20180413 activity 的生命周期.html' target = 'right'>20180413 activity 的生命周期.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180803创建一个记事本的功能1 = tree.createNode('20180803创建一个记事本的功能',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180803创建一个记事本的功能_html2 = _20180803创建一个记事本的功能1.createChildNode("<a href = './20180803创建一个记事本的功能/20180803创建一个记事本的功能.html' target = 'right'>20180803创建一个记事本的功能.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_androidstudio1 = tree.createNode('android studio',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_顶层build_gradle文件的加载2 = _androidstudio1.createChildNode('顶层build_gradle 文件的加载',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180730Androidstudio无法读取pom文件_html3 = _顶层build_gradle文件的加载2.createChildNode("<a href = './android studio/顶层build_gradle 文件的加载/20180730 Android studio 无法读取pom 文件.html' target = 'right'>20180730 Android studio 无法读取pom 文件.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180730无法获取到pom的终极解决方案_html3 = _顶层build_gradle文件的加载2.createChildNode("<a href = './android studio/顶层build_gradle 文件的加载/20180730 无法获取到pom的终极解决方案.html' target = 'right'>20180730 无法获取到pom的终极解决方案.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180730顶层文件夹build_gradle下载文件错误_html3 = _顶层build_gradle文件的加载2.createChildNode("<a href = './android studio/顶层build_gradle 文件的加载/20180730顶层文件夹build_gradle 下载文件错误.html' target = 'right'>20180730顶层文件夹build_gradle 下载文件错误.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180730connectionrefused_html2 = _androidstudio1.createChildNode("<a href = './android studio/20180730 connection refused.html' target = 'right'>20180730 connection refused.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180731androidstudio导出一个apk包_html2 = _androidstudio1.createChildNode("<a href = './android studio/20180731 android studio 导出一个apk 包.html' target = 'right'>20180731 android studio 导出一个apk 包.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180731下载一些小的图标_html2 = _androidstudio1.createChildNode("<a href = './android studio/20180731 下载一些小的图标.html' target = 'right'>20180731 下载一些小的图标.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_win1 = tree.createNode('win',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180713Androidsdk的环境配置2 = _win1.createChildNode('20180713 Android sdk的环境配置',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180713Androidsdk的环境配置_html3 = _20180713Androidsdk的环境配置2.createChildNode("<a href = './win/20180713 Android sdk的环境配置/20180713 Android sdk的环境配置.html' target = 'right'>20180713 Android sdk的环境配置.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_error2 = _win1.createChildNode('error',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_error20180716win下打开sdk闪退_html3 = _error2.createChildNode("<a href = './win/error/error20180716win下打开sdk闪退.html' target = 'right'>error20180716win下打开sdk闪退.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_安装模拟器2 = _win1.createChildNode('安装模拟器',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_v20180716androiditools官网_html3 = _安装模拟器2.createChildNode("<a href = './win/安装模拟器/v20180716 android itools 官网.html' target = 'right'>v20180716 android itools 官网.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180716adb常用指令_html2 = _win1.createChildNode("<a href = './win/20180716 adb常用指令.html' target = 'right'>20180716 adb常用指令.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180716安装Androidsdk的简单过程_html2 = _win1.createChildNode("<a href = './win/20180716安装Android sdk的简单过程.html' target = 'right'>20180716安装Android sdk的简单过程.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_组件1 = tree.createNode('组件',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_ButterKnife2 = _组件1.createChildNode('ButterKnife',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180730ButterKnife入门_html3 = _ButterKnife2.createChildNode("<a href = './组件/ButterKnife/20180730ButterKnife 入门.html' target = 'right'>20180730ButterKnife 入门.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180731errorcannotresolveR_html1 = tree.createNode("<a href = './20180731error cannot resolve R.html' target = 'right'>20180731error cannot resolve R.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

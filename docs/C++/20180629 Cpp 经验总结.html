@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180629 C++ 经验总结</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180629-c">20180629 C++ 经验总结</h1>
+<p>1- 只有 const 可以同时在声明和定义中使用：</p>
+<pre><code class="cpp">// demo.h
+class Demo{
+	public:
+		const Demo operator+(Demo &amp; d)const;    // 重载了 operator+()
+};
+</code></pre>
+
+<p>在定义文件中：</p>
+<pre><code class="cpp">// demo.cpp
+const Demo Demo::operator+(Demo &amp; d)const{
+	//...
+}
+</code></pre>
+
+<p><br></p>
+<p>2- static 成员和 friend 都只是在声明的时候用：</p>
+<pre><code class="cpp">// demo.h
+class Demo{
+	public:
+	static int d;
+};
+</code></pre>
+
+<p>static 成员除了 <code>static const int a = 10;</code> 这样的整型常量和枚举量，必须在定义文件中初始化：</p>
+<pre><code class="cpp">// demo.cpp
+int Demo::d = 0;
+</code></pre>
+
+<hr />
+<p>对于friend，在需要访问类的私有数据中声明：</p>
+<pre><code class="cpp">// demo.h
+class Demo{
+	public:
+		friend const Demo operator+(Demo &amp; d1, Demo &amp; d2);      // 非类的成员函数
+};
+</code></pre>
+
+<p>定义文件：</p>
+<pre><code class="cpp">// demo.cpp
+const Demo operator+(Demo &amp; d1, Demo &amp; d2){     // 注意：不需要 friend 了
+	//...
+}
+</code></pre>
+
+<p><br></p>
+<p>3- 类中有成员是用 new 动态分配内存的，必须有析构函数：</p>
+<pre><code class="cpp">// demo.h
+class Demo{
+private:
+	char * str;
+public:
+	Demo(){
+		str = new char[4];  // 动态分配内存
+	}
+	~Demo(){
+		delete[] str;       // 使用对应的 delete[] 释放
+	}
+};
+</code></pre>
+
+<p><mark>注意： new 分配的用 delete 释放， <code>new[]</code> 用<code>delete[]</code> 释放；</mark></p>
+<p><br></p>
+<p>4- <mark>当使用一个对象来初始化另一个对象时</mark>, 以下语句将自动调用复制构造函数(如果未定义，编译器将<mark>自动创建</mark>)：</p>
+<pre><code class="cpp">StringBad sailor = StringBad(sports);
+</code></pre>
+
+<p>5- C++ 自动提供了下面的成员函数：</p>
+<ul>
+<li>1） 默认构造函数，如果没有定义构造函数；</li>
+<li>2） 默认析构函数，如果没有定义；</li>
+<li>3） 复制构造函数，如果没有定义；</li>
+<li>4） 赋值运算符， 如果没有定义；</li>
+<li>5）地址运算符，如果没有定义；</li>
+</ul>
+<p>更准确的说，编译器将<mark>生成上述最后三个函数的定义</mark> —— 如果程序的对象有要求，例如，将一个对象赋 给另一个对象，将提供赋值运算符定义；</p>
+<p>隐式<mark>地址运算符将返回调用对象的地址（即 this 指针的值）</mark>， 这与初衷一致，在此不详细讨论；</p>
+<p><mark>默认析构不执行任何操作</mark>，也不讨论；</p>
+<p>C++ 11 还提供另外两个特殊成员函数： <mark>移动构造</mark>（move constructor）  和 <mark>移动赋值运算符</mark>（move assignment operator）</p>
+<p><br></p>
+<p>6- 如果有<mark>静态计数变量， 或 new 分配的成员，则该类必须定义 复制构造函数，重载赋值运算符 和 析构函数</mark>；</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,121 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_交通1 = tree.createNode('交通',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180809汽车档位说明2 = _交通1.createChildNode('20180809 汽车档位说明',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180809汽车档位说明_html3 = _20180809汽车档位说明2.createChildNode("<a href = './交通/20180809 汽车档位说明/20180809 汽车档位说明.html' target = 'right'>20180809 汽车档位说明.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180809空调的使用2 = _交通1.createChildNode('20180809 空调的使用',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180809空调的使用_html3 = _20180809空调的使用2.createChildNode("<a href = './交通/20180809 空调的使用/20180809 空调的使用.html' target = 'right'>20180809 空调的使用.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180809识别路牌2 = _交通1.createChildNode('20180809 识别路牌',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_东营市路口_graffle3 = _20180809识别路牌2.createChildNode('东营市路口.graffle',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_交通路标识别图_graffle3 = _20180809识别路牌2.createChildNode('交通路标识别图.graffle',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180809识别路牌_html3 = _20180809识别路牌2.createChildNode("<a href = './交通/20180809 识别路牌/20180809 识别路牌.html' target = 'right'>20180809 识别路牌.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180809识别道路交通指示牌2 = _交通1.createChildNode('20180809 识别道路交通指示牌',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180809识别道路交通指示牌_html3 = _20180809识别道路交通指示牌2.createChildNode("<a href = './交通/20180809 识别道路交通指示牌/20180809 识别道路交通指示牌.html' target = 'right'>20180809 识别道路交通指示牌.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_日记1 = tree.createNode('日记',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180615diary_html2 = _日记1.createChildNode("<a href = './日记/20180615 diary.html' target = 'right'>20180615 diary.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180625前任3_html1 = tree.createNode("<a href = './ 20180625前任3.html' target = 'right'> 20180625前任3.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180610创造101_html1 = tree.createNode("<a href = './20180610  创造101.html' target = 'right'>20180610  创造101.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180610论语_html1 = tree.createNode("<a href = './20180610 论语.html' target = 'right'>20180610 论语.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180611归去来_html1 = tree.createNode("<a href = './20180611 归去来.html' target = 'right'>20180611 归去来.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180612归去来_html1 = tree.createNode("<a href = './20180612 归去来.html' target = 'right'>20180612 归去来.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180616世界杯葡萄牙西班牙_html1 = tree.createNode("<a href = './20180616 世界杯葡萄牙西班牙.html' target = 'right'>20180616 世界杯葡萄牙西班牙.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180616归去来_html1 = tree.createNode("<a href = './20180616 归去来.html' target = 'right'>20180616 归去来.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180617抖音女神和创造101_html1 = tree.createNode("<a href = './20180617 抖音女神和创造101.html' target = 'right'>20180617 抖音女神和创造101.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180619归去来_html1 = tree.createNode("<a href = './20180619 归去来.html' target = 'right'>20180619 归去来.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180621归去来_html1 = tree.createNode("<a href = './20180621 归去来.html' target = 'right'>20180621 归去来.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180621扶摇_html1 = tree.createNode("<a href = './20180621 扶摇.html' target = 'right'>20180621 扶摇.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180627_天意_html1 = tree.createNode("<a href = './20180627-天意.html' target = 'right'>20180627-天意.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180629抖音和寻秦记_html1 = tree.createNode("<a href = './20180629 抖音和寻秦记.html' target = 'right'>20180629 抖音和寻秦记.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

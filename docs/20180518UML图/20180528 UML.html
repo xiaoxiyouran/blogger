@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180528 UML</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180528-uml">20180528 UML</h1>
+<hr />
+<p>原文链接： https://www.ibm.com/developerworks/cn/rational/rationaledge/content/feb05/bell/index.html</p>
+<p>在 UML 2 中有二种基本的图范畴：<strong>结构图和行为图</strong>。每个 UML 图都属于这二个图范畴。</p>
+<p>1）结构图的目的是显示建模系统的静态结构。它们包括类，组件和（或）对象图。</p>
+<p>2）另一方面，行为图显示系统中的对象的动态行为，包括如对象的方法，协作和活动之类的内容。行为图的实例是活动图，用例图和序列图。</p>
+<h2 id="1-">1- 基础</h2>
+<p>如先前所提到的，类图的目的是显示建模系统的类型。在大多数的 UML 模型中这些类型包括：</p>
+<ul>
+<li>类</li>
+<li>接口</li>
+<li>数据类型</li>
+<li>组件</li>
+</ul>
+<p>UML 为这些类型起了一个特别的名字：“分类器”。通常地，你可以把分类器当做类，但在技术上，分类器是更为普遍的术语，它还是引用上面的其它三种类型为好。</p>
+<h3 id="_1">基本类图</h3>
+<p>一个基本类图如下，</p>
+<p><img alt="" src="基本类_01.jpg" /></p>
+<h3 id="_2">带继承关系的类图</h3>
+<p>两种方式，一种是在IBM Rational Rose和IBM Rational XDE中使用的方法， 另一种采用树形标记。</p>
+<p><img alt="" src="继承_01.jpg" /></p>
+<h2 id="2-">2- 关联</h2>
+<p>有5种关联类型。</p>
+<h3 id="_3">双向关联</h3>
+<p>彼此之间都知道对方的联系</p>
+<p><img alt="" src="双向关联.jpg" /></p>
+<p>多重值和它们的表示，</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>序号</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>表示</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0..1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0个或者1个</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>有且有1个</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0..*</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0个或者多个</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>*</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0个或者多个(同上)</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>5</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1..*</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>&gt;=1</code> 个</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>6</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>只能有3个</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>7</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0..5</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0~5个</td>
+</tr>
+</tbody>
+</table>
+<p>参考：</p>
+<p>UML 基础：https://www.ibm.com/developerworks/cn/rational/rationaledge/content/feb05/bell/index.html</p>
+<p><a href="http://www.cnblogs.com/langtianya/p/3825764.html">UML建模之时序图（Sequence Diagram）教程</a></p>
+<p>UML类图简明教程：https://blog.csdn.net/AllenWells/article/details/47398091</p>
+<p>深入浅出UML类图（一）：https://blog.csdn.net/lovelion/article/details/7838679</p>
+<p>UML实践详细经典教程----用例图、顺序图、状态图、类图、包图、协作图：https://blog.csdn.net/zfrong/article/details/4086424</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

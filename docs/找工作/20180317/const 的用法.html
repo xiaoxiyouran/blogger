@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>const 的用法</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="const">const 的用法</h1>
+<p>const修饰的函数不仅能限制函数去修改成员变量，同时也能实现函数的重载。要想调用const修饰的重载函数，需要用const对象去调用。</p>
+<p>另外要注意的是，如果一个函数用const修饰了，但是这个函数没有实现重载，那么非const对象和const对象都能调用这个函数。</p>
+<p>特别注意的是，const修饰的对象只能调用const修饰的函数，比如，testC.fun()是错误的，因为fun()是非const的，而testC是const的。</p>
+<ul>
+<li>const修饰数据成员</li>
+</ul>
+<p>修饰数据变量，保证数据变量只能在定义的时候进行初始化，并且在程序的执行过程中不能被再次赋值。</p>
+<p>1、修饰类中的数据成员变量,可以直接在声明的时候进行初始化（const int num = 100;）,不过最好还是在构造函数的初始化列表中进行初始化（必须用初始化列表进行初始化）。</p>
+<pre><code class="cpp">class A
+{
+public:
+		 A(int val):num(val){ }
+private:
+		 const int num;//const成员变量
+};
+
+</code></pre>
+
+<p>2、也可以在程序中定义const变量。const int num = 100;//比如在定义全局const变量num=100;</p>
+<p>3、const int num = 100;等价于int const num = 100;</p>
+<p>也就是说<strong>const int 和int const</strong>意思相同。</p>
+<ul>
+<li><strong>const修饰成员函数</strong></li>
+</ul>
+<p>1、const修饰成员函数的返回类型</p>
+<pre><code class="cpp">class A
+{
+public:
+		 A(int val):num(val){ }
+		 const void fun(int val){
+			 cout &lt;&lt; &quot;num = &quot; &lt;&lt; num &lt;&lt; endl;
+			 age = val;
+		 }
+private:
+		 const int num;//const成员变量
+		 int age;
+};
+</code></pre>
+
+<p>此时const的位置有下面两种等价的情况：</p>
+<p><strong>const void</strong>fun ()；</p>
+<p><strong>void const</strong>fun ();</p>
+<p>2、const修饰成员函数的形参变量</p>
+<p>此时const的位置有下面两种等价的情况：</p>
+<p>void fun(const int val);</p>
+<p>void fun(int const val);</p>
+<p>3、const直接修饰成员函数</p>
+<p>const放在函数声明之后，函数实现之前。void fun(int val)const;</p>
+<p>const此时<strong>保证不会修改该对象的数据成员。</strong></p>
+<p>下面的例子是错误的，因为fun是const成员函数，它不能修改对象的成员变量age;</p>
+<pre><code class="cpp">void fun(int val)const{
+	 cout &lt;&lt; &quot;num = &quot; &lt;&lt; num &lt;&lt; endl;
+	 age = val;//此时是错误的。
+}
+</code></pre>
+
+<p>(1):const成员函数此时<strong>能访问const和非const数据成员。但不能修改非const数据成员。</strong>(都能访问，但是不能改变量的值)</p>
+<p>(2):const成员函数中只能调用其它const的成员函数。<strong>（const函数只能调用const函数）</strong></p>
+<p>(3):void fun(int val)const;和void fun(int val);两个函数构成重载函数。<strong>（加const函数，相当于重载。const对象只能调用const函数。 如果只有const函数，非const对象也能调用它）</strong></p>
+<p>const对象只能调用const成员函数。</p>
+<p>非const对象会优先调用非const成员函数，但是如果fun函数只有const函数，那么非const对象也会调用const成员函数。（但是该非const成员函数中不能修改对象成员变量）</p>
+<ul>
+<li><strong>const修饰类对象</strong></li>
+</ul>
+<p>定义一个const对象a：const A a(100);</p>
+<p>const修饰函数，是从函数的层面，不修改数据。</p>
+<p>const修饰类对象，是从对象的层面，不修改数据，只能调用const成员函数。</p>
+<p>const对象只能调用const成员函数。</p>
+<p><strong>非const对象会优先调用非const成员函数</strong>，但是如果fun函数只有const函数，那么非const对象也会调用const成员函数。（但是该非const成员函数中不能修改对象成员变量）</p>
+<hr />
+<h4 id="const_1">一、用const修饰函数参数</h4>
+<h5 id="1">1、修饰指针，可以防止指针被修改</h5>
+<pre><code>void test(const ClassA* a)
+{
+	ClassA** b = &amp;a; //编译错误,不能对const指针取地址
+	ClassA* c = a; //编译错误，不能将const指针转普通指针
+	(*b) = new ClassA();
+}
+void test2(ClassA* a)
+{
+	ClassA** b = &amp;a;
+	(*b) = new ClassA();
+}1234567891011
+</code></pre>
+
+<h5 id="2">2、修饰普通类型，说明这个参数不应该被修改</h5>
+<pre><code>void test(const int a)
+{
+		a++; //编译错误
+		int* c= &amp;a; //编译错误，不能取地址，否则就具备了改a的能力
+		int b = a;  //不用强转也可以编译通过，但还是没能力改a的值        
+}123456
+</code></pre>
+
+<h5 id="3-copy">3、修饰引用类型，参数的值不能被修改， 也就失去了引用类型的效果，但传递对象时，可以起到不copy对象的目的。</h5>
+<pre><code>void test(const int&amp; a)
+{
+	a = 2; //编译错误，不能修改const引用类型的值
+}
+void test(const ClassA&amp; a) //传递的时候，不需要copy一个新的ClassA,又能保护a
+{
+
+}12345678
+</code></pre>
+
+<h4 id="const_2">二、用const修饰局部或全局变量，功能类似函数参数</h4>
+<h4 id="constconst">三、用const修饰函数返回值，说明函数的返回类型是const的，功能类似于函数参数</h4>
+<pre><code>const int test()
+{
+	int a = 1;
+	return a;
+}12345
+</code></pre>
+
+<h4 id="const_3">四、用const修饰函数，说明函数不会修改成员变量的值</h4>
+<pre><code>class ClassA
+{
+public:
+	int b;
+	int test() const
+	{
+		b = 3; //编译错误，const修饰的函数不能修改类成员变量的值
+		return b;
+	}
+}
+</code></pre>
+
+<hr />
+<p>为什么要用const？</p>
+<p><strong>将参数声明为常量数据的引用原因有3条</strong></p>
+<p><strong>1.使用const 可以避免无意中修改数据的错误编程。</strong></p>
+<p><strong>2.使用const 使函数能够处理const 和非const 实参，否则将只能接受非const 数据。</strong></p>
+<p><strong>3.使用const 引用使函数能够正确的生成并使用临时变量。</strong></p>
+<p><strong>引用和继承派生之间的关系：</strong></p>
+<p><strong>基类引用可以指向派生类对象，而无需进行强制类型转换。</strong></p>
+<p><strong>调用函数的时候，可以将基类对象作为参数，也可以将派生类对象作为参数。</strong></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

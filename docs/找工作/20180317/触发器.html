@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>触发器</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<p>触发器</p>
+<p>本人水平有限，写此博客只为给那些像我一样的菜鸟一点小小的帮助，还请各位大牛不要见笑。</p>
+<p>数据库的重要性就不用我多说了吧，我们做的大多数项目都要跟数据库打交道。因此，熟练掌握数据库的各种操作，就成了一个程序员必备的技能。今天我们就来简单说一下触发器。</p>
+<p><strong>触发器简介：</strong></p>
+<p>触发器（trigger）是种特殊的存储过程，它的执行不是由程序调用，也不需要手动操作，它是由事件来触发，事件大家应该非常熟悉吧，比如按钮的Click事件、网页的Load事件等。按钮的Click事件是通过鼠标单击按钮触发的，而触发器的事件，是由对表进行增删改操作所触发的。当对一个数据库或表进行增删改（ Insert，Delete，Update）的时就会激活触发器。</p>
+<p>从SQL2005开始，根据SQL语句的不同将触发器分成了两类，一类是DML触发器，一类是DLL触发器。其中DML触发器又分为两类：After触发器和Instead Of触发器。</p>
+<p><strong>触发器的分类：</strong></p>
+<p>DML触发器：DML（Data Manipulation Language）触发器是当数据库服务器中发生数据操作语言事件时执行的存储过程。DML触发器又分为两类：After触发器和Instead Of触发器</p>
+<p>DDL触发器：DDL触发器是在响应数据定义语言（Data Definition Language）事件时执行的存储过程。DDL触发器一般用于执行数据库中管理任务。如审核和规范数据库操作、防止数据库表结构被修改等。</p>
+<p><strong>DML触发器：</strong></p>
+<p>今天我们我们主要介绍DML触发器，DML触发器分为After触发器和Instead Of触发器。</p>
+<p>After触发器：这类触发器是在记录已经改变完之后（after），才会被激活执行，它主要是用于记录变更后的处理或检查，一旦发现错误，也可以用Rollback Transaction语句来回滚本次的操作。</p>
+<p>Instead Of触发器：这类触发器一般是用来取代原本的操作，在记录变更之前发生的，它并不去执行原来SQL语句里的操作（Insert、Update、Delete），而去执行触发器本身所定义的操作。</p>
+<p>在SQL Server里，每个DML触发器都分配有两个特殊的表，一个是Inserted表，一个是Deleted表。它们两个存在于数据库服务器的内存中，是由系统管理的逻辑表，是两个临时表，而不是真正存储在数据库中的物理表。用户对这两个表只有读取的权限，没有修改的权限。</p>
+<p>这两个表的结构(主外键、字段、数据类型等)与触发器所在数据表的结构是完全一致的，当触发器的工作完成之后，这两个表也将会从内存中删除。</p>
+<p><strong>Inserted和Deleted两个表的作用：</strong></p>
+<p>Inserted：对于插入记录操作来说，插入表里存放的是要插入的数据；对于更新记录操作来说，插入表里存放的是要更新的记录。</p>
+<p>Deleted：对于更新记录操作来说，删除表里存放的是被更新记录；对于删除记录操作来说，删除表里存入的是被删除的旧记录。</p>
+<p>看上面两句话可能不太明白，那么看看下面这张表是不是就明白了？</p>
+<p><img alt="img" src="http://my.csdn.net/uploads/201206/09/1339207042_9080.png" /></p>
+<p><strong>工作原理：</strong></p>
+<p>After触发器的工作原理：</p>
+<p>After触发器是在SQL语句执行之后才被激活的。以删除记录为例：当SQL Server接收到一条删除操作的SQL语句时，SQL Server先将要删除的记录存放在Deleted表里，然后把数据表里的记录删除，再激活After触发器，执行After触发器里的SQL语句。执行完毕之后， 删除内存中的Deleted表，操作结束。</p>
+<p>还是举上面的例子：在产品库存表里，如果要删除一条产品记录，在删除的时候，触发器可以检查该产品库存数量是否为零，如果不为零则取消删除操作。数据库的操作如下：</p>
+<p>1，接收SQL语句，将要从产品库存表里删除的产品记录取出来，放在删除表里。</p>
+<p>2，从产品库存表里删除该产品记录。</p>
+<p>3，从删除表里读出该产品的库存数量字段，判断是不是为零，如果为零的话，完成操作，从内存里清除删除表；如果不为零的话，用Rollback Transaction语句来回滚操作(即将库存表还原成删除之前的状态)。</p>
+<p>Instead Of 触发器的工作原理：</p>
+<p>Instead Of触发器与After触发器不同。After触发器是在Insert、Update和Delete操作完成后才激活的，而Instead Of触发器，是在这些操作进行之前就激活了，并且不再去执行原来的SQL操作，而是用触发器本身的SQL语句代替原来的语句去执行。</p>
+<p>还拿上面那个例子来说，删除一条产品记录的时候，用Instead Of将删除操作替换成查询该产品的库存。数据库的操作如下：</p>
+<p>1，接收SQL语句，但不执行，而是跳转到Instead Of后面的SQL语句</p>
+<p>2，根据传入的产品ID，将该产品的库存取出，完成操作。</p>
+<p>说了那么多理论上的东西，下面让我们看看触发器的代码到底怎么写：</p>
+<p>下面的一段代码是触发器的一个框架。</p>
+<pre><code>CREATE TRIGGER  Trigger_Name --触发器名，在一个数据库中触发器名是唯一的。
+   ON  Table_Name | View_Name --触发器所在的表或者视图。
+   AFTER(FOR)|Instead Of  INSERT,DELETE,UPDATE --定义成AFTER或Instead Of类型的触发器。
+	  --AFTER跟FOR相同，不可在视图上定义AFTER触发器
+	  -- 后面是触发器被触发的条件，最少有一个，可以邮多个。如果有多个用逗号分开，顺序无要求。
+
+AS --触发器要执行的操作
+
+BEGIN
+   --BEGIN跟END组成一个代码块，可以写也可以不写，如果触发器中执行的SQL语句比较复杂，用BEGIN和END会让代码更加整齐，更容易理解。
+
+END
+GO --GO就代表结操作完毕
+</code></pre>
+
+<p><strong>注意事项：</strong></p>
+<p>1，After触发器只能用于数据表不能用于视图；Instead Of触发器两者皆可，设置为With Check Option的视图也不允许建立Instead Of触发器。两种触发器都不可以建立在临时表上。</p>
+<p>2，一个数据表可以有多个触发器，但是一个触发器只能对应一个表。</p>
+<p>3，在同一个数据表中，对每个操作（如Insert、Update、Delete）而言可以建立许多个After触发器，而Instead Of触发器针对每个操作只有建立一个。</p>
+<p>4，如果针对某个操作即设置了After触发器又设置了Instead Of触发器，那么Instead of触发器一定会激活，而After触发器就不一定会激活。</p>
+<p>5，不同的SQL语句，可以触发同一个触发器，如Insert和Update语句都可以激活同一个触发器。</p>
+<p>6，触发器名在所在的数据库里必须是唯一的。由于触发器是建立中数据表或视图中的，所以有很多人都以为只要是在不同的数据表中，触发器的名称就可以相同，其实触发器的全名（Server.Database.Owner.TriggerName）是必须 唯一的，这与触发器在哪个数据表或视图无关。</p>
+<p>7，关键字AFTER可以用For来代取，它们的意思都是一样的，代表只有在数据表的操作都已正确完成后才会激活的触发器。</p>
+<p>关于触发器就简单介绍到这里，有什么不足还请各位不吝赐教！</p>
+<hr />
+<p>触发器（trigger）是与表事件相关的数据库对象，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，当触发器所在表上出现指定事件时，将调用该对象，即表的操作事件触发触发器的执行。比如，当对一个表进行操作（ insert，delete， update）时就会激活它执行。触发器经常用于加强数据的完整性约束和业务规则等。 本文通过一个示例，介绍MySql触发器的使用方法。</p>
+<h3 id="1-mysql">1. MySql触发器语法</h3>
+<pre><code>CREATE TRIGGER &lt;触发器名称&gt;
+{ BEFORE | AFTER }
+{ INSERT | UPDATE | DELETE } 
+ON &lt;表名称&gt;
+FOR EACH ROW
+&lt;触发的SQL语句&gt;
+</code></pre>
+
+<ul>
+<li><code>触发器名称</code> -- 触发器名字，最多64个字符，其命令规则和MySQL中其他对象的命名方式类似</li>
+<li><code>{ BEFORE | AFTER }</code>-- 触发器执行时间：可以设置为事件发生前或后</li>
+<li><code>{ INSERT | UPDATE | DELETE }</code>-- 触发事件：可以设置为在执行INSERT、UPDATE、DELETE操作时触发</li>
+<li><code>表名称</code> -- 触发器所属表：触发器属于某一个表，当在这个表上执行INSERT、UPDATE、DELETE操作的时就会使触发器触发，一张表的同一个事件只能有一个触发器</li>
+<li><code>FOR EACH ROW</code>-- 触发器的执行间隔：FOR EACH ROW子句通知触发器，每行执行一次动作</li>
+<li><code>触发的SQL语句</code> -- 事件触发时所要执行的SQL语句</li>
+</ul>
+<h3 id="2">2. 触发器查看与删除</h3>
+<h4 id="21-mysql">2.1 查看MySql触发器</h4>
+<p>在MySql中，查看已创建触发器和查看数据库<code>SHOW DATABASES</code>、查看表<code>SHOW TABLES</code>一样。查看触发器的语法如下：</p>
+<pre><code>SHOW TRIGGERS [FROM schema_name];
+</code></pre>
+
+<p>其中可选参数<code>schema_name</code>即<code>Schema</code>的名称，在MySQL中<code>Schema</code>和<code>Database</code>相关，查看时可以指定数据库名。指定后会从指定的数据库查询，不定则从<code>USE database_name;</code>切换的，当前工作数据库查询。</p>
+<h4 id="22-mysql">2.2 删除MySql触发器</h4>
+<p>在MySql中，删除已创建触发器和删除数据库、删除表一样，删除触发器的语法如下：</p>
+<pre><code>DROP TRIGGER [IF EXISTS] [schema_name.]trigger_name;
+</code></pre>
+
+<h3 id="3-mysql">3. MySql触发器使用示例</h3>
+<h4 id="31">3.1 创建触发器</h4>
+<p>现有用户表<code>users</code>和用户角色关系表<code>userRoles</code>，其结构如下：</p>
+<pre><code>mysql&gt; show columns from users;
++--------------------+---------------+------+-----+---------------------+----------------+
+| Field              | Type          | Null | Key | Default             | Extra          |
++--------------------+---------------+------+-----+---------------------+----------------+
+| userId             | bigint(11)    | NO   | PRI | NULL                | auto_increment |
+| userName           | varchar(255)  | NO   |     | NULL                |                |
+| password           | varchar(255)  | NO   |     | NULL                |                |
+| name               | varchar(255)  | NO   |     | NULL                |                |
+| nickName           | varchar(255)  | YES  |     | NULL                |                |
+| avatar             | varchar(1024) | YES  |     | NULL                |                |
+| sex                | int(11)       | NO   |     | 0                   |                |
+| email              | varchar(255)  | NO   |     | NULL                |                |
+| isManager          | tinyint(1     | NO   |     | NULL                |                |
+| createdOn          | datetime      | NO   |     | 2014-05-06 11:15:25 |                |
+| updatedOn          | datetime      | NO   |     | 2014-05-06 11:15:25 |                |
++--------------------+---------------+------+-----+---------------------+----------------+
+21 rows in set (0.02 sec)
+
+mysql&gt; show columns from userRoles;
++--------+------------+------+-----+---------+----------------+
+| Field  | Type       | Null | Key | Default | Extra          |
++--------+------------+------+-----+---------+----------------+
+| id     | int(11)    | NO   | PRI | NULL    | auto_increment |
+| userId | bigint(11) | YES  | MUL | NULL    |                |
+| roleId | bigint(11) | YES  | MUL | NULL    |                |
++--------+------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+</code></pre>
+
+<p>创建一个触发器<code>t_after_insert_userRoles</code>，在<code>userRoles</code>表插入数据，且<code>roleId</code>为<code>1</code>时，将<code>users</code>表相同<code>userId</code>的<code>isManager</code>字段更新为<code>true</code>。触发器创建过程如下：</p>
+<pre><code>mysql&gt; DELIMITER $   //将SQL语句的结束符设置为#
+mysql&gt; CREATE TRIGGER t_after_insert_userRoles
+AFTER INSERT ON
+userRoles
+FOR EACH ROW
+BEGIN
+	update users set isManager = 1 where userId = new.userId and new.roleId = 1;
+END$
+
+mysql&gt; DELIMITER ;   //将SQL语句的结束符设重置为;以不影响后续使用
+</code></pre>
+
+<p>触发器创建完成。</p>
+<h4 id="32">3.2 验证触发器</h4>
+<p>向用户表<code>users</code>插入数据。</p>
+<pre><code>mysql&gt; INSERT INTO users (userName, password, name, nickName, sex, email, isManager) VALUE ('itbilu', 'e10adc3949ba59abbe56e057f20f883e', 'IT笔录', 'itbilu', 1, 'cn.liuht@gmail.com', 0);
+</code></pre>
+
+<p><code>users</code>原来没有数据，刚插入的数据<code>userId</code>为<code>1</code>。向用户表角色表<code>userRoles</code>插入数据，使触发器触发：</p>
+<pre><code>mysql&gt; INSERT INTO userRoles (userId, roleId) VALUE (1, 1);
+</code></pre>
+
+<p>刚才插入的数据已经使触发器触发，查看结果如下：</p>
+<pre><code>mysql&gt; select isManager from users;
++-----------+
+| isManager |
++-----------+
+|         1 |
++-----------+
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

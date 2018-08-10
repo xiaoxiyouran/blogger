@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180411 GitHub 和 码云一起用</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180411-github">20180411 GitHub 和 码云一起用</h1>
+<pre><code class="sh">第一次push 码云时，要注意，会提醒你填写用户名和密码。
+</code></pre>
+
+<p>使用码云和使用GitHub类似，我们在码云上注册账号并登录后，需要先上传自己的SSH公钥。选择右上角用户头像 -&gt; 菜单“修改资料”，然后选择“SSH公钥”，填写一个便于识别的标题，然后把用户主目录下的<code>.ssh/id_rsa.pub</code>文件的内容粘贴进去：</p>
+<p>【需要注意的是，如果之前用的247700529@qq.com 注册的GitHub，生成了相应的公钥，那么直接添加这个即可，即使码云用的账号是xiaoxiyouran@163.com 也没有关系】</p>
+<p><img alt="gitee-add-ssh-key" src="./20180411_github" title="和 码云一起使用_01.jpg" /></p>
+<p>点击“确定”即可完成并看到刚才添加的Key：</p>
+<p><img alt="gitee-key" src="./20180411_github" title="和 码云一起使用_02.jpg" /></p>
+<p>如果我们已经有了一个本地的git仓库（例如，一个名为learngit的本地库），如何把它关联到码云的远程库上呢？</p>
+<p>首先，我们在码云上创建一个新的项目，选择右上角用户头像 -&gt; 菜单“控制面板”，然后点击“创建项目”：</p>
+<p><img alt="gitee-new-repo" src="20180411_github" title="和 码云一起使用_03.jpg" /></p>
+<p>项目名称最好与本地库保持一致：</p>
+<p>然后，我们在本地库上使用命令<code>git remote add</code>把它和码云的远程库关联：</p>
+<pre><code class="git">git remote add origin git@gitee.com:liaoxuefeng/learngit.git
+</code></pre>
+
+<p>之后，就可以正常地用<code>git push</code>和<code>git pull</code>推送了！</p>
+<p>如果在使用命令<code>git remote add</code>时报错：</p>
+<pre><code>git remote add origin git@gitee.com:liaoxuefeng/learngit.git
+fatal: remote origin already exists.
+</code></pre>
+
+<p>这说明本地库已经关联了一个名叫<code>origin</code>的远程库，此时，可以先用<code>git remote -v</code>查看远程库信息：</p>
+<pre><code>git remote -v
+origin    git@github.com:michaelliao/learngit.git (fetch)
+origin    git@github.com:michaelliao/learngit.git (push)
+</code></pre>
+
+<p>可以看到，本地库已经关联了<code>origin</code>的远程库，并且，该远程库指向GitHub。</p>
+<p>我们可以删除已有的GitHub远程库：</p>
+<pre><code>git remote rm origin
+</code></pre>
+
+<p>再关联码云的远程库（注意路径中需要填写正确的用户名）：</p>
+<pre><code>git remote add origin git@gitee.com:liaoxuefeng/learngit.git
+</code></pre>
+
+<p>此时，我们再查看远程库信息：</p>
+<pre><code>git remote -v
+origin    git@gitee.com:liaoxuefeng/learngit.git (fetch)
+origin    git@gitee.com:liaoxuefeng/learngit.git (push)
+</code></pre>
+
+<p>现在可以看到，origin已经被关联到码云的远程库了。通过<code>git push</code>命令就可以把本地库推送到Gitee上。</p>
+<hr />
+<p>有的小伙伴又要问了，一个本地库能不能既关联GitHub，又关联码云呢？</p>
+<p>答案是肯定的，因为git本身是分布式版本控制系统，可以同步到另外一个远程库，当然也可以同步到另外两个远程库。</p>
+<p>使用多个远程库时，我们要注意，git给远程库起的默认名称是<code>origin</code>，如果有多个远程库，我们需要用不同的名称来标识不同的远程库。</p>
+<p>仍然以<code>learngit</code>本地库为例，我们先删除已关联的名为<code>origin</code>的远程库：</p>
+<pre><code>git remote rm origin
+</code></pre>
+
+<hr />
+<p>【<strong>把 origin 替换掉即可</strong>】</p>
+<p>后，先关联GitHub的远程库：</p>
+<pre><code class="shell">git remote add github git@github.com:michaelliao/learngit.git
+</code></pre>
+
+<p>注意，<strong>远程库的名称叫<code>github</code>，不叫<code>origin</code>了。</strong></p>
+<p>接着，再关联码云的远程库：</p>
+<pre><code class="shell">git remote add gitee git@gitee.com:liaoxuefeng/learngit.git
+</code></pre>
+
+<p><strong>同样注意，远程库的名称叫<code>gitee</code>，不叫<code>origin</code>。</strong></p>
+<p>现在，我们用<code>git remote -v</code>查看远程库信息，可以看到两个远程库：</p>
+<pre><code class="shell">git remote -v
+gitee    git@gitee.com:liaoxuefeng/learngit.git (fetch)
+gitee    git@gitee.com:liaoxuefeng/learngit.git (push)
+github    git@github.com:michaelliao/learngit.git (fetch)
+github    git@github.com:michaelliao/learngit.git (push)
+</code></pre>
+
+<p><strong>如果要推送到GitHub，使用命令：</strong></p>
+<pre><code>git push github master
+</code></pre>
+
+<p><strong>如果要推送到码云，使用命令：</strong></p>
+<pre><code>git push gitee master
+</code></pre>
+
+<p>这样一来，我们的本地库就可以同时与多个远程库互相同步：</p>
+<pre><code>┌─────────┐ ┌─────────┐
+│ GitHub  │ │  Gitee  │
+└─────────┘ └─────────┘
+	 ▲           ▲
+	 └─────┬─────┘
+		   │
+	┌─────────────┐
+	│ Local Repo  │
+	└─────────────┘
+
+</code></pre>
+
+<p>码云也同样提供了Pull request功能，可以让其他小伙伴参与到开源项目中来。你可以通过Fork我的仓库：<a href="https://gitee.com/liaoxuefeng/learngit">https://gitee.com/liaoxuefeng/learngit</a>，创建一个<code>your-gitee-id.txt</code>的文本文件，写点自己学习Git的心得，然后推送一个pull request给我，这个仓库会在码云和GitHub做双向同步。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>deque 双端队列</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="deque">deque 双端队列</h1>
+<pre><code class="cpp">1-  d.push_back( 10 ); 在后面添加
+	d.push_front( 5 );  在前面添加
+
+	d.front(); d.pop_front();       取出前面的并弹出
+	d.back(); d.pop_back();         取出后面的并弹出
+
+	 d.erase(d.begin() + 2);        删除d[2]
+
+2- 空间可动态增加。队列容积增加不会发生元素的拷贝和重新填充。
+</code></pre>
+
+<h2 id="1-">1- 函数说明</h2>
+<p>在头文件<code>&lt;deque&gt;</code>中。</p>
+<p>函数模板</p>
+<pre><code>template &lt;class T，class Alloc = allocator &lt;T&gt;&gt; class deque;
+</code></pre>
+
+<ul>
+<li>
+<p>双端队列，可以在两端（前端或后端）扩展或收缩。</p>
+</li>
+<li>
+<p>允许通过随机访问迭代器直接访问各个元素，并根据需要通过扩展和收缩容器来自动处理存储。</p>
+</li>
+<li>提供了类似于<a href="http://www.cplusplus.com/vector">矢量</a>的功能，但是在序列的开始部分也有效地插入和删除元素，而不仅仅是在其末尾。但是，与<a href="http://www.cplusplus.com/vector">矢量</a>不同，<a href="http://www.cplusplus.com/deque">deques</a>不保证将其所有元素存储在连续的存储位置：<code>deque</code>通过偏移指向其他元素的指针访问元素会导致<em>未定义的行为</em>。</li>
+</ul>
+<p>Vector和deques提供了一个非常相似的接口，可用于类似的目的，但内部工作方式完全不同：虽然向量使用单个数组，偶尔需要重新分配以增长，但deque的元素可以分散在不同的块中的容器，容器在内部保存必要的信息以提供对其任何元素的持续时间和统一的顺序接口（通过迭代器）的直接访问。因此，deques在内部比<a href="http://www.cplusplus.com/vector">vector</a>更加复杂一些，但是这使得它们可以在某些情况下更有效地增长，特别是在重新分配变得更加昂贵的很长序列的情况下。</p>
+<p>对于涉及频繁插入或移除开始或结束位置以外的元素的操作，deques表现得更差, 相比于 consistent iterators and references than <a href="http://www.cplusplus.com/list">lists</a> and <a href="http://www.cplusplus.com/forward_list">forward lists</a>.</p>
+<p>特点：</p>
+<p>1- 内部有序</p>
+<p>2- 允许以动态数组实现，允许直接访问序列中的任何元素，并在序列的开始或结束处提供相对较快的元素添加/删除。</p>
+<p>3- 用 allocator object to dynamically handle its storage needs. </p>
+<p>C++队列queue模板类的定义在<queue>头文件中,queue 模板类需要两个模板参数，一个是元素类型，一个容器类型，元素类型是必要的，容器类型是可选的，默认为deque 类型。</p>
+<p>C++队列Queue是一种容器适配器，它给予程序员一种先进先出(FIFO)的数据结构。</p>
+<h2 id="2-">2- 成员函数</h2>
+<p>deque容器为一个给定类型的元素进行<strong>线性处理，像向量一样，它能够快速地随机访问任一个元素，并且能够高效地插入和删除容器的尾部元素。但它又与vector不同，deque支持高效插入和删除容器的头部元素，因此也叫做双端队列。</strong>deque类常用的函数如下。</p>
+<p>(1)    构造函数</p>
+<p>deque():创建一个空deque</p>
+<p>deque(int nSize):创建一个deque,元素个数为nSize</p>
+<p>deque(int nSize,const T&amp; t):创建一个deque,元素个数为nSize,且值均为t</p>
+<p>deque(const deque &amp;):复制构造函数</p>
+<p>(2)    增加函数</p>
+<p><strong>void push_front(const T&amp; x):双端队列头部增加一个元素X</strong></p>
+<p><strong>void push_back(const T&amp; x):双端队列尾部增加一个元素x</strong></p>
+<p><strong>iterator insert(iterator it,const T&amp; x):双端队列中某一元素前增加一个元素x</strong></p>
+<p>void insert(iterator it,int n,const T&amp; x):双端队列中<strong>某一元素前增加n个相同的元素x</strong></p>
+<p>void insert(iterator it,const_iterator first,const_iteratorlast):双端队列中<strong>某一元素前插入另一个相同类型向量的[forst,last)间的数据</strong></p>
+<p>(3)    删除函数</p>
+<p><strong>Iterator erase(iterator it):删除双端队列中的某一个元素</strong></p>
+<p>Iterator erase(iterator first,iterator last):<strong>删除双端队列中[first,last）中的元素</strong></p>
+<p><strong>void pop_front():删除双端队列中最前一个元素</strong></p>
+<p><strong>void pop_back():删除双端队列中最后一个元素</strong></p>
+<p><strong>void clear():清空双端队列中最后一个元素</strong></p>
+<p>(4)    遍历函数</p>
+<p>reference at(int pos):返回pos位置元素的引用</p>
+<p><strong>reference front():返回手元素的引用</strong></p>
+<p><strong>reference back():返回尾元素的引用</strong></p>
+<p>iterator begin():返回向量头指针，指向第一个元素</p>
+<p>iterator end():返回指向向量中最后一个元素下一个元素的指针（不包含在向量中）</p>
+<p>reverse_iterator rbegin():反向迭代器，指向最后一个元素</p>
+<p>reverse_iterator rend():反向迭代器，指向第一个元素的前一个元素</p>
+<p>(5)    判断函数</p>
+<p><strong>bool empty() const:向量是否为空，若true,则向量中无元素</strong></p>
+<p>(6)    大小函数</p>
+<p><strong>Int size() const:返回向量中元素的个数</strong></p>
+<p>int max_size() const:返回最大可允许的双端对了元素数量值</p>
+<p>(7)    其他函数</p>
+<p><strong>void swap(deque&amp;):交换两个同类型向量的数据</strong></p>
+<p><strong>void assign(int n,const T&amp; x):向量中第n个元素的值设置为x</strong></p>
+<pre><code class="cpp">// deque.cpp : 定义控制台应用程序的入口点。
+//
+
+#include &lt;bits/stdc++.h&gt;
+//#include&lt;iostream&gt;
+//#include&lt;deque&gt;
+
+using namespace std;
+int main(){
+	deque&lt;int&gt; d;
+	d.push_back( 10 );
+	d.push_back(20);
+	d.push_back(30);
+	cout&lt;&lt;&quot;原始双端队列：&quot;&lt;&lt;endl;
+	for(int i = 0; i &lt; d.size(); i++)
+	{
+		cout&lt;&lt;d.at(i)&lt;&lt;&quot;\t&quot;;        // 10   20  30
+	}
+	cout&lt;&lt;endl;
+	d.push_front(5);
+	d.push_front(3);
+	d.push_front(1);
+
+	cout&lt;&lt;&quot;after push_front(5.3.1):&quot;&lt;&lt;endl;
+	for(int i = 0;i &lt; d.size();i++)
+	{
+		cout&lt;&lt;d.at(i)&lt;&lt;&quot;\t&quot;;        // 1    3   5   10  20  30
+	}
+	cout&lt;&lt;endl;
+
+	/// 弹出前两个元素
+	d.pop_front();
+	d.pop_front();
+	cout&lt;&lt;&quot;after pop_front() two times:&quot;&lt;&lt;endl;
+	for(int i = 0;i &lt; d.size();i++)
+	{
+		cout&lt;&lt;d.at(i)&lt;&lt;&quot;\t&quot;;        // 5    10  20  30
+	}
+	cout&lt;&lt;endl;
+
+	d.erase(d.begin() + 2);
+	for( int val: d )
+		cout &lt;&lt; val &lt;&lt; &quot;\t&quot; ;       // 5    10  30
+
+	cout&lt;&lt;endl;
+	return 0;
+}
+</code></pre>
+
+<p>deque与vector内存分配比较：</p>
+<pre><code class="cpp">// deque.cpp : 定义控制台应用程序的入口点。
+//
+
+
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main(){
+	vector&lt;int&gt;v(2);
+	v[0]=10;
+	int *p = &amp;v[0];
+	cout&lt;&lt;&quot;vector第一个元素迭代指针*p=&quot;&lt;&lt;*p&lt;&lt;endl;
+	v.push_back(20);
+	cout&lt;&lt;&quot;vector容量变化后原vector第1个元素迭代指针*p=&quot;&lt;&lt;*p&lt;&lt;endl;
+
+	deque&lt;int&gt; d(2);
+	d[0]=10;
+	int *q = &amp;d[0];
+	cout&lt;&lt;&quot;deque第一个元素迭代指针*q=&quot;&lt;&lt;*q&lt;&lt;endl;
+	d.push_back(20);
+	cout&lt;&lt;&quot;deque容量变化后第一个元素迭代器指针*q=&quot;&lt;&lt;*q&lt;&lt;endl;
+}
+</code></pre>
+
+<p>结果为：</p>
+<pre><code class="cpp">vector第一个元素迭代指针*p=10
+vector容量变化后原vector第1个元素迭代指针*p=10
+deque第一个元素迭代指针*q=10
+deque容量变化后第一个元素迭代器指针*q=10
+</code></pre>
+
+<p>下面这个应该是以前的内容，发现现在的编译器做了优化，指针并没有发生变化。移动语义赋值？？？</p>
+<blockquote>
+<p>该段程序的功能是：deque、vector初始化后大小为2，第一个元素都为10，当通过push_back函数分别给两个容器增加一个元素后，从结果发现原先保持的指针元素值对vector容器前后发生了变化，而对deque容器前后没有发生变化。原因为，在建立vector容器时，一般来说伴随这建立空间-&gt;填充数据-&gt;重建更大空间-&gt;复制原空间数据-&gt;删除原空间-&gt;添加新数据，如此反复，保证vector始终是一块独立的连续内存空间；在建立deque容器时，一般便随着建立空间-&gt;建立数据-&gt;建立新空间-&gt;填充新数据，如此反复，没有原空间数据的复制和删除过程，是由多个连续的内存空间组成的。</p>
+</blockquote>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

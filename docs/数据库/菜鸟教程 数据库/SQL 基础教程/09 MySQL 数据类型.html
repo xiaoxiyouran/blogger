@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>09 MySQL 数据类型</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="09-mysql">09 MySQL 数据类型</h1>
+<p>MySQL中定义数据字段的类型对你数据库的优化是非常重要的。</p>
+<p>MySQL支持多种类型，大致可以分为三类：<strong>数值、日期/时间和字符串(字符)</strong>类型。</p>
+<hr />
+<h2 id="_1">数值类型</h2>
+<p>MySQL支持所有标准SQL数值数据类型。</p>
+<p>这些类型包括严格数值数据类型(INTEGER、SMALLINT、DECIMAL和NUMERIC)，以及近似数值数据类型(FLOAT、REAL和DOUBLE PRECISION)。</p>
+<p>关键字INT是INTEGER的同义词，关键字DEC是DECIMAL的同义词。</p>
+<p>BIT数据类型保存位字段值，并且支持MyISAM、MEMORY、InnoDB和BDB表。</p>
+<p>作为SQL标准的扩展，MySQL<strong>也支持整数类型TINYINT、MEDIUMINT和BIGINT</strong>。下面的表显示了需要的每个整数类型的存储和范围。</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>类型</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>大小</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>范围（有符号）</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>范围（无符号）</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>TINYINT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-128，127)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(0，255)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>小整数值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>SMALLINT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-32 768，32 767)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(0，65 535)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>大整数值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MEDIUMINT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-8 388 608，8 388 607)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(0，16 777 215)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>大整数值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>INT或INTEGER</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-2 147 483 648，2 147 483 647)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(0，4 294 967 295)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>大整数值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>BIGINT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-9 233 372 036 854 775 808，9 223 372 036 854 775 807)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(0，18 446 744 073 709 551 615)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>极大整数值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>FLOAT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>单精度浮点数值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>DOUBLE</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>双精度浮点数值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>DEC 或DECIMAL</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>对DECIMAL(M,D) ，如果M&gt;D，为M+2否则为D+2</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>依赖于M和D的值</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>依赖于M和D的值</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>小数值</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">日期和时间类型</h2>
+<p>表示时间值的日期和时间类型为DATETIME、DATE、TIMESTAMP、TIME和YEAR。</p>
+<p>每个时间类型有一个有效值范围和一个"零"值，当指定不合法的MySQL不能表示的值时使用"零"值。</p>
+<p><strong>TIMESTAMP类型有专有的自动更新特性</strong>，将在后面描述。</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>类型</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>大小(字节)</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>范围</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>格式</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>DATE</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1000-01-01/9999-12-31</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>YYYY-MM-DD</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>日期值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>TIME</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>'-838:59:59'/'838:59:59'</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>HH:MM:SS</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>时间值或持续时间</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>YEAR</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1901/2155</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>YYYY</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>年份值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>DATETIME</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1000-01-01 00:00:00/9999-12-31 23:59:59</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>YYYY-MM-DD HH:MM:SS</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>混合日期和时间值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>TIMESTAMP</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1970-01-01 00:00:00/2038结束时间是第 <strong>2147483647</strong> 秒，北京时间 <strong>2038-1-19 11:14:07</strong>，格林尼治时间 2038年1月19日 凌晨 03:14:07</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>YYYYMMDD HHMMSS</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>混合日期和时间值，时间戳</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">字符串类型</h2>
+<p>字符串类型指CHAR、VARCHAR、BINARY、VARBINARY、BLOB、TEXT、ENUM和SET。该节描述了这些类型如何工作以及如何在查询中使用这些类型。</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>类型</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>大小</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>CHAR</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-255字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>定长字符串</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>VARCHAR</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-65535 字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>变长字符串</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>TINYBLOB</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-255字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>不超过 255 个字符的二进制字符串</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>TINYTEXT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-255字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>短文本字符串</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>BLOB</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-65 535字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>二进制形式的长文本数据</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>TEXT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-65 535字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>长文本数据</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MEDIUMBLOB</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-16 777 215字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>二进制形式的中等长度文本数据</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MEDIUMTEXT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-16 777 215字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>中等长度文本数据</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>LONGBLOB</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-4 294 967 295字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>二进制形式的极大文本数据</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>LONGTEXT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0-4 294 967 295字节</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>极大文本数据</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CHAR 和 VARCHAR 类型类似，但它们保存和检索的方式不同。它们的最大长度和是否尾部空格被保留等方面也不同。在存储或检索过程中不进行大小写转换。</strong></p>
+<p>BINARY 和 VARBINARY 类似于 CHAR 和 VARCHAR，不同的是它们包含<strong>二进制字符串</strong>而不要非二进制字符串。也就是说，它们包含<strong>字节字符串</strong>而不是字符字符串。这说明它们<strong>没有字符集，并且排序和比较基于列值字节的数值值。</strong></p>
+<p>BLOB 是一个二进制大对象，可以容纳可变数量的数据。有 <strong>4 种 BLOB 类型：TINYBLOB、BLOB、MEDIUMBLOB 和 LONGBLOB。</strong>它们区别在于可容纳存储范围不同。</p>
+<p>有 <strong>4 种 TEXT 类型：TINYTEXT、TEXT、MEDIUMTEXT 和 LONGTEXT</strong>。对应的这 4 种 BLOB 类型，可存储的最大长度不同，可根据实际情况选择。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

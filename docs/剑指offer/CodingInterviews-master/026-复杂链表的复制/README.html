@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<p><a href="http://www.nowcoder.com/ta/coding-interviews?page=">牛客剑指Offer题目列表</a></p>
+<p><a href="http://ac.jobdu.com/hhtproblems.php">九度OJ剑指Offer题目列表</a></p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>题目</th>
+<th align="center">题解</th>
+<th align="right">代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&amp;tqId=11154&amp;rp=1&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">二维数组中的查找</a></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><mark></mark>===</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>&gt;牛客OJ：<a href="http://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba?tpId=13&amp;tqId=11178&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">复杂链表的复制</a></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>&gt;</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>&gt;九度OJ：http://ac.jobdu.com/problem.php?pid=1524</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>&gt;</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>&gt;GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/026-复杂链表的复制">026-复杂链表的复制</a></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>&gt;</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>&gt;CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51227939">剑指Offer--026-复杂链表的复制</a></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba?tpId=13&amp;tqId=11178&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">复杂链表的复制</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1524">1524-复杂链表的复制</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51227939">剑指Offer--026-复杂链表的复制</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点）。</p>
+<p>要求你编写函数复制这个复杂链表</p>
+</blockquote>
+<p><font color=#00ffff>复杂链表如下图所示</font></p>
+<p><img alt="复杂链表" src="1.jpg" />
+<font color=#00ffff>复制完后的复杂链表如下图所示</font></p>
+<p><img alt="复杂链表的复制" src="4.jpg" /></p>
+<h1 id="_3">暴力方法</h1>
+<hr />
+<p>最简单暴力的方法：</p>
+<p>很明显，链表分成两个部分，一个是下一个节点组成的链表，另一个特殊指针的链接。</p>
+<p>那么我们的复制操作可以分成两个部分
+<em>    复制正常的链表指针域
+这个操作比较简单，因为链表的下一个指针为形成一个串的，我们从头开始即可遍历所有的结点
+</em>    复制随机的指针域
+这个操作有点麻烦，由于指针是随机指向的，因此无法通过一趟遍历来实现，这里我们采用暴力的方式，
+由于指针的位置是一一对应的，我们查找到原来的随机指针域在新链表中对应位置（$O(N)$），而我们遍历一遍将所有的随机指针都复制则需要$O(N^2)$</p>
+<p>代码如下</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	///  找到newHead指向的新链表中与原来链表oldHead的randNode节点对应的那个节点
+	///
+	///  复制的链表newHead与原链表oldHead存在一一对应的关系
+	///  因此使用两个指针(一个指向原来链表一个指向新链表)同步移动
+	///  即可找到newHead指向的新链表中与原来链表oldHead的randNode节点对应的那个节点
+	RandomListNode* FindInNew(RandomListNode *oldHead, RandomListNode *newHead, RandomListNode *randNode)
+	{
+		RandomListNode *currNode = oldHead;
+		RandomListNode *newNode = newHead;
+
+		while(currNode != NULL &amp;&amp; newNode != NULL)
+		{
+			if(randNode == currNode)
+			{
+				return newNode;
+			}
+			currNode = currNode-&gt;next;
+			newNode = newNode-&gt;next;
+		}
+
+		return NULL;
+	}
+
+	///  复制操作
+	RandomListNode* Clone(RandomListNode* pHead)
+	{
+		if(pHead == NULL)
+		{
+			return NULL;
+		}
+
+		RandomListNode *currNode = pHead;
+		RandomListNode *newHead = NULL, *preNode = NULL, *newNode = NULL;
+
+		///  首先复制原链表的普通指针域, 一次遍历即可完成
+		while(currNode != NULL)
+		{
+			newNode = new RandomListNode(currNode-&gt;label);
+			currNode = currNode-&gt;next;
+
+			if(preNode == NULL)
+			{
+				newHead = newNode;
+			}
+			else
+			{
+				preNode-&gt;next = newNode;
+			}
+
+			preNode = newNode;
+		}
+
+		//  接着复制随机指针域, 需要两次遍历
+		currNode = pHead;
+		newNode = newHead;
+		while(currNode != NULL &amp;&amp; newNode != NULL)
+		{
+			RandomListNode *randNode = currNode-&gt;random;                        ///  随机指针域randNode
+			RandomListNode *newRandNode = FindInNew(pHead, newHead, randNode);  ///  查找到新链表中与randNode对应的指针域
+			newNode-&gt;random = newRandNode;
+
+			///  链表同步移动
+			currNode = currNode-&gt;next;
+			newNode = newNode-&gt;next;
+		}
+
+		return newHead;
+	}
+
+};
+</code></pre>
+
+<h1 id="map">用map来存储新旧链表的节点对应关系（空间换取时间（）</h1>
+<hr />
+<blockquote>
+<p>其实分析一下子就知道我们的暴力解法的性能缺陷在哪？</p>
+</blockquote>
+<p>我们每次复制随机指针的时候，找到newHead指向的新链表中与原来链表oldHead的randNode节点对应的那个节点时，需要同步遍历两个链表，这个过程是$O(n)$的</p>
+<blockquote>
+<p>有没有什么方法把这个动作的时间复杂度降低到$O(1)$呢？</p>
+</blockquote>
+<p>由于新旧链表中的节点是一一对应的，那么我们用空间换时间的方法，用一个map或者hashtable来存储这个映射关系</p>
+<pre><code class="cpp">
+class Solution
+{
+public:
+
+	///  复制操作
+	RandomListNode* Clone(RandomListNode* pHead)
+	{
+		if(pHead == NULL)
+		{
+			return NULL;
+		}
+		map&lt;RandomListNode *, RandomListNode *&gt; nodeMap;
+
+		RandomListNode *currNode = pHead;
+		RandomListNode *newHead = NULL, *preNode = NULL, *newNode = NULL;
+
+		///  首先复制原链表的普通指针域, 一次遍历即可完成
+		while(currNode != NULL)
+		{
+			newNode = new RandomListNode(currNode-&gt;label);
+			nodeMap[currNode] = newNode;
+			currNode = currNode-&gt;next;
+
+			if(preNode == NULL)
+			{
+				newHead = newNode;
+			}
+			else
+			{
+				preNode-&gt;next = newNode;
+			}
+
+			preNode = newNode;
+		}
+
+		//  接着复制随机指针域, 需要两次遍历
+		currNode = pHead;
+		newNode = newHead;
+		while(currNode != NULL &amp;&amp; newNode != NULL)
+		{
+			RandomListNode *randNode = currNode-&gt;random;                        ///  随机指针域randNode
+			RandomListNode *newRandNode = nodeMap[randNode];
+			newNode-&gt;random = newRandNode;
+
+			///  链表同步移动
+			currNode = currNode-&gt;next;
+			newNode = newNode-&gt;next;
+		}
+
+		return newHead;
+	}
+
+};
+</code></pre>
+
+<h1 id="next">用next指针域关联新旧结点</h1>
+<hr />
+<p>上面那种方法，我们用map来存储新旧链表中结点的对应关系，对于右N个节点的链表，我么就用了一个大小为$O(N)$的map的空间消耗将时间复杂度从$O(N^2)$降到了$O(N)$
+那么有没有什么方法，能够将空间复杂度也降下来，在使用不用辅助空间的情况下实现$O(N)$的时间效率</p>
+<p>其实我们需要的就只是能够建立新节点与原节点之前的对应关系就可以了, 链表中的顺序非随机访问方式，能够很简单的通过接单的nex指针t域查找下一个节点，那么我们将新节点直接插入到原结点的后面，这样可以很方便的通过原来节点找到新节点，</p>
+<p>因此我们算法的流程如下：
+1.    遍历一遍原始链表，复制结点N对应的N'，将其插入到结点N的后面，如下图所示</p>
+<p><img alt="链接" src="2.jpg" /></p>
+<ol>
+<li>确定每个随机指针的指向，只需遍历一遍链表即可确定每个结点的随机指针的指向，得到如下图结构</li>
+</ol>
+<p><img alt="链接" src="3.jpg" /></p>
+<ol>
+<li>再次遍历一遍，将原始链表和复制链表分开，奇数为原始链表，偶数为复制链表，得到如下图型</li>
+</ol>
+<p><img alt="链接" src="4.jpg" /></p>
+<pre><code class="cpp">class Solution
+{
+public:
+
+	///  复制操作
+	RandomListNode* Clone(RandomListNode* pHead)
+	{
+		if(pHead == NULL)
+		{
+			return NULL;
+		}
+
+		RandomListNode *currNode = pHead;
+		RandomListNode *newHead = NULL, *preNode = NULL, *newNode = NULL;
+
+		///  首先复制原链表的普通指针域, 一次遍历即可完成
+		///  将新的节点链接杂原来节点的末尾
+		while(currNode != NULL)
+		{
+			if((newNode = new RandomListNode(currNode-&gt;label)) == NULL)
+			{
+				perror(&quot;new error : &quot;);
+				exit(-1);
+			}
+
+
+			/// 将新的节点newNode连接在currNode的后面
+			newNode-&gt;next = currNode-&gt;next;
+			currNode-&gt;next = newNode;
+
+			///  指向指向下一个节点
+			currNode = newNode-&gt;next;
+		}
+
+		///  接着复制随机指针域
+		///  原来节点的下一个位置就是其对应的新节点
+		currNode = pHead;
+		newNode = pHead-&gt;next;
+		while(currNode != NULL)
+		{
+			RandomListNode *randNode = currNode-&gt;random;                        ///  随机指针域randNode
+			RandomListNode *newNode = currNode-&gt;next;
+			if(randNode != NULL)
+			{
+
+				newNode-&gt;random = randNode-&gt;next;
+
+			}
+			else
+			{
+				newNode-&gt;random = NULL;
+			}
+			///  链表同步移动
+			currNode = newNode-&gt;next;
+		}
+
+		/// 将链接在一起的新旧两个链表拆分开
+		/// 脱链，更新各链表的next指针
+		currNode = pHead;
+		newNode = newHead = pHead-&gt;next;
+		while(currNode != NULL)
+		{
+			/// curr  new new-&gt;next
+			currNode-&gt;next = newNode-&gt;next;
+			debug &lt;&lt;currNode-&gt;label &lt;&lt;&quot;, &quot; &lt;&lt;newNode-&gt;label &lt;&lt;endl;
+			if(newNode-&gt;next != NULL)
+			{
+				newNode-&gt;next = newNode-&gt;next-&gt;next;
+			}
+			else
+			{
+				newNode-&gt;next = NULL;
+			}
+
+			currNode = currNode-&gt;next;
+			newNode = newNode-&gt;next;
+		}
+
+		return newHead;
+	}
+
+};
+</code></pre>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>aa1565d85a362288728f966d99a87c21309698ad</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

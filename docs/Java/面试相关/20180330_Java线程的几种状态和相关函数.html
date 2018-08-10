@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180330_Java线程的几种状态和相关函数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180330_java">20180330_Java线程的几种状态和相关函数</h1>
+<pre><code class="cpp">1- 线程的4种状态：
+	产生(New)，尚未启动，start() 函数之前
+	可执行（Runnable）,start()之后。 可能正在运行，也可能正处于线程池中等待排程器启动它
+	死亡（Dead），一个线程run() 执行完后，就进入该死亡状态
+	 停滞（Blocked），wait()函数之后就处于停滞状态。排程器不会调用它，只有当两次对该线程调用notify或notifyAll后它才能两次回到可执行状态     
+
+2- wait(), notify() 和 notifyAll() 三大函数
+</code></pre>
+
+<h2 id="1-">1-  线程的几种状态</h2>
+<p>线程有四种状态，任何一个线程肯定处于这四种状态中的一种：</p>
+<p>1) <strong>产生（New）</strong>：线程对象已经产生，但尚未被启动，所以无法执行。如通过new产生了一个线程对象后没对它调用start()函数之前。</p>
+<p>2) <strong>可执行（Runnable）</strong>：<strong>每个支持多线程的系统都有一个排程器，排程器会从线程池中选择一个线程并启动它</strong>。当一个线程处于可执行状态时，表示它可能正处于线程池中等待排程器启动它；也可能它已正在执行。如执行了一个线程对象的start()方法后，线程就处于可执行状态，但显而易见的是此时线程不一定正在执行中。</p>
+<p>3) <strong>死亡（Dead）</strong>：当一个线程正常结束，它便处于死亡状态。如一个线程的run()函数执行完毕后线程就进入死亡状态。</p>
+<p>4) <strong>停滞（Blocked）</strong>：当一个线程处于停滞状态时，系统排程器就会忽略它，不对它进行排程。当处于停滞状态的线程重新回到可执行状态时，它有可能重新执行。如通过对一个线程调用wait()函数后，线程就进入停滞状态，只有<strong>当两次对该线程调用notify或notifyAll后它才能两次回到可执行状态</strong>。</p>
+<h2 id="2-class-object">2- class　Object下常用的线程函数</h2>
+<p>wait()、notify()和notifyAll()这三个函数由java.lang.Object类提供，用于协调多个线程对共享数据的存取。</p>
+<h3 id="21-waitnotifynotifyall">2.1- wait()、notify()和notifyAll()</h3>
+<p>1) wait()函数有两种形式：第一种形式接受一个毫秒值，用于在指定时间长度内暂停线程，使线程进入停滞状态。第二种形式为不带参数，代表waite()在notify()或notifyAll()之前会持续停滞。</p>
+<p>2) 当对一个对象执行notify()时，<strong>会从线程等待池中移走该任意一个线程，并把它放到锁标志等待池中；当对一个对象执行notifyAll()时，会从线程等待池中移走所有该对象的所有线程，并把它们放到锁标志等待池中。</strong></p>
+<p>3) 当调用wait()后，线程会<strong>释放掉它所占有的“锁标志”，从而使线程所在对象中的其它synchronized数据可被别的线程使用。</strong></p>
+<p>例17：</p>
+<p>下面，我们将对例11中的例子进行修改</p>
+<pre><code class="java">class TestThreadMethod extends Thread{
+	public static int shareVar = 0;
+	public TestThreadMethod(String name){
+	super(name);
+	}
+
+	public synchronized void run(){
+		if(shareVar==0){
+			for(int i=0; i&lt;10; i++){
+				shareVar++;
+				if(shareVar==5){
+					try{
+						this.wait();　//（4）
+					}
+					catch(InterruptedException e){}
+
+				}
+
+			}
+
+		}
+
+		if(shareVar!=0){
+			System.out.print(Thread.currentThread().getName());
+			System.out.println(&quot; shareVar = &quot; + shareVar);
+			this.notify();　//（5）
+		}
+
+	}
+
+}
+
+public class TestThread{
+	public static void main(String[] args){
+	TestThreadMethod t1 = new TestThreadMethod(&quot;t1&quot;);
+	TestThreadMethod t2 = new TestThreadMethod(&quot;t2&quot;);
+	t1.start();　//（1）
+	//t1.start();　（2）
+	t2.start();　//（3）
+	}
+}
+</code></pre>
+
+<p>运行结果为：</p>
+<pre><code class="java">t2 shareVar = 5
+</code></pre>
+
+<p>因为t1和t2是两个不同对象，所以线程t2调用代码（5）不能唤起线程t1。如果去掉代码（2）的注释，并注释掉代码（3），结果为：</p>
+<pre><code class="java">t1 shareVar = 5
+t1 shareVar = 10
+</code></pre>
+
+<p>这是因为，当代码（1）的线程执行到代码（4）时，它进入停滞状态，并释放对象的锁状态。接着，代码（2）的线程执行run()，由于此时 shareVar值为5，所以执行打印语句并调用代码（5）使代码（1）的线程进入可执行状态，然后代码（2）的线程结束。当代码（1）的线程重新执行后，它接着执行for()循环一直到shareVar=10，然后打印shareVar。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

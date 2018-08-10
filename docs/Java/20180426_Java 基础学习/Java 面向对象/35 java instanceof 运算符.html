@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>35 java instanceof 运算符</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="35-java-instanceof">35 java instanceof 运算符</h1>
+<p>java <code>instanceof</code>运算符用于测试<strong>指定对象是否是指定类型(类或子类或接口)的实例</strong>。</p>
+<p>java中的<code>instanceof</code>也称为类型比较运算符，因为它将类型与实例进行比较。 它返回<code>true</code>或<code>false</code>。 如果<strong>对任何具有<code>null</code>值的变量应用<code>instanceof</code>运算符，则返回false</strong>。</p>
+<p><strong>java instanceof的简单示例</strong></p>
+<p>下面来看看实例运算符的简单示例，它测试当前类。</p>
+<pre><code class="Java">class Simple1 {
+	public static void main(String args[]) {
+		Simple1 s = new Simple1();
+		System.out.println(s instanceof Simple1);// true
+	}
+}
+</code></pre>
+
+<p>执行上面试代码，得到以下结果 -</p>
+<pre><code class="Shell">true
+</code></pre>
+
+<p>子类类型的对象也是父类的类型。 例如，如果<code>Dog</code>扩展了<code>Animal</code>，那么<code>Dog</code>的对象可以通过<code>Dog</code>或<code>Animal</code>类来引用。</p>
+<p><strong>java instanceof运算符的另一个例子</strong></p>
+<pre><code class="Java">class Animal {
+}
+
+class Dog1 extends Animal {// Dog inherits Animal
+
+	public static void main(String args[]) {
+		Dog1 d = new Dog1();
+		System.out.println(d instanceof Animal);// true
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="Java">true
+</code></pre>
+
+<p><strong>instanceof测试null值的变量示例</strong></p>
+<p>如果我们对具有<code>null</code>值的变量应用<code>instanceof</code>运算符，则返回<code>false</code>。来看看下面给出的例子，将<code>instanceof</code>运算符应用于具有<code>null</code>值的变量。</p>
+<pre><code class="Java">class Dog2 {
+	public static void main(String args[]) {
+		Dog2 d = null;
+		System.out.println(d instanceof Dog2);// false
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="Java">false
+</code></pre>
+
+<p><strong>使用java instanceof运算符的向下转换</strong></p>
+<p>当子类型引用父类的对象时，它被称为向下转换(downcasting)。 如果直接执行它，编译器会出现编译错误。 如果通过类型转换来执行，在运行时会抛出：<code>ClassCastException</code> 。 但是如果使用<code>instanceof</code>运算符，可以进行向下转换。</p>
+<pre><code class="Java">Dog d=new Animal();//Compilation error
+</code></pre>
+
+<p>如果通过类型转换执行向下转换，则在运行时抛出：<code>ClassCastException</code>。</p>
+<pre><code class="Java">Dog d=(Dog)new Animal();  
+//Compiles successfully but ClassCastException is thrown at runtime
+</code></pre>
+
+<p><strong>使用instanceof进行向下转换</strong></p>
+<p>现在看看下面这个例子，通过<code>instanceof</code>运算符进行向下转换。</p>
+<pre><code class="Java">class Animal {
+}
+
+class Dog3 extends Animal {
+	static void method(Animal a) {
+		if (a instanceof Dog3) {
+			Dog3 d = (Dog3) a;// downcasting
+			System.out.println(&quot;ok downcasting performed&quot;);
+		}
+	}
+
+	public static void main(String[] args) {
+		Animal a = new Dog3();
+		Dog3.method(a);
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="Java">ok downcasting performed
+</code></pre>
+
+<p><strong>向下转换不使用instanceof</strong></p>
+<p>也可以在不使用<code>instanceof</code>运算符的情况下执行下转换，如以下示例代码所示：</p>
+<pre><code class="Java">class Animal {
+}
+
+class Dog4 extends Animal {
+	static void method(Animal a) {
+		Dog4 d = (Dog4) a;// downcasting
+		System.out.println(&quot;ok downcasting performed&quot;);
+	}
+
+	public static void main(String[] args) {
+		Animal a = new Dog4();
+		Dog4.method(a);
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="Java">ok downcasting performed
+</code></pre>
+
+<p>仔细看看，被引用的实际对象是<code>Dog</code>类的对象。 所以如果向下转换它，它是没有问题的。 但是，如果也可以这样写：</p>
+<pre><code class="Java">Animal a=new Animal();  
+Dog.method(a);  
+//Now ClassCastException but not in case of instanceof operator
+</code></pre>
+
+<h2 id="javainstanceof">理解在java中使用instanceof的实例</h2>
+<p>这是一个instanceof的终极示例，通过下面的例子中的代码看看<code>instanceof</code>关键字的真正用法。</p>
+<pre><code class="Java">interface Printable {
+}
+
+class A implements Printable {
+	public void a() {
+		System.out.println(&quot;a method&quot;);
+	}
+}
+
+class B implements Printable {
+	public void b() {
+		System.out.println(&quot;b method&quot;);
+	}
+}
+
+class Call {
+	void invoke(Printable p) {// upcasting
+		if (p instanceof A) {
+			A a = (A) p;      // Downcasting
+			a.a();
+		}
+		if (p instanceof B) {
+			B b = (B) p;      // Downcasting
+			b.b();
+		}
+
+	}
+}// end of Call class
+
+class Test4 {
+	public static void main(String args[]) {
+		Printable p = new B();
+		Call c = new Call();
+		c.invoke(p);
+	}
+}
+
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="shell">b method
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

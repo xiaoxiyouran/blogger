@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180415 实现读写锁</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180415">20180415 实现读写锁</h1>
+<hr />
+<p>原文链接： http://www.cnblogs.com/myd620/p/6129112.html</p>
+<p>多线程编程中，需要对共享变量进行加锁。但是频繁地加锁，会对程序效率有很大影响。在某些读多写少的场景下，多个线程进行读数据时，如果都加互斥锁，这显然是不必须的。于是读写锁便应运而生。</p>
+<p>读写锁的加锁规则：</p>
+<p>1 如果没有加写锁时，那么多个线程可以同时加读锁；如果有加写锁时，不可以加读锁</p>
+<p>2 不管是加了读锁还是写锁，都不能继续加写锁。</p>
+<p>满足这两个条件，便可以初步实现一个读写锁。我们用<strong>两个锁，一个变量，实现一个简单的读写锁</strong>，代码如下</p>
+<pre><code class="cpp">class rwlock
+{
+public:
+	rwlock(): read_cnt(0)
+	{
+				pthread_mutex_init(&amp;read_mtx,NULL);
+				pthread_mutex_init(&amp;write_mtx,NULL);
+	}
+
+	~ rwlock()
+	{
+				pthread_mutex_destroy(&amp;read_mtx);
+				pthread_mutex_destroy(&amp;write_mtx);
+	}
+
+	void readLock()
+	{
+		pthread_mutex_lock(&amp;read_mtx);
+		if (++read_cnt == 1)
+			pthread_mutex_lock(&amp;write_mtx);
+		pthread_mutex_unlock(&amp;read_mtx);
+	}
+
+	void readUnlock()
+	{
+		pthread_mutex_lock(&amp;read_mtx);
+		if (--read_cnt == 0)
+			pthread_mutex_unlock(&amp;write_mtx);
+		pthread_mutex_unlock(&amp;read_mtx);
+	}
+
+	void writeLock()
+	{
+		pthread_mutex_lock(&amp;write_mtx);
+	}
+
+	void writeUnlock()
+	{
+		pthread_mutex_unlock(&amp;write_mtx);
+	}
+
+private:
+	pthread_mutex_t read_mtx;
+	pthread_mutex_t write_mtx;
+	int read_cnt; // 读锁个数
+};
+</code></pre>
+
+<p>首先，在加读锁时，<strong>判断读者数量，如果为1，说明自己是第一个读者，这时要加写锁。如果没有写者，加锁成功。如果有写者，那么需要等待写锁释放。</strong></p>
+<p>其次，加<strong>写锁时，就是直接锁write_mtx,如果没有其他任何读者或者写者，加锁成功；否则就等待write_mtx被释放。</strong></p>
+<p>这种实现方法简单明了，但是存在一个问题。<strong>当读写锁被读者占有时，这时来了写者需要等待读锁释放，如果又来了读锁却可以加锁成功。这样就可能导致，写锁很难获取，读锁一直无法释放。</strong>实际应用中，我们并不期望如此，因为这有可能导致数据不能及时更新，读取的数据是过期的。很明显，<strong>写锁的优先级应该高于读锁</strong>。那么如何实现这样的读写锁呢？</p>
+<p>那么在读写锁的数据结构中，应该<strong>需要两个变量，来表示在等待的读者和写者的数量</strong>。首先给出读写锁的定义</p>
+<pre><code class="cpp">class rwlock
+{
+public:
+	rwlock();
+	~rwlock();
+	void readlock();
+	void writelock();
+	void unlock();
+	int tryreadlock();
+	int trywritelock();
+
+private:
+	pthread_mutex_t rwmutex;
+	int refcount;   // -1表示有写者，0表示没有加锁，正数表示有多少个读者
+	int readwaiters;
+	int writewaiters;
+	pthread_cond_t readcond;
+	pthread_cond_t writecond;
+};
+</code></pre>
+
+<p>实现如下:</p>
+<p>1.构造函数，负责初始化变量</p>
+<pre><code class="cpp">rwlock::rwlock()
+{
+	refcount     = 0;
+	readwaiters  = 0;
+	writewaiters = 0;
+	pthread_mutex_init(&amp;rwmutex,NULL);
+	pthread_cond_init(&amp;readcond, NULL);
+	pthread_cond_init(&amp;writecond, NULL);
+}
+</code></pre>
+
+<p>2 析构函数，销毁资源</p>
+<pre><code class="cpp">rwlock::~rwlock()
+{
+	refcount     = 0;
+	readwaiters  = 0;
+	writewaiters = 0;
+	pthread_mutex_destroy(&amp;rwmutex);
+	pthread_cond_destroy(&amp;readcond);
+	pthread_cond_destroy(&amp;writecond);
+</code></pre>
+
+<p>3 加读锁</p>
+<pre><code class="cpp">void rwlock::readlock()
+{
+	pthread_mutex_lock(&amp;rwmutex);
+	while(refcount &lt; 0)
+	{
+		readwaiters++;
+		pthread_cond_wait(&amp;readcond,&amp;rwmutex);
+		readwaiters--;
+	}
+	refcount++;
+	pthread_mutex_unlock(&amp;rwmutex);
+}
+</code></pre>
+
+<p>首先，对rwmutex加锁，主要是为了读取refcount变量。然后在while循环中，等待读信号量。这里要注意的是，while不能用if来判断。我们可能会认为，在readcond有信号时，说明写者已经释放了写锁，这时refcount必然会等于0，没必要用while循环。但是，请注意，<strong>pthread_cond_wait这个函数的执行过程。首先，它会释放锁rwmutex,然后等待readcond有信号，最后获得信号量时，再对rwmutex加锁。这样就会存在一种情况，在readcond获得信号之后，还没来得及对rwmutex进行加锁，另外一个线程这时来获取写锁，很显然它可以获取到，refcount变成了-1。</strong>如果不对refcount进行判断就会出错。</p>
+<p>4 加写锁</p>
+<pre><code class="cpp">void rwlock::writelock()
+{
+	pthread_mutex_lock(&amp;rwmutex);
+	while(refcount != 0)
+	{
+		writewaiters++;
+		pthread_cond_wait(&amp;writecond,&amp;rwmutex);
+		writewaiters--;
+	}
+	refcount = -1;
+	pthread_mutex_unlock(&amp;rwmutex);
+}
+</code></pre>
+
+<p>注意点和读锁一样，都是要while循环，不再重复</p>
+<p>5释放锁</p>
+<pre><code class="cpp">void rwlock::unlock()
+{
+	pthread_mutex_lock(&amp;rwmutex);
+	if(refcount == -1)
+		refcount = 0;
+	else
+		refcount--;
+	if(refcount == 0)
+	{
+		if(writewaiters &gt; 0)
+			pthread_cond_signal(&amp;writecond);
+		else if(readwaiters &gt; 0)
+			pthread_cond_broadcast(&amp;readcond);
+	}
+
+	pthread_mutex_unlock(&amp;rwmutex);
+}
+</code></pre>
+
+<p>解锁时，如果recount==0,说明已经没有任何人再使用读写锁，那么首先判断是否有写锁等待，如果是，置writecond有信号。如果没有写者，只有读者，那么对readcond信号量进行广播。</p>
+<p>到这里，读写锁的功能就介绍完了。但是注意上面的<strong>加锁接口都是阻塞的</strong>，我们接着介绍非阻塞的加锁接口</p>
+<p>6 非阻塞读锁</p>
+<pre><code class="cpp">int rwlock::tryreadlock()
+{
+	int ret = 0;
+	pthread_mutex_lock(&amp;rwmutex);
+	if(refcount &lt; 0 || writewaiters &gt; 0)
+	{
+		ret = -1;
+	}
+	else
+		refcount++;
+	pthread_mutex_unlock(&amp;rwmutex);
+	return ret;
+}
+</code></pre>
+
+<p>7 非阻塞写锁</p>
+<pre><code class="cpp">int rwlock::trywritelock()
+{
+	int ret = 0;
+	pthread_mutex_lock(&amp;rwmutex);
+	if(refcount != 0 )
+	{
+		ret = -1;
+	}
+	else
+		refcount = -1;
+	pthread_mutex_unlock(&amp;rwmutex);
+	return ret;
+}
+</code></pre>
+
+<p>非阻塞接口相对比阻塞接口简单，这里就不再重复讲述了。</p>
+<p>总结：本文详细介绍了读写锁的功能，以及实现方法。实现都是基于posix接口，适用于所有类unix系统。至于windows系统，可参考这篇博文</p>
+<p><a href="http://www.cnblogs.com/myd620/p/%20http://blog.csdn.net/querw/article/details/7214925"> http://blog.csdn.net/querw/article/details/7214925</a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>19 面向对象OOP 概念</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="19-oop">19 面向对象OOP 概念</h1>
+<p>在本节中，我们将了解面向对象(OOP)的基础知识。 面向对象编程只是一个模式，它提供许多概念，如继承，数据绑定，多态等等。</p>
+<p><code>Simula</code>是第一种面向对象的编程语言。而一切都可表示为对象的编程模式被称为真正的面向对象的编程语言。</p>
+<p><code>Smalltalk</code>是第一个真正的面向对象的编程语言。</p>
+<h2 id="oops">OOPs(面向对象编程系统)</h2>
+<p>对象意味着真实的单词实体，如：笔，椅子，表等。面向对象编程是一种使用类和对象来设计程序的方法或模式。 它通过提供一些概念简化了软件开发和维护：</p>
+<ul>
+<li>对象</li>
+<li>类</li>
+<li>继承</li>
+<li>多态性</li>
+<li>抽象</li>
+<li>封装</li>
+</ul>
+<p><img alt="img" src="19_01.jpg" /></p>
+<h3 id="1">1. 对象</h3>
+<p>任何具有状态和行为的实体都称为<strong>对象</strong>。 例如：椅子，钢笔，桌子，键盘，自行车等。它可以是物理和逻辑的。</p>
+<h3 id="2">2. 类</h3>
+<p>对象的集合称为<strong>类</strong>。 它是一个逻辑实体。</p>
+<h3 id="3">3. 继承</h3>
+<p>当一个对象获取父对象的所有属性和行为，称为<strong>继承</strong>。 它提供代码可重用性。 它用于实现运行时多态性。</p>
+<h3 id="4">4. 多态性</h3>
+<p>当一个任务通过不同的方式执行时，称为<strong>多态性</strong>。 例如：以不同的方式说服客户，画一些东西，如：形状或矩形等。</p>
+<p>在java中，我们使用方法重载和方法重写来实现多态性。</p>
+<p>另一个例子可以是说话，同是说话，人说话，猫说话和狗说话等，说话的方式都不太一样。</p>
+<p><img alt="img" src="19_02.gif" /></p>
+<h3 id="5">5. 抽象</h3>
+<p>隐藏内部细节和显示功能称为<strong>抽象</strong>。 例如：电话，但我们不知道内部是如何处理通话/通信的。</p>
+<h3 id="6">6. 封装</h3>
+<p>将代码和数据绑定(或包装)在一起成为单个单元称为<strong>封装</strong>。 例如：胶囊，它包裹着不同的药物。</p>
+<p><img alt="img" src="19_03.jpg" /></p>
+<p>一个java类是封装的例子。 Java bean是完全封装的类，因为所有的数据成员在这里是私有的。</p>
+<h2 id="oop">OOP的优点相对于面向过程的编程语言</h2>
+<ol>
+<li>OOP使开发和维护变得更容易，因为在面向过程的编程语言中，如果代码随着项目规模的增长而增长，则不容易管理。</li>
+<li>OOP提供数据隐藏，而在面向过程的编程语言中，可以从任何地方访问全局数据。</li>
+<li>OOP提供更有效地模拟真实世界事件的能力。 如果使用面向对象的编程语言，我们可以提供真实世界里的问题的解决方案。</li>
+</ol>
+<p><img alt="img" src="19_04.png" /></p>
+<h3 id="_1">面向对象编程语言和基于对象的编程语言有什么区别？</h3>
+<p>除了继承，基于对象的编程语言遵循OOP的所有功能。JavaScript和VBScript是基于对象的编程语言。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180412 J2EE的体系架构</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180412-j2ee">20180412 J2EE的体系架构</h1>
+<p>J2EE是Java2平台企业版（Java 2 Platform,Enterprise Edition），它的核心是一组技术规范与指南，提供基于组件的方式来设计、开发、组装和部署企业应用。J2EE使用多层分布式的应用模型。</p>
+<h1 id="j2ee">J2EE分层：</h1>
+<p>​                         <img alt="img" src="https://img-blog.csdn.net/20140528173127406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGFuZGFuem1j/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" /></p>
+<p>​        客户层，运行在客户计算机上的组件，用户与系统的接口逻辑，通过http协议的来访问应用服务器。</p>
+<p>​        表示层，运行在J2EE服务器上的组件，通过与业务逻辑层互动，将用户需要的数据以适当的方式输出。</p>
+<p>​        业务逻辑层，同样是运行在J2EE服务器上的组件。</p>
+<p>​        企业信息系统层（EIS），是指运行在EIS服务器上的软件系统。</p>
+<p>​        以上层次一般也指三层应用，也就是客户层+J2EE应用服务层+企业信息系统层，分布在三个不同位置：客户计算机、J2EE服务器及后台的数据库或过去遗留下来的系统。</p>
+<h2 id="_1">客户层</h2>
+<h3 id="web">Web浏览器</h3>
+<p>​        也称Web客户端， 以标准格式来显示从服务器传递过来的网页，它们传递给浏览器时已经是HTML或者XML格式，浏览器正确的显示给用户。</p>
+<h3 id="applet">小应用程序（Applet）</h3>
+<p>​        是嵌在浏览器中的一种轻量级客户端，当web页面不能充分的表现数据或者应用界面的时候，才使用它，Applet是一种替代web页面的手段，能够使用J2SE开发Applet，Applet无法使用J2EE中的各种Service和API。需要运行在客户端安装了Java虚拟机的Web浏览器上。</p>
+<h3 id="_2">应用程序客户端</h3>
+<p>​        J2EE应用程序客户端相对Applet而言，是一个较重量级的客户端，能够使用大多数的服务和API，它运行在客户机上，能提供强大而灵活易用的用户界面，如使用Swing或AWT创建的图形化的用户界面（GUI）。当然，应用程序可直接访问运行在业务层的Bean，如果需求允许，也可以打开HTTP连接，建立与运行在Web层上的Servlet之间的通讯。</p>
+<h2 id="j2ee_1">J2EE应用服务器</h2>
+<h3 id="_3">两大容器</h3>
+<p>​        EJB容器+Web容器，即业务逻辑层+表示层</p>
+<h4 id="web_1"><strong>Web容器</strong></h4>
+<p>​        管理所有的Servlet等Web组件的运行，对响应客户请求和返回结果提供了运行时的支持。</p>
+<h4 id="ejb"><strong>EJB容器：</strong></h4>
+<p>​        负责所有的EJB的运行，支持EJB组件的事务处理和生命周期管理，以及Bean的查找和其他服务，支持J2EE多层架构的基础结构，是一个控制业务实现的运行期环境，并提供事务服务、持久性、安全性等重要的系统服务，让开发人员不必开发基础服务而将注意力集中在业务逻辑的实现。</p>
+<h3 id="_4">两大组件</h3>
+<p>Web组件+Ejb组件</p>
+<h4 id="web_2"><strong>Web组件</strong></h4>
+<p>​        与基于Web的客户端进行交互，J2EE中有三类Web组件：Servlet、JSP、JavaBean，Servlet是Web服务器的功能扩展，接受Web请求，返回动态的Web页面。Web容器中的组件可以使用EJB中的组件来完成复杂的业务逻辑。值得注意的是静态的HTML页面和Applets不算是Web层组件。</p>
+<h4 id="ejb_1"><strong>EJB组件</strong></h4>
+<p>​        包含三种不同类型的EJB：会话Bean、消息驱动Bean、实体Bean</p>
+<p>​        第一：会话Bean：着重业务逻辑的实现与控制，负责与Web层通信，给Web层提供访问业务数据的接口。当客户端完成执行过程的时候，会话Bean及相关数据会消失。</p>
+<p>​        第二：实体Bean：代表持久数据，数据相当于存储在数据库表中，它负责保存业务数据，给会话Bean访问业务数据的接口。</p>
+<p>​        第三：消息驱动Bean：用于接收、处理客户通过JMS发送过来的消息，允许业务组件接收衣服的JMS消息。</p>
+<h2 id="_5">企业信息系统层</h2>
+<p>​        负责运行企业信息系统软件，包括ERP、数据库、目录服务、其他遗留系统等。</p>
+<h1 id="_6">总结</h1>
+<p>​       J2EE所包含的各类组件、服务架构及技术层次，均有共同的标准及规格，让各种依循J2EE架构的不同平台之间，存在良好的兼容性，解决过去企业后端使用的信息产品彼此之间无法兼容，企业内部或外部难以互通的窘境。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

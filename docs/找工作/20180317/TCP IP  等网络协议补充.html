@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>TCP IP  等网络协议补充</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="tcp-ip">TCP IP  等网络协议补充</h1>
+<p>物理层与数据链路层为上面的协议族提供服务我们一般很少接触。IP(ip v4/ ip v6)在网络层，TCP/UDP在传输层，应用层一般是我们经常接触的东西.</p>
+<p><img alt="img" src="https://uploadfiles.nowcoder.net/images/20170221/3376963_1487669763810_92C6A2EF3BAA43B44BAC7C8EDB09DC1F" /></p>
+<p><img alt="img" src="https://uploadfiles.nowcoder.net/images/20170221/3376963_1487669784925_BE9C8D014E82DE000B3F6885F96CCF90" /></p>
+<pre><code>- TCP协议工作在OSI的传输层，是一种可靠的面向连接的数据流协议。
+
+- 每个数据包都包含序列号和确认号，发送数据包的同时确认已接收到的数据包
+	确认号 = 接收到的数据包的序列号 + 该包有效数据长度
+	序列号 = 接收到的数据包里的确认号
+	也就是始终让对方来设置我的序列号应该是多少，即我应该发送那个包
+
+- TCP发送一个数据包时会把其放入重发队列，同时启动计时，超时时间内收到确认包则删除该包，否则重传
+
+- 接收方使用序列号来对分组传输的数据进行重组，保证传输的完整性
+</code></pre>
+
+<h2 id="tcp">TCP连接的建立</h2>
+<pre><code>TCP使用我们熟悉的三次握手方式建立连接。这里以A向B发起连接来说明。
+</code></pre>
+
+<ol>
+<li>A向B发送一个同步请求数据包，该包中初始序列号<em>ISN_a1</em>是A随机生成的，确认号是0, SYC=1 (A问B听到了吗？）</li>
+<li>B接收到A发送过来的请求数据包之后，会向A发送一个同步确认数据包，该包的初始序列号<em>ISN_b1</em>由B随机生成，确认号为<em>ISN_a1</em>+1, SYC=1, ARC=1（B说听到了，你听到了吗？）–此时A知道B能听到</li>
+<li>A收到B的同步确认数据包之后，再向B发送一个确认包，该包的序列号=B包里的确认号，该包的确认号=<em>ISN_b1</em>+1, ARC=1（A说我也听到了）–此时B知道A也能听到</li>
+</ol>
+<h2 id="tcp_1">TCP数据的传输</h2>
+<pre><code>TCP工作在全双工模式下。
+三次握手时A、B各发送了一个请求包，占用一个包序号，所以传输数据时A、B的序列号都从初始序列号+1开始。
+</code></pre>
+
+<ul>
+<li>A向B发送数据的情况（PacketB初始为建立连接时，第二次握手时B发的确认包）</li>
+<li>A发送数据包：A向B发送数据包packetA（序列号=packetB.确认号，确认号=packetB.序列号）</li>
+<li>B发送确认包：B收到数据包packetA，向A发送确认包packetB（序列号=packetA.确认号，确认号=packetA.序列号+packetA.有效载荷）</li>
+<li>A接收确认包：A收到确认包packetB，从重发队列删除packetA，并继续发送</li>
+<li>B向A发送数据的情况（PacketA初始为建立连接时，第三次握手时A发的确认包）</li>
+<li>B发送数据包：B向A发送数据包packetB（序列号=packetA.确认号，确认号=packetA.序列号）</li>
+<li>A发送确认包：A收到数据包packetB，向B发送确认包packetA（序列号=packetB.确认号，确认号=packetB.序列号+packetB.有效载荷）</li>
+<li>B接收确认包：B收到确认包packetA，从重发队列删除packetB，并继续发送</li>
+</ul>
+<p>数据发送过程同时进行，即上述两个过程并行。 
+使用滑动窗口，使的发送方在没有接收到确认包之前可以发送多个数据包。</p>
+<h2 id="tcp_2">TCP连接的关闭</h2>
+<pre><code>著名的四次挥手，我挥一挥手，各回各家吧！
+
+ 1. A向B发送关闭连接的请求，FIN标志位置1（我要挂电话咯）
+ 2. B发送确认包，A到B的连接可以关闭（好的）
+ 3. B再向A发送关闭连接的请求，FIN标志位置1（我也挂了）
+ 4. A发送确认包，B到A的连接也可以关闭咯（恩）
+</code></pre>
+
+<h2 id="_1">举个例子</h2>
+<p>（sequence number(SN)序列号，acknowledgement number(AK)确认号,实际中初始SN为随机生成数，这里为了方便设为0）</p>
+<p><img alt="mage-20180317192703" src="./image-201803171927030.png" /></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

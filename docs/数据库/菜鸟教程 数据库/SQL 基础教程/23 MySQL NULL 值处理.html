@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>23 MySQL NULL 值处理</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="23-mysql-null">23 MySQL NULL 值处理</h1>
+<p>1- MySQL 中<strong>处理 NULL 使用 IS NULL 和 IS NOT NULL 运算符。</strong></p>
+<hr />
+<p>原文： http://www.runoob.com/mysql/mysql-null.html</p>
+<p>我们已经知道 MySQL 使用 SQL SELECT 命令及 WHERE 子句来读取数据表中的数据,但是<strong>当提供的查询条件字段为 NULL 时</strong>，该命令可能就无法正常工作。</p>
+<p>为了处理这种情况，MySQL提供了三大运算符:</p>
+<ul>
+<li><strong>IS NULL:</strong> 当列的值是 NULL,此运算符返回 true。</li>
+<li><strong>IS NOT NULL:</strong> 当列的值不为 NULL, 运算符返回 true。</li>
+<li><strong>&lt;=&gt;:</strong> 比较操作符（不同于=运算符），当比较的的两个值为 NULL 时返回 true。</li>
+</ul>
+<p>关于 NULL 的条件比较运算是比较特殊的。你<strong>不能使用 = NULL 或 != NULL 在列中查找 NULL 值</strong> 。</p>
+<p>在 MySQL 中，<strong>NULL 值与任何其它值的比较（即使是 NULL）永远返回 false，即 NULL = NULL 返回false 。</strong></p>
+<p>MySQL 中<strong>处理 NULL 使用 IS NULL 和 IS NOT NULL 运算符。</strong></p>
+<hr />
+<h2 id="null">在命令提示符中使用 NULL 值</h2>
+<p>以下实例中假设数据库 RUNOOB 中的表 runoob_test_tbl 含有两列 runoob_author 和 runoob_count, runoob_count 中设置插入NULL值。</p>
+<h3 id="_1">实例</h3>
+<p>尝试以下实例:</p>
+<pre><code class="mysql"># 创建数据表 runoob_test_tbl
+
+root@host# mysql -u root -p password;
+Enter password:*******
+mysql&gt; use RUNOOB;
+Database changed
+mysql&gt; create table runoob_test_tbl
+	(
+	runoob_author varchar(40) NOT NULL,
+	runoob_count  INT
+	);
+Query OK, 0 rows affected (0.05 sec)
+mysql&gt; INSERT INTO runoob_test_tbl (runoob_author, runoob_count) values ('RUNOOB', 20);
+mysql&gt; INSERT INTO runoob_test_tbl (runoob_author, runoob_count) values ('菜鸟教程', NULL);
+mysql&gt; INSERT INTO runoob_test_tbl (runoob_author, runoob_count) values ('Google', NULL);
+mysql&gt; INSERT INTO runoob_test_tbl (runoob_author, runoob_count) values ('FK', 20);
+
+mysql&gt; SELECT * from runoob_test_tbl;
++---------------+--------------+
+| runoob_author | runoob_count |
++---------------+--------------+
+| RUNOOB        | 20           |
+| 菜鸟教程  | NULL         |
+| Google        | NULL         |
+| FK            | 20           |
++---------------+--------------+
+4 rows in set (0.01 sec)
+</code></pre>
+
+<p>以下实例中你可以看到 = 和 != 运算符是不起作用的：</p>
+<pre><code class="mysql">mysql&gt; SELECT * FROM runoob_test_tbl WHERE runoob_count = NULL;
+Empty set (0.00 sec)
+mysql&gt; SELECT * FROM runoob_test_tbl WHERE runoob_count != NULL;
+Empty set (0.01 sec)
+</code></pre>
+
+<p>查找数据表中 runoob_test_tbl 列是否为 NULL，必须使用 <strong>IS NULL</strong> 和 <strong>IS NOT NULL</strong>，如下实例：</p>
+<pre><code class="mysql">mysql&gt; SELECT * FROM runoob_test_tbl WHERE runoob_count IS NULL;
++---------------+--------------+
+| runoob_author | runoob_count |
++---------------+--------------+
+| 菜鸟教程  | NULL         |
+| Google        | NULL         |
++---------------+--------------+
+2 rows in set (0.01 sec)
+
+mysql&gt; SELECT * from runoob_test_tbl WHERE runoob_count IS NOT NULL;
++---------------+--------------+
+| runoob_author | runoob_count |
++---------------+--------------+
+| RUNOOB        | 20           |
+| FK            | 20           |
++---------------+--------------+
+2 rows in set (0.01 sec)
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>数据库中group by和having语法使用详解</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="group-byhaving">数据库中group by和having语法使用详解</h1>
+<p><strong>有个朋友问我一个返话费的问题，大概意思是这样的：只需把表deal中所有手机用户某天充值两次以上且总金额超过50的用户充值记录查询出来，至于怎么进行返话费那不是重点。</strong></p>
+<p><strong>先看看group by的语法：</strong></p>
+<p><code>mysql
+SELECT column1, SUM(column2) FROM "list-of-tables" GROUP BY "column-list";</code></p>
+<p>GROUP BY子句将集中所有的行在一起，它包含了指定列的数据以及允许合计函数来计算一个或者多个列。</p>
+<p>假设我们将从员工表employee表中搜索每个部门中工资最高的薪水，可以使用以下的SQL语句：</p>
+<pre><code class="msyql">SELECT max(salary), dept FROM employee GROUP BY dept;  
+</code></pre>
+
+<p>这条语句将在每一个单独的部门中选择工资最高的工资，结果将他们的salary和dept返回。</p>
+<p>​    group by 顾名思义就是按照xxx进行分组，它必须有“聚合函数”来配合才能使用，使用时至少需要一个分组标识字段。</p>
+<p>​    聚合函数有：sum()、count()、avg()等，使用group by目的就是要将数据分组进行汇总操作。</p>
+<p>​    例如对员工表的操作：</p>
+<pre><code class="mysql">select dept_id,count(emp_id),sum(salary) form employee  group by dept_id;    
+</code></pre>
+
+<p>​    这样的运行结果就是以“dept_id”为分类标志统计各单位的职工人数和工资总额。</p>
+<hr />
+<p><strong>再看看having的语法：</strong>    </p>
+<pre><code class="mysql">SELECT column1, SUM(column2) FROM “list-of-tables” GROUP BY “column-list” HAVING “condition”;  
+</code></pre>
+
+<p>这个HAVING子句的作用就是为每一个组指定条件，像where指定条件一样，也就是说，可以根据你指定的条件来选择行。如果你要使用HAVING子句的话，它必须处在GROUP BY子句之后。</p>
+<p>​    例如还是对员工表的操作：</p>
+<pre><code class="mysql">SELECT dept_id, avg(sal) FROM employee GROUP BY dept_id HAVING avg(salary) &gt;= 4000;  
+</code></pre>
+
+<p>​    这样的运行结果就是以“dept_id”为分类标志统计各单位的职工人数和工资平均数且工资平均数大于4000。</p>
+<h2 id="_1"><strong>下面开始我们的返话费查询功能的实现：</strong></h2>
+<p>话费表deal字段有这些：
+sell_no:订单编号
+name:用户名
+phone:用户手机号
+amount:充值金额
+date:充值日期</p>
+<p>上边就这些有效字段，假如数据（数据纯属虚构，如有*，纯是巧合）如下：</p>
+<pre><code class="mysql">sell_no             name         phone               amount      date
+00000000001         李晓红       15822533496         50          2011-10-23 08:09:23
+00000000002         李晓红       15822533496         60          2011-10-24 08:15:34
+00000000003         李晓红       15822533496         30          2011-10-24 12:20:56
+00000000004         杨 轩        18200000000         100         2011-10-24 07:59:43
+00000000005         杨 轩        18200000000         200         2011-10-24 10:11:11
+00000000006         柳梦璃       18211111111         50          2011-10-24 09:09:46
+00000000007         韩菱纱       18222222222         50          2011-10-24 08:09:45
+00000000008         云天河       18333333333         50          2011-10-24 08:09:25
+</code></pre>
+
+<p>把以上数据当天(2011-10-24)交过两次话费，而且总金额大于50的数据取出来，要取的结果如下：</p>
+<pre><code class="mysql">00000000002         李晓红       15822533496         60          2011-10-24 08:15:34
+00000000003         李晓红       15822533496         30          2011-10-24 12:20:56
+00000000004         杨 轩        18200000000         100         2011-10-24 07:59:43
+00000000005         杨 轩        18200000000         200         2011-10-24 10:11:11
+</code></pre>
+
+<p>因为今天(2011-10-24)李晓红和杨轩交过两次以上话费，而且总金额大于50，所以有他们的数据，而柳梦璃，韩菱纱，云天河只交过一次，所以没他们的数据。</p>
+<p>我的处理思路大概是这样的，先把当天日期的记录用group by进行手机号分组即一个手机号为一组，接着用having子句进行过滤，把交过两次话费且话费总金额大于50的手机号查出来，最后用手机号和日期条件组合查询就能完成数据的查询，具体如下。</p>
+<p>​    注意日期处理细节，要查询的某一天(yyyy-MM-dd)的所有记录mysql是这样处理的：</p>
+<pre><code class="mysql">SELECT date_format(date,'%Y-%m-%d') from deal;
+</code></pre>
+
+<p>​    查询出符合条件（交过两次以上话费，而且总金额大于50）的手机号：</p>
+<pre><code class="mysql">select phone from deal where date_format(date,'%Y-%m-%d')=&quot;2011-10-24&quot; group by phone having count(phone)&gt;1 and sum(amount)&gt;50;
+</code></pre>
+
+<p>结合手机号和日期查询出最终记录：</p>
+<pre><code class="mysql">select * from deal where date_format(date,'%Y-%m-%d')=&quot;2011-10-24&quot; and phone in 
+  (select phone from deal where date_format(date,'%Y-%m-%d')=&quot;2011-10-24&quot; 
+   group by phone having count(phone)&gt;1 and sum(amount)&gt;50) order by phone;
+</code></pre>
+
+<p>​    里边嵌套了一个select语句，感觉效率低点了，谁有更高效的方法不？</p>
+<p>附数据建库sql代码：</p>
+<pre><code class="mysql">
+create database if not exists `phone_deal`;
+
+USE `phone_deal`;
+
+DROP TABLE IF EXISTS `deal`;
+
+CREATE TABLE `deal` (
+  `sell_no` varchar(100) NOT NULL,
+  `name` varchar(100) default NULL,
+  `phone` varchar(100) default NULL,
+  `amount` decimal(10,0) default NULL,
+  `date` datetime default NULL,
+  PRIMARY KEY  (`sell_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert  into `deal`(`sell_no`,`name`,`phone`,`amount`,`date`) values 
+('00001','李晓红','15822533496','60','2011-10-23 08:09:23'),
+('00002','李晓红','15822533496','50','2011-10-24 08:15:34'),
+('00003','李晓红','15822533496','40','2011-10-24 12:20:56'),
+('00004','杨轩','18210607179','100','2011-10-24 07:59:43'),
+('00005','杨轩','18210607179','50','2011-10-24 10:11:11'),
+('00006','柳梦璃','15822533492','1000','2011-10-24 09:09:46'),
+('00007','韩菱纱','15822533493','10000','2011-10-24 08:09:45'),
+('00008','云天河','15822533494','500','2011-10-24 08:09:25');
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

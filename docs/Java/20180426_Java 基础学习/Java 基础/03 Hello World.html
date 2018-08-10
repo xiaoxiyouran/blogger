@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>03 Hello World</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="03-hello-world">03 Hello World</h1>
+<h2 id="hello-java">Hello Java示例的要求</h2>
+<p>要执行任何java程序，您首先需要：</p>
+<ul>
+<li>安装JDK，如果你没有安装它，<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">下载JDK</a>并安装它。</li>
+<li>设置<code>jdk/bin</code>目录的路径，参考：</li>
+<li>创建或编写java程序</li>
+<li>编译并运行java程序</li>
+</ul>
+<h3 id="hello-java_1">创建hello java示例</h3>
+<p>现在让我们创建<code>hello java</code>程序，即创建一个 <code>Simple</code> 类，代码如下：</p>
+<pre><code class="Java">class Simple{  
+	public static void main(String args[]){  
+	   System.out.println(&quot;Hello Java !&quot;);  
+	}  
+}
+
+</code></pre>
+
+<p>将上面代码保存在一个文件：<code>Simple.java</code> 中。</p>
+<p>编译 <code>Simple.java</code>文件中的代码：</p>
+<pre><code class="Shell">javac Simple.java
+</code></pre>
+
+<p>执行编译后生成的二进制代码(Simple.class)：</p>
+<pre><code class="Java">java Simple
+</code></pre>
+
+<p>输出结果：</p>
+<pre><code class="Shell">Hello Java
+</code></pre>
+
+<h2 id="java">理解第一个java程序</h2>
+<p>让我们看看<code>class</code>，<code>public</code>，<code>static</code>，<code>void</code>，<code>main</code>，<code>String []</code>，<code>System.out.println()</code>的含义。</p>
+<ul>
+<li><code>class</code>关键字用于在java中声明一个类。</li>
+<li><code>public</code>关键字是一个表示可见性的访问修饰符，它表示对所有人可见。</li>
+<li><code>static</code>是一个关键字，如果将某个方法声明为<code>static</code>，它被称为静态方法。 静态方法的核心优势是不用创建对象就可以直接调用。 <code>main</code>方法由JVM执行，因此它不需要创建对象来调用<code>main</code>方法。所以它节省了内存。</li>
+<li><code>void</code>是方法的返回类型，它意味着它不返回任何值。</li>
+<li><code>main</code>表示程序开始(执行的入口)。</li>
+<li><code>String [] args</code>用于命令行参数，在以后会学习。</li>
+<li><code>System.out.println()</code>是打印输出语句。在稍后我们会来了解<code>System.out.println</code>语句的内部工作原理。</li>
+</ul>
+<p>下面我们来演示编写简单程序完整过程，通过<strong>开始菜单</strong> -&gt; <strong>所有程序</strong> -&gt; <strong>附件</strong> -&gt; <strong>打开记事本</strong>(或者您常用的文本编辑器)，并写如下所示的简单程序：</p>
+<p><img alt="img" src="03_01.png" /></p>
+<p>如上图所示，在编辑器(记事本)中编写java的简单程序并将其保存为<code>Simple.java</code>文件。 要编译和运行这个程序，可通过<strong>开始菜单</strong> -&gt;<strong>所有程序</strong> -&gt;<strong>附件</strong> -&gt; <strong>打开命令提示符</strong>。</p>
+<p>要编译和运行上述程序，首先转到保存<code>Simple.java</code>文件所在的目录; 本示例中的目录是 <code>F:\worksp\javabase</code> 。命令提示符下进入这个目录并按步输入：</p>
+<p>编译 <code>Simple.java</code>文件中的代码：</p>
+<pre><code class="Shell">javac Simple.java
+</code></pre>
+
+<p>执行编译后生成的二进制代码(Simple.class)：</p>
+<pre><code class="java">java Simple
+</code></pre>
+
+<p>输出结果：</p>
+<pre><code class="Java">Hello Java
+</code></pre>
+
+<p>整个过程如下图所示 -</p>
+<p><img alt="img" src="03_02.png" /></p>
+<h2 id="java_1">编写Java程序的方式有多少种？</h2>
+<p>有很多方法可用来编写一个java程序。 可以在java程序中进行的修改如下：</p>
+<p><strong>1)通过改变修饰符的顺序，方法原型不改变。</strong></p>
+<p>让我们再来看看<code>main</code>方法的简单代码。</p>
+<pre><code class="java">static public void main(String args[])
+</code></pre>
+
+<p><strong>2)java数组可以使用后类型，前变量或后变量。</strong></p>
+<p>让我们看看编写<code>main</code>方法的不同方式的代码。</p>
+<pre><code class="Java">public static void main(String[] args)  
+public static void main(String []args)  
+public static void main(String args[])
+</code></pre>
+
+<p><strong>3)通过传递3个点为main方法提供var-args支持</strong></p>
+<p>让我们来看看在<code>main</code>方法中使用<code>var-args</code>的简单代码，在Java新特性一章中我们将学习<code>var-args</code>的用法。</p>
+<pre><code>public static void main(String... args)
+</code></pre>
+
+<p><strong>4)在java中的类的末尾的分号是可选的。</strong></p>
+<p>让我们来看看下面简单的代码。</p>
+<pre><code class="java">class A{  
+static public void main(String... args){  
+System.out.println(&quot;hello java4&quot;);  
+}  
+};// &quot;;&quot;- 这里加不加分号没有影响
+</code></pre>
+
+<h3 id="java-main">有效的java main方法签名</h3>
+<pre><code class="java">public static void main(String[] args)  
+public static void main(String []args)  
+public static void main(String args[])  
+public static void main(String... args)  
+static public void main(String[] args)  
+public static final void main(String[] args)  
+final public static void main(String[] args)   /// can add final
+final strictfp public static void main(String[] args) /// strictfp?
+</code></pre>
+
+<h3 id="java-main_1">无效的java main方法签名</h3>
+<p><code>public static</code> 必须在void 声明的前面。 且 不能用 <code>abstract</code>。</p>
+<pre><code class="java">public void main(String[] args)  
+static void main(String[] args)  
+public void static main(String[] args)  
+abstract public static void main(String[] args)
+</code></pre>
+
+<h3 id="javac">解决错误: “javac不能识别为内部或外部命令”</h3>
+<p><strong>说的应该是环境变量的设置？？？</strong></p>
+<p>如果发生如下图所示的问题，则需要设置路径。由于DOS不知道<code>javac</code>或<code>java</code>命令，所以我们需要设置<code>path</code>。 在这种情况下，如果将程序保存在 <code>jdk/bin</code> 文件夹中，则不需要路径。但最好设置路径，设置路径之后任何地方都可以使用 <code>javac</code>或<code>java</code>命令了 。
+<img alt="img" src="03_03.png" /></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

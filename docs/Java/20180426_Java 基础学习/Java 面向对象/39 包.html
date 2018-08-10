@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>39 包</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="39">39 包</h1>
+<p>一个java包是一组相似类型的类，接口和子包。java中的包可以分为两种形式，<strong>内置包和用户定义包</strong>。</p>
+<p>java中有很多内置的包，如：<code>java</code>，<code>lang</code>，<code>awt</code>，<code>javax</code>，<code>swing</code>，<code>net</code>，<code>io</code>，<code>util</code>，<code>sql</code>等。</p>
+<p>在这里，我们将详细学习创建和使用用户定义的包。</p>
+<p><strong>Java包的优点</strong></p>
+<ol>
+<li>Java包用于<strong>对类和接口进行分类</strong>，以便更好地维护它们。</li>
+<li>Java包提供<strong>访问保护</strong>。</li>
+<li>Java包<strong>消除命名冲突</strong>。</li>
+</ol>
+<p><img alt="img" src="39_01.png" /></p>
+<p><strong>java包的简单示例</strong></p>
+<p><code>package</code>关键字用于在java中创建一个包。</p>
+<pre><code class="java">//save as Simple.java  
+package com.yiibai;
+
+public class Simple {
+	public static void main(String args[]) {
+		System.out.println(&quot;Welcome to package&quot;);
+	}
+}
+</code></pre>
+
+<p><strong>如何编译java包</strong></p>
+<p>如果您没有使用任何IDE，则需要遵循以下语法：</p>
+<pre><code class="Java">javac -d directory javafilename
+</code></pre>
+
+<p><strong>例如</strong></p>
+<pre><code class="Java">javac -d . Simple.java
+</code></pre>
+
+<p><code>-d</code> 指定放置生成的类文件的目标位置。 您可以使用任何目录名称，如<code>/home</code>(在Linux的情况下)，<code>D:\workspace</code>(在Windows的情况下)等。如果想保持包在同一目录，可以使用<code>.</code>(点)表示当前目录。</p>
+<p><strong>如何运行java包程序</strong></p>
+<p>您需要使用完全限定(指定)名称。如：<code>com.yiibai.Simple</code>等来运行类。</p>
+<p><strong>编译</strong>：<code>javac -d . Simple.java</code>
+<strong>运行</strong>：<code>java com.yiibai.Simple</code></p>
+<p>输出结果如下 -</p>
+<pre><code class="Java">Welcome to package
+</code></pre>
+
+<p><code>-d</code>是一个开关，它告诉编译器放置类文件的位置，即它代表目的地。 <code>.</code>(点符号)表示当前文件夹。</p>
+<p><strong>如何从一个包中访问另一个包？</strong></p>
+<p><strong>有三种方法从包外部来访问一个包</strong>。它们分别如下 -</p>
+<ol>
+<li>import package.*;</li>
+<li>import package.classname;</li>
+<li>完全限定名</li>
+</ol>
+<h2 id="1-packagename">1. 使用 packagename.</h2>
+<p>如果使用<code>package.*</code>，那么这个包的<strong>所有</strong>类和接口都是可访问的，而不是子包。
+<code>import</code>关键字用于使当前包可访问的另一个包的类和接口。
+导入<code>packagename</code>的包的示例。
+一个Java文件：<code>A.java</code>，在 <code>pack</code> 包下。</p>
+<pre><code class="Java">//save by A.java  
+package pack;  
+public class A{  
+	public void msg(){System.out.println(&quot;Hello&quot;);}  
+}
+</code></pre>
+
+<p>另一个Java文件：<code>B.java</code>，在 <code>mypack</code> 包下，下面看看它是如何引用 <code>pack</code> 包中的 <code>A.java</code> 这个类。</p>
+<pre><code class="Java">//save by B.java  
+package mypack;  
+import pack.*;  
+
+class B{  
+  public static void main(String args[]){  
+	 A obj = new A();  
+	 obj.msg();  
+  }  
+}
+
+</code></pre>
+
+<p>执行上面代码，输出结果如下 -</p>
+<pre><code class="Shell">Hello
+</code></pre>
+
+<h2 id="2-packagenameclassname">2. 使用packagename.classname</h2>
+<p>如果要导入<code>package.classname</code>，那么只有这个包的类声明为可访问的。</p>
+<p><strong>通过导入package.classname的包的示例</strong>
+以下是 <code>A.java</code> 文件中的代码 -</p>
+<pre><code class="Java">//save by A.java  
+
+package pack;  
+public class A{  
+  public void msg(){System.out.println(&quot;Hello&quot;);}  
+}
+</code></pre>
+
+<p>以下是 <code>B.java</code> 文件中的代码 -</p>
+<pre><code class="Java">//save by B.java  
+package mypack;
+
+import pack.A; /// import 具体的类名
+
+class B {
+	public static void main(String args[]) {
+		A obj = new A();
+		obj.msg();
+	}
+}
+
+</code></pre>
+
+<p>执行上面代码，输出结果如下 -</p>
+<pre><code class="shell">Hello
+</code></pre>
+
+<h2 id="3">3. 使用完全限定名</h2>
+<p>如果使用完全限定名，那么只有这个包的声明类将可访问。现在没有必要导入，但是需要在每次访问类或接口时使用完全限定名。
+它通常<strong>用于两个包具有相同类名</strong>的情况。 <code>java.util</code>和<code>java.sql</code>包包含<code>Date</code>类。</p>
+<p><strong>通过导入完全限定名称的包的示例</strong>
+创建一个Java文件：<code>A.java</code>，其代码如下所示 -</p>
+<pre><code class="Java">//save by A.java  
+package pack;
+
+public class A {
+	public void msg() {
+		System.out.println(&quot;Hello&quot;);
+	}
+}
+</code></pre>
+
+<p>创建另一个Java文件：<code>B.java</code>，其代码如下所示 -</p>
+<pre><code class="Java">//save by B.java  
+package mypack;
+
+class B {
+	public static void main(String args[]) {
+		pack.A obj = new pack.A();// using fully qualified name
+		obj.msg();
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="Shell">Hello
+</code></pre>
+
+<blockquote>
+<p><strong>注意</strong>：如果导入包，则不会导入子包。</p>
+</blockquote>
+<p>如果导入包，则将导入该包的所有类和接口，但不包括子包的类和接口。 因此，您还需要导入子包。</p>
+<p><strong>注意：</strong>程序的序列必须先是包，然后再导入类。</p>
+<p><img alt="img" src="39_02.jpg" /></p>
+<h2 id="java">在java中的子包</h2>
+<p>包内的包称为子包。创建它用以进一步分类包。
+举个例子，<strong>Sun Microsystem</strong>定义了一个名为<code>java</code>的包，其中包含了很多类，比如<code>System</code>，<code>String</code>，<code>Reader</code>，<code>Writer</code>，<code>Socket</code>等。 <code>Reader</code>和<code>Writer</code>类用于输入/输出操作，<code>Socket</code>和<code>ServerSocket</code>类用于网络等等。 所以，Sun已经将java包子类化为子包，如：<code>lang</code>，<code>net</code>，<code>io</code>等，并将输入/输出相关类放在<code>io</code>包中，将<code>Server</code>和<code>ServerSocket</code>类放在<code>net</code>包中等等。</p>
+<blockquote>
+<p>注：定义包的标准是<code>domain.company.package</code>,例如：<code>com.yiibai.bean</code>或<code>org.apache.dao</code>。</p>
+</blockquote>
+<p><strong>子包示例</strong></p>
+<pre><code class="Java">package com.yiibai.core;
+
+class Simple {
+	public static void main(String args[]) {
+		System.out.println(&quot;Hello subpackage&quot;);
+	}
+}
+</code></pre>
+
+<p><strong>编译执行的命令</strong>：<code>javac -d . Simple.java</code>
+<strong>运行执行的命令</strong>：<code>java com.yiibai.core.Simple</code></p>
+<pre><code class="Java">Hello subpackage
+</code></pre>
+
+<p><strong>如何将类文件发送到另一个目录或驱动器？</strong></p>
+<p>有一个场景，想要把<code>A.java</code>源文件的类文件放在<code>C</code> 盘的<code>classes</code>文件夹中。 例如：</p>
+<p><img alt="img" src="39_03.jpg" /></p>
+<p>首先在 <code>E:\source</code> 目录中创建 <code>A.java</code> 文件，如下代码 -</p>
+<pre><code class="Java">//save as Simple.java  
+package mypack;
+
+public class Simple {
+	public static void main(String args[]) {
+		System.out.println(&quot;Welcome to package&quot;);
+	}
+}
+</code></pre>
+
+<p><strong>编译：</strong></p>
+<pre><code class="Shell">E:\sources&gt; javac -d c:\classes Simple.java
+</code></pre>
+
+<p><strong>运行：</strong>
+要在<code>E:\source</code>目录运行此程序，需要设置类文件所在目录的类路径。</p>
+<pre><code class="Java">e:\sources&gt; set classpath=c:\classes;.;
+e:\sources&gt; java mypack.Simple
+</code></pre>
+
+<p><strong>另一种方式运行这个程序通过 -classpath切换java：</strong></p>
+<p><code>-classpath</code>切换可以与<code>javac</code>和<code>java</code>工具一起使用。</p>
+<p>要在<code>E:\source</code>目录运行此程序，可以使用java的<code>-classpath</code>选项，告诉在哪里查找类文件。 例如：</p>
+<pre><code class="Java">e:\sources&gt; java -classpath c:\classes mypack.Simple
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="Java">Welcome to package
+</code></pre>
+
+<p><strong>加载类文件或jar文件的方式</strong>
+有两种方法用来临时和永久加载类文件。</p>
+<ul>
+<li>加载临时类文件</li>
+<li>通过在命令提示符中设置类路径</li>
+<li>通过 <code>-classpath</code> 开关选项</li>
+<li>永久加载类文件</li>
+<li>通过在环境变量中设置类路径</li>
+<li>通过<strong>创建jar文件，其中包含所有类文件，并将jar文件复制到JDK安装目录的<code>jre/lib/ext</code>文件夹中。</strong></li>
+</ul>
+<blockquote>
+<p>规则：在java源文件中只能有一个公共类，它必须以公共类的名称保存。</p>
+</blockquote>
+<pre><code class="Java">//save as C.java otherwise Compilte Time Error  
+
+class A {
+}
+
+class B {
+}
+
+public class C {
+}
+</code></pre>
+
+<p><strong>如何将两个公共类放在包中？</strong></p>
+<p>如果想把两个公共类放在同一个包中，有两个java源文件都包含一个公共类，<strong>只需保持包名称相同即可</strong>。 例如：
+文件：<code>A.java</code>，代码如下所示 -</p>
+<pre><code class="Java">//save as A.java  
+
+package yiibai;  
+public class A{}
+</code></pre>
+
+<p>文件：<code>B.java</code>，代码如下所示 -</p>
+<pre><code>//save as B.java  
+
+package yiibai;  
+public class B{}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

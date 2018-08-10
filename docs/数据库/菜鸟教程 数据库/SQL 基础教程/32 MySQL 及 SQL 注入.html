@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>32 MySQL 及 SQL 注入</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="32-mysql-sql">32 MySQL 及 SQL 注入</h1>
+<hr />
+<p>原文：http://www.runoob.com/mysql/mysql-sql-injection.html</p>
+<p>如果您通过网页获取用户输入的数据并将其插入一个MySQL数据库，那么就有可能发生SQL注入安全的问题。</p>
+<p>本章节将为大家介绍如何防止SQL注入，并通过脚本来过滤SQL中注入的字符。</p>
+<p>所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
+<p>我们永远不要信任用户的输入，我们<strong>必须认定用户输入的数据都是不安全的，我们都需要对用户输入的数据进行过滤处理</strong>。</p>
+<p>以下实例中，<strong>输入的用户名必须为字母、数字及下划线的组合，且用户名长度为 8 到 20 个字符之间：</strong></p>
+<pre><code class="mysql">if (preg_match(&quot;/^\w{8,20}$/&quot;, $_GET['username'], $matches))
+{
+   $result = mysqli_query($conn, &quot;SELECT * FROM users 
+						  WHERE username=$matches[0]&quot;);
+}
+ else 
+{
+   echo &quot;username 输入异常&quot;;
+}
+</code></pre>
+
+<p>让我们看下在没有过滤特殊字符时，出现的SQL情况：</p>
+<pre><code class="mysql">// 设定$name 中插入了我们不需要的SQL语句
+$name = &quot;Qadir'; DELETE FROM users;&quot;;
+ mysqli_query($conn, &quot;SELECT * FROM users WHERE name='{$name}'&quot;);
+</code></pre>
+
+<p>以上的注入语句中，我们没有对<code>$name 的变量进行过滤，$name</code>中插入了我们不需要的SQL语句，将删除 users 表中的所有数据。</p>
+<p>在PHP中的 mysqli_query() 是不允许执行多个 SQL 语句的，但是在 SQLite 和 PostgreSQL 是可以同时执行多条SQL语句的，所以我们<strong>对这些用户的数据需要进行严格的验证。</strong></p>
+<p>防止SQL注入，我们需要注意以下几个要点：</p>
+<ul>
+<li>1.永远不要信任用户的输入。对用户的输入进行校验，可以通过正则表达式，或限制长度；对单引号和 双"-"进行转换等。</li>
+<li>2.永远<strong>不要使用动态拼装sql，可以使用参数化的sql或者直接使用存储过程进行数据查询存取。</strong></li>
+<li>3.永远<strong>不要使用管理员权限的数据库连接</strong>，为每个应用使用单独的权限有限的数据库连接。</li>
+<li>4.不要把机密信息直接存放，加密或者hash掉密码和敏感的信息。</li>
+<li>5.应用的<strong>异常信息应该给出尽可能少的提示</strong>，最好使用自定义的错误信息对原始错误信息进行包装</li>
+<li>6.sql注入的检测方法一般采取辅助软件或网站平台来检测，<strong>软件一般采用sql注入检测工具jsky，网站平台就有亿思网站安全平台检测工具</strong>。MDCSOFT SCAN等。采用MDCSOFT-IPS可以有效的防御SQL注入，XSS攻击等。</li>
+</ul>
+<hr />
+<h2 id="sql">防止SQL注入</h2>
+<p>在脚本语言，如Perl和PHP你可以对用户输入的数据进行转义从而来防止SQL注入。</p>
+<p>PHP的MySQL扩展提供了mysqli_real_escape_string()函数来转义特殊的输入字符。</p>
+<pre><code class="Php">if (get_magic_quotes_gpc()) 
+{
+  $name = stripslashes($name);
+}
+$name = mysqli_real_escape_string($conn, $name);
+ mysqli_query($conn, &quot;SELECT * FROM users WHERE name='{$name}'&quot;);
+</code></pre>
+
+<hr />
+<h2 id="like">Like语句中的注入</h2>
+<p>like查询时，如果用户输入的值有"<em>"和"%"，则会出现这种情况：用户本来只是想查询"abcd</em>"，查询结果中却有"abcd_"、"abcde"、"abcdf"等等；用户要查询"30%"（注：百分之三十）时也会出现问题。</p>
+<p>在PHP脚本中我们可以使用addcslashes()函数来处理以上情况，如下实例：</p>
+<pre><code class="Php">$sub = addcslashes(mysqli_real_escape_string($conn, &quot;%something_&quot;), &quot;%_&quot;);
+// $sub == \%something\_
+ mysqli_query($conn, &quot;SELECT * FROM messages WHERE subject LIKE '{$sub}%'&quot;);
+</code></pre>
+
+<p>addcslashes() 函数在指定的字符前添加反斜杠。</p>
+<p>语法格式:</p>
+<pre><code class="Php">addcslashes(string,characters)
+</code></pre>
+
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>参数</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>string</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>必需。规定要检查的字符串。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>characters</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>可选。规定受 addcslashes() 影响的字符或字符范围。</td>
+</tr>
+</tbody>
+</table>
+<p>具体应用可以查看：<a href="http://www.w3cschool.cc/php/func-string-addcslashes.html">PHP addcslashes() 函数</a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

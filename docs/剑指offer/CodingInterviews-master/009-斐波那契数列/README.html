@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&amp;tqId=11160&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-rankingg">斐波那契数列</a> </p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1387</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/009-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97">009-斐波那契数列</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51115810">剑指Offer--009-斐波那契数列</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&amp;tqId=11160&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-rankingg">斐波那契数列</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1387">1387-斐波那契数列</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51115810">剑指Offer--009-斐波那契数列</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<blockquote>
+<p>参考：</p>
+<p><a href="http://blog.csdn.net/jsqfengbao/article/details/47121489">剑指Offer面试题9（java版）斐波那契数列</a></p>
+<p><a href="http://blog.csdn.net/dadoneo/article/details/6776272">O(logn)时间复杂度求Fibonacci数列</a></p>
+<p><a href="http://www.xuebuyuan.com/1959920.html">剑指offer第9题及扩展 斐波那契数列</a></p>
+</blockquote>
+<h1 id="_2">题意</h1>
+<hr />
+<p>题目描述</p>
+<p>大家都知道斐波那契数列，
+现在要求输入一个整数n，
+请你输出斐波那契数列的第n项。</p>
+<h1 id="_3">递推公式</h1>
+<hr />
+<p>我们很容易的想到了递推公式$f(n) =$ 
+<em>    $=0, 当n=0$
+</em>    $=1, 当n=1$
+*    $=f(n - 1) + f(n - 2), 其他$
+因此我们马上想到了如下递归代码</p>
+<pre><code class="cpp">    int Fibonacci(int n)
+	{
+		if(n &lt;= 1)
+		{
+			return n;
+		}
+		else
+		{
+			return Fibonacci(n - 1) + Fibonacci(n - 2);
+		}
+	}
+</code></pre>
+
+<p>但是很抱歉StackOverFlow了。
+事实上，用递归的方法计算的时间复杂度是以n的指数的方式递增的。读者不妨求Fibonacci的第100项..</p>
+<h1 id="-on">递归展开--迭代方法$O(N)$</h1>
+<hr />
+<p>因此我们只能用最普通的方法，将递推公式进行展开</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+
+public:
+	int Fibonacci(int n)
+	{
+		if(n &lt;= 1)
+		{
+			return n;
+		}
+		long one = 0;
+		long two = 1;;
+		long res = 0;
+
+		for(int i = 2; i &lt;= n; i++)
+		{
+			res = one + two;
+
+			one = two;
+			two = res;
+		}
+
+		return res;
+	}
+};
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.Fibonacci(3) &lt;&lt;endl;;
+
+	return 0;
+}
+
+</code></pre>
+
+<p>这个算法这还不是最快的方法。下面介绍一种时间复杂度是O(logn)的方法。</p>
+<h1 id="ologn">时间复杂度是O(logn)的但是不够实用的算法</h1>
+<hr />
+<p>在介绍这种方法之前，先介绍一个数学公式：</p>
+<p>{f(n), f(n-1), f(n-1), f(n-2)} ={1, 1, 1,0}n-1</p>
+<p>(注：{f(n+1), f(n), f(n), f(n-1)}表示一个矩阵。在矩阵中第一行第一列是f(n+1)，第一行第二列是f(n)，第二行第一列是f(n)，第二行第二列是f(n-1)。)</p>
+<p>有了这个公式，要求得f(n)，我们只需要求得矩阵{1, 1, 1,0}的n-1次方，因为矩阵{1, 1, 1,0}的n-1次方的结果的第一行第一列就是f(n)。这个数学公式用数学归纳法不难证明。感兴趣的朋友不妨自己证明一下。</p>
+<p>现在的问题转换为求矩阵{1, 1, 1, 0}的乘方。如果简单第从0开始循环，n次方将需要n次运算，并不比前面的方法要快。但我们可以考虑乘方的如下性质：</p>
+<pre><code>
+		/  an/2*an/2                      n为偶数时
+an=
+		\  a(n-1)/2*a(n-1)/2            n为奇数时
+
+</code></pre>
+
+<p>要求得n次方，我们先求得n/2次方，再把n/2的结果平方一下。如果把求n次方的问题看成一个大问题，把求n/2看成一个较小的问题。这种把大问题分解成一个或多个小问题的思路我们称之为<strong>分治法</strong>。这样求n次方就只需要logn次运算了。</p>
+<p>实现这种方式时，首先需要定义一个2×2的矩阵，并且定义好矩阵的乘法以及乘方运算。当这些运算定义好了之后，剩下的事情就变得非常简单。完整的实现代码如下所示。</p>
+<p>原理：
+观察: a(n)  = a(n - 1) + a(n - 2)
+				  = 2 * a(n - 2) + a  (n - 3)
+				  = 3 * a(n - 3) + 2 * a(n - 4)
+				  = 5 * a(n - 4) + 3 * a(n - 5)
+				  = ... ...
+				  = a(k)  *  a(n - k + 1) + a(k - 1) * a(n - k)
+1、若令 n = 2k
+	 得 a(2k) = a(k)  * a(k + 1) + a(k-1) * a(k)
+				   = a(k) * [a(k) + a(k - 1)] + a(k-1) * a(k)
+				   = a(k) ^ 2 + 2 * a(k)  *  a(k - 1) 
+2、若令 n = 2k - 1 
+	 得 a(2k - 1) = a(k) * a(k) + a(k - 1)  * a(k - 1) 
+						 = a(k)  ^ 2 +  a(k - 1) ^ 2</p>
+<p>代码如下</p>
+<pre><code class="cpp">
+#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+public :
+	static int pre;
+	static int post;
+	int temp;
+	int Fibonacci(int n)
+	{
+		/**
+		 * 每次Fibonacci调用结束后:
+		 *      pre:  存的都是Fibonacci(n)的值
+		 *      post: 存的都是Fibonacci(n-1)的值
+		 */
+
+		// if   n = 0            #=&gt; 0
+		// else n = 1 || n = 2   #=&gt; 1
+		if(n &lt;= 2)
+		{
+			if (n == 0) return 0;
+			pre = 1;
+			post = 1;
+			return pre;
+		}
+
+		// n 为奇数， 则做减一操作， 函数回调时
+		//        pre：        f(n) = f(n - 1) + f(n - 2)
+		//        post：   f(n - 1) = f(n) - f(n - 2)
+		if(n%2 == 1)
+		{
+			Fibonacci(n-1);
+			pre = pre + post;
+			post = pre - post;
+			return pre;
+		}
+
+		// n为偶数时不断除二
+		// 函数回调时,f(n) 通过 f(n/2) 来计算:
+		//
+		//  设 n = 2k：
+		//          f(2k) = f(k)  * f(k + 1) + f(k-1) * f(k)
+		//                = f(k) * [f(k) + f(k - 1)] + f(k-1) * f(k)
+		//                = f(k) ^ 2 + 2 * f(k) * f(k - 1)
+		// 设 n = 2k-1：
+		//      f(2k - 1) = f(k) * f(k) + f(k - 1)  * f(k - 1)
+		//                = f(k)^2 + f(k - 1)^2
+		//
+		Fibonacci(n/2);
+		temp = pre;
+		// f(2k) = f(k)^2 + 2 * f(k) * f(k - 1)
+		pre = pre * pre + 2 * pre * post;
+		// f(2k - 1) = f(k) * f(k) + f(k - 1) * f(k - 1)
+		post = temp*temp + post*post;
+		return pre;
+	}
+};
+
+int Solution::pre = 0;
+int Solution::post = 0;
+
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.Fibonacci(3) &lt;&lt;endl;;
+
+	return 0;
+}
+
+</code></pre>
+
+<h1 id="-">扩展一--跳台阶</h1>
+<hr />
+<h2 id="_4">题目描述</h2>
+<hr />
+<p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+<h2 id="_5">分析</h2>
+<hr />
+<p>每次只能跳一级或者跳两级，那么调N个台阶就可以分解为</p>
+<ul>
+<li>
+<p>先跳1级，然后剩余的是跳一个$N - 1$级的台阶，</p>
+</li>
+<li>
+<p>先跳2级，然后剩余的是跳一个$N - 2$级的台阶，</p>
+</li>
+</ul>
+<p>那么它的递推公式为</p>
+<ul>
+<li>$=0, 当n=0$</li>
+<li>$=1, 当n=1$</li>
+<li>$=2, 当n=2$</li>
+<li>$=f(n - 1) + f(n - 2), 其他$</li>
+</ul>
+<h2 id="_6">代码</h2>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+
+public:
+	int jumpFloor(int n)
+	{
+		if(n &lt;= 2)
+		{
+			return n;
+		}
+		long one = 1;
+		long two = 2;;
+		long res = 0;
+
+		for(int i = 3; i &lt;= n; i++)
+		{
+			res = one + two;
+
+			one = two;
+			two = res;
+		}
+
+		return res;
+	}
+
+
+};
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.jumpFloor(2) &lt;&lt;endl;;
+
+	return 0;
+}
+
+</code></pre>
+
+<h1 id="-_1">扩展二--变态跳台阶</h1>
+<hr />
+<h2 id="_7">题目描述</h2>
+<hr />
+<blockquote>
+<p>一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+</blockquote>
+<h2 id="_8">分析</h2>
+<hr />
+<p>关于本题，前提是n个台阶会有一次n阶的跳法。分析如下:</p>
+<blockquote>
+<p>f(1) = 1
+f(2) = f(2-1) + f(2-2)         //f(2-2) 表示2阶一次跳2阶的次数。
+f(3) = f(3-1) + f(3-2) + f(3-3) 
+...
+f(n) = f(n-1) + f(n-2) + f(n-3) + ... + f(n-(n-1)) + f(n-n) </p>
+</blockquote>
+<p>说明： </p>
+<ol>
+<li>
+<p>这里的f(n) 代表的是n个台阶有一次1,2,...n阶的 跳法数。</p>
+<p>.   n = 1时，只有1种跳法，f(1) = 1</p>
+<p>.   n = 2时，会有两个跳得方式，一次1阶或者2阶，这回归到了问题（1） ，f(2) = f(2-1) + f(2-2) </p>
+<p>.   n = 3时，会有三种跳得方式，1阶、2阶、3阶，
+那么就是第一次跳出1阶后面剩下：f(3-1);第一次跳出2阶，剩下f(3-2)；第一次3阶，那么剩下f(3-3)
+因此结论是f(3) = f(3-1)+f(3-2)+f(3-3)</p>
+<p>.   n = n时，会有n中跳的方式，1阶、2阶...n阶，得出结论：
+f(n) = f(n-1)+f(n-2)+...+f(n-(n-1)) + f(n-n) =&gt; f(0) + f(1) + f(2) + f(3) + ... + f(n-1)</p>
+<p>.   由以上已经是一种结论，但是为了简单，我们可以继续简化：
+f(n-1) = f(0) + f(1)+f(2)+f(3) + ... + f((n-1)-1) = f(0) + f(1) + f(2) + f(3) + ... + f(n-2)
+f(n) = f(0) + f(1) + f(2) + f(3) + ... + f(n-2) + f(n-1) = f(n-1) + f(n-1)
+可以得出：
+ $ f(n) = 2*f(n-1)$</p>
+<p>.   得出最终结论,在n阶台阶，一次有1、2、...n阶的跳的方式时，总得跳法为：</p>
+<pre><code>1       ,(n=0 )
+
+1       ,(n=1 )
+
+2*f(n-1),(n&gt;=2)
+</code></pre>
+</li>
+</ol>
+<h2 id="_9">代码</h2>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+
+public :
+	int jumpFloorII(int target)
+	{
+		if (target &lt;= 0)
+		{
+			return -1;
+		}
+		else if (target == 1)
+		{
+			return 1;
+		}
+		else
+		{
+			return 2 * jumpFloorII(target - 1);
+		}
+	}
+};
+
+
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.jumpFloorII(2) &lt;&lt;endl;;
+
+	return 0;
+}
+
+</code></pre>
+
+<p>或者</p>
+<pre><code class="cpp">class Solution
+{
+
+public :
+	int jumpFloorII(int target)
+	{
+		if (target &lt;= 0)
+		{
+			return -1;
+		}
+		else
+		{
+			return pow(2, target - 1);
+		}
+	}
+};
+</code></pre>
+
+<p>或者更高效的</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+
+public :
+	int jumpFloorII(int target)
+	{
+		long long ret;
+		if(target &gt;= 32)//大于4字节后，需要分两次移位，否则出错
+		{
+			ret = 1 &lt;&lt; 30;
+			ret = ret &lt;&lt; (target - 31);
+		}
+		else
+		{
+			ret = 1 &lt;&lt; (target - 1);
+		}
+
+		return ret;
+	}
+};
+
+
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.jumpFloorII(2) &lt;&lt;endl;;
+
+	return 0;
+}
+
+</code></pre>
+
+<h1 id="-_2">扩展三--矩形覆盖</h1>
+<hr />
+<h2 id="_10">题目描述</h2>
+<hr />
+<p>我们可以用2<em>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2</em>1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
+<h2 id="_11">分析</h2>
+<hr />
+<p>2*n的矩形方法数定义为f(n). </p>
+<p>第一个2*1的小矩形覆盖大矩形的左边，</p>
+<ul>
+<li>
+<p>要么竖着放，转化成f(n-1),</p>
+<pre><code>要么横着放两次，转化成f(n-2),
+</code></pre>
+</li>
+</ul>
+<p>因此f(n) = f(n-1) + f(n-2)</p>
+<ul>
+<li>
+<p>1 n = 0</p>
+<pre><code>1 n = 1
+
+f(n - 1) + f(n - 2)
+</code></pre>
+</li>
+</ul>
+<h2 id="_12">代码</h2>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+
+public:
+	int rectCover(int n)
+	{
+		if(n  == 0)
+		{
+			return 1;
+		}
+		else if(n == 1)
+		{
+			return 1;
+		}
+
+		long one = 1;
+		long two = 1;
+		long res = 0;
+
+		for(int i = 2; i &lt;= n; i++)
+		{
+			res = one + two;
+
+			one = two;
+			two = res;
+		}
+
+		return res;
+	}
+
+
+};
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.rectCover(2) &lt;&lt;endl;;
+
+	return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

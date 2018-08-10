@@ -1,0 +1,790 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>markdown 绘图插件 mermaid</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="markdown-mermaid">markdown 绘图插件 mermaid</h1>
+<hr />
+<p>原文：https://blog.csdn.net/wangyaninglm/article/details/52887045</p>
+<p>原文： http://www.sysctl.me/2017/11/11/Draw%20Diagrams%20With%20Markdown/</p>
+<h2 id="flowchart">流程图(flowchart)</h2>
+<pre><code class="Sh">graph LR;  %% 从左到右
+　　A--&gt;B;    
+　　A--&gt;C;  
+　　B--&gt;D;  
+　　C--&gt;D;
+</code></pre>
+
+<p>效果如下【即时渲染】：</p>
+<div class="mermaid">graph LR;  %% 从左到右
+　　A-->B;    
+　　A-->C;  
+　　B-->D;  
+　　C-->D;
+</div>
+
+<h2 id="sequence-diagram">时序图(Sequence diagram)</h2>
+<pre><code class="shell">sequenceDiagram
+　　　participant Alice  %% 先给两个参与者
+　　　participant Bob
+　　　Alice-&gt;John:Hello John, how are you?
+　　　loop Healthcheck     % 自循环[标题]
+　　　　　John-&gt;John:Fight against hypochondria % 自循环内容
+　　　end
+　　　Note right of John:Rational thoughts &lt;br/&gt;prevail... % 右边注释
+　　　John--&gt;Alice:Great!      % -&gt; 实线；  --&gt; 虚线
+　　　John-&gt;Bob: How about you?
+　　　Bob--&gt;John: Jolly good!
+</code></pre>
+
+<p>生成的图表如下所示：</p>
+<div class="mermaid">sequenceDiagram
+　　　participant Alice
+　　　participant Bob
+　　　Alice->John:Hello John, how are you?
+　　　loop Healthcheck
+　　　　　John->John:Fight against hypochondria
+　　　end
+　　　Note right of John:Rational thoughts &lt;br/>prevail...
+　　　John-->Alice:Great!
+　　　John->Bob: How about you?
+　　　Bob-->John: Jolly good!
+</div>
+
+<h2 id="gantt-diagram">甘特图（gantt diagram）</h2>
+<p>这种图，主要是为了完成任务的</p>
+<pre><code class="shell">gantt
+　　　dateFormat　YYYY-MM-DD  % 日期格式
+　　　title Adding GANTT diagram functionality to mermaid % 标题
+　　　section A section       % 上面的一部分
+　　　Completed task　　:done, des1, 2014-01-06,2014-01-08 % 【起始， 终止】
+　　　Active task 　　　　:active, des2, 2014-01-09, 3d    % [起始，之后的时长]
+　　　future task 　　　　:　　　  des3, after des2, 5d    % [起始des2 的后面, 之后持续5天]
+　　　future task2　　　　:　　　  des4, after des3, 5d    % 
+　　　section Critical tasks
+　　　Completed task in the critical line　:crit, done, 2014-01-06,24h % crit 会变红
+　　　Implement parser and json　　　　　　:crit, done, after des1, 2d   
+　　　Create tests for parser　　　　　　　:crit, active, 3d % 默认继上一天之后，持续3天
+　　　Future task in critical line　　　　　:crit, 5d        % 默认继上一天之后，持续5天
+　　　Create tests for renderer　　　　　　:crit,2d
+　　　Add to ,mermaid　　　　　　　　　　　:1d
+</code></pre>
+
+<p>生成的表如下：</p>
+<div class="mermaid">gantt
+　　　dateFormat　YYYY-MM-DD
+　　　title Adding GANTT diagram functionality to mermaid
+　　　section A section
+　　　Completed task　　:done, des1, 2014-01-06,2014-01-08
+　　　Active task 　　　　:active, des2, 2014-01-09, 3d
+　　　future task 　　　　:　　　  des3, after des2, 5d
+　　　future task2　　　　:　　　  des4, after des3, 5d
+　　　section Critical tasks
+　　　Completed task in the critical line　:crit, done, 2014-01-06,24h
+　　　Implement parser and json　　　　　　:crit, done, after des1, 2d
+　　　Create tests for parser　　　　　　　:crit, active, 3d
+　　　Future task in critical line　　　　　:crit, 5d
+　　　Create tests for renderer　　　　　　:2d
+　　　Add to ,mermaid　　　　　　　　　　　:1d
+</div>
+
+<h2 id="_1">下游项目</h2>
+<p>Mermaid 是由Knut Sveidqbist发起旨在轻便化的文档撰写。所有开发者:<a href="https://github.com/knsv/mermaid/graphs/contributors">开发者列表</a></p>
+<ul>
+<li><a href="https://github.com/JozoVilcek/gitbook-plugin-mermaid">Gitbook-plugin</a></li>
+<li><a href="http://lighttable.com/">Light table</a></li>
+<li><a href="https://marketplace.atlassian.com/plugins/org.anvard.atlassian.mermaid-plugin/server/overview">Confluence plugin</a></li>
+<li><a href="http://nauvalatmaja.com/2015/01/13/rendering-mermaid-in-docpad/">Using mermaid via docpad</a></li>
+<li><a href="https://rubygems.org/gems/jekyll-mermaid/versions/1.0.0">Using mermaid in Jekvll</a></li>
+<li><a href="http://mostlyblather.com/blog/2015/05/23/mermaid-jekyll-octopress/">Using mermaid via Octopress</a></li>
+<li><a href="http://pad.haroopress.com/user.html">Mardown editor Haroopad</a></li>
+<li><a href="https://atom.io/packages/atom-mermaid">Plugin for atom</a></li>
+<li><a href="http://mdp.tylingsoft.com/">Markdown Plus</a></li>
+<li><a href="http://lightpaper.42squares.in/">LightPaper 1.2+</a></li>
+<li><a href="https://github.com/kannokanno/previm">Vim Plugin</a> 
+  以上的这些都有集成mermaid或者开发相关的插件。</li>
+</ul>
+<h2 id="_2">简单图解析</h2>
+<h3 id="graph">Graph</h3>
+<pre><code>graph TD
+	A --&gt; B
+</code></pre>
+
+<p>效果：</p>
+<div class="mermaid">graph TD
+	A --> B
+</div>
+
+<p>这是申明一个由左到右，水平向右的图。\ 
+可能方向有： </p>
+<ul>
+<li>TB - top bottom </li>
+<li>BT - bottom top </li>
+<li>RL - right left </li>
+<li>LR - left right </li>
+<li>TD - same as TB</li>
+</ul>
+<h4 id="_3">节点与形状</h4>
+<h6 id="_4">默认节点</h6>
+<blockquote>
+<p>graph LR 
+id1</p>
+</blockquote>
+<p>效果：</p>
+<div class="mermaid">graph LR 
+id1
+</div>
+
+<p>注意：’id’显示在节点内部。</p>
+<h6 id="_5">文本节点</h6>
+<pre><code class="sh">graph LR
+id[This is the text in the box];
+</code></pre>
+
+<p>效果：</p>
+<div class="mermaid">graph LR
+id[This is the text in the box];
+</div>
+
+<h6 id="_6">圆角节点</h6>
+<pre><code>graph LR
+id(This is the text in the box);
+</code></pre>
+
+<p>效果：</p>
+<div class="mermaid">graph LR
+id(This is the text in the box);
+</div>
+
+<h6 id="the-form-of-a-circle">圆节点(The form of a circle)</h6>
+<p><img alt="这里写图片描述" src="20161021234523829.jpeg" /></p>
+<pre><code>graph LR
+id((This is the text in the circle)); %% 两个圆括号
+</code></pre>
+
+<h6 id="asymetric-shape">非对称节点(asymetric shape)</h6>
+<p><img alt="这里写图片描述" src="20161021234543595.jpeg" /></p>
+<pre><code>graph LR
+id&gt;This is the text in the box]     %% 注意是id&gt; *** ]
+</code></pre>
+
+<h6 id="rhombus">菱形节点(rhombus)</h6>
+<p><img alt="这里写图片描述" src="20161021234607369.jpeg" /></p>
+<pre><code>graph LR
+id{This is the text in the box}     %% 菱形节点用的是id{}
+</code></pre>
+
+<hr />
+<h4 id="_7">连接线</h4>
+<p>节点间的连接线有多种形状，而且可以在连接线中加入标签：</p>
+<h6 id="_8">箭头形连接</h6>
+<p><img alt="这里写图片描述" src="20161021235256658.jpeg" /></p>
+<pre><code>graph LR;
+  A--&gt;B;            %% 箭头就是 --&gt;
+</code></pre>
+
+<h6 id="_9">开放行连接</h6>
+<p><img alt="img" src="20161021235317799.jpeg" /></p>
+<pre><code>graph LR
+A --- B     %% 无箭头--
+</code></pre>
+
+<h6 id="_10">标签连接</h6>
+<p><img alt="这里写图片描述" src="20161021235357770.jpeg" /></p>
+<pre><code>graph LR
+A -- This is the label text --- B;  %% 中间加标签 -- ** ---
+</code></pre>
+
+<h6 id="_11">箭头标签连接</h6>
+<blockquote>
+<p>A–&gt;|text|B
+或者
+A– text –&gt;B    %% 这种更直观</p>
+</blockquote>
+<p><img alt="这里写图片描述" src="20161022000831696.jpeg" /></p>
+<pre><code>graph LR
+ A-- text --&gt;B12
+</code></pre>
+
+<h6 id="dotted-link">虚线(dotted link,点连线)</h6>
+<blockquote>
+<p>-.-&gt;  % 带箭头的</p>
+</blockquote>
+<p><img alt="这里写图片描述" src="20161022000926713.jpeg" /></p>
+<pre><code>graph LR
+A-.-&gt;B12
+</code></pre>
+
+<blockquote>
+<p>-.-.  % 不带箭头的</p>
+</blockquote>
+<p><img alt="这里写图片描述" src="20161022000949275.jpeg" /></p>
+<pre><code>graph LR
+A-.-.B12
+</code></pre>
+
+<h6 id="_12">标签虚线</h6>
+<blockquote>
+<p>-.text.-&gt;  % 标签用虚线</p>
+</blockquote>
+<pre><code>graph LR
+A-.text.-&gt;B12
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022001052183.jpeg" /></p>
+<h6 id="_13">粗实线</h6>
+<blockquote>
+<p><mark>&gt;</p>
+</blockquote>
+<pre><code>graph LR
+A==&gt;B12
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022001112761.jpeg" /></p>
+<blockquote>
+<p></mark>=</p>
+</blockquote>
+<pre><code>graph LR
+A===B12
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022001206902.jpeg" /></p>
+<h6 id="_14">标签粗线</h6>
+<blockquote>
+<p>=\=text\<mark>&gt;</p>
+</blockquote>
+<pre><code>graph LR
+A==text==&gt;B12
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022001232918.jpeg" /></p>
+<blockquote>
+<p>=\=text\</mark>=</p>
+</blockquote>
+<pre><code>graph LR
+A==text===B12
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022001257074.jpeg" /></p>
+<hr />
+<h4 id="_15">特殊的语法</h4>
+<h5 id="_16">使用引号可以抑制一些特殊的字符的使用，可以避免一些不必要的麻烦。</h5>
+<blockquote>
+<p>graph LR
+d1[“This is the (text) in the box”]</p>
+</blockquote>
+<pre><code>graph LR
+d1[&quot;This is the (text) in the box&quot;]12
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022001504435.jpeg" /></p>
+<h5 id="html">html字符的转义字符</h5>
+<p>转义字符的使用语法： 
+流程图定义如下：</p>
+<blockquote>
+<p>graph LR\ 
+A[“A double quote:#quot;”] –&gt; B[“A dec char:#9829;”]</p>
+</blockquote>
+<p>渲染后的图如下： 
+<img alt="这里写图片描述" src="20161022001541200.jpeg" /></p>
+<pre><code>graph LR
+		A[&quot;A double quote:#quot;&quot;]--&gt;B[&quot;A dec char:#9829;&quot;] %% 特殊的 HTML 符号
+</code></pre>
+
+<h4 id="subgraphs">子图(Subgraphs)</h4>
+<blockquote>
+<p>subgraph title
+  graph definition 
+end</p>
+</blockquote>
+<p>示例：</p>
+<pre><code>graph TB
+		subgraph one
+		a1 --&gt; a2
+		end
+		subgraph two
+		b1 --&gt; b2
+		end
+		subgraph three
+		c1 --&gt; c2
+		end
+		c1 --&gt; a2
+</code></pre>
+
+<pre><code class="Mermaid">
+</code></pre>
+
+<p>结果：</p>
+<p><img alt="这里写图片描述" src="20161022001631207.jpeg" /></p>
+<h4 id="fontawesome">基础fontawesome支持</h4>
+<p>如果想加入来自frontawesome的图表字体,需要像frontawesome网站上那样引用的那样。\ 
+详情请点击：<a href="http://fontawesome.io/">fontawdsome</a></p>
+<p>引用的语法为：++fa:#icon class name#++</p>
+<pre><code>graph TD
+	  B[&quot;fa:fa-twitter for peace&quot;]
+	  B--&gt;C[fa:fa-ban forbidden]
+	  B--&gt;D(fa:fa-spinner);
+	  B--&gt;E(A fa:fa-camerra-retro perhaps?);
+</code></pre>
+
+<p>渲染图如下：</p>
+<p><img alt="这里写图片描述" src="20161022001648160.jpeg" /></p>
+<p>以上reference： 
+1.<a href="https://knsv.github.io/mermaid/#initialization">mermaid docs</a></p>
+<hr />
+<h3 id="graph_1">第二部分—图表(graph)</h3>
+<hr />
+<h5 id="_17">定义连接线的样式</h5>
+<pre><code>graph LR
+	 id1(Start)--&gt;id2(Stop)
+	 style id1 fill:#f9f,stroke:#333,stroke-width:4px;
+	 style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray:5,5;
+</code></pre>
+
+<p>渲染结果：</p>
+<p><img alt="这里写图片描述" src="20161022002151244.jpeg" /></p>
+<p>备注：这些样式参考CSS样式。</p>
+<h5 id="_18">样式类</h5>
+<p>为了方便样式的使用，可以定义类来使用样式 
+类的定义示例：</p>
+<pre><code>classDef className fill:#f9f,stroke:#333,stroke-width:4px;
+</code></pre>
+
+<p>对节点使用样式类：</p>
+<pre><code>class nodeId className;
+</code></pre>
+
+<p>同时对多个节点使用相同的样式类：</p>
+<pre><code>class nodeId1,nodeId2 className;
+</code></pre>
+
+<p>可以在CSS中提前定义样式类，应用在图表的定义中。</p>
+<pre><code>graph LR
+	  A--&gt;B[AAABBB];
+	  B--&gt;D;
+	  class A cssClass;
+</code></pre>
+
+<p>默认样式类：\ 
+当没有指定样式的时候，默认采用。</p>
+<pre><code>classDef default fill:#f9f,stroke:#333,stroke-width:4px;
+</code></pre>
+
+<p>示例：</p>
+<pre><code>graph LR
+	classDef default fill:#f90,stroke:#555,stroke-width:4px;
+	id1(Start)--&gt;id2(Stop)
+</code></pre>
+
+<p>结果：</p>
+<h2 id="_19"><img alt="这里写图片描述" src="20161022002223062.jpeg" /></h2>
+<h3 id="sequence-diagram1">序列图(sequence diagram)<a href="https://blog.csdn.net/wangyaninglm/article/details/52887045#fn:sequence">1</a></h3>
+<p><a href="https://en.wikipedia.org/wiki/Unified_Modeling_Language#Interaction_diagrams">序列图</a></p>
+<p>示例：</p>
+<pre><code>sequenceDiagram
+　　Alice-&gt;&gt;John: Hello John, how are you ?
+　　John--&gt;&gt;Alice: Great!
+　　Alice---&gt;&gt;John: Huang,you are better .
+　　John--&gt;&gt;Alice: yeah, Just not bad.
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022002549453.jpeg" /> 
+观察上面的图，如果想让John出现在前面，如何控制，mermaid通过设定参与者(participants)的顺序控制二者的顺序。上面的图可以做如下修改：</p>
+<pre><code>sequenceDiagram
+　　participant John
+　　participant Alice
+　　Alice-xJohn:Hello John,how are you?
+　　John--&gt;&gt;Alice:Great!
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022002612798.jpeg" /> 
+消息的语法： 
+　　实线或者虚线的使用： 
+[Actor][Arrow][Actor]:Message text\ </p>
+<h3 id="arrow">Arrow的六种样式：</h3>
+<ul>
+<li>-&gt;</li>
+<li>–&gt;</li>
+<li>-&gt;&gt;</li>
+<li>–&gt;&gt;</li>
+<li>-x</li>
+<li>–x</li>
+</ul>
+<p>示例：</p>
+<pre><code>sequenceDiagram
+	Alice-&gt;John: Hello John, how are you ?
+	John--&gt;Alice:Great!
+	Alice-&gt;&gt;John: dont borther me !
+	John--&gt;&gt;Alice:Great!
+	Alice-xJohn: wait!
+	John--xAlice: Ok!
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022002857083.jpeg" /></p>
+<h5 id="_20">便签</h5>
+<p>给序列图增加便签：\ 
+具体规则：\ 
+<code>[right of | left of | over][Actor]:Text</code>\ 
+示例：</p>
+<pre><code>sequenceDiagram
+　　participant John
+　　Note left of John: Text in note
+</code></pre>
+
+<p>结果：</p>
+<p><img alt="这里写图片描述" src="20161022002928022.jpeg" /></p>
+<p>跨越两个Actor的便签：</p>
+<pre><code>sequenceDiagram
+　　Alice-&gt;John:Hello John, how are you?
+　　Note over Alice,John:A typical interaction 
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022003002159.jpeg" /></p>
+<h5 id="loops">循环Loops</h5>
+<p>在序列图中，也可以使用循环，具体规则如下：</p>
+<pre><code>loop Loop text
+... statements...
+end
+</code></pre>
+
+<p>示例：</p>
+<pre><code>sequenceDiagram
+　　Alice-&gt;&gt;John: Hello!
+　　loop Reply every minute
+　　　　John-&gt;&gt;Alice:Great!
+　　end
+</code></pre>
+
+<p>渲染结果：</p>
+<p><img alt="这里写图片描述" src="20161022003209222.jpeg" /></p>
+<h5 id="alt">选择ALT</h5>
+<p>在序列图中选择的表达。规则如下：</p>
+<pre><code>alt Describing text
+...statements...
+else
+...statements...
+end
+</code></pre>
+
+<p>或者使用opt(推荐在没有else的情况下使用)</p>
+<pre><code>opt Describing text
+...statements...
+end
+</code></pre>
+
+<p>示例：</p>
+<pre><code>sequenceDiagram
+　　Alice-&gt;&gt;Bob: Hello Bob, how are you?
+　　alt is sick
+　　　　Bob-&gt;&gt;Alice:not so good :(
+　　else is well
+　　　　Bob-&gt;&gt;Alice:Feeling fresh like a daisy:)
+　　end
+　　opt Extra response
+　　　　Bob-&gt;&gt;Alice:Thanks for asking
+　　end12345678910
+</code></pre>
+
+<p>渲染结果如下：</p>
+<p><img alt="这里写图片描述" src="20161022003252848.jpeg" /></p>
+<hr />
+<h3 id="gantt2">甘特图(gantt)<a href="https://blog.csdn.net/wangyaninglm/article/details/52887045#fn:gantt">2</a></h3>
+<p>甘特图是一类条形图，由Karol Adamiechi在1896年提出, 而在1910年Henry Gantt也独立的提出了此种图形表示。通常用在对项目终端元素和总结元素的开始及完成时间进行的描述。</p>
+<p>示例：</p>
+<pre><code>gantt
+dateFormat YYYY-MM-DD
+
+section S1
+T1: 2014-01-01, 9d
+
+section S2
+T2: 2014-01-11, 9d
+
+section S3
+T3: 2014-01-02, 9d
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022003521420.jpeg" /></p>
+<p>先来看一个大的例子：</p>
+<pre><code>    gantt
+	dateFormat  YYYY-MM-DD
+	title Adding GANTT diagram functionality to mermaid
+
+	section A section
+	Completed task            :done,    des1, 2014-01-06,2014-01-08
+	Active task               :active,  des2, 2014-01-09, 3d
+	Future task               :         des3, after des2, 5d
+	Future task2               :         des4, after des3, 5d
+
+	section Critical tasks
+	Completed task in the critical line :crit, done, 2014-01-06,24h
+	Implement parser and jison          :crit, done, after des1, 2d
+	Create tests for parser             :crit, active, 3d
+	Future task in critical line        :crit, 5d
+	Create tests for renderer           :2d
+	Add to mermaid                      :1d
+
+	section Documentation
+	Describe gantt syntax               :active, a1, after des1, 3d
+	Add gantt diagram to demo page      :after a1  , 20h
+	Add another diagram to demo page    :doc1, after a1  , 48h
+
+	section Last section
+	Describe gantt syntax               :after doc1, 3d
+	Add gantt diagram to demo page      : 20h
+	Add another diagram to demo page    : 48h
+</code></pre>
+
+<p>获得的图渲染后如下： 
+<img alt="这里写图片描述" src="20161022003542911.jpeg" /></p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>header 1</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>header 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>title</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>标题</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>dateFormat</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>日期格式</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>section</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>模块</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Completed</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>已经完成</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Active</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>当前正在进行</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Future</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>后续待处理</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>crit</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>关键阶段</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>日期缺失</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>默认从上一项完成后</td>
+</tr>
+</tbody>
+</table>
+<p>关于日期的格式可以参考： 
+- <a href="http://momentjs.com/docs/#/parsing/string-format/">string-format</a> 
+- <a href="https://github.com/mbostock/d3/wiki/Time-Formatting">Time-Formatting</a></p>
+<h3 id="demo">Demo</h3>
+<pre><code>graph TB
+	sq[Square shape] --&gt; ci((Circle shape))
+
+	subgraph A subgraph
+		di{Diamond with  line break} -.-&gt; ro(Rounded)
+		di==&gt;ro2(Rounded square shape)
+	end
+
+	e --&gt; od3&gt;Really long text with linebreak&lt;br&gt;in an Odd shape]
+
+	cyr[Cyrillic]--&gt;cyr2((Circle shape Начало));
+
+	classDef green fill:#9f6,stroke:#333,stroke-width:2px;
+	classDef orange fill:#f96,stroke:#333,stroke-width:4px;
+	class sq,e green
+	class di orange
+</code></pre>
+
+<p><img alt="这里写图片描述" src="20161022003623677.jpeg" /></p>
+<h3 id="reference"><strong>reference</strong></h3>
+<p><a href="https://knsv.github.io/mermaid/">mermaid docs</a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

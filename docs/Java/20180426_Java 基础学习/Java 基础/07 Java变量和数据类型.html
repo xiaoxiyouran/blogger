@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>07 Java变量和数据类型</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="07-java">07 Java变量和数据类型</h1>
+<p>变量是一个内存位置的名称。 java中有三种类型的变量：<strong>局部变量</strong>，<strong>实例变量</strong>和<strong>静态变量</strong>。java中有两种类型的数据类型：<strong>原始数据类型</strong>和<strong>非原始数据类型</strong>。</p>
+<h2 id="_1">变量</h2>
+<p>变量是在内存中分配的保留区域的名称。换句话说，它是内存位置的名称。这意味着它的值可以改变。</p>
+<p><img alt="img" src="07_01.png" /></p>
+<pre><code class="Java">int data=50;// 这里 data 就是一个变量。
+</code></pre>
+
+<h2 id="_2">变量类型</h2>
+<p>java中有三种类型的变量：</p>
+<ul>
+<li>局部变量</li>
+<li>实例变量</li>
+<li>静态变量</li>
+</ul>
+<p><img alt="img" src="07_02.png" /></p>
+<p><strong>1)局部变量</strong></p>
+<p>在方法内声明的变量称为局部变量。</p>
+<p><strong>2)实例变量</strong></p>
+<p>在类中声明但在方法外部的变量称为实例变量。但它不被声明为静态(未加<code>static</code>修辞符)。</p>
+<p><strong>3)静态变量</strong></p>
+<p>被声明为<code>static</code>的变量(加<code>static</code>修辞符)称为静态变量。它不能是局部的。</p>
+<p>我们将在下一章中详细学习这些变量。</p>
+<p>下面看几个示例来了解java中的变量类型。</p>
+<pre><code class="java">class A{  
+	int data=50;//实例变量
+	static int m=100;// 静态变量
+	void method(){  
+		int n=90;//局部变量
+	}  
+}//end of class
+</code></pre>
+
+<h2 id="java">Java数据类型</h2>
+<p>数据类型表示要存储在变量中的不同类型的值。 在Java中，有两种类型的数据类型：</p>
+<ul>
+<li>原始数据类型</li>
+<li>非原始数据类型</li>
+</ul>
+<p><img alt="img" src="07_03.png" /></p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>数据类型</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>默认值</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>默认长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>boolean</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>false</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>1 bit</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>char</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>'\u0000'</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2 byte</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>byte</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1 byte</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>short</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2 byte</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>int</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4 byte</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>long</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0L</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8 byte</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>float</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0.0f</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4 byte</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>double</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0.0d</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8 byte</td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么char在java中使用2个字节以及什么是\u0000？</strong></p>
+<p>这是因为java使用<code>Unicode</code>系统而非<code>ASCII</code>码系统编码。 <code>\u0000</code>是Unicode系统的最低范围。要了解有关Unicode的详细说明，请访问下一页。</p>
+<h3 id="java_1">Java变量示例：两个数字相加</h3>
+<pre><code class="java">class Simple{  
+	public static void main(String[] args){  
+		int a = 10;  
+		int b = 10;  
+		int c = a + b;  
+		System.out.println(c);  
+	}
+}
+</code></pre>
+
+<p>输出结果：</p>
+<pre><code class="shell">20
+</code></pre>
+
+<h3 id="java_2">Java变量示例：加宽</h3>
+<pre><code class="java">class Simple{  
+	public static void main(String[] args){  
+		int a=10;  
+		float f=a;  
+		System.out.println(a);  
+		System.out.println(f);  
+	}
+}
+</code></pre>
+
+<p>输出结果：</p>
+<pre><code class="shell">10
+10.0
+</code></pre>
+
+<h3 id="java_3">Java变量示例：缩小(转换)</h3>
+<pre><code class="Java">class Simple{  
+	public static void main(String[] args){  
+		float f=10.5f;  
+		//int a=f;                  //Compile time error  
+		int a=(int)f;               /// 范围缩小，必须显示强转
+		System.out.println(f);  
+		System.out.println(a);  
+	}
+}
+</code></pre>
+
+<p>输出结果：</p>
+<pre><code class="shell">10.5
+10
+</code></pre>
+
+<h3 id="java_4">Java变量示例：溢出</h3>
+<pre><code class="java">class Simple{  
+	public static void main(String[] args){  
+		//Overflow  
+		int a=130;  
+		byte b=(byte)a;  
+		System.out.println(a);  
+		System.out.println(b);  
+	}
+}
+</code></pre>
+
+<p>输出结果：</p>
+<pre><code class="shell">130
+-126
+</code></pre>
+
+<h3 id="java_5">Java变量示例：较低类型相加</h3>
+<pre><code class="java">class Simple{  
+	public static void main(String[] args){  
+		byte a=10;  
+		byte b=10;  
+		//byte c=a+b;           //Compile Time Error: because a+b=20 will be int  
+		byte c=(byte)(a+b);     // must with two()
+		System.out.println(c);  
+	}
+}
+</code></pre>
+
+<p>输出结果：</p>
+<pre><code class="shell">20
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

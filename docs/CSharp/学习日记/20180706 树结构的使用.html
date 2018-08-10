@@ -1,0 +1,963 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180706 树结构的使用</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180706">20180706 树结构的使用</h1>
+<p>```c#
+using System.Collections.Generic;
+using UnityEngine;
+using XJson.Json;
+using System.IO;
+using System;
+using System.Collections; //file使用Hashtable时，必须引入这个命名空间
+using System.Reflection;    // reflection
+//------------------------------------------------------------------------------
+/**
+	@file   : LangBuildCfg</p>
+<pre><code>@brief  :
+
+@date   : 4/13/2018 3:04:51 PM
+
+@author : fishdai
+</code></pre>
+<p>*/
+//------------------------------------------------------------------------------</p>
+<p>//public class LangBase
+//{</p>
+<p>//}</p>
+<p>public class LangBuildCfgUnit{
+	// default ctor
+	public LangBuildCfgUnit() {</p>
+<pre><code>}
+// copy ctor
+public LangBuildCfgUnit(LangBuildCfgUnit copy)
+{
+	base_name = copy.base_name;
+	name = copy.name;
+	channelResCfgPath = copy.channelResCfgPath;
+
+	// deep-copy array
+
+	macro = new string[copy.macro.Length];
+	copy.macro.CopyTo(macro, 0);
+
+	useObb = copy.useObb;
+	enablePuffer = copy.enablePuffer;
+	androidBundleName = copy.androidBundleName;
+	commonDeleteFiles = copy.commonDeleteFiles;
+
+	// deep-copy Directory
+	//Dictionary&lt;string, string&gt; tmp_androidDeleteFiles
+	androidDeleteFiles  = new Dictionary&lt;string, string&gt;();
+	if (copy.androidDeleteFiles != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.androidDeleteFiles)
+		{
+			androidDeleteFiles.Add(kvp.Key, kvp.Value);
+		}
+	}
+	//androidDeleteFiles = tmp_androidDeleteFiles;
+
+
+	// deep-copy Directory
+	iosDeleteFiles = new Dictionary&lt;string, string&gt;();
+	if (copy.iosDeleteFiles != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.iosDeleteFiles)
+		{
+			iosDeleteFiles.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	commonDeleteFolders = new Dictionary&lt;string, string&gt;();
+	if (copy.commonDeleteFolders != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.commonDeleteFolders)
+		{
+			commonDeleteFolders.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	androidDeleteFolders = new Dictionary&lt;string, string&gt;();
+	if (copy.androidDeleteFolders != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.androidDeleteFolders)
+		{
+			androidDeleteFolders.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	iosDeleteFolders = new Dictionary&lt;string, string&gt;();
+	if (copy.iosDeleteFolders != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.iosDeleteFolders)
+		{
+			iosDeleteFolders.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	commonReplaceFiles = new Dictionary&lt;string, string&gt;();
+	if (copy.commonReplaceFiles != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.commonReplaceFiles)
+		{
+			commonReplaceFiles.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	androidReplaceFiles = new Dictionary&lt;string, string&gt;();
+	if (copy.androidReplaceFiles != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.androidReplaceFiles)
+		{
+			androidReplaceFiles.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	iosReplaceFiles = new Dictionary&lt;string, string&gt;();
+	if (copy.iosReplaceFiles != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.iosReplaceFiles)
+		{
+			iosReplaceFiles.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	commonReplaceFolders = new Dictionary&lt;string, string&gt;();
+	if (copy.commonReplaceFolders != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.commonReplaceFolders)
+		{
+			commonReplaceFolders.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	androidReplaceFolders = new Dictionary&lt;string, string&gt;();
+	if (copy.androidReplaceFolders != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.androidReplaceFolders)
+		{
+			androidReplaceFolders.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+	// deep-copy Directory
+	iosReplaceFolders = new Dictionary&lt;string, string&gt;();
+	if (copy.iosReplaceFolders != null)
+	{
+		foreach (KeyValuePair&lt;string, string&gt; kvp in copy.iosReplaceFolders)
+		{
+			iosReplaceFolders.Add(kvp.Key, kvp.Value);
+		}
+	}
+
+
+	androidMultidexFile = copy.androidMultidexFile;
+
+}
+
+private string m_base;
+public string base_name
+{
+	get
+	{
+		return m_base;
+	}
+	set
+	{
+		m_base = value;
+	}
+}
+
+
+private string m_name;
+public string name
+{
+	get
+	{
+		return m_name;
+	}
+	set
+	{
+		m_name = value;
+	}
+}
+
+private string m_channelResCfgPath;
+public string channelResCfgPath
+{
+	get
+	{
+		return m_channelResCfgPath;
+	}
+	set
+	{
+		m_channelResCfgPath = value;
+	}
+}
+
+private string[] m_macro;
+public string[] macro
+{
+	get
+	{
+		return m_macro;
+	}
+	set
+	{
+		m_macro = value;
+	}
+}
+
+private bool m_useObb ;
+public bool useObb
+{
+	get
+	{
+		return m_useObb;
+	}
+	set
+	{
+		m_useObb = value;
+	}
+}
+
+private bool m_enablePuffer;
+public bool enablePuffer
+{
+	get
+	{
+		return m_enablePuffer;
+	}
+	set
+	{
+		m_enablePuffer = value;
+	}
+}
+
+
+private string m_androidBundleName;
+public string androidBundleName
+{
+	get
+	{
+		return m_androidBundleName;
+	}
+	set
+	{
+		m_androidBundleName = value;
+	}
+}
+
+
+// key-目标文件路径 (相对于Assets)
+// value- 相对于languageFiles目录 
+// 先delete后replace
+// delete 
+private Dictionary&lt;string, string&gt; m_commonDeleteFiles;
+public Dictionary&lt;string, string&gt; commonDeleteFiles
+{
+	get { return m_commonDeleteFiles; }
+	set { m_commonDeleteFiles = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_androidDeleteFiles;
+public Dictionary&lt;string, string&gt; androidDeleteFiles
+{
+	get { return m_androidDeleteFiles; }
+	set { m_androidDeleteFiles = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_iOSDeleteFiles;
+public Dictionary&lt;string, string&gt; iosDeleteFiles
+{
+	get { return m_iOSDeleteFiles; }
+	set { m_iOSDeleteFiles = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_commonDeleteFolders;
+public Dictionary&lt;string, string&gt; commonDeleteFolders
+{
+	get { return m_commonDeleteFolders; }
+	set { m_commonDeleteFolders = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_androidDeleteFolders;
+public Dictionary&lt;string, string&gt; androidDeleteFolders
+{
+	get { return m_androidDeleteFolders; }
+	set { m_androidDeleteFolders = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_iOSDeleteFolders;
+public Dictionary&lt;string, string&gt; iosDeleteFolders
+{
+	get { return m_iOSDeleteFolders; }
+	set { m_iOSDeleteFolders = value; }
+}
+
+// replace
+private Dictionary&lt;string, string&gt; m_commonReplaceFiles;
+public Dictionary&lt;string, string&gt; commonReplaceFiles
+{
+	get { return m_commonReplaceFiles; }
+	set { m_commonReplaceFiles = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_androidReplaceFiles;
+public Dictionary&lt;string, string&gt; androidReplaceFiles
+{
+	get { return m_androidReplaceFiles; }
+	set { m_androidReplaceFiles = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_iOSReplaceFiles;
+public Dictionary&lt;string, string&gt; iosReplaceFiles
+{
+	get { return m_iOSReplaceFiles; }
+	set { m_iOSReplaceFiles = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_commonReplaceFolders;
+public Dictionary&lt;string, string&gt; commonReplaceFolders
+{
+	get { return m_commonReplaceFolders; }
+	set { m_commonReplaceFolders = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_androidReplaceFolders;
+public Dictionary&lt;string, string&gt; androidReplaceFolders
+{
+	get { return m_androidReplaceFolders; }
+	set { m_androidReplaceFolders = value; }
+}
+
+private Dictionary&lt;string, string&gt; m_iOSReplaceFolders;
+public Dictionary&lt;string, string&gt; iosReplaceFolders
+{
+	get { return m_iOSReplaceFolders; }
+	set { m_iOSReplaceFolders = value; }
+}
+
+private string m_androidMultidexFile;
+public string androidMultidexFile
+{
+	get { return m_androidMultidexFile; }
+	set { m_androidMultidexFile = value; }
+}
+
+static LangBuildCfgUnit s_default;
+public static LangBuildCfgUnit Default
+{
+	get
+	{
+		if (s_default == null)
+		{
+			s_default = new LangBuildCfgUnit();
+			s_default.name = "default";
+			s_default.channelResCfgPath = "Garena/channel_res_cfg.json";
+			s_default.useObb = false;
+			s_default.macro = new string[]
+				{
+					"INTERNATIONAL_CHT",        // 繁中
+					"INTERNATIONAL_GARENA_EN",  // 英
+					"INTERNATIONAL_THA",        // 泰
+					"INTERNATIONAL_IDN",        // 印尼
+					"INTERNATIONAL_GARENA",
+				};
+		}
+
+		return s_default;
+	}
+}
+</code></pre>
+<p>}</p>
+<p>public class tree
+{
+	public int level; 
+	public string value;
+	public tree father;
+	public List<tree> child;</p>
+<pre><code>public tree(string treeValue)
+{
+	value = treeValue;
+}
+</code></pre>
+<p>}</p>
+<p>public class LangBuildCfg
+{
+	public const string ENV_KEY = "LANG_BUILD";
+	public const string DEFAULT_ENV_VALUE = "garena_southeast_asia";</p>
+<pre><code>[JsonIgnore]
+private ChannelResCfgMeta m_crcm = null;
+
+private Dictionary&lt;string, LangBuildCfgUnit&gt; m_build;
+public Dictionary&lt;string, LangBuildCfgUnit&gt; build
+{
+	get
+	{
+		return m_build;
+	}
+	set
+	{
+		m_build = value;
+	}
+}
+
+/// &lt;summary&gt;
+/// 获取类中的属性值
+/// &lt;/summary&gt;
+public static string GetModelValue(string FieldName, object obj)
+{
+	try
+	{
+		Type Ts = obj.GetType();
+		object o = Ts.GetProperty(FieldName).GetValue(obj, null);
+		string Value = Convert.ToString(o);
+		if (string.IsNullOrEmpty(Convert.ToString(o))) return null;
+		return Value;
+	}
+	catch(System.Exception e)
+	{
+		throw e;
+	}
+}
+
+/// &lt;summary&gt;
+/// 设置类中的属性值
+/// &lt;/summary&gt;
+public static bool SetModelValue(string FieldName, string Value, object obj)
+{
+	try
+	{
+		Debug.Log(FieldName);
+		Type Ts = obj.GetType();
+		object v = Convert.ChangeType(Value, Ts.GetProperty(FieldName).PropertyType);
+		Ts.GetProperty(FieldName).SetValue(obj, v, null);
+		return true;
+	}
+	catch(System.Exception e)
+	{
+		throw e;
+	}
+}
+
+static LangBuildCfgUnit generateThroughTemplate(LangBuildCfgUnit template, LangBuildCfgUnit alter, string curKey, ref Hashtable ht, string path) {
+	LangBuildCfgUnit generate = new LangBuildCfgUnit(template); // create a new object
+	string curReSet = (string)ht[curKey];
+
+	Type t = typeof(LangBuildCfgUnit);
+	PropertyInfo[] properties = t.GetProperties();              // need using System.Reflection
+	foreach (PropertyInfo property in properties)
+	{
+		string FieldName = property.Name;
+		if (property.PropertyType.Equals(typeof(bool)))
+		{
+			if (curReSet.Contains(FieldName))
+			{
+				string value = GetModelValue(FieldName, alter);
+				try
+				{
+					SetModelValue(FieldName, value, generate);
+				}
+				catch (System.Exception e)
+				{
+					Logger.LogErrorP(string.Format("Load LangMacroCfg failed. {0}, {1}", path, e.ToString()));
+					return null;
+				}
+			}
+
+		}
+		else
+		{
+			string value = GetModelValue(FieldName, alter);
+			int res_cmp = String.Compare(FieldName, "Default");
+			if ( value != null &amp;&amp; ( res_cmp != 0 ) )        // Default property need to skip
+			{
+				try
+				{
+					SetModelValue(FieldName, value, generate);
+				}
+				catch (System.Exception e)
+				{
+					Logger.LogErrorP(string.Format("Load LangMacroCfg failed. {0}, {1}", path, e.ToString()));
+					return null;
+				}
+			}
+		}
+
+	}
+
+	return generate;
+}
+
+static LangBuildCfg Load()
+{
+	string path = Application.dataPath + "/Languages/build_define.json";
+	try
+	{
+		string content = File.ReadAllText(path);
+
+		JsonReaderSettings set = new JsonReaderSettings();
+		set.TypeHintName = null;
+		set.AllowNullValueTypes = true;
+		set.AllowUnquotedObjectKeys = false;
+		JsonReader jsonReader = new JsonReader(content, set);
+
+		LangBuildCfg cfg = jsonReader.Deserialize&lt;LangBuildCfg&gt;();
+		Dictionary&lt;string, LangBuildCfgUnit&gt; build_content = cfg.build;
+
+		List&lt;string&gt; keys = new List&lt;string&gt;();
+		foreach (string item in build_content.Keys)
+		{
+			keys.Add(item);
+		}
+
+		string[] eachLine = content.Split('\n');
+
+		Hashtable keyLineNo = new Hashtable();          //创建一个Hashtable实例
+		for (int i = 0; i &lt; eachLine.Length; i++)
+		{
+			string tmpLine = eachLine[i].Trim();
+			for (int j = 0; j &lt; keys.Count; j++)
+			{   
+				string begin = "\"" + keys[j] + "\"";
+				if (tmpLine.StartsWith(begin))
+				{
+					keyLineNo.Add(keys[j], i);
+				}
+			}
+		}
+
+		string[] arrKey = new string[keyLineNo.Count];  //暂存 Hashtable 的键
+		int[] arrValue = new int[keyLineNo.Count];      //暂存 Hashtable 的值
+
+		keyLineNo.Keys.CopyTo(arrKey, 0);
+		keyLineNo.Values.CopyTo(arrValue, 0);
+
+		Array.Sort(arrValue, arrKey);                   //按 HashTable 的值排序
+
+		Hashtable ht = new Hashtable();                 //创建一个Hashtable实例
+		for (int i = 0; i &lt; arrKey.Length; i++) {
+			string[] Slice;
+			if (i &lt; arrKey.Length - 1)
+			{
+				Slice = new List&lt;string&gt;(eachLine).GetRange(arrValue[i], arrValue[i + 1] - arrValue[i]).ToArray();
+			}
+			else                                        // Last config
+			{
+				Slice = new List&lt;string&gt;(eachLine).GetRange(arrValue[i], eachLine.Length - arrValue[i]).ToArray();
+			}
+			ht.Add(arrKey[i], String.Join('\n'.ToString(), Slice));
+		}
+
+		//LinkedList&lt;string&gt; inheritLL = new LinkedList&lt;string &gt;();
+		//foreach (string key in build_content.Keys)
+		//{
+		//    string template = build_content[key].base_name;
+		//    if (template != null)
+		//    {
+		//        if (inheritLL.Contains(template))
+		//        {
+
+		//        }
+		//    }
+		//}
+
+			tree head = new tree("Root");
+		//tree head = new tree("Root");
+		head.child = new List&lt;tree&gt;();
+		head.level = 0;
+		//head.father = null;
+		foreach (string key in build_content.Keys)
+		{
+			string template = build_content[key].base_name;
+			// 创建当前key节点
+			tree curTree = new tree(key);
+			if (template != null)
+			{
+				// 将当前cur 节点添加到 搜索到的 节点（如果搜索完还没有找到，先创建，再添加）
+				List&lt;tree&gt; find = new List&lt;tree&gt;();
+				FindTree(head, template, ref find);
+				if (find.Count == 0)
+				{
+					// 检查，子节点声明的顺序如果在父节点之前，就会报错
+					List&lt;tree&gt; findChild = new List&lt;tree&gt;();
+					FindTree(head, key, ref findChild);
+					if (findChild.Count != 0)
+					{
+						Logger.LogErrorP(string.Format("Load LangMacroCfg failed. {0}, {1}", path, @"the statement of child node should be after father node"));
+					}
+
+					tree tempTree = new tree(template);
+					tempTree.level = head.level + 1;
+					if (tempTree.child == null)
+					{
+						tempTree.child = new List&lt;tree&gt;();
+					}
+					curTree.level = tempTree.level + 1; 
+					tempTree.child.Add(curTree);
+					head.child.Add(tempTree);
+				}
+				else
+				{
+					if (find.Count == 1)
+					{
+						if (find[0].child == null)
+						{
+							find[0].child = new List&lt;tree&gt;();
+						}
+						curTree.level = find[0].level + 1; 
+						find[0].child.Add(curTree);
+					}
+					else
+					{
+						Logger.LogErrorP(string.Format("Load LangMacroCfg failed. {0}, {1}", path, @"FindTree() function"));
+					}
+				}
+			}
+			else
+			{
+				// 将当前节点添加为1级节点
+				curTree.level = head.level + 1; 
+				head.child.Add(curTree);
+			}
+		}
+
+		Dictionary&lt;string, LangBuildCfgUnit&gt; res_build = new Dictionary&lt;string, LangBuildCfgUnit&gt;();
+
+		//bfsTree(head,  res_build, build_content[template], build_content[key], string key, ref Hashtable ht, string path)
+		bfsTree(head,build_content, res_build, ref  ht,  path);
+
+		//foreach (string key in build_content.Keys) {
+		//    string template = build_content[key].base_name;
+		//    if ( template!= null) {
+
+		//        LangBuildCfgUnit tmp = generateThroughTemplate(build_content[template], build_content[key], key, ref ht, path);
+		//        res_build.Add(key, tmp);
+		//    }
+		//    else
+		//    {
+		//        res_build.Add(key, build_content[key]); 
+		//    }
+
+		//}
+
+		cfg.build = res_build;
+		return cfg;
+	}
+	catch (System.Exception e)
+	{
+		Logger.LogErrorP(string.Format("Load LangMacroCfg failed. {0}, {1}", path, e.ToString()));
+		return null;
+	}
+}
+
+// dfs
+static public void FindTree(tree head, string value,ref  List&lt;tree&gt; res)
+{
+	if (head == null)
+	{
+		return;
+	}
+	//Console.WriteLine(head.value);
+	if (head.value.CompareTo(value) == 0)
+	{           
+			res.Add(head);            
+	}
+	if (head.child != null)
+	{
+		foreach (tree temp_tree in head.child)
+		{
+			FindTree(temp_tree, value,ref  res);
+		}
+
+	}
+}
+
+
+//按层遍历
+public static void bfsTree(tree head, Dictionary&lt;string, LangBuildCfgUnit&gt; build_content, Dictionary&lt;string, LangBuildCfgUnit&gt; res_build, ref Hashtable ht, string path, tree father = null)
+{
+	Queue&lt;tree&gt; queueTree = new Queue&lt;tree&gt;();
+	queueTree.Enqueue(head);
+	while (queueTree.Count != 0)
+	{
+		head = queueTree.Peek();
+		if (head.level == 1)
+		{
+
+			res_build.Add(head.value, build_content[head.value]);
+
+		}
+		else if(head.level &gt; 1)
+		{
+			LangBuildCfgUnit tmp = generateThroughTemplate(res_build[head.father.value], build_content[head.value], head.value, ref ht, path);
+			res_build.Add(head.value, tmp);
+		}
+
+		//Console.WriteLine(queueTree.Peek().value);
+		if (queueTree.Peek().child != null)
+		{
+			foreach (tree temp_tree in queueTree.Peek().child)
+			{
+				temp_tree.father = queueTree.Peek();
+				queueTree.Enqueue(temp_tree);
+			}
+		}
+		queueTree.Dequeue();
+	}
+}
+
+private static LangBuildCfg s_instance;
+public static LangBuildCfg Instace
+{
+	get
+	{
+		if (s_instance == null)
+		{
+			s_instance = Load();
+		}
+		return s_instance;
+	}
+}
+
+public static void Clear()
+{
+	s_instance = null;
+}
+
+public LangBuildCfgUnit GetCurBuildCfgUnit()
+{
+	string envDef = EditorCommon.GetEnvStr(ENV_KEY, DEFAULT_ENV_VALUE);
+	if (m_build.ContainsKey(envDef))
+	{
+		return m_build[envDef];
+	}
+
+	Logger.LogErrorP(string.Format("{0} not found in build_define.json, use default", envDef));
+	return LangBuildCfgUnit.Default;
+</code></pre>
+<p>} </p>
+<pre><code>public string GetCurChannel()
+{
+	ChannelResCfgMeta crcm = GetCurChannelResCfgMeta();
+	if (crcm == null)
+	{
+		return "";
+	}
+	return crcm.Channel;
+}
+
+public ChannelResCfgMeta GetCurChannelResCfgMeta()
+{
+	if (m_crcm != null)
+	{
+		return m_crcm;
+	}
+
+	string sChannelResCfgMetaPath = GetCurBuildCfgUnit().channelResCfgPath;
+	m_crcm = ChannelResCfgMeta.Load(Application.dataPath + "/Languages/" + sChannelResCfgMetaPath);
+	if (m_crcm == null)
+	{
+		Logger.LogErrorP("ChannelResCfgMeta load failed. path:" + sChannelResCfgMetaPath);
+		return null;
+	}
+	return m_crcm;
+}
+</code></pre>
+<p>}</p>
+<p>```</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

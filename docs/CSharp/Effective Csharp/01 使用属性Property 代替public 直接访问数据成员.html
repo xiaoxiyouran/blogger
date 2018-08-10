@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>01 使用属性Property 代替public 直接访问数据成员</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="01-property-public">01 使用属性Property 代替public 直接访问数据成员</h1>
+<h2 id="name">检查 name 不能设置为空</h2>
+<pre><code class="csharp">public class Customer 
+{
+	private string name; 
+	public string Name 
+	{
+		get { return name; } 
+		set 
+		{
+			if (string.IsNullOrEmpty(value))
+				throw new ArgumentException(&quot;Name cannot be blank&quot;, &quot;Name&quot;); 
+			name = value;
+		} 
+		// More Elided.
+	} 
+}
+</code></pre>
+
+<h2 id="_1">多线程</h2>
+<p>因为属性是用方法实现的，增加多线程的支持是很容易的。你可以加强 get 和 set 访问器（accessors）的实现来提供数据访问的同步。 </p>
+<pre><code class="csharp">public class Customer 
+{
+	private object syncHandle = new object();
+
+	private string name; 
+	public string Name 
+	{
+		get 
+		{
+			lock (syncHandle) 
+			return name;
+		} 
+		set 
+		{
+			if (string.IsNullOrEmpty(value)) 
+				throw new ArgumentException(
+				&quot;Name cannot be blank&quot;, 
+				&quot;Name&quot;);
+			lock (syncHandle) 
+			name = value;
+		} 
+	} 
+	// More Elided.
+}
+</code></pre>
+
+<p>属性<mark>有所有方法的语言特性。属性可以是 virtual</mark>：</p>
+<p>这个例子使用 C# 3.0 的隐式属性语法。创建属性包裹一个备份存储（backing store）是一个常见的模式。一般，你不需要验证逻辑在属性的 getters 或 setters 。 C# 语言支持最简化的<mark>隐式属性</mark> 语法来极大减少需要作为属性来暴露简单域的打字功夫。编译器会创建一个 private 成员域（通常被称作备份存储）并且实现 get 和 set 放弃的逻辑。 </p>
+<pre><code class="csharp">public class Customer 
+{
+	public virtual string Name  
+	{
+		get;
+		set; 
+	}
+
+	// 相当于
+	private string m_name;
+	public string Name{
+		get{return m_name;}
+		set{m_name = value;}
+	}
+}
+</code></pre>
+
+<p>可以使用简化的隐式属性拓展属性为 abstract 和定义属性作为接口的一部分。下面的例子演示了在泛型接口（generic interface）定义了属性。可以注意到下面定义的接口没有包含任何实现并且 <mark>语法和隐式属性是一致的</mark> 。每个实现这个接口的类都要实现这个规范。</p>
+<pre><code class="csharp">public interface INameValuePair&lt;T&gt; 
+{
+	string Name 
+	{
+		get; 
+	}
+	T Value 
+	{
+		get; 
+		set;
+	} 
+}
+</code></pre>
+
+<p>可以指定 get 和 set 访问器不同访问修饰符。这让你可以很好控制通过属性暴露数据成员的可访问性:</p>
+<pre><code class="csharp">public class Customer 
+{
+	public virtual string Name 
+	{
+		get; 
+		protected set;
+	} 
+// remaining implementation omitted
+}
+</code></pre>
+
+<p>属性的语法扩展远超过简单的数据域。如果你的类包含 <mark>可索引项（indexed items）作为它的接口</mark>，你可以使用索引器（indexers）（参数化属性（parameterized properties））。创建属性实现返回序列（sequence）中的项是非常有用的：</p>
+<p>值得注意的是所有索引器必须使用 this 关键字声明。在 C# 中你不能自己命名索引器。所以一个类型的索引器必须有不同的参数列表来避免歧义。几乎<mark>所有的属性的功能都适用索引器。索引器可以是 virtual 或 abstract ；索引器的 setters 和 getters 可以不同的访问限制</mark>。不过，你不能像创建隐式属性一样创建隐式索引器。 </p>
+<pre><code class="csharp">public int this[int index]      // 相当于实现了运算符重载 int operator[](int index){}
+{
+	get { return theValues[index]; } 
+	set { theValues[index] = value; }
+}
+
+// Accessing an indexer: 
+int val = someObject[i];
+</code></pre>
+
+<p>属性的功能都非常好，是一个非常不错的改进。如果你还蠢蠢欲动使用数据成员的初始实现，然后等到你需要使用到属性的优势的时候，再用属性替换数据成员。这听起来像是一个合理的策略——但这是错误的。考虑下面的类的定义：</p>
+<pre><code class="csharp">// using public data members, bad practice: 
+public class Customer 
+{
+	public string Name;
+	// remaining implementation omitted 
+}
+</code></pre>
+
+<p>类 Customer 有一个数据成员 Name 。你可以使用熟悉的成员记号（member notation） get 或 set 这个 Name ：</p>
+<pre><code class="csharp">string name = customerOne.Name; 
+customerOne.Name = &quot;This Company, Inc.&quot;;
+</code></pre>
+
+<p>这个简单有直观。你会觉得你以后使用属性替换数据成员 Name ，而且代码不做改动能照常工作。好吧，确实是那样的。属性就是访问起来跟数据成员一样。这个语法的目的就在于此。但是<mark>属性不是数据。属性访问和数据访问会产生不同的微软中间语言（Microsoft Intermediate Language）指令</mark>。</p>
+<p>尽管属性和数据成员在代码上兼容的。但<mark>在二进制上是不兼容的</mark>。一个很明显的案例，当你把一个 public 数据成员改为等同的 public 属性，意味着你要重新编译所有使用这个 public 数据成员的代码。 C# 把二进制程序集（assemblies）看做“第一类公民”。语言的一个目的就是你可以发布单一更新的程序集，而不要更新整个应用。把数据成员改为属性这么简单的行为却破坏二进制的兼容性。这个行为使得部署更新单一程序集变得更困难。</p>
+<p>如果你看了 IL 的属性实现，你可能很想知道属性和数据成员的相对性能。<mark>属性并不比数据成员快，但也不会慢多少</mark>。 JIT 编译器对属性的访问器做了 inline 的优化。如果 JIT 编译器做了 inline 属性访问器优化， 数据成员和属性的性能是一样的。即使没有属性访问器没有置为 inline ，性能差别也只是可以忽略不计的一个函数调用话费。这差别只有在少数情况下才可以被测量出来。</p>
+<p>属性是像数据一样被调用的方法。调用者就会有一些访问权限期望。他们<mark>把访问属性当做数据访问</mark>。毕竟，那就是属性。你的属性访问器要能满足这些期望。 Get 访问器不能有其他作用。 Set 访问器改变了状态，调用者要能看到改变。</p>
+<p>属性访问器同时满足使用者的性能期望。属性访问跟数据域访问很类似。这不能导致属性和简单数据访问有着显著不同的性能特点。<mark>属性访问不能在长计算，或跨平台调用（比如执行数据库查询），或其他长操作和使用者期望保持一致</mark>。</p>
+<p>无论什么时候，你要在类中<mark>暴露数据作为 public或 protected 接口，请使用属性</mark>。对于序列或 dictionaries 是使用索引器。所有数据成员应该无一例外地使用 private 修饰符。你会立即在数据绑定得到支持，而且在以后会很容易方法中的实现。把变量封装在属性里所有的打字功夫加起来就一到两分钟。你会发现在使用属性替换之前的设计会花费数小时。现在花一点时间，以后节约你大量时间。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

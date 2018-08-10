@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180429 CPP 和 Java的区别</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180429-cpp-java">20180429 CPP 和 Java的区别</h1>
+<h2 id="1-">1- 继承</h2>
+<p>java 只有extends 这种默认相对于CPP中的<code>public</code>继承</p>
+<h2 id="2-">2- 调用静态方法</h2>
+<pre><code class="cpp">// Java
+Add.func(); /// Java 中用 .
+
+// CPP
+Add::func(); /// CPP 中用的 ::
+</code></pre>
+
+<h2 id="3-override">3- 关于重写（override）</h2>
+<p>Java 和CPP一样： 也有两个要求： 1- 继承， 2- 子类重写的方法和父类完全一样（方法名 + 输入参数）</p>
+<p>但是CPP中：必须有 virtual， 才能实现多态，否则实现的是隐藏。</p>
+<p>//// java 中</p>
+<p><strong>问题：可以覆盖静态方法吗？</strong></p>
+<p><strong>答：</strong> 这是不可以的，<strong>静态方法不能被覆盖。可以通过运行时多态来证明不能覆盖</strong>，在稍后章节中将学习它。</p>
+<p><strong>问题： 为什么不能覆盖静态方法？</strong>
+<strong>答：</strong> 因为<strong>静态方法是绑定类，而实例方法绑定对象。 静态属于类区域，实例属于堆区域。</strong></p>
+<p><strong>问题：可以重写java main方法吗？</strong></p>
+<p><strong>答：</strong> 这是不可以的，因为<code>main</code>是一个静态方法。</p>
+<hr />
+<p>重写：返回类型必须相同或者协变</p>
+<p>重载：可改变， 也可不改变</p>
+<h2 id="4-super">4- super</h2>
+<p>1- Java 中可以使用 super 关键字来调用父类中被同名变量隐藏的成员;</p>
+<p>2- 还有一种，对于子类而言，编译器会自动在子类构造中调用super(); 即，先调用父类的构造</p>
+<p>CPP 中没有super 关键字， 原因尽是 CPP中允许多重继承，没法确定 super 到底是哪一个。。。</p>
+<h2 id="5-java">5- Java 有实例化程序块</h2>
+<p>实例初始化块主要有三个规则。 它们如下：</p>
+<ol>
+<li><strong>在创建类的实例时创建实例初始化程序块。</strong></li>
+<li><strong>在父类构造函数被调用之后(即在<code>super()</code>构造函数调用之后)调用实例初始化块。</strong></li>
+<li><strong>实例初始化程序块按它们显示的顺序排列。</strong></li>
+</ol>
+<h2 id="6-javafinal">6- Java中的final</h2>
+<p>Java 中的final ， 有三种功能：</p>
+<p>1- 类，禁止继承</p>
+<p>2- 变量，常量，防止变量的值被更改</p>
+<p>3- 方法，禁止子类 重写</p>
+<p><code>final</code>关键字可以应用于变量，没有值的<code>final</code>变量称为<strong>空白变量或未初始化的最终变量。 它只能在构造函数中初始化</strong>。 <strong>空白最终变量也可以是静态的，它将仅在静态块中初始化</strong>。 【有点类似CPP 中的const变量】</p>
+<p><strong>问题：什么是空白或未初始化的final变量？</strong></p>
+<p>在声明时未初始化的<code>final</code>变量称为空白<code>final</code>变量。</p>
+<p>如果要在创建一个对象时初始化变量，并且变量在初始化后就不会被改变</p>
+<p><strong>可以初始化空白的final变量吗？</strong></p>
+<p><strong>答：</strong> 是的，但只能在构造函数中</p>
+<h2 id="7-">7- 多态</h2>
+<p>Java 中多态，只要向上转型了即可，不用写CPP 中的 virtual函数</p>
+<p>java 中多态对成员函数有用，对数据成员没用。（向上转型，那就是调用父类的数据成员）</p>
+<p>在多级继承中，调用其中一个被覆盖的函数。【从子类开始向上查找】</p>
+<p><strong>尝试下面一段代码的输出：</strong></p>
+<pre><code class="Java">class Animal {
+	void eat() {
+		System.out.println(&quot;animal is eating...&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void eat() {
+		System.out.println(&quot;dog is eating...&quot;);
+	}
+}
+
+class BabyDog1 extends Dog {
+	public static void main(String args[]) {
+		Animal a = new BabyDog1();
+		a.eat();
+	}
+}
+
+</code></pre>
+
+<p>执行上述代码，结果如下：</p>
+<pre><code class="Java">Dog is eating
+</code></pre>
+
+<p>因为，<code>BabyDog</code>不会覆盖<code>eat()</code>方法，所以这里是<code>Dog</code>类的<code>eat()</code>方法被调用。</p>
+<h2 id="8-">8- 静态绑定和动态绑定</h2>
+<p>Java： </p>
+<p>有任何<code>private</code>，<code>final</code>或<code>static</code>方法，则有静态绑定。</p>
+<h2 id="9-javainstanceof">9- java中有instanceof 运算符</h2>
+<p>和 <code>new</code> 一样，它是一种<strong>运算符</strong></p>
+<p>常用在： 先向上转换 — 判断 instanceof 子类 —— 然后又向下转换</p>
+<p>子类 = (子类) 基类【向上转换后的基类】</p>
+<p><strong>给个终极示例：</strong></p>
+<p>这是一个instanceof的终极示例，通过下面的例子中的代码看看<code>instanceof</code>关键字的真正用法。</p>
+<pre><code class="Java">interface Printable {
+}
+
+class A implements Printable {
+	public void a() {
+		System.out.println(&quot;a method&quot;);
+	}
+}
+
+class B implements Printable {
+	public void b() {
+		System.out.println(&quot;b method&quot;);
+	}
+}
+
+class Call {
+	void invoke(Printable p) {// upcasting
+		if (p instanceof A) {
+			A a = (A) p;      // Downcasting
+			a.a();
+		}
+		if (p instanceof B) {
+			B b = (B) p;      // Downcasting
+			b.b();
+		}
+
+	}
+}// end of Call class
+
+class Test4 {
+	public static void main(String args[]) {
+		Printable p = new B();
+		Call c = new Call();
+		c.invoke(p);
+	}
+}
+
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="shell">b method
+</code></pre>
+
+<h2 id="10-java">10- Java 中的抽象类</h2>
+<p>abstract classA {}; /// 抽象类</p>
+<p><strong>在java中有两种实现抽象的方法，它们分别是：</strong></p>
+<ol>
+<li><strong>抽象类(部分)</strong></li>
+<li><strong>接口 (完全)</strong></li>
+</ol>
+<p>抽象方法： </p>
+<pre><code class="java">abstract void printStatus();//no body and abstract
+</code></pre>
+
+<p>在类中有任何抽象方法，那个类必须声明为抽象的</p>
+<blockquote>
+<p>规则：<strong>如果你继承任何具有抽象方法的抽象类，必须提供方法的实现或使这个类抽象化。</strong></p>
+</blockquote>
+<p>抽象类也可以用于提供接口的一些实现.</p>
+<p>在这种情况下，终端用户可能不会被强制覆盖接口的所有方法。</p>
+<blockquote>
+<p>注意：如果您是初学者到Java，请跳过此示例先学习<a href="http://www.yiibai.com/java/interface-in-java.html">接口(interface)</a>。</p>
+</blockquote>
+<pre><code class="Java">interface A {
+	void a();
+
+	void b();
+
+	void c();
+
+	void d();
+}
+
+abstract class B implements A {
+	public void c() {
+		System.out.println(&quot;I am C&quot;);
+	}
+}
+
+class M extends B {  /// 可以被new 的一定是实现了接口中 所有 方法
+	public void a() {
+		System.out.println(&quot;I am a&quot;);
+	}
+
+	public void b() {
+		System.out.println(&quot;I am b&quot;);
+	}
+
+	public void d() {
+		System.out.println(&quot;I am d&quot;);
+	}
+}
+
+class Test5 {
+	public static void main(String args[]) {
+		A a = new M();
+		a.a();
+		a.b();
+		a.c();
+		a.d();
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="Java">I am a
+I am b
+I am c
+I am d
+</code></pre>
+
+<h2 id="11-java">11- Java 中的接口</h2>
+<p>接口中只有抽象方法而不是方法体。接口用于在Java中实现抽象和多重继承。</p>
+<p>为什么要用接口？</p>
+<p>需要使用接口主要有三个原因。如下面给出。</p>
+<ul>
+<li><strong>它用于实现抽象。</strong></li>
+<li><strong>通过接口，可以支持多重继承的功能。</strong></li>
+<li><strong>它可用于实现松耦合。</strong></li>
+</ul>
+<p>由于Java 8，接口可以有默认和静态方法</p>
+<p><strong>由编译器内部添加</strong>
+java编译器在接口方法之前添加<code>public</code>和<code>abstract</code>关键字。还有，它在数据成员之前添加<code>public</code>，<code>static</code>和<code>final</code>关键字。</p>
+<p>换句话说，接口字段默认是<code>public</code>，<code>static</code>和<code>final</code>，方法默认是<code>public</code>和<code>abstract</code>。</p>
+<p>////////////////////////////////</p>
+<p>用的是<code>implements</code> 关键字。</p>
+<p><strong>接口可以继承接口</strong> </p>
+<pre><code>interface A extends B{}
+</code></pre>
+
+<p>////////////////////////////////////////</p>
+<p><strong>Java 8 中 接口中两类特殊的方法</strong></p>
+<h3 id="java-8">Java 8接口中的默认方法</h3>
+<p>从Java 8开始，我们可以在接口中有方法体。 但需要使其为默认方法。现在来看看一个例子，创建一个Java文件：<code>TestInterfaceDefault.java</code>，其代码如下 ：</p>
+<pre><code class="Java">interface Drawable {
+	void draw();
+
+	default void msg() {  /// 可以有  default 方法体
+		System.out.println(&quot;default method&quot;);
+	}
+}
+
+class Rectangle implements Drawable {
+	public void draw() {
+		System.out.println(&quot;drawing rectangle&quot;);
+	}
+}
+
+class TestInterfaceDefault {
+	public static void main(String args[]) {
+		Drawable d = new Rectangle();
+		d.draw();
+		d.msg();
+	}
+}
+
+</code></pre>
+
+<p>执行上面代码，得到如下结果 -</p>
+<pre><code class="Shell">drawing rectangle
+default method
+</code></pre>
+
+<h3 id="java-8_1">Java 8接口中的静态方法</h3>
+<p>从Java 8开始，我们可以在接口中有静态方法。 让我们来看看下面的一个例子，创建一个Java文件：<code>TestInterfaceStatic.java</code> 其代码如下：</p>
+<pre><code class="Java">interface Drawable {
+	void draw();
+
+	static int cube(int x) {
+		return x * x * x;
+	}
+}
+
+class Rectangle implements Drawable {
+	public void draw() {
+		System.out.println(&quot;drawing rectangle&quot;);
+	}
+}
+
+class TestInterfaceStatic {
+	public static void main(String args[]) {
+		Drawable d = new Rectangle();
+		d.draw();
+		System.out.println(Drawable.cube(3));       /// 通过接口调用静态方法
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到如下结果 -</p>
+<pre><code class="Shell">drawing rectangle
+27
+</code></pre>
+
+<p>///////////////////////////////////////</p>
+<p>两类特殊的接口</p>
+<p><strong>问题：什么是标记或标记的接口？</strong></p>
+<p>没有成员的接口(仅定义一个空的接口)称为标记或标记接口。 例如：可序列化，可克隆，远程等。它们用于向JVM提供一些基本信息，以便JVM可以执行一些有用的操作。</p>
+<pre><code class="Java">//How Serializable interface is written?  
+public interface Serializable{  
+}
+</code></pre>
+
+<p><strong>Java嵌套接口</strong></p>
+<p><strong>注意：</strong> 一个接口中可以有另一个接口，即被称为嵌套接口。有关于这方面的知识，将在<a href="http://www.yiibai.com/java/nested-interface.html">嵌套类</a>的章节中详细学习。 例如：</p>
+<pre><code class="Java">interface printable {
+	void print();
+
+	interface MessagePrintable {
+		void msg();
+	}
+}
+</code></pre>
+
+<h2 id="12-java">12- Java中接口和抽象类的区别</h2>
+<p>抽象类实现了部分抽象(0到100％)，而接口实现了完全抽象(100％)</p>
+<h2 id="13-java-cpp">13- Java 中的包 和 CPP 中的命名空间</h2>
+<p><strong>Java包的优点</strong></p>
+<ol>
+<li>Java包用于<strong>对类和接口进行分类</strong>，以便更好地维护它们。</li>
+<li>Java包提供<strong>访问保护</strong>。</li>
+<li>Java包<strong>消除命名冲突</strong>。</li>
+</ol>
+<p>您需要使用完全限定(指定)名称。如：<code>com.yiibai.Simple</code>等来运行类。</p>
+<p><strong>编译</strong>：<code>javac -d . Simple.java</code>
+<strong>运行</strong>：<code>java com.yiibai.Simple</code></p>
+<p><strong>有三种方法从包外部来访问一个包</strong>。它们分别如下 -</p>
+<ol>
+<li>import package.*;</li>
+<li>import package.classname;</li>
+<li>完全限定名【两个包具有相同的类名】</li>
+</ol>
+<p>不用import</p>
+<pre><code class="java">//save by B.java  
+package mypack;
+
+class B {
+	public static void main(String args[]) {
+		pack.A obj = new pack.A();// using fully qualified name
+		obj.msg();
+	}
+}
+</code></pre>
+
+<blockquote>
+<p>意**：如果导入包，则不会导入子包。</p>
+</blockquote>
+<p>如果导入包，则将导入该包的所有类和接口，但不包括子包的类和接口。 因此，您还需要导入子包。</p>
+<p><strong>注意：</strong>程序的序列必须先是包，然后再导入类。</p>
+<h2 id="14-java">14- Java 中非常特殊的几种访问修饰符</h2>
+<h2 id="java">理解所有java访问修饰符</h2>
+<p>让我们通过下面的一个简单的表来理解访问修饰符。</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>访问修饰符</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>在类内</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>在包内</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>外部包只通过子类</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>外部包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Private</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>N</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>N</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>N</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Default</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>N</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>N</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Protected</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>N</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Public</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Y</td>
+</tr>
+</tbody>
+</table>
+<p>如果你要覆盖任何方法，重写的方法(即在子类中声明)则不能声明得更严格。</p>
+<h3 id="3-protected">3. protected访问修饰符</h3>
+<p><code>protected</code>访问修饰<strong>符可以在包中和包外部访问，但只能通过继承。<code>protected</code>访问修饰符可以应用于数据成员，方法和构造函数。 它不能应用于类。</strong></p>
+<p><strong>protected访问修饰符的示例</strong></p>
+<p>在这个例子中，我们创建了两个包<code>pack</code>和<code>mypack</code>。 <code>A</code>类的包是<code>public</code>的，所以可以从外部访问包。 但是这个包的<code>msg</code>方法声明为<code>protected</code>，因此只能通过继承从类外面访问它。如下两个类：<code>A.java</code> 和 <code>B.java</code> 代码。</p>
+<pre><code class="Java">//save by A.java  
+package pack;
+
+public class A {
+	protected void msg() {
+		System.out.println(&quot;Hello&quot;);
+	}
+}
+</code></pre>
+
+<p><code>B.java</code> 代码如下 -</p>
+<pre><code class="Java">//save by B.java  
+package mypack;
+
+import pack.*;
+
+class B extends A {
+	public static void main(String args[]) {
+		B obj = new B();
+		obj.msg();
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到如下结果 -</p>
+<pre><code class="Java">Hello
+</code></pre>
+
+<h3 id="_1">重写方法，只能更宽松</h3>
+<p>如果你要覆盖任何方法，重写的方法(即在子类中声明)则不能声明得更严格。</p>
+<pre><code class="Java">class A {
+	protected void msg() {
+		System.out.println(&quot;Hello java&quot;);
+	}
+}
+
+public class Simple extends A {
+	void msg() {
+		System.out.println(&quot;Hello java&quot;);
+	}// C.T.Error
+
+	public static void main(String args[]) {
+		Simple obj = new Simple();
+		obj.msg();
+	}
+}
+
+</code></pre>
+
+<p>默认(<code>default</code>)修饰符比受保护的修饰符更严格。 这就是为什么有编译时错误。</p>
+<h2 id="15-">15- 拷贝构造</h2>
+<p>CPP： 复制构造函数</p>
+<p>Java: implements Cloneable 接口，覆写 clone() 方法</p>
+<h2 id="16-">16- 引用传递</h2>
+<p>CPP:用 &amp;</p>
+<p>Java: 只能传递一个对象过去</p>
+<h2 id="17-static">17- static</h2>
+<p>Java: 可以对一个类用</p>
+<pre><code class="cpp">static public class A{};
+</code></pre>
+
+<h2 id="_2">其它</h2>
+<p>方法重载居然和类型提升有关</p>
+<p>Java中，整型一般到 int ,</p>
+<p>其它所有类型都可以到 double</p>
+<hr />
+<p><strong>在模糊的情况下使用类型提升来实现方法重载的示例</strong></p>
+<p>如果在方法中没有匹配的类型参数，并且<strong>每个方法都会提升相同数量的参数</strong>，那么会出现歧义。如下示例代码，将会产生编译时错误。</p>
+<p>注意： <strong>只有一种类型不被隐式地去提升</strong>，例如<code>double</code>不能被隐含地提升到任何类型。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

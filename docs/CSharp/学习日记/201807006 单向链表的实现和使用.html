@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>201807006 单向链表的实现和使用</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="201807006">201807006 单向链表的实现和使用</h1>
+<pre><code class="csharp">    public class Node&lt;T&gt; {
+		private T data;
+		public T Data {
+			get { return data; }
+			set { data = value; }
+		}
+
+		private Node&lt;T&gt; next;
+		public Node&lt;T&gt; Next
+		{
+			get { return next; }
+			set { next = value; }
+		}
+
+		// ctor 
+		public Node(T val, Node&lt;T&gt; p)
+		{
+			data = val;
+			next = p;
+		}
+
+		public Node(Node&lt;T&gt; p)
+		{
+			next = p;
+		}
+
+		public Node(T val)
+		{
+			data = val;
+			next = null;
+		}
+
+
+		public Node()
+		{
+			data = default(T);
+			next = null;
+		}
+	}
+	public class MyLinkList&lt;T&gt; {
+
+
+
+	}
+</code></pre>
+
+<h2 id="linkedlist">LinkedList 的使用</h2>
+<pre><code class="csharp"> string[] words =
+				{ &quot;the&quot;, &quot;fox&quot;, &quot;jumped&quot;, &quot;over&quot;, &quot;the&quot;, &quot;dog&quot; };
+			LinkedList&lt;string&gt; sentence = new LinkedList&lt;string&gt;(words);
+			Display(sentence, &quot;The linked list values:&quot;);
+			Console.WriteLine(&quot;sentence.Contains(\&quot;jumped\&quot;) = {0}&quot;,
+				sentence.Contains(&quot;jumped&quot;));
+
+			// Add the word 'today' to the beginning of the linked list.
+			sentence.AddFirst(&quot;today&quot;);
+			Display(sentence, &quot;Test 1: Add 'today' to beginning of the list:&quot;);
+
+			// Move the first node to be the last node.
+			LinkedListNode&lt;string&gt; mark1 = sentence.First;              // get a node
+			sentence.RemoveFirst();
+			sentence.AddLast(mark1);
+			Display(sentence, &quot;Test 2: Move first node to be last node:&quot;);
+
+			// Change the last node be 'yesterday'.
+			sentence.RemoveLast();
+			sentence.AddLast(&quot;yesterday&quot;);
+			Display(sentence, &quot;Test 3: Change the last node to 'yesterday':&quot;);
+
+			// Move the last node to be the first node.
+			mark1 = sentence.Last;
+			sentence.RemoveLast();
+			sentence.AddFirst(mark1);
+			Display(sentence, &quot;Test 4: Move last node to be first node:&quot;);
+
+
+			// Indicate, by using parentheisis, the last occurence of 'the'.
+			sentence.RemoveFirst();
+			LinkedListNode&lt;string&gt; current = sentence.FindLast(&quot;the&quot;);
+			IndicateNode(current, &quot;Test 5: Indicate last occurence of 'the':&quot;);
+
+			// Add 'lazy' and 'old' after 'the' (the LinkedListNode named current).
+			sentence.AddAfter(current, &quot;old&quot;);
+			sentence.AddAfter(current, &quot;lazy&quot;);
+			IndicateNode(current, &quot;Test 6: Add 'lazy' and 'old' after 'the':&quot;);
+
+			// Indicate 'fox' node.
+			current = sentence.Find(&quot;fox&quot;);
+			IndicateNode(current, &quot;Test 7: Indicate the 'fox' node:&quot;);
+
+			// Add 'quick' and 'brown' before 'fox':
+			sentence.AddBefore(current, &quot;quick&quot;);
+			sentence.AddBefore(current, &quot;brown&quot;);
+			IndicateNode(current, &quot;Test 8: Add 'quick' and 'brown' before 'fox':&quot;);
+
+			// Keep a reference to the current node, 'fox',
+			// and to the previous node in the list. Indicate the 'dog' node.
+			mark1 = current;
+			LinkedListNode&lt;string&gt; mark2 = current.Previous;
+			current = sentence.Find(&quot;dog&quot;);
+			IndicateNode(current, &quot;Test 9: Indicate the 'dog' node:&quot;);
+
+			// The AddBefore method throws an InvalidOperationException
+			// if you try to add a node that already belongs to a list.
+			Console.WriteLine(&quot;Test 10: Throw exception by adding node (fox) already in the list:&quot;);
+			try
+			{
+				sentence.AddBefore(current, mark1);
+			}
+			catch (InvalidOperationException ex)
+			{
+				Console.WriteLine(&quot;Exception message: {0}&quot;, ex.Message);
+			}
+			Console.WriteLine();
+
+			// Remove the node referred to by mark1, and then add it
+			// before the node referred to by current.
+			// Indicate the node referred to by current.
+			sentence.Remove(mark1);
+			sentence.AddBefore(current, mark1);
+			IndicateNode(current, &quot;Test 11: Move a referenced node (fox) before the current node (dog):&quot;);
+
+			// Remove the node referred to by current.
+			sentence.Remove(current);
+			IndicateNode(current, &quot;Test 12: Remove current node (dog) and attempt to indicate it:&quot;);
+
+			// Add the node after the node referred to by mark2.
+			sentence.AddAfter(mark2, current);
+			IndicateNode(current, &quot;Test 13: Add node removed in test 11 after a referenced node (brown):&quot;);
+
+			// The Remove method finds and removes the
+			// first node that that has the specified value.
+			sentence.Remove(&quot;old&quot;);
+			Display(sentence, &quot;Test 14: Remove node that has the value 'old':&quot;);
+
+			// When the linked list is cast to ICollection(Of String),
+			// the Add method adds a node to the end of the list.
+			sentence.RemoveLast();
+			ICollection&lt;string&gt; icoll = sentence;
+			icoll.Add(&quot;rhinoceros&quot;);
+			Display(sentence, &quot;Test 15: Remove last node, cast to ICollection, and add 'rhinoceros':&quot;);
+
+			Console.WriteLine(&quot;Test 16: Copy the list to an array:&quot;);
+			// Create an array with the same number of
+			// elements as the inked list.
+			string[] sArray = new string[sentence.Count];
+			sentence.CopyTo(sArray, 0);
+
+			foreach (string s in sArray)
+			{
+				Console.WriteLine(s);
+			}
+
+			// Release all the nodes.
+			sentence.Clear();
+
+			Console.WriteLine();
+			Console.WriteLine(&quot;Test 17: Clear linked list. Contains 'jumped' = {0}&quot;,
+				sentence.Contains(&quot;jumped&quot;));
+
+			Console.ReadLine();
+		}
+
+		private static void Display(LinkedList&lt;string&gt; words, string test)
+		{
+			Console.WriteLine(test);
+			foreach (string word in words)
+			{
+				Console.Write(word + &quot; &quot;);
+			}
+			Console.WriteLine();
+			Console.WriteLine();
+		}
+
+		private static void IndicateNode(LinkedListNode&lt;string&gt; node, string test)
+		{
+			Console.WriteLine(test);
+			if (node.List == null)
+			{
+				Console.WriteLine(&quot;Node '{0}' is not in the list.\n&quot;,
+					node.Value);
+				return;
+			}
+
+			StringBuilder result = new StringBuilder(&quot;(&quot; + node.Value + &quot;)&quot;);
+			LinkedListNode&lt;string&gt; nodeP = node.Previous;
+
+			while (nodeP != null)
+			{
+				result.Insert(0, nodeP.Value + &quot; &quot;);
+				nodeP = nodeP.Previous;
+			}
+
+			node = node.Next;
+			while (node != null)
+			{
+				result.Append(&quot; &quot; + node.Value);
+				node = node.Next;
+			}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>30 MySQL 序列使用</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="30-mysql">30 MySQL 序列使用</h1>
+<hr />
+<p>原文： http://www.runoob.com/mysql/mysql-using-sequences.html</p>
+<p>MySQL序列是一组整数：1, 2, 3, ...，由于一张数据表<strong>只能有一个字段自增主键</strong>， 如果你想实现其他字段也实现自动增加，就可以<strong>使用MySQL序列</strong>来实现。</p>
+<p>本章我们将介绍如何使用MySQL的序列。</p>
+<hr />
+<h2 id="auto_increment">使用AUTO_INCREMENT</h2>
+<p>MySQL中最简单使用序列的方法就是使用 MySQL <strong>AUTO_INCREMENT 来定义列</strong>。</p>
+<h3 id="_1">实例</h3>
+<p>以下实例中创建了数据表insect， insect中id无需指定值可实现自动增长</p>
+<pre><code class="mysql">mysql&gt; CREATE TABLE insect
+	 (
+	 id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	 PRIMARY KEY (id),
+	 name VARCHAR(30) NOT NULL, # type of insect
+	 date DATE NOT NULL, # date collected
+	 origin VARCHAR(30) NOT NULL # where collected
+);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql&gt; INSERT INTO insect (id,name,date,origin) VALUES
+	 (NULL,'housefly','2001-09-10','kitchen'),
+	 (NULL,'millipede','2001-09-10','driveway'),
+	 (NULL,'grasshopper','2001-09-10','front yard');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql&gt; SELECT * FROM insect ORDER BY id;
++----+-------------+------------+------------+
+| id | name        | date       | origin     |
++----+-------------+------------+------------+
+|  1 | housefly    | 2001-09-10 | kitchen    |
+|  2 | millipede   | 2001-09-10 | driveway   |
+|  3 | grasshopper | 2001-09-10 | front yard |
++----+-------------+------------+------------+
+3 rows in set (0.00 sec)
+</code></pre>
+
+<h2 id="auto_increment_1">获取AUTO_INCREMENT值</h2>
+<p>在MySQL的客户端中你可以使用 SQL中的LAST_INSERT_ID( ) 函数来获取最后的插入表中的自增列的值。</p>
+<pre><code class="mysql">mysql&gt; select LAST_INSERT_ID( ) from insect;
++-------------------+
+| LAST_INSERT_ID( ) |
++-------------------+
+|                 1 |
+|                 1 |
+|                 1 |
++-------------------+
+3 rows in set (0.00 sec)
+</code></pre>
+
+<h2 id="_2">重置序列</h2>
+<p>如果你删除了数据表中的多条记录，并希望对剩下数据的AUTO_INCREMENT列进行重新排列，那么你可以通过删除自增的列，然后重新添加来实现。 不过该操作要非常小心，如果在删除的同时又有新记录添加，有可能会出现数据混乱。操作如下所示：</p>
+<pre><code class="Mysql">mysql&gt; ALTER TABLE insect DROP id;
+mysql&gt; ALTER TABLE insect
+	 ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST,
+	 ADD PRIMARY KEY (id);
+</code></pre>
+
+<hr />
+<h2 id="_3">设置序列的开始值</h2>
+<p>一般情况下序列的开始值为1，但如果你需要指定一个开始值100，那我们可以通过以下语句来实现：</p>
+<pre><code class="Mysql">mysql&gt; CREATE TABLE insect
+	 (
+	 id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	 PRIMARY KEY (id),
+	 name VARCHAR(30) NOT NULL, 
+	 date DATE NOT NULL,
+	 origin VARCHAR(30) NOT NULL
+)engine=innodb auto_increment=100 charset=utf8;
+</code></pre>
+
+<p>或者你也可以在表创建成功后，通过以下语句来实现：</p>
+<pre><code class="Mysql">mysql&gt; ALTER TABLE t AUTO_INCREMENT = 100;
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

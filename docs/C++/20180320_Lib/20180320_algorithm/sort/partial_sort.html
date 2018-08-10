@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>partial_sort</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="partial_sort">partial_sort</h1>
+<h2 id="1-partial_sort">1- partial_sort 原理</h2>
+<p>当有一个无序的序列集合的时候，我们想知道这个序列里面按照某种排序关系最大的m个或者前top个有序的元素。比如我又100个学生，我只想知道排名前20的学生的名次列表，剩余的我并不关心，如何去得到呢？ 当然你脑海中第一个闪过的便是sort，做一次排序，取排序后前面的20不就好了吗？ 没错，排序作为做常规的方法，肯定是最先想到的，这里要介绍的是比排序来的更快更直接的一个算法：部分排序（partial_sort）,该算法来自于STL的算法库，在研究STL源码时看到的，瞬间眼前一亮，这里分享出来。</p>
+<p>partial_sort算法接受一个middle的index，该middle位于[first, last)的元素序列范围内，然后重新安排[first, last),使得序列中的middle-first个最小元素以指定顺序排序最终放置在[first, middle)中， 其余的元素安置在[middle, last)内，不保证有任何指定的顺序。因此可以看出来partial_sort执行后并不保证所有的结果都有序，而有序的部分数量永远都小于等于整个元素区间的数量。所以在只是挑出前m个元素的排序中，效率明显要高于全排序的sort算法，当然m越小效率越高，m等于n时相当于全排序了。</p>
+<p>partial_sort的原理：部分排序的原型出现在STL的算法库里面，根据其所描述的代码，很容易可以看出来partial_sort是借用了<strong>堆排序的思想来作为底层排序实现的</strong>。对于该算法的原理这样描述。假设我们有n个元素序列，需要找到其中最小的m个元素，m&lt;=n时。 先界定区间[first, m) 然后对该区间使用<strong>make_heap()</strong>来组织成一个大顶堆。然后遍历剩余区间[m, last)中的元素， 剩余区间的每个元素均与大顶堆的堆顶元素进行比较（大顶堆的堆顶元素为最大元素，该元素为第一个元素，很容易获得），若堆顶元素较小，边交换堆顶元素和遍历得到的元素值，重新调整该大顶堆以维持该堆为大顶堆。遍历结束后，[first, m)区间内的元素便是排名在前的m个元素，在对该堆做一次堆排序便可得到最好的结果。</p>
+<p>1- 首先找到前[first,mid) 个元素，构成最大堆。 </p>
+<p>2- 遍历剩下的元素，每次与堆的最大比较，如果小于它，就交换，重新构建最大堆。</p>
+<p>3- 剩下的元素都遍历完了，就将前面的排序。</p>
+<p>用到的一个规律是： 指定位置的前面的元素 &lt;= 后面的元素。<img alt="img" src="http://img.blog.csdn.net/20150728162029551?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA<mark>/dissolve/70/gravity/Center" /></p>
+<h2 id="2-">2- 算法举例</h2>
+<pre><code class="cpp">#include &lt;iostream&gt;  
+#include &lt;string&gt;  
+#include &lt;vector&gt;  
+#include &lt;algorithm&gt;  
+using namespace std;  
+
+int main()  
+{  
+	vector&lt;int&gt; vc;  
+	for (int i = 0; i &lt; 10; i++)  
+	{  
+		vc.push_back(rand()%100);  
+	}  
+
+	for (int i = 0; i &lt; vc.size(); i++)  
+		cout &lt;&lt; vc[i] &lt;&lt; &quot; &quot;;  
+	cout &lt;&lt; endl;  
+
+	partial_sort(vc.begin(), vc.begin()+4, vc.end());  
+
+	for (int i = 0; i &lt; vc.size(); i++)  
+		cout &lt;&lt; vc[i] &lt;&lt; &quot; &quot;;  
+	cout &lt;&lt; endl;  
+
+	return 0;  
+}  
+
+</code></pre>
+
+<p><img alt="img" src="http://img.blog.csdn.net/20150728161950427?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/Center" /></p>
+<p>官网的一个例子</p>
+<pre><code class="cpp">// partial_sort example
+#include &lt;iostream&gt;     // std::cout
+#include &lt;algorithm&gt;    // std::partial_sort
+#include &lt;vector&gt;       // std::vector
+
+bool myfunction (int i,int j) { return (i&lt;j); }
+
+int main () {
+  int myints[] = {9,8,7,6,5,4,3,2,1};
+  std::vector&lt;int&gt; myvector (myints, myints+9);
+
+  // using default comparison (operator &lt;):
+  /// 前5 个元素排序
+  std::partial_sort (myvector.begin(), myvector.begin()+5, myvector.end());
+
+  // using function as comp
+  std::partial_sort (myvector.begin(), myvector.begin()+5, myvector.end(),myfunction);
+
+  // print out content:
+  std::cout &lt;&lt; &quot;myvector contains:&quot;;
+  for (std::vector&lt;int&gt;::iterator it=myvector.begin(); it!=myvector.end(); ++it)
+	std::cout &lt;&lt; ' ' &lt;&lt; *it;
+  std::cout &lt;&lt; '\n';
+
+  return 0;
+}
+
+&gt;&gt;&gt;
+myvector contains: 1 2 3 4 5 9 8 7 6
+</code></pre>
+
+<h2 id="3-stl">3- STL 源码</h2>
+<pre><code class="cpp">template &lt;class RandomAccessIterator&gt;  
+inline void partial_sort(RandomAccessIterator first,  
+	RandomAccessIterator middle,  
+	RandomAccessIterator last) {  
+		__partial_sort(first, middle, last, value_type(first));  
+}  
+
+template &lt;class RandomAccessIterator, class T&gt;  
+void __partial_sort(RandomAccessIterator first, RandomAccessIterator middle,  
+	RandomAccessIterator last, T*) {  
+		make_heap(first, middle); //将区间[first, middle)构造为一个堆结构  
+		for (RandomAccessIterator i = middle; i &lt; last; ++i)  
+			if (*i &lt; *first)    // 遍历堆以外的元素，并将更优的元素放入堆中  
+				__pop_heap(first, middle, i, T(*i), distance_type(first));  
+		sort_heap(first, middle); // 对最终的堆进行排序  
+}  
+</code></pre>
+
+<h2 id="4-heap">4- heap源码</h2>
+<pre><code class="cpp">template &lt;class RandomAccessIterator&gt;  
+inline void partial_sort(RandomAccessIterator first,  
+	RandomAccessIterator middle,  
+	RandomAccessIterator last) {  
+		__partial_sort(first, middle, last, value_type(first));  
+}  
+
+template &lt;class RandomAccessIterator, class T&gt;  
+void __partial_sort(RandomAccessIterator first, RandomAccessIterator middle,  
+	RandomAccessIterator last, T*) {  
+		make_heap(first, middle); //将区间[first, middle)构造为一个堆结构  
+		for (RandomAccessIterator i = middle; i &lt; last; ++i)  
+			if (*i &lt; *first)    // 遍历堆以外的元素，并将更优的元素放入堆中  
+				__pop_heap(first, middle, i, T(*i), distance_type(first));  
+		sort_heap(first, middle); // 对最终的堆进行排序  
+}  
+
+template &lt;class RandomAccessIterator&gt;  
+inline void make_heap(RandomAccessIterator first, RandomAccessIterator last) {  
+	__make_heap(first, last, value_type(first), distance_type(first));  
+}  
+
+template &lt;class RandomAccessIterator, class T, class Distance&gt;  
+void __make_heap(RandomAccessIterator first, RandomAccessIterator last, T*,  
+	Distance*) {  
+		if (last - first &lt; 2) return;      
+		Distance len = last - first;  
+		Distance parent = (len - 2)/2;   
+
+		while (true) {  
+			__adjust_heap(first, parent, len, T(*(first + parent)));  
+			if (parent == 0) return;      
+			parent--;                 
+		}  
+}  
+
+template &lt;class RandomAccessIterator, class Distance, class T&gt;  
+void __adjust_heap(RandomAccessIterator first, Distance holeIndex,  
+	Distance len, T value) {  
+		Distance topIndex = holeIndex;  
+		Distance secondChild = 2 * holeIndex + 2;     
+		while (secondChild &lt; len) {  
+			if (*(first + secondChild) &lt; *(first + (secondChild - 1)))  
+				secondChild--;     
+
+			*(first + holeIndex) = *(first + secondChild);    
+			holeIndex = secondChild;  
+			secondChild = 2 * (secondChild + 1);  
+		}  
+		if (secondChild == len) {   
+			*(first + holeIndex) = *(first + (secondChild - 1));  
+			holeIndex = secondChild - 1;  
+		}  
+		__push_heap(first, holeIndex, topIndex, value);  
+}  
+
+template &lt;class RandomAccessIterator, class Distance, class T&gt;  
+void __push_heap(RandomAccessIterator first, Distance holeIndex,  
+	Distance topIndex, T value) {  
+		Distance parent = (holeIndex - 1) / 2;    
+		while (holeIndex &gt; topIndex &amp;&amp; *(first + parent) &lt; value) {  
+			*(first + holeIndex) = *(first + parent);     
+			holeIndex = parent;   
+			parent = (holeIndex - 1) / 2;     
+		}    
+		*(first + holeIndex) = value;     
+}  
+
+template &lt;class RandomAccessIterator&gt;  
+inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last) {  
+	__pop_heap_aux(first, last, value_type(first));  
+}  
+
+template &lt;class RandomAccessIterator, class T&gt;  
+inline void __pop_heap_aux(RandomAccessIterator first,  
+	RandomAccessIterator last, T*) {  
+		__pop_heap(first, last-1, last-1, T(*(last-1)), distance_type(first));  
+}  
+
+template &lt;class RandomAccessIterator, class T, class Distance&gt;  
+inline void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,  
+	RandomAccessIterator result, T value, Distance*) {  
+		*result = *first;  
+		__adjust_heap(first, Distance(0), Distance(last - first), value);  
+}  
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

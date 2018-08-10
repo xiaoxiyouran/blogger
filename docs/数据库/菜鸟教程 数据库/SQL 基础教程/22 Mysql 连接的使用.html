@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>22 Mysql 连接的使用</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="22-mysql">22 Mysql 连接的使用</h1>
+<p>1- 不管是哪种join, 都会和 on  搭配使用。</p>
+<hr />
+<p>原文： </p>
+<p>在前几章节中，我们已经学会了如何在一张表中读取数据，这是相对简单的，但是在真正的应用中经常需要从多个数据表中读取数据。</p>
+<p>本章节我们将向大家介绍如何使用 MySQL 的 JOIN 在两个或多个表中查询数据。</p>
+<p>你可以在 SELECT, UPDATE 和 DELETE 语句中使用 Mysql 的 JOIN 来联合多表查询。</p>
+<p>JOIN 按照功能大致分为如下三类：</p>
+<ul>
+<li><strong>INNER JOIN（内连接,或等值连接）</strong>：获取两个表中字段匹配关系的记录。</li>
+<li><strong>LEFT JOIN（左连接）：</strong>获取左表所有记录，即使右表没有对应匹配的记录。</li>
+<li><strong>RIGHT JOIN（右连接）：</strong> 与 LEFT JOIN 相反，用于获取右表所有记录，即使左表没有对应匹配的记录。</li>
+</ul>
+<p>本章节使用的数据库结构及数据下载：<a href="http://static.runoob.com/download/runoob-mysql-join-test.sql">runoob-mysql-join-test.sql</a>。</p>
+<hr />
+<h2 id="inner-join">在命令提示符中使用 INNER JOIN</h2>
+<p>我们在RUNOOB数据库中有两张表 tcount_tbl 和 runoob_tbl。两张数据表数据如下：</p>
+<h3 id="_1">实例</h3>
+<p>尝试以下实例：</p>
+<pre><code class="mysql">mysql&gt; use RUNOOB;
+Database changed
+mysql&gt; SELECT * FROM tcount_tbl;
++---------------+--------------+
+| runoob_author | runoob_count |
++---------------+--------------+
+| 菜鸟教程  | 10           |
+| RUNOOB.COM    | 20           |
+| Google        | 22           |
++---------------+--------------+
+3 rows in set (0.01 sec)
+
+mysql&gt; SELECT * from runoob_tbl;
++-----------+---------------+---------------+-----------------+
+| runoob_id | runoob_title  | runoob_author | submission_date |
++-----------+---------------+---------------+-----------------+
+| 1         | 学习 PHP    | 菜鸟教程  | 2017-04-12      |
+| 2         | 学习 MySQL  | 菜鸟教程  | 2017-04-12      |
+| 3         | 学习 Java   | RUNOOB.COM    | 2015-05-01      |
+| 4         | 学习 Python | RUNOOB.COM    | 2016-03-06      |
+| 5         | 学习 C      | FK            | 2017-04-05      |
++-----------+---------------+---------------+-----------------+
+5 rows in set (0.01 sec)
+</code></pre>
+
+<p>接下来我们就使用MySQL的<strong>INNER JOIN(也可以省略 INNER 使用 JOIN，效果一样)</strong>来连接以上两张表来读取runoob_tbl表中所有runoob_author字段在tcount_tbl表对应的runoob_count字段值：</p>
+<pre><code class="mysql"># 使用 INNER JOIN 的方法
+mysql&gt; SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a INNER JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;
++-------------+-----------------+----------------+
+| a.runoob_id | a.runoob_author | b.runoob_count |
++-------------+-----------------+----------------+
+| 1           | 菜鸟教程    | 10             |
+| 2           | 菜鸟教程    | 10             |
+| 3           | RUNOOB.COM      | 20             |
+| 4           | RUNOOB.COM      | 20             |
++-------------+-----------------+----------------+
+4 rows in set (0.00 sec)
+</code></pre>
+
+<p>以上 SQL 语句等价于：</p>
+<pre><code class="mysql"># 使用 WHERE 子句
+mysql&gt; SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a, tcount_tbl b WHERE a.runoob_author = b.runoob_author;
++-------------+-----------------+----------------+
+| a.runoob_id | a.runoob_author | b.runoob_count |
++-------------+-----------------+----------------+
+| 1           | 菜鸟教程    | 10             |
+| 2           | 菜鸟教程    | 10             |
+| 3           | RUNOOB.COM      | 20             |
+| 4           | RUNOOB.COM      | 20             |
++-------------+-----------------+----------------+
+4 rows in set (0.01 sec)
+</code></pre>
+
+<p><img alt="img" src="22_01.gif" /></p>
+<h2 id="mysql-left-join">MySQL LEFT JOIN</h2>
+<p>MySQL left join 与 join 有所不同。 MySQL LEFT JOIN 会读取左边数据表的全部数据，即便右边表无对应数据。</p>
+<h3 id="_2">实例</h3>
+<p>尝试以下实例，以 <strong>runoob_tbl</strong> 为左表，<strong>tcount_tbl</strong> 为右表，理解 MySQL LEFT JOIN 的应用：</p>
+<pre><code class="mysql">mysql&gt; SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a LEFT JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;
++-------------+-----------------+----------------+
+| a.runoob_id | a.runoob_author | b.runoob_count |
++-------------+-----------------+----------------+
+| 1           | 菜鸟教程    | 10             |
+| 2           | 菜鸟教程    | 10             |
+| 3           | RUNOOB.COM      | 20             |
+| 4           | RUNOOB.COM      | 20             |
+| 5           | FK              | NULL           |
++-------------+-----------------+----------------+
+5 rows in set (0.01 sec)
+
+</code></pre>
+
+<p>以上实例中使用了 LEFT JOIN，该语句会读取左边的数据表 runoob_tbl 的所有选取的字段数据，即便在右侧表 tcount_tbl中 没有对应的 runoob_author 字段值。</p>
+<p><img alt="img" src="22_02.gif" /></p>
+<h2 id="mysql-right-join">MySQL RIGHT JOIN</h2>
+<p>MySQL RIGHT JOIN 会读取右边数据表的全部数据，即便左边边表无对应数据。</p>
+<h3 id="_3">实例</h3>
+<p>尝试以下实例，以 <strong>runoob_tbl</strong> 为左表，<strong>tcount_tbl</strong> 为右表，理解MySQL RIGHT JOIN的应用：</p>
+<pre><code class="mysql"># 使用 RIGHT JOIN  
+mysql&gt; SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a RIGHT JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;
++-------------+-----------------+----------------+
+| a.runoob_id | a.runoob_author | b.runoob_count |
++-------------+-----------------+----------------+
+| 1           | 菜鸟教程    | 10             |
+| 2           | 菜鸟教程    | 10             |
+| 3           | RUNOOB.COM      | 20             |
+| 4           | RUNOOB.COM      | 20             |
+| NULL        | NULL            | 22             |
++-------------+-----------------+----------------+
+5 rows in set (0.01 sec)
+</code></pre>
+
+<p>以上实例中使用了 RIGHT JOIN，该语句会读取右边的数据表 tcount_tbl 的所有选取的字段数据，即便在左侧表 runoob_tbl 中没有对应的runoob_author 字段值。</p>
+<p><img alt="img" src="22_03.gif" /></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

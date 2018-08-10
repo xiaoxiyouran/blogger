@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>随机数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">随机数</h1>
+<pre><code class="Cpp">1- rand 在&lt;stdlib.h&gt; 头文件中
+2- 如果要每次产生不同的随机数
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+srand((unsigned)time(NULL));
+	for(int i = 0; i &lt; 10;i++ )
+		cout &lt;&lt; rand() &lt;&lt; '\t'; 
+
+3- 产生[a,b] 之间的随机数
+  rand()%(b-a+1) + a;
+</code></pre>
+
+<p>计算机的随机数都是由伪随机数，即是由小M多项式序列生成的，其中产生每个小序列都有一个初始值，即随机种子。（注意： 小M多项式序列的<strong>周期是65535，即每次利用一个随机种子生成的随机数的周期是65535，当你取得65535个随机数后它们又重复出现了</strong>。）</p>
+<p>我们知道rand()函数可以用来产生随机数，但是这不是真正意义上的随机数，是一个伪随机数，是根据一个数（我们可以称它为种子，<strong>默认是设置为1</strong>）为基准以某个递推公式推算出来的一系列数，当<strong>这系列数很大的时候，就符合正态公布，从而相当于产生了随机数，但这不是真正的随机数，当计算机正常开机后，这个种子的值是定了的</strong>，除非你破坏了系统。</p>
+<h2 id="1-rand">1- rand</h2>
+<p>功能:随机数发生器</p>
+<p><strong>用法:int rand(void)</strong></p>
+<p><strong>所在头文件: stdlib.h</strong></p>
+<p>rand()的内部实现是用线性同余法做的，它<strong>不是真的随机数，因其周期特别长，故在一定的范围里可看成是随机的。</strong></p>
+<p><strong>rand()返回一随机数值的范围在0至RAND_MAX[定义在 stdlib.h] 间。RAND_MAX的范围最少是在32767之</strong>间(int)。用unsigned int 双字节是65535，四字节是4294967295的整数范围。0~RAND_MAX每个数字被选中的机率是相同的。</p>
+<p>用户<strong>未设定随机数种子时，系统默认的随机数种子为1。</strong></p>
+<p>rand()产生的是<strong>伪随机数字，每次执行时是相同的;</strong>若要不同,用函数srand()初始化它。</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+#include &lt;stdlib.h&gt;  /* RAND_MAX, int rand() */
+using namespace std;
+
+
+int main() {
+	cout &lt;&lt; RAND_MAX &lt;&lt; endl;   // 2147483647
+
+	// 产生10个随机数,每次运行产生的随机数是一样的
+	for( int i=0; i&lt;10;i++ )
+		cout &lt;&lt; rand() &lt;&lt; &quot; &quot;;  // 16807 282475249 1622650073 984943658 1144108930 470211272 101027544 1457850878 1458777923 2007237709 
+	return 0;
+}
+</code></pre>
+
+<p>如何获取小数呢？例如：我们可以先获得10001以内的整数（0~10000），然后再用这个整数除以10000得到小数点后两位的小数。</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+using namespace std;
+int main()
+{
+	for(int i=0;i&lt;10;i++)
+	{
+		cout&lt;&lt;(rand()%10001)/10000.0&lt;&lt;&quot; &quot;;      // 0.6806 0.7005 0.7825 0.5174 0.4531 0.4256 0.7443 0.5108 0.206 0.7006 
+	}
+}
+</code></pre>
+
+<h2 id="2-srand">2- srand</h2>
+<p>功能:初始化随机数发生器</p>
+<p>用法: void srand(unsigned int seed)</p>
+<p>所在头文件: stdlib.h</p>
+<p>srand()用来<strong>设置rand()产生随机数时的随机数种子。参数seed必须是个整数，如果每次seed都设相同值，rand()所产生的随机数值每次就会一样。</strong></p>
+<p>rand()产生的随机数在每次运行的时候都是与上一次相同的。若要不同,用函数srand()初始化它。可以利用srand((unsigned int)(time(NULL))的方法，产生不同的随机数种子，因为每一次运行程序的时间是不同的。</p>
+<p>产生随机数的用法 
+1) 给srand()提供一个种子，它是一个unsigned int类型； 
+2) 调用rand()，它会根据提供给srand()的种子值返回一个随机数(在0到RAND_MAX之间)； 
+3) 根据需要多次调用rand()，从而不间断地得到新的随机数； 
+4) 无论什么时候，都可以给srand()提供一个新的种子，从而进一步“随机化”rand()的输出结果。</p>
+<p>通常可以利用<code>geypid()</code>或<code>time(0)</code>的返回值来当做seed</p>
+<p>如果你用time(0)的话，要加入头文件<code>#include&lt;ctime&gt;</code></p>
+<p>time(0)或者time(NULL)返回的是系统的时间（从1970.1.1午夜算起），单位：秒</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;ctime&gt;
+using namespace std;
+
+int main()
+{
+	int a;
+	a=time(0);//time(0)返回的是系统的时间（从1970.1.1午夜算起），单位：秒 1521858244,1521858255
+	cout&lt;&lt;a&lt;&lt;endl;
+	return 0;
+}
+</code></pre>
+
+<p>0~RAND_MAX之间的随机数程序</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;time.h&gt;
+using namespace std;
+int main()
+{   
+	/// 每次运行的结果是不一样的。
+	srand((unsigned)time(NULL));
+	for(int i = 0; i &lt; 10;i++ )
+		cout &lt;&lt; rand() &lt;&lt; '\t'; // 1335455916   1655985415  758804785   1474125609  110275024   113941007   1598575172  85008187    655973654   1915642727  
+	cout &lt;&lt; endl;
+	return 0;
+}
+</code></pre>
+
+<h2 id="3-">3- 产生一定范围的随机数</h2>
+<p>产生一定范围随机数的通用表示公式 
+要取得[a,b)的随机整数，使用(rand() % (b-a))+ a; 
+要取得[a,b]的随机整数，使用(rand() % (b-a+1))+ a; 
+要取得(a,b]的随机整数，使用(rand() % (b-a))+ a + 1; 
+通用公式:a + rand() % n；其中的a是起始值，n是整数的范围。 
+要取得a到b之间的随机整数，另一种表示：a + (int)b * rand() / (RAND_MAX + 1)。 
+要取得0～1之间的浮点数，可以使用rand() / double(RAND_MAX)。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

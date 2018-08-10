@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180506mermaid 画图官方实例</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180506mermaid">20180506mermaid 画图官方实例</h1>
+<h2 id="1">例子1</h2>
+<pre><code>graph LR
+
+		%% Example diagram
+		A[Square Rect] -- Link text --&gt; B((Circle));
+		A --&gt; C(Round Rect)
+		A --&gt; E(- Elipse -)
+		click A coolAction
+		B --&gt; D{Rhombus}
+		C --&gt; D
+		A(&quot;test(vcc) a a &quot;) --&gt; B
+		snda
+</code></pre>
+
+<div class="mermaid">graph LR
+
+		%% Example diagram
+		A[Square Rect] -- Link text --> B((Circle));
+		A --> C(Round Rect)
+		A --> E(- Elipse -)
+		click A coolAction
+		B --> D{Rhombus}
+		C --> D
+		A(&quot;test(vcc) a a &quot;) --> B
+		snda例子2
+</div>
+
+<h2 id="2">例子2</h2>
+<pre><code class="Shell">graph TB
+		subgraph old_sys_2
+		a2(new client)--&gt;b2
+		oc2(Old client)--&gt;b2
+		a3(test)--&gt;b2
+		end
+
+		subgraph old_sys_1
+		a1(new client)--&gt;b1(sys1 server)
+		oc1(Old client)--&gt;b2(test)
+		end
+</code></pre>
+
+<p>效果如下所示：</p>
+<div class="mermaid">graph TB
+		subgraph aa
+		a2(new client)-->b2
+		oc2(Old client)-->b2
+		a3(test)-->b2
+		end
+
+		subgraph bb
+		a1(new client)-->b1(sys1 server)
+		oc1(Old client)-->b2(test)
+		end
+</div>
+
+<h2 id="3">例子3</h2>
+<pre><code class="shell">   graph LR
+		A--&gt;B
+		B--&gt;C
+		C--&gt;A
+		D--&gt;C
+</code></pre>
+
+<p>效果：</p>
+<div class="mermaid">   graph LR
+		A-->B
+		B-->C
+		C-->A
+		D-->C
+</div>
+
+<h2 id="4">例子4</h2>
+<pre><code class="shell">        graph LR;
+		A[Now with default style on links]--v--&gt;B{a = '1,2'}
+		B--&gt;|v|C[v]
+		B-- ... default style on links --&gt;Z[My default thing this]
+		C--&gt;D{condition};
+
+		linkStyle 0 stroke-width:2px,fill:none,stroke:blue;
+		linkStyle default stroke-width:2px,fill:none,stroke:red;
+
+</code></pre>
+
+<p>效果</p>
+<div class="mermaid">        graph LR;
+		A[Now with default style on links]--v-->B{a = '1,2'}
+		B-->|v|C[v]
+		B-- ... default style on links -->Z[My default thing this]
+		C-->D{condition};
+
+		linkStyle 0 stroke-width:2px,fill:none,stroke:blue;
+		linkStyle default stroke-width:2px,fill:none,stroke:red;
+
+</div>
+
+<h2 id="5">例子5</h2>
+<pre><code class="shell">  graph LR
+		A[Square Rect]  --      Link text      --&gt;       B((Circle))
+		A[Square Rect]--v--&gt;D((Circle))
+		A --&gt; C(Round Rect)
+		B    ==  testing ==&gt;     D{Rhombus}
+		C-.-&gt;D
+</code></pre>
+
+<div class="mermaid">  graph LR
+		A[Square Rect]  --      Link text      -->       B((Circle))
+		A[Square Rect]--v-->D((Circle))
+		A --> C(Round Rect)
+		B    ==  testing ==>     D{Rhombus}
+		C-.->D
+</div>
+
+<h2 id="6">例子6</h2>
+<pre><code class="shell"> graph TD
+		question1{Gas tank less than 1/8?}
+		action1[Fill tank to 100%]
+		question1-- Yes --&gt;action1
+</code></pre>
+
+<div class="mermaid"> graph TD
+		question1{Gas tank less than 1/8?}
+		action1[Fill tank to 100%]
+		question1-- Yes -->action1
+</div>
+
+<h2 id="7">例子7</h2>
+<pre><code class="shell"> graph TD;
+		A[Default style on nodes]--&gt;B;
+		A--&gt;C;
+		A--&gt;D;
+		B--&gt;D;
+		A--&gt;|Link text|B
+		classDef default fill:#f96,stroke:#333,stroke-width:2px;
+		classDef green fill:#9f6,stroke:#333,stroke-width:2px;
+		class B green;
+</code></pre>
+
+<div class="mermaid"> graph TD;
+		A[Default style on nodes]-->B;
+		A-->C;
+		A-->D;
+		B-->D;
+		A-->|Link text|B
+		classDef default fill:#f96,stroke:#333,stroke-width:2px;
+		classDef green fill:#9f6,stroke:#333,stroke-width:2px;
+		class B green;
+</div>
+
+<h2 id="8">例子8</h2>
+<pre><code>graph LR
+		subgraph old sys 1
+			a1(new client)--&gt;b1(sys1 server)
+			oc1(Old client)--&gt;b2
+		end
+
+		subgraph old sys 2
+			a2(new client)--&gt;b2(sys2 server)
+			oc2(Old client)--&gt;b2
+		end
+
+		subgraph old sys 3
+			a3(new client)--&gt;b3(sys3 server)
+		end
+
+		subgraph New sys
+			a1
+			a2
+			a3
+		end
+</code></pre>
+
+<div class="mermaid">graph LR
+		subgraph old sys 1
+			a1(new client)-->b1(sys1 server)
+			oc1(Old client)-->b2
+		end
+
+		subgraph old sys 2
+			a2(new client)-->b2(sys2 server)
+			oc2(Old client)-->b2
+		end
+
+		subgraph old sys 3
+			a3(new client)-->b3(sys3 server)
+		end
+
+		subgraph New sys
+			a1
+			a2
+			a3
+		end
+</div>
+
+<h2 id="9">例子9</h2>
+<pre><code class="shell">graph TB
+		subgraph one
+		a1--&gt;a2
+		end
+		subgraph two
+		b1--&gt;b2
+		end
+		subgraph three
+		c1--&gt;c2
+		end
+</code></pre>
+
+<div class="mermaid">graph TB
+		subgraph one
+		a1-->a2
+		end
+		subgraph two
+		b1-->b2
+		end
+		subgraph three
+		c1-->c2
+		end
+</div>
+
+<h2 id="10">例子10</h2>
+<pre><code>graph TB
+		subgraph Tjo
+			sq[Square shape] -.-&gt; ci((Circle shape))
+			od&gt;Odd shape]-. Two line&lt;br&gt;edge comment .-&gt; ro
+			di{Diamond with &lt;br/&gt; line break} ==&gt; ro(Rounded&lt;br&gt;square&lt;br&gt;shape)
+			di--&gt;ro2(Rounded square shape)
+		end
+
+		%% Notice that no text in shape are added here instead that is appended further down
+		subgraph Go go
+			e --&gt; od3&gt;Really long text with linebreak&lt;br&gt;in an Odd shape]
+
+			e((Inner / circle&lt;br&gt;and some odd &lt;br&gt;special characters)) --&gt; f(,.?!+-*ز)
+
+			cyr[Cyrillic]--&gt;cyr2((Circle shape Начало))
+		end
+		classDef green fill:#9f6,stroke:#333,stroke-width:2px;
+		classDef orange fill:#f96,stroke:#333,stroke-width:4px,font-size:50%,font-style:bold;
+		class sq,e green
+		class di orange
+</code></pre>
+
+<div class="mermaid">graph TB
+		subgraph Tjo
+			sq[Square shape] -.-> ci((Circle shape))
+			od>Odd shape]-. Two line&lt;br>edge comment .-> ro
+			di{Diamond with &lt;br/> line break} ==> ro(Rounded&lt;br>square&lt;br>shape)
+			di-->ro2(Rounded square shape)
+		end
+
+		%% Notice that no text in shape are added here instead that is appended further down
+		subgraph Go go
+			e --> od3>Really long text with linebreak&lt;br>in an Odd shape]
+
+			e((Inner / circle&lt;br>and some odd &lt;br>special characters)) --> f(,.?!+-*ز)
+
+			cyr[Cyrillic]-->cyr2((Circle shape Начало))
+		end
+		classDef green fill:#9f6,stroke:#333,stroke-width:2px;
+		classDef orange fill:#f96,stroke:#333,stroke-width:4px,font-size:50%,font-style:bold;
+		class sq,e green
+		class di orange
+</div>
+
+<h2 id="11">例子11</h2>
+<pre><code>graph TB
+		subgraph f
+			sq[Square shape]--&gt;ci((Circle shape))
+			od&gt;Odd shape]---|Two line&lt;br&gt;edge comment|ro
+		end
+subgraph dfdg
+	od2&gt;Really long text in an Odd shape]--&gt;od3&gt;Really long text with linebreak&lt;br&gt;in an Odd shape]
+	di{Diamond is broken}--&gt;ro(Rounded squar shape)
+	di--&gt;ro2(Rounded square shape)
+end
+</code></pre>
+
+<div class="mermaid">graph TB
+		subgraph f
+			sq[Square shape]-->ci((Circle shape))
+			od>Odd shape]---|Two line&lt;br>edge comment|ro
+		end
+subgraph dfdg
+	od2>Really long text in an Odd shape]-->od3>Really long text with linebreak&lt;br>in an Odd shape]
+	di{Diamond is broken}-->ro(Rounded squar shape)
+	di-->ro2(Rounded square shape)
+end
+</div>
+
+<h2 id="12">例子12</h2>
+<pre><code class="shell">graph LR;
+		A(Central Message Router);
+		B(R TD);
+		C(XYZ);
+		D(S Writer);
+		A--&gt;|R TD Router|B;
+		B--&gt;C;
+		C--&gt;|XYZ Router|D;
+</code></pre>
+
+<div class="mermaid">graph LR;
+		A(Central Message Router);
+		B(R TD);
+		C(XYZ);
+		D(S Writer);
+		A-->|R TD Router|B;
+		B-->C;
+		C-->|XYZ Router|D;
+</div>
+
+<h2 id="13">例子13</h2>
+<pre><code class="shell">sequenceDiagram
+		participant Alice
+		Note left of Alice: Bob thinks about &lt;br/&gt; things &lt;br/&gt; to think about
+</code></pre>
+
+<div class="mermaid">sequenceDiagram
+		participant Alice
+		Note left of Alice: Bob thinks about &lt;br/> things &lt;br/> to think about
+</div>
+
+<h2 id="14">例子14</h2>
+<pre><code class="shell">sequenceDiagram
+		participant Alice
+		participant Bob
+		participant John
+		Alice-&gt;&gt;Bob: Hello Bob, how are you?
+		Note left of Alice: Bob thinks about &lt;br/&gt; things &lt;br/&gt; to think about
+		Bob--&gt;&gt;Alice: I am good thanks!
+		loop Multiple status checks
+		Bob--xJohn: How about you John?
+		Note right of John: Bob thinks
+		end
+
+		Bob--xAlice: Checking with John...
+		Alice-&gt;John the Long: Yes... John, how are you?
+		John the Long--&gt;Alice: Better then you!!
+
+</code></pre>
+
+<div class="mermaid">sequenceDiagram
+		participant Alice
+		participant Bob
+		participant John
+		Alice->>Bob: Hello Bob, how are you?
+		Note left of Alice: Bob thinks about &lt;br/> things &lt;br/> to think about
+		Bob-->>Alice: I am good thanks!
+		loop Multiple status checks
+		Bob--xJohn: How about you John?
+		Note right of John: Bob thinks
+		end
+
+		Bob--xAlice: Checking with John...
+		Alice->John the Long: Yes... John, how are you?
+		John the Long-->Alice: Better then you!!
+
+</div>
+
+<h2 id="15">例子15</h2>
+<pre><code>graph LR;
+				A[Start]--&gt;B{a = '1,2'}
+				B--&gt;|True|C[test = 1]
+				B--&gt;|False|Z[Store]
+				C--&gt;D{condition};
+				D--&gt;|True|E[test = 2];
+				D--&gt;|False|F[test = 3];
+				E--&gt;G{condition2 = ''};
+				F--&gt;G;
+				G--&gt;|True|H[test = 4];
+				G--&gt;|False|I[test = 5];
+				H--&gt;J{condition3};
+				I--&gt;J;
+				J--&gt;|True|K[test = 6];
+				J--&gt;|False|L;
+				K--&gt;L[Print];
+				L--&gt;M[Any Action];
+				M--&gt;N[Any Other Action];
+				N--&gt;Z;
+		linkStyle 11 stroke-width:2px,fill:none,stroke:red;
+</code></pre>
+
+<div class="mermaid">graph LR;
+				A[Start]-->B{a = '1,2'}
+				B-->|True|C[test = 1]
+				B-->|False|Z[Store]
+				C-->D{condition};
+				D-->|True|E[test = 2];
+				D-->|False|F[test = 3];
+				E-->G{condition2 = ''};
+				F-->G;
+				G-->|True|H[test = 4];
+				G-->|False|I[test = 5];
+				H-->J{condition3};
+				I-->J;
+				J-->|True|K[test = 6];
+				J-->|False|L;
+				K-->L[Print];
+				L-->M[Any Action];
+				M-->N[Any Other Action];
+				N-->Z;
+		linkStyle 11 stroke-width:2px,fill:none,stroke:red;
+</div>
+
+<h2 id="16">例子16</h2>
+<pre><code> digraph
+		{
+		a -&gt; b -&gt; c -- d -&gt; e;
+		a -- e;
+		}
+</code></pre>
+
+<div class="mermaid"> digraph
+		{
+		a -> b -> c -- d -> e;
+		a -- e;
+		}
+</div>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

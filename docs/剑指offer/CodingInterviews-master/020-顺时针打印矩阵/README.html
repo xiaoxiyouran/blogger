@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/9b4c81a02cd34f76be2659fa0d54342a?tpId=13&amp;tqId=11172&amp;rp=1&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">顺时针打印矩阵</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1391</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/020-顺时针打印矩阵">020-顺时针打印矩阵</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51182615">剑指Offer--020-顺时针打印矩阵</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/9b4c81a02cd34f76be2659fa0d54342a?tpId=13&amp;tqId=11172&amp;rp=1&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">顺时针打印矩阵</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1391">1391-顺时针打印矩阵</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51182615">剑指Offer--020-顺时针打印矩阵</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<p>题目描述</p>
+<p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，</p>
+<p>例如，
+如果输入如下矩阵： </p>
+<blockquote>
+<p>1 2 3 4 
+5 6 7 8 
+9 10 11 12 
+13 14 15 16 </p>
+</blockquote>
+<p>则依次打印出数字</p>
+<blockquote>
+<p>1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10</p>
+</blockquote>
+<h1 id="_3">类似与蛇形填数</h1>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cassert&gt;
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+class Solution
+{
+public:
+	vector&lt;int&gt; printMatrix(vector&lt;vector&lt;int&gt; &gt; matrix)
+	{
+
+		int row = matrix.size( );
+		int col = matrix[0].size( );
+
+		int left = 0, right = col, up = 0, down = row;      //  限制当前遍历的数的范围在行ROW[left, right), COL[left, right)
+
+		int x = 0, y = 0;                                   //  当前遍历的下标
+		int count = 0, max_count = row * col;               //  当前遍历的数据的个数
+
+		vector&lt;int&gt; res;
+		res.push_back(matrix[x][y]);
+
+		for(count = 1; count &lt; max_count;)
+		{
+			//  turn right y++
+			for(y++; y &lt; right &amp;&amp; count &lt; max_count; y++)
+			{
+				res.push_back(matrix[x][y]);
+				debug &lt;&lt;&quot;right-[&quot; &lt;&lt;x &lt;&lt;&quot;, &quot; &lt;&lt;y &lt;&lt;&quot;] = &quot; &lt;&lt;matrix[x][y] &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+				count++;
+			}
+#ifdef __tmain
+			assert(right == y);
+			assert(up == x);
+			system(&quot;PAUSE&quot;);
+#endif // __tmain
+			y--;        //  最后一次的时候, y == right了, 超出了范围需要回退
+			up++;       //  向右走以后, 那么当前最顶行up == x已经遍历过了，不可能再遍历了, 因此up++
+
+
+
+			//  turn down x++
+			for(x++; x &lt; down &amp;&amp; count &lt; max_count; x++)
+			{
+				res.push_back(matrix[x][y]);
+				debug &lt;&lt;&quot;right-[&quot; &lt;&lt;x &lt;&lt;&quot;, &quot; &lt;&lt;y &lt;&lt;&quot;] = &quot; &lt;&lt;matrix[x][y] &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+				count++;
+			}
+#ifdef __tmain
+			assert(down  == x);
+			assert(right - 1 == y);
+			system(&quot;PAUSE&quot;);
+#endif // __tmain
+			x--;            //  最后一次的时候, x == down, 超出了范围需要回退
+			right--;        //  向右走以后, 那么当前最右列right - 1 == y已经遍历过了，不可能再遍历了, 因此right--
+
+
+
+			//  turn left y--
+			for(y--; y &gt;= left &amp;&amp; count &lt; max_count; y--)
+			{
+				res.push_back(matrix[x][y]);
+				debug &lt;&lt;&quot;right-[&quot; &lt;&lt;x &lt;&lt;&quot;, &quot; &lt;&lt;y &lt;&lt;&quot;] = &quot; &lt;&lt;matrix[x][y] &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+				count++;
+			}
+#ifdef __tmain
+			assert(down - 1 == x);
+			assert(left - 1 == y);
+			system(&quot;PAUSE&quot;);
+#endif // __tmain
+			y++;            //  最后一次的时候, y == left - 1, 超出了范围需要回退
+			down--;         //  向左走以后, 那么当前最下行(down - 1) == x已经遍历过了，不可能再遍历了, 因此down--
+
+			//  turn uo x--
+			for(x--; x &gt;= up &amp;&amp; count &lt; max_count; x--)
+			{
+				res.push_back(matrix[x][y]);
+				debug &lt;&lt;&quot;right-[&quot; &lt;&lt;x &lt;&lt;&quot;, &quot; &lt;&lt;y &lt;&lt;&quot;] = &quot; &lt;&lt;matrix[x][y] &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+				count++;
+			}
+#ifdef __tmain
+			assert(up - 1 == x);
+			assert(left == y);
+			system(&quot;PAUSE&quot;);
+#endif // __tmain
+			x++;            //  最后一次的时候, x == up - 1, 超出了范围需要回退
+			left++;         //  向左走以后, 那么当前最左列left == y已经遍历过了，不可能再遍历了, 因此left--
+
+#ifdef __tmain
+			system(&quot;PAUSE&quot;);
+#endif // __tmain
+		}
+
+		return res;
+	}
+};
+
+
+int __tmain( )
+{
+	int a1[] = {  1,  2,  3,  4 };
+	int a2[] = {  5,  6,  7,  8 };
+	int a3[] = {  9, 10, 11, 12 };
+	int a4[] = { 13, 14, 15, 16 };
+//    int a1[] = { 1 };
+//    int a2[] = { 2 };
+//    int a3[] = { 3 };
+//    int a4[] = { 4 };
+
+	vector&lt;int&gt; vec1(a1, a1 + 4);
+	vector&lt;int&gt; vec2(a2, a2 + 4);
+	vector&lt;int&gt; vec3(a3, a3 + 4);
+	vector&lt;int&gt; vec4(a4, a4 + 4);
+
+
+	vector&lt; vector&lt;int&gt; &gt; vec;
+	vec.push_back(vec1);
+	vec.push_back(vec2);
+	vec.push_back(vec3);
+	vec.push_back(vec4);
+
+	Solution solu;
+	vector&lt;int&gt; res = solu.printMatrix(vec);
+	for(int i = 0; i &lt; res.size( ); i++)
+	{
+		cout &lt;&lt;res[i] &lt;&lt;&quot; &quot;;
+	}
+	return 0;
+}
+</code></pre>
+
+<h1 id="_4">用数组来标识转向</h1>
+<hr />
+<p>由于蛇形填数的方法，本质就是一次遍历，因此我们也可以用一层循环来实现
+当然由于也是需要转向，那么我们可以用一个数组来</p>
+<blockquote>
+<p>const int D[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+表示转向操作</p>
+</blockquote>
+<p>这样我们的代码称为</p>
+<pre><code class="cpp">class Solution
+{
+	int n, m;
+	vector&lt;vector&lt;bool&gt; &gt; v;
+	bool judge(int i, int j)
+	{
+		return 0 &lt;= i &amp;&amp; i &lt; n &amp;&amp; 0 &lt;= j &amp;&amp; j &lt; m &amp;&amp; !v[i][j];
+	}
+
+public:
+	 vector&lt;int&gt; printMatrix(vector&lt;vector&lt;int&gt; &gt; a)
+	 {
+		vector&lt;int&gt; r;
+		if((n = a.size()) == 0 || (m = a[0].size()) == 0)
+			return r;
+
+		v = vector&lt;vector&lt;bool&gt; &gt;(n, vector&lt;bool&gt;(m, false));
+		const int D[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+		int i = 0, j = 0, d = 0, count = m * n;
+		while(count--)
+		{
+			r.push_back(a[i][j]);
+			v[i][j] = true;
+			if(!judge(i + D[d][0], j + D[d][1]))
+			{
+				(++d) %= 4; //转弯
+			}
+			i += D[d][0];
+			j += D[d][1];//前进
+		}
+		return r;
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

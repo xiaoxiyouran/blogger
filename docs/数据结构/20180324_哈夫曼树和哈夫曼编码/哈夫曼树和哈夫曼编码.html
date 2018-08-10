@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>哈夫曼树和哈夫曼编码</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">哈夫曼树和哈夫曼编码</h1>
+<pre><code>1- 哈夫曼树是带权的二叉树
+2- 权值越大，离根越近
+3- 权值是从根到叶子的路径长度。（即经过的节点数 - 1 ）
+4- 数值越大，频率越高，编码长度越短
+
+5- 区分不同频率或者概率上不同的相同类型操作上，利用统计数据得出的规律构建最优化选择树结构，避免了过多的无用分支，提升整体操作性能。
+</code></pre>
+
+<h2 id="1-">1- 基本概念</h2>
+<p>a、路径和路径长度</p>
+<p>若在一棵树中存在着一个结点序列 k1，k2，……，kj， 使得 ki是ki+1 的双亲（1&lt;=i&lt;j），则称此结点序列是从 k1 到 kj 的路径。</p>
+<p>从 k1 到 kj 所经过的分支数称为这两点之间的路径长度，它等于路径上的结点数减1.</p>
+<p>b、结点的权和带权路径长度</p>
+<p>在许多应用中，常常将树中的结点赋予一个有着某种意义的实数，我们称此实数为该结点的权，(如下面一个树中的蓝色数字表示结点的权)</p>
+<p>结点的带权路径长度规定为从树根结点到该结点之间的路径长度与该结点上权的乘积。</p>
+<p>c、树的带权路径长度</p>
+<p>树的带权路径长度定义为树中所有叶子结点的带权路径长度之和，公式为：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131205224108125?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd3RmbW9ua2luZw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>其中，n表示叶子结点的数目，wi 和 li 分别表示叶子结点 ki 的权值和树根结点到 ki 之间的路径长度。</p>
+<p>如下图中树的带权路径长度 WPL = 9 x 2 + 12 x 2 + 15 x 2 + 6 x 3 + 3 x 4 + 5 x 4  =  122</p>
+<p>d、哈夫曼树</p>
+<p>哈夫曼树又<strong>称最优二叉树。它是 n 个带权叶子结点构成的所有二叉树中，带权路径长度 WPL 最小的二叉树。</strong></p>
+<p>如下图为一哈夫曼树示意图。</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131205232832062?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd3RmbW9ua2luZw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<h2 id="2-">2- 构造哈夫曼树</h2>
+<p>假设有n个权值，则构造出的哈夫曼树有n个叶子结点。 n个权值分别设为 w1、w2、…、wn，则哈夫曼树的构造规则为：</p>
+<p>(1) 将w1、w2、…，wn看成是有n 棵树的森林(每棵树仅有一个结点)；</p>
+<p>(2) 在森林中选出两个根结点的权值最小的树合并，作为一棵新树的左、右子树，且新树的根结点权值为其左、右子树根结点权值之和；</p>
+<p>(3)从森林中删除选取的两棵树，并将新树加入森林；</p>
+<p>(4)重复(2)、(3)步，直到森林中只剩一棵树为止，该树即为所求得的哈夫曼树。</p>
+<p>如：对 下图中的六个带权叶子结点来构造一棵哈夫曼树，步骤如下：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131205234828406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd3RmbW9ua2luZw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p><strong>注意：为了使得到的哈夫曼树的结构尽量唯一，通常规定生成的哈夫曼树中每个结点的左子树根结点的权小于等于右子树根结点的权。</strong></p>
+<p>构造哈夫曼树的程序如下：</p>
+<pre><code class="cpp">//2、根据数组 a 中 n 个权值建立一棵哈夫曼树，返回树根指针
+BTreeNode* CreateHuffman(vector&lt;ElemType&gt; a){
+
+	if(a.size() == 0)
+		return NULL;
+	else if(a.size() == 1)
+		return  new BTreeNode(a[0]);
+
+	vector&lt;BTreeNode *&gt; b;
+	for( int i=0; i&lt; a.size();i++ ){
+		b.push_back(new BTreeNode(a[i]));
+	}
+
+	BTreeNode* q = NULL;                 // for return
+
+	int i,j;
+	//进行 n-1 次循环建立哈夫曼树
+	for (i = 1; i &lt; a.size(); i++){
+		//k1表示森林中具有最小权值的树根结点的下标，k2为次最小的下标
+		int k1 = -1, k2;
+
+		//让k1初始指向森林中第一棵树，k2指向第二棵
+		for (j = 0; j &lt; a.size(); j++){
+			if (b[j] != NULL &amp;&amp; k1 == -1){
+				k1 = j;
+				continue;
+			}
+			if(b[j] != NULL){
+				k2 = j;
+				break;
+			}
+		}
+
+		// 找最小和次小值
+		//从当前森林中求出最小权值树和次最小
+		for (j = k2; j &lt; a.size(); j++){
+			if (b[j] != NULL){
+				if (b[j]-&gt;data &lt; b[k1]-&gt;data){
+					k2 = k1;
+					k1 = j;
+				}
+				else if (b[j]-&gt;data &lt; b[k2]-&gt;data)
+					k2 = j;
+			}
+		}
+
+		//由最小权值树和次最小权值树建立一棵新树，q指向树根结点
+		q = new BTreeNode( b[k1]-&gt;data + b[k2]-&gt; data );
+		q-&gt;left = b[k1];
+		q-&gt;right = b[k2];
+
+		b[k1] = q;//将指向新树的指针赋给b指针数组中k1位置
+		b[k2] = NULL;//k2位置为空
+	}
+
+	return q; //返回整个哈夫曼树的树根指针
+}
+</code></pre>
+
+<h2 id="3-">3- 哈夫曼编码</h2>
+<p>在电报通信中，电文是以二进制的0、1序列传送的，每个字符对应一个二进制编码，<strong>为了缩短电文的总长度，采用不等长编码方式，构造哈夫曼树，</strong></p>
+<p>将<strong>每个字符的出现频率作为字符结点的权值赋予叶子结点，每个分支结点的左右分支分别用0和1编码</strong>，从树根结点到每个叶子结点的路径上</p>
+<p>所经分支的0、1编码序列等于该叶子结点的二进制编码。如上文所示的哈夫曼编码如下：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131206233126390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd3RmbW9ua2luZw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>a 的编码为：00</p>
+<p>b 的编码为：01</p>
+<p>c 的编码为：100</p>
+<p>d 的编码为：1010</p>
+<p>e 的编码为：1011</p>
+<p>f 的编码为：11</p>
+<h2 id="4-">4- 前缀编码</h2>
+<p>引申</p>
+<p>提到哈夫曼树自然少不了前缀编码，前缀编码的依据也就是哈夫曼树所提供的优化判断功能，由树结构可知，每一个原始节点都被构造为哈夫曼树的叶子节点，使得到达任一叶子节点(原始节点)都不可能经过其他叶子节点(原始节点)，这听起来像是一句废话，但这确实是前缀编码的定义：不存在一个字符的编码是另一个字符的前缀。</p>
+<p>而前缀编码一个很明显的特性就是<strong>提供了对不等长编码的优化，即所有讲哈夫曼编码都会提到的例子，给出现频率高的字符分配较短的编码，给出现频率低的字符分配较长的编码，此不等长编码刚好借助哈夫曼树的特征来避免编码与另一个编码的前缀相同的问题</strong>，即实现了前缀编码(名字真有意思，<strong>前缀编码表示不存在一个编码的前缀等于另一个编码</strong>)。</p>
+<h2 id="5-">5-  哈夫曼树的全部操作运算</h2>
+<p>C++ 程序如下：</p>
+<p>输出数结构用到的广义表形式，其实就是前序遍历</p>
+<pre><code class="cpp"> #include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+typedef int ElemType;
+
+/// 二叉树结构
+struct BTreeNode
+{
+	ElemType data;
+	struct BTreeNode* left;
+	struct BTreeNode* right;
+	BTreeNode(int val):data(val),left(NULL),right(NULL){
+	}
+};
+
+//1、输出二叉树，可在前序遍历的基础上修改。采用广义表格式，元素类型为int[广义表是前序遍历的意思]
+void PrintBTree_int(struct BTreeNode* BT)
+{
+	if (BT != NULL)
+	{
+		printf(&quot;%d&quot;, BT-&gt;data); //输出根结点的值
+		if (BT-&gt;left != NULL || BT-&gt;right != NULL)
+		{
+			printf(&quot;(&quot;);
+			PrintBTree_int(BT-&gt;left); //输出左子树
+			if (BT-&gt;right != NULL)
+				printf(&quot;,&quot;);
+			PrintBTree_int(BT-&gt;right); //输出右子树
+			printf(&quot;)&quot;);
+		}
+	}
+}
+
+//2、根据数组 a 中 n 个权值建立一棵哈夫曼树，返回树根指针
+BTreeNode* CreateHuffman(vector&lt;ElemType&gt; a){
+
+	if(a.size() == 0)
+		return NULL;
+	else if(a.size() == 1)
+		return  new BTreeNode(a[0]);
+
+	vector&lt;BTreeNode *&gt; b;
+	for( int i=0; i&lt; a.size();i++ ){
+		b.push_back(new BTreeNode(a[i]));
+	}
+
+	BTreeNode* q = NULL;                 // for return
+
+	int i,j;
+	//进行 n-1 次循环建立哈夫曼树
+	for (i = 1; i &lt; a.size(); i++){
+		//k1表示森林中具有最小权值的树根结点的下标，k2为次最小的下标
+		int k1 = -1, k2;
+
+		//让k1初始指向森林中第一棵树，k2指向第二棵
+		for (j = 0; j &lt; a.size(); j++){
+			if (b[j] != NULL &amp;&amp; k1 == -1){
+				k1 = j;
+				continue;
+			}
+			if(b[j] != NULL){
+				k2 = j;
+				break;
+			}
+		}
+
+		// 找最小和次小值
+		//从当前森林中求出最小权值树和次最小
+		for (j = k2; j &lt; a.size(); j++){
+			if (b[j] != NULL)
+			{
+				if (b[j]-&gt;data &lt; b[k1]-&gt;data)
+				{
+					k2 = k1;
+					k1 = j;
+				}
+				else if (b[j]-&gt;data &lt; b[k2]-&gt;data)
+					k2 = j;
+			}
+		}
+
+		//由最小权值树和次最小权值树建立一棵新树，q指向树根结点
+		q = new BTreeNode( b[k1]-&gt;data + b[k2]-&gt; data );
+		q-&gt;left = b[k1];
+		q-&gt;right = b[k2];
+
+		b[k1] = q;//将指向新树的指针赋给b指针数组中k1位置
+		b[k2] = NULL;//k2位置为空
+	}
+
+	return q; //返回整个哈夫曼树的树根指针
+}
+
+//3、求哈夫曼树的带权路径长度
+ElemType WeightPathLength(struct BTreeNode* FBT, int len)//len初始为0
+{
+	if (FBT == NULL) //空树返回0
+		return 0;
+	else
+	{
+		if (FBT-&gt;left == NULL &amp;&amp; FBT-&gt;right == NULL)//访问到叶子结点
+			return FBT-&gt;data * len;
+		else //访问到非叶子结点，进行递归调用，返回左右子树的带权路径长度之和，len递增
+			return WeightPathLength(FBT-&gt;left,len+1)+WeightPathLength(FBT-&gt;right,len+1);
+	}
+}
+
+//4、哈夫曼编码（可以根据哈夫曼树带权路径长度的算法基础上进行修改）
+void HuffManCoding(struct BTreeNode* FBT, int len)//len初始值为0
+{
+	static int a[10];//定义静态数组a，保存每个叶子的编码，数组长度至少是树深度减一
+	if (FBT != NULL)//访问到叶子结点时输出其保存在数组a中的0和1序列编码
+	{
+		if (FBT-&gt;left == NULL &amp;&amp; FBT-&gt;right == NULL)
+		{
+			int i;
+			printf(&quot;结点权值为%d的编码：&quot;, FBT-&gt;data);
+			for (i = 0; i &lt; len; i++)
+				printf(&quot;%d&quot;, a[i]);
+			printf(&quot;\n&quot;);
+		}
+		else//访问到非叶子结点时分别向左右子树递归调用，并把分支上的0、1编码保存到数组a
+		{   //的对应元素中，向下深入一层时len值增1
+			a[len] = 0;
+			HuffManCoding(FBT-&gt;left, len + 1);
+			a[len] = 1;
+			HuffManCoding(FBT-&gt;right, len + 1);
+		}
+	}
+}
+
+//主函数
+int main()
+{
+	int n, i;
+
+	struct BTreeNode* fbt;
+	printf(&quot;从键盘输入待构造的哈夫曼树中带权叶子结点数n：\n&quot;);
+	while(1)
+	{
+		scanf(&quot;%d&quot;, &amp;n);
+		if (n &gt; 1)
+			break;
+		else
+			printf(&quot;重输n值：\n&quot;);
+	}
+
+	vector&lt;ElemType &gt; a(n,0);
+	printf(&quot;从键盘输入%d个整数作为权值：\n&quot;, n);
+	for (i = 0; i &lt; n; i++)
+		scanf(&quot; %d&quot;, &amp;a[i]);
+	fbt = CreateHuffman(a);
+	printf(&quot;广义表形式的哈夫曼树：&quot;);
+	PrintBTree_int(fbt);
+	printf(&quot;\n&quot;);
+	printf(&quot;哈夫曼树的带权路径长度：&quot;);
+	printf(&quot;%d\n&quot;, WeightPathLength(fbt, 0));
+	printf(&quot;树中每个叶子结点的哈夫曼编码：\n&quot;);
+	HuffManCoding(fbt, 0);
+
+	return  0;
+}
+</code></pre>
+
+<p>测试结果如下：</p>
+<pre><code class="cpp">从键盘输入待构造的哈夫曼树中带权叶子结点数n：
+6
+6
+从键盘输入6个整数作为权值：
+3 9 5 12 6 15
+3 9 5 12 6 15
+广义表形式的哈夫曼树：50(21(9,12),29(14(6,8(3,5)),15))
+哈夫曼树的带权路径长度：122
+树中每个叶子结点的哈夫曼编码：
+结点权值为9的编码：00
+结点权值为12的编码：01
+结点权值为6的编码：100
+结点权值为3的编码：1010
+结点权值为5的编码：1011
+结点权值为15的编码：11
+</code></pre>
+
+<h2 id="6-">6- 总结</h2>
+<p>哈夫曼树作为一种优化判断的树结构，在<strong>区分不同频率或者概率上不同的相同类型</strong>操作上，利用统计数据得出的规律构建最优化选择树结构，避免了过多的无用分支，提升整体操作性能。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

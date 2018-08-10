@@ -1,0 +1,969 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180803创建一个记事本的功能</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180803">20180803创建一个记事本的功能</h1>
+<h2 id="_1">创建数据库</h2>
+<p>1- 新建一个工程，名字随意</p>
+<p><img alt="image-20180803105509930" src="image-20180803105509930.png" /></p>
+<p>2- 选择的平台是Android.4.0</p>
+<p><img alt="image-20180803105555853" src="image-20180803105555853.png" /></p>
+<p>3- 下一步下一步，创建一个Empty activity.</p>
+<p>4- 创建一个 NotesDB 数据库类；</p>
+<pre><code class="java">package com.xiaoxiyouran.xi_notepad;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+/**
+ * Created by cookie on 2018/8/3.
+ */
+
+public class NotesDB extends SQLiteOpenHelper {
+
+		public static final String TABLE_NAME = &quot;notes&quot;;    // 指定表名
+		public static final String CONTENT = &quot;content&quot;;     // 指定表名
+		public static final String ID = &quot;_id&quot;;              // 每个数据库都需要指定一个id，注意id 是下划线id
+		public static final String TIME = &quot;time&quot;;           // 数据库的创建时间
+
+
+
+
+
+		public NotesDB(Context context){
+			super(context, &quot;notes&quot;, null, 1);   // 第二个参数是名字，第三个是库， 第四个是版本号（第一次创建）
+//             public SQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+		}
+
+		 public  void onCreate(SQLiteDatabase db){
+			//Todo: 创建数据库
+			 db.execSQL(&quot;CREATE TABLE &quot; + TABLE_NAME + &quot;(&quot;
+			 + ID +&quot; INTEGER PRIMARY KEY AUTOINCREMENT,&quot;
+			 + CONTENT + &quot; TEXT NOT NULL,&quot;  // 不是真正的空，而是一个不能为空的字符串
+			 + TIME + &quot; TEXT NOT NULL)&quot;
+			 );
+		 }
+
+
+		public  void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+
+		}
+
+}
+</code></pre>
+
+<p>然后在MainActivity.java 中启动，</p>
+<pre><code class="java">package com.xiaoxiyouran.xi_notepad;
+
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MainActivity extends AppCompatActivity {
+
+	private  NotesDB notesDB;           // 创建一个工具类
+	private SQLiteDatabase dbWriter;    // 创建一个数据库对象
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		notesDB = new NotesDB(this);
+		dbWriter = notesDB.getWritableDatabase();       // 获得写入权限
+
+	}
+
+	public void addDB(){
+		// 添加具体的内容
+		ContentValues cv = new ContentValues();
+		cv.put(NotesDB.CONTENT, &quot;Hello&quot;);       // cv 是数据库中的键和值
+		cv.put(NotesDB.TIME, getTime());        // cv 是数据库中的键和值
+		dbWriter.insert(NotesDB.TABLE_NAME, null,cv);   // 获取表明，添加条件，添加内容
+
+
+	}
+
+	public String getTime(){
+		// 获取当期系统的具体时间
+		SimpleDateFormat format = new SimpleDateFormat(&quot;yyyy年MM月dd日 HH:mm:ss&quot;);
+		Date curDate = new Date();
+		String str = format.format(curDate);
+
+		return str;
+
+	}
+}
+
+</code></pre>
+
+<p>通过DMSS的file Explore 工具，在data/com.xiaoxiyouran.xi_notepad/ db/ 可以找到notes文件，将其导出存为notes.db 文件。然后用一个查看.db的插件就能看到数据库内的内容。</p>
+<p>得找个视频看一下 DMSS的视频教程。</p>
+<p><br></p>
+<h2 id="ui">添加UI</h2>
+<p>1- 首先更改了activity_main.xml 的主页面布局；</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+
+&lt;!--
+1- 改为 LinearLayout
+2- 指定垂直布局
+
+
+--&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+	xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+	android:layout_width=&quot;match_parent&quot;
+	android:layout_height=&quot;match_parent&quot;
+	android:orientation=&quot;vertical&quot;
+	tools:context=&quot;com.xiaoxiyouran.xi_notepad.MainActivity&quot;&gt;
+
+	&lt;!--
+	1-
+	上面显示图片，视频和文字，下面显示列表
+	宽度填满
+	高度：自适应
+
+	2- 布局方向为横向布局
+
+	3- 添加三个button，指定 weight，三个按钮都能撑开布局
+
+	--&gt;
+	&lt;LinearLayout
+		android:layout_width=&quot;fill_parent&quot;
+		android:layout_height=&quot;wrap_content&quot;
+		android:orientation=&quot;horizontal&quot;
+		&gt;
+		&lt;Button
+			android:layout_weight=&quot;1&quot;
+			android:layout_width=&quot;wrap_content&quot;
+			android:layout_height=&quot;wrap_content&quot;
+			android:id=&quot;@+id/text&quot;
+			android:text=&quot;文字&quot;
+			/&gt;
+
+		&lt;Button
+			android:layout_weight=&quot;1&quot;
+			android:layout_width=&quot;wrap_content&quot;
+			android:layout_height=&quot;wrap_content&quot;
+			android:id=&quot;@+id/img&quot;
+			android:text=&quot;图文&quot;
+			/&gt;
+		&lt;Button
+			android:layout_weight=&quot;1&quot;
+			android:layout_width=&quot;wrap_content&quot;
+			android:layout_height=&quot;wrap_content&quot;
+			android:id=&quot;@+id/video&quot;
+			android:text=&quot;视频&quot;
+			/&gt;
+
+	&lt;/LinearLayout&gt;
+
+	&lt;!--
+	ListView 来承载我们添加的每一条内容
+	1- 高度自适应，有多少内容，加载多少
+
+	--&gt;
+	&lt;ListView
+		android:id=&quot;@+id/list&quot;
+		android:layout_width=&quot;fill_parent&quot;
+		android:layout_height=&quot;wrap_content&quot;&gt;
+
+
+	&lt;/ListView&gt;
+
+&lt;/LinearLayout&gt;
+
+</code></pre>
+
+<p>效果如下： </p>
+<p><img alt="image-20180803132330937" src="image-20180803132330937.png" /></p>
+<p>2- 添加一个cell.xml 视图文件，显示具体编辑的页面</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	android:layout_width=&quot;match_parent&quot;
+	android:layout_height=&quot;match_parent&quot;
+	android:orientation=&quot;vertical&quot;
+	&gt;
+
+	&lt;!--
+	1- 使用一个 LinearLayout 来承载相应的图片，视频
+	2- 第二个 ImageView 来承载视频
+
+	--&gt;
+	&lt;LinearLayout
+		android:layout_width=&quot;fill_parent&quot;
+		android:layout_height=&quot;wrap_content&quot;
+		android:orientation=&quot;horizontal&quot;
+		&gt;
+		&lt;ImageView
+			android:id=&quot;@+id/list_img&quot;
+			android:layout_width=&quot;wrap_content&quot;
+			android:layout_height=&quot;wrap_content&quot; /&gt;
+		&lt;ImageView
+			android:id=&quot;@+id/list_video&quot;
+			android:layout_width=&quot;wrap_content&quot;
+			android:layout_height=&quot;wrap_content&quot; /&gt;
+
+		&lt;!--
+		文字是垂直居中的；
+		高度是100dp 稍微高点好看一些；
+		--&gt;
+		&lt;LinearLayout
+			android:layout_width=&quot;fill_parent&quot;
+			android:layout_height=&quot;100dp&quot;
+			android:layout_gravity=&quot;center_vertical&quot;
+			android:orientation=&quot;vertical&quot;
+			&gt;
+
+			&lt;!--
+			TextView 来承载具体的文字
+			--&gt;
+			&lt;TextView
+				android:layout_width=&quot;wrap_content&quot;
+				android:layout_height=&quot;wrap_content&quot;
+				android:id=&quot;@+id/list_content&quot;
+				android:text=&quot;tv&quot;
+				/&gt;
+
+			&lt;TextView
+				android:layout_width=&quot;wrap_content&quot;
+				android:layout_height=&quot;wrap_content&quot;
+				android:id=&quot;@+id/list_time&quot;
+				android:text=&quot;tv&quot;
+				/&gt;
+
+		&lt;/LinearLayout&gt;
+
+	&lt;/LinearLayout&gt;
+&lt;/LinearLayout&gt;
+
+</code></pre>
+
+<p>效果如下：</p>
+<p><img alt="image-20180803132517895" src="image-20180803132517895.png" /></p>
+<p>3- 在MainActivity 中添加各个按钮的监听事件：</p>
+<pre><code class="java">package com.xiaoxiyouran.xi_notepad;
+
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+	private  NotesDB notesDB;           // 创建一个工具类
+	private SQLiteDatabase dbWriter;    // 创建一个数据库对象
+
+
+	private Button textbtn, imgbtn, videobtn;
+	private ListView lv;
+
+	private Intent i;   // 作为标识，指示是从哪个按钮跳到 addConent 视图
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		notesDB = new NotesDB(this);
+		dbWriter = notesDB.getWritableDatabase();       // 获得写入权限
+		addDB();
+		initView();                                     // 测试能否跳转
+	}
+
+	public void addDB(){
+		// 添加具体的内容
+		ContentValues cv = new ContentValues();
+		cv.put(NotesDB.CONTENT, &quot;Hello&quot;);       // cv 是数据库中的键和值
+		cv.put(NotesDB.TIME, getTime());        // cv 是数据库中的键和值
+		dbWriter.insert(NotesDB.TABLE_NAME, null,cv);   // 获取表明，添加条件，添加内容
+
+
+	}
+
+	public String getTime(){
+		// 获取当期系统的具体时间
+		SimpleDateFormat format = new SimpleDateFormat(&quot;yyyy年MM月dd日 HH:mm:ss&quot;);
+		Date curDate = new Date();
+		String str = format.format(curDate);
+
+		return str;
+
+	}
+
+
+	public void initView(){
+		// 初始化试图
+		lv = (ListView) findViewById(R.id.list);
+		textbtn = (Button) findViewById(R.id.text);
+		imgbtn = (Button) findViewById(R.id.img);
+		videobtn = (Button) findViewById(R.id.video);
+
+		textbtn.setOnClickListener(this);
+		imgbtn.setOnClickListener(this);
+		videobtn.setOnClickListener(this);
+
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		//  因为有三个按钮，实现OnclickLister 接口比较好
+
+		i = new Intent(this, AddContent.class);
+		switch (v.getId()){
+			case R.id.text:
+				i.putExtra(&quot;flag&quot;, &quot;1&quot;);
+				startActivity(i);                       // 跳转的时候把值传过去
+				break;
+			case R.id.img:
+				i.putExtra(&quot;flag&quot;, &quot;2&quot;);
+				startActivity(i);
+				break;
+
+			case R.id.video:
+				i.putExtra(&quot;flag&quot;, &quot;3&quot;);
+				startActivity(i);
+				break;
+
+		}
+
+	}
+}
+
+</code></pre>
+
+<p>4- 创建一个编辑内容的activity： AddContent.java</p>
+<pre><code class="java">package com.xiaoxiyouran.xi_notepad;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+/**
+ * Created by cookie on 2018/8/3.
+ */
+
+public class AddContent extends Activity{
+	private  String val;        // 作为接收的值
+
+
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.addcontent);
+
+		val = getIntent().getStringExtra(&quot;flag&quot;);
+	}
+}
+
+</code></pre>
+
+<p>该activity 的布局文件暂时为空：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	android:layout_width=&quot;match_parent&quot;
+	android:layout_height=&quot;match_parent&quot;&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+
+<p>5- 添加完一个activity 之后，需要将它添加到manifest.xml 中：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	package=&quot;com.xiaoxiyouran.xi_notepad&quot;&gt;
+
+	&lt;application
+		android:allowBackup=&quot;true&quot;
+		android:icon=&quot;@mipmap/ic_launcher&quot;
+		android:label=&quot;@string/app_name&quot;
+		android:roundIcon=&quot;@mipmap/ic_launcher_round&quot;
+		android:supportsRtl=&quot;true&quot;
+		android:theme=&quot;@style/AppTheme&quot;&gt;
+		&lt;!--
+		android:screenOrientation=&quot;portrait&quot;: 切换过去是竖屏
+		--&gt;
+		&lt;activity
+			android:screenOrientation=&quot;portrait&quot;
+			android:name=&quot;.MainActivity&quot;
+			android:label=&quot;@string/app_name&quot;
+			&gt;
+			&lt;intent-filter&gt;
+				&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+				&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+			&lt;/intent-filter&gt;
+		&lt;/activity&gt;
+
+		&lt;activity
+			android:screenOrientation=&quot;portrait&quot;
+			android:name=&quot;.AddContent&quot;&gt;
+
+		&lt;/activity&gt;
+
+	&lt;/application&gt;
+
+&lt;/manifest&gt;
+</code></pre>
+
+<p><br></p>
+<h2 id="_2">添加文字内容</h2>
+<p>1- 设置 addcontent.xml 试图的布局：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	android:layout_width=&quot;match_parent&quot;
+	android:layout_height=&quot;match_parent&quot;
+	android:orientation=&quot;vertical&quot;
+	&gt;
+
+	&lt;!--
+	显示图片
+	因为刚开始添加的是文字，可以先将图片隐藏
+	--&gt;
+	&lt;ImageView
+		android:id=&quot;@+id/c_img&quot;
+		android:layout_width=&quot;300dp&quot;
+		android:layout_height=&quot;500dp&quot;
+		android:visibility=&quot;gone&quot;
+		/&gt;
+
+	&lt;!--
+	播放视频
+	--&gt;
+	&lt;VideoView
+		android:layout_width=&quot;300dp&quot;
+		android:layout_height=&quot;500dp&quot;
+		android:id=&quot;@+id/c_video&quot;
+		android:visibility=&quot;gone&quot;
+		/&gt;
+
+
+	&lt;!--
+	指定一个编辑框
+	 android:layout_weight=&quot;1&quot;: 让它尽量的充满全屏
+
+	把背景去掉，要不然背景有个边框
+
+	android:gravity=&quot;top&quot;: 光标自动置顶
+	--&gt;
+	&lt;EditText
+		android:layout_width=&quot;fill_parent&quot;
+		android:layout_height=&quot;wrap_content&quot;
+		android:layout_weight=&quot;1&quot;
+		android:background=&quot;@null&quot;
+		android:gravity=&quot;top&quot;
+
+		android:id=&quot;@+id/ettext&quot;
+		android:hint=&quot;有了记事本，我再也不会忘记事情了&quot;
+		/&gt;
+
+	&lt;!--
+	创建两个按钮，保存，取消
+	--&gt;
+	&lt;LinearLayout
+		android:layout_width=&quot;fill_parent&quot;
+		android:layout_height=&quot;wrap_content&quot;
+		android:orientation=&quot;horizontal&quot;
+		&gt;
+
+		&lt;Button
+			android:layout_width=&quot;wrap_content&quot;
+			android:layout_height=&quot;wrap_content&quot;
+			android:layout_weight=&quot;1&quot;
+			android:text=&quot;保存&quot;
+			android:id=&quot;@+id/save&quot;
+			/&gt;
+
+		&lt;Button
+			android:layout_width=&quot;wrap_content&quot;
+			android:layout_height=&quot;wrap_content&quot;
+			android:layout_weight=&quot;1&quot;
+			android:text=&quot;取消&quot;
+			android:id=&quot;@+id/delete&quot;
+			/&gt;
+
+	&lt;/LinearLayout&gt;
+&lt;/LinearLayout&gt;
+
+</code></pre>
+
+<p>效果如下：</p>
+<p><img alt="image-20180803142844990" src="image-20180803142844990.png" /></p>
+<p>2- 点击保存按钮时，会将文本存到数据库，如下：</p>
+<pre><code class="java">// AddContent.java
+package com.xiaoxiyouran.xi_notepad;
+
+import android.app.Activity;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.VideoView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * Created by cookie on 2018/8/3.
+ */
+
+public class AddContent extends Activity implements View.OnClickListener{
+	private  String val;        // 作为接收的值
+
+	private Button savebtn, deletebtn;
+	private EditText ettext;
+	private ImageView c_img;
+	private VideoView v_video;
+
+	private NotesDB notesDB;
+	private SQLiteDatabase dbWriter;
+
+
+
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.addcontent);
+
+		val = getIntent().getStringExtra(&quot;flag&quot;);
+		savebtn = findViewById(R.id.save);
+		deletebtn = findViewById(R.id.delete);
+		ettext = findViewById(R.id.ettext);
+
+		c_img = findViewById(R.id.c_img);
+		v_video = findViewById(R.id.c_video);
+
+		savebtn.setOnClickListener(this);
+		deletebtn.setOnClickListener(this);
+
+		notesDB = new NotesDB(this);
+		dbWriter = notesDB.getWritableDatabase();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()){
+			case R.id.save:
+				addDB();
+				finish();
+				break;
+			case R.id.delete:
+				finish();       // 关闭当前的activity
+				break;
+
+
+		}
+	}
+
+	public void addDB(){
+		ContentValues cv = new ContentValues();
+		cv.put(NotesDB.CONTENT, ettext.getText().toString());
+		cv.put(NotesDB.TIME, getTime());
+		dbWriter.insert(NotesDB.TABLE_NAME, null, cv);
+
+	}
+
+	private String  getTime(){
+		SimpleDateFormat format = new SimpleDateFormat(&quot;yyyy年MM月dd日 HH:mm:ss&quot;);
+		Date date = new Date();
+		String str = format.format(date);
+		return  str;
+
+
+	}
+}
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">添加适配器</h2>
+<p>1- 有一个SimpleTextAdapter? 可以显示文本，但是没法显示视频和图像，就需要自己去创建一个Adapter。</p>
+<pre><code class="java">package com.xiaoxiyouran.xi_notepad;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextClock;
+import android.widget.TextView;
+
+/**
+ * Created by cookie on 2018/8/3.
+ */
+
+public class MyAdapter extends BaseAdapter {
+
+	private Context context;    // 上下文环境
+	private Cursor cursor;      // 从数据库中查询出来的对象
+	private LinearLayout layout;    // 创建一个视图对象
+
+	public MyAdapter(Context context, Cursor cursor){
+		// 将这两个变量传进来
+		this.context = context;
+		this.cursor = cursor;
+	}
+
+	@Override
+	public int getCount() {
+		// 应该返回的是Cursor的 长度，但 cursor是一个游标，又该如何返回呢？
+
+		return cursor.getCount();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return cursor.getPosition();
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		LayoutInflater inflater = LayoutInflater.from(context);     // 创建一个加载视图的权限
+		layout = (LinearLayout) inflater.inflate(R.layout.cell, null);
+		TextView contenttv = (TextView) layout.findViewById(R.id.list_content);    // 获取列表的内容
+		TextView timetv = (TextView) layout.findViewById(R.id.list_time);
+		ImageView imgiv = (ImageView) layout.findViewById(R.id.list_img);           // 显示图片
+		ImageView videoiv = (ImageView) layout.findViewById(R.id.list_video);       // 截取视频的第一张图片
+		cursor.moveToPosition(position);        // 移到要查询的位置
+		String content = cursor.getString(cursor.getColumnIndex(&quot;content&quot;));    // 查询第一个内容列
+		String time = cursor.getString(cursor.getColumnIndex(&quot;time&quot;));          // 获取第二列查询的内容
+		contenttv.setText(content);
+		timetv.setText(time);
+
+		return layout;
+	}
+}
+
+</code></pre>
+
+<p>2- 添加完成后，就可以在MainActivity.java 中使用：</p>
+<p>注意数据库读取内容的使用；</p>
+<pre><code class="java">package com.xiaoxiyouran.xi_notepad;
+
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+	private  NotesDB notesDB;           // 创建一个工具类
+	private SQLiteDatabase dbWriter;    // 创建一个数据库对象
+
+
+	private Button textbtn, imgbtn, videobtn;
+	private ListView lv;
+
+	private Intent i;                   // 作为标识，指示是从哪个按钮跳到 addConent 视图
+
+	private MyAdapter adapter;          // 先创建一个adapter对象
+	private SQLiteDatabase dbReader;    // 需要获取数据库读取的权限
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		notesDB = new NotesDB(this);
+		dbWriter = notesDB.getWritableDatabase();       // 获得写入权限
+		dbReader = notesDB.getReadableDatabase();       // 获得读取权限
+//        addDB();
+		initView();                                     // 测试能否跳转
+	}
+
+	public void addDB(){
+		// 添加具体的内容
+		ContentValues cv = new ContentValues();
+		cv.put(NotesDB.CONTENT, &quot;Hello&quot;);       // cv 是数据库中的键和值
+		cv.put(NotesDB.TIME, getTime());        // cv 是数据库中的键和值
+		dbWriter.insert(NotesDB.TABLE_NAME, null,cv);   // 获取表明，添加条件，添加内容
+
+
+	}
+
+	public String getTime(){
+		// 获取当期系统的具体时间
+		SimpleDateFormat format = new SimpleDateFormat(&quot;yyyy年MM月dd日 HH:mm:ss&quot;);
+		Date curDate = new Date();
+		String str = format.format(curDate);
+
+		return str;
+
+	}
+
+
+	public void initView(){
+		// 初始化试图
+		lv = (ListView) findViewById(R.id.list);
+		textbtn = (Button) findViewById(R.id.text);
+		imgbtn = (Button) findViewById(R.id.img);
+		videobtn = (Button) findViewById(R.id.video);
+
+		textbtn.setOnClickListener(this);
+		imgbtn.setOnClickListener(this);
+		videobtn.setOnClickListener(this);
+
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		//  因为有三个按钮，实现OnclickLister 接口比较好
+
+		i = new Intent(this, AddContent.class);
+		switch (v.getId()){
+			case R.id.text:
+				i.putExtra(&quot;flag&quot;, &quot;1&quot;);
+				startActivity(i);                       // 跳转的时候把值传过去
+				break;
+			case R.id.img:
+				i.putExtra(&quot;flag&quot;, &quot;2&quot;);
+				startActivity(i);
+				break;
+
+			case R.id.video:
+				i.putExtra(&quot;flag&quot;, &quot;3&quot;);
+				startActivity(i);
+				break;
+
+		}
+
+	}
+
+	public void selectDB(){
+		// 创建一个方法专门来读取数据库
+
+		Cursor cursor = dbReader.query(NotesDB.TABLE_NAME,null,null, null,
+				null,null,null);        // 从数据库读取的一个游标
+		adapter = new MyAdapter(this, cursor);
+		lv.setAdapter(adapter);
+	}
+
+	@Override
+	protected void onResume() {
+		// 在onResume 中去调用 selectDB() 函数
+		super.onResume();
+		selectDB();
+	}
+}
+</code></pre>
+
+<p><br></p>
+<h2 id="_4">添加图片</h2>
+<p>下次接着学：https://www.bilibili.com/video/av18875281/?p=6</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180713 反射</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180713">20180713 反射</h1>
+<p>举一个用反射来实现以一个对象的内容为模板 创建另一个对象。</p>
+<pre><code class="csharp">    /// &lt;summary&gt;
+	/// 获取类中的属性值
+	/// &lt;/summary&gt;
+	public static string GetModelValue(string FieldName, object obj)
+	{
+		try
+		{
+			Type Ts = obj.GetType();
+			object o = Ts.GetProperty(FieldName).GetValue(obj, null);
+			string Value = Convert.ToString(o);
+			if (string.IsNullOrEmpty(Convert.ToString(o))) return null;
+			return Value;
+		}
+		catch(System.Exception e)
+		{
+			throw e;
+		}
+	}
+
+	/// &lt;summary&gt;
+	/// 设置类中的属性值
+	/// &lt;/summary&gt;
+	public static bool SetModelValue(string FieldName, string Value, object obj)
+	{
+		try
+		{
+			Debug.Log(FieldName);
+			Type Ts = obj.GetType();
+			object v = Convert.ChangeType(Value, Ts.GetProperty(FieldName).PropertyType);
+			Ts.GetProperty(FieldName).SetValue(obj, v, null);
+			return true;
+		}
+		catch(System.Exception e)
+		{
+			throw e;
+		}
+	}
+
+	static LangBuildCfgUnit generateThroughTemplate(LangBuildCfgUnit template, LangBuildCfgUnit alter, string curKey, ref Hashtable ht, string path) {
+		LangBuildCfgUnit generate = new LangBuildCfgUnit(template); // create a new object
+		string curReSet = (string)ht[curKey];
+
+		Type t = typeof(LangBuildCfgUnit);
+		PropertyInfo[] properties = t.GetProperties();              // need using System.Reflection
+		foreach (PropertyInfo property in properties)
+		{
+			string FieldName = property.Name;
+			if (property.PropertyType.Equals(typeof(bool)))      // bool 类型的数据需要特殊对待
+			{
+				if (curReSet.Contains(FieldName))               // 如果bool 类型的数据确实改变了
+				{
+					string value = GetModelValue(FieldName, alter);
+					try
+					{
+						SetModelValue(FieldName, value, generate);
+					}
+					catch (System.Exception e)
+					{
+						Logger.LogErrorP(string.Format(&quot;Load LangMacroCfg failed. {0}, {1}&quot;, path, e.ToString()));
+						return null;
+					}
+				}
+
+			}
+			else
+			{
+				string value = GetModelValue(FieldName, alter);
+				int res_cmp = String.Compare(FieldName, &quot;Default&quot;);
+				if ( value != null &amp;&amp; ( res_cmp != 0 ) )        // Default property need to skip
+				{
+					try
+					{
+						SetModelValue(FieldName, value, generate);
+					}
+					catch (System.Exception e)
+					{
+						Logger.LogErrorP(string.Format(&quot;Load LangMacroCfg failed. {0}, {1}&quot;, path, e.ToString()));
+						return null;
+					}
+				}
+			}
+
+		}
+
+		return generate;
+	}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180413 DES AES 和 RSA 等常用加密算法介绍</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180413-des-aes-rsa">20180413 DES AES 和 RSA 等常用加密算法介绍</h1>
+<pre><code class="java">1- 加密算法的三大类
+   对称加密（加密与解密的密钥相同）：DES，3DES,AES
+   非对称加密（加密与解密密钥不同）：RSA、DSA
+   散列算法：SHA-1、MD5
+
+   序列算法（序列密码）：次只对明文中的单个位（有时对字节）运算
+   分组算法（分组密码）：对明文的一组位进行运算（即运算之前将明文分为若干组，然后分别对每一组进行运算，这些位组称为分组）
+
+2- DES加密： 分组密码，以64位为分组对数据加密，它的密钥长度是56位   
+   3DES（Triple DES）：对一块数据用三个不同的密钥进行三次加密，强度更高
+
+   AES： 对称分组密码体制，密钥长度的最少支持为128、192、256，分组长度128位。美联邦的区块加密标准
+
+   RSA： 最有影响力的公钥加密算法， 第一个同时用于 加密+ 数字签名。 基于一个简单的数论知识：将两个大素数相乘十分容易，但想要对其乘积进行因式分解却极其困难，因此可以将乘积公开作为加密密钥
+
+   DSA: 基于整数有限域离散对数难题的, 对两个素数公开。即使不知道私钥，你也能确认它们是否是随机产生的，还是作了手脚。 只用于签名。
+
+   BASE64： 传输8bit字节代码的编码方式之一，Base64编码可用于在HTTP环境下传递较长的标识信息。
+
+   MD5加密算法：散列函数，提供消息的完整性保护。对一段Message产生fingerprin指纹，以防止被“篡改”。防止文件作者的“抵赖”
+
+   SHA1加密算法：SHA1是和MD5一样流行的消息摘要算法。用于数字签名，两个不同的消息不会产生同样的消息摘要 保证数据完整性。
+
+   凡是采取“消息摘要”方式的数字验证算法都是有“碰撞”的——也就是两个不同的东西算出的消息摘要相同，互通作弊图就是如此。
+
+
+</code></pre>
+
+<hr />
+<p>原文链接： https://blog.csdn.net/w4hechuan2009/article/details/76601895</p>
+<p>文本先简单介绍常用的加密算法，后面将逐步推送每个加密算法的加密原理与应用及java实现方式。</p>
+<p>​       加密算法分对称加密和非对称算法，其中<strong>对称加密算法的加密与解密密钥相同，非对称加密算法的加密密钥与解密密钥不同</strong>，此外，还有一类<strong>不需要密钥的散列算法</strong>。</p>
+<p>​       常见的<strong>对称加密算法主要有DES、3DES、AES</strong>等，常见的<strong>非对称算法主要有RSA、DSA</strong>等，<strong>散列算法主要有SHA-1、MD5</strong>等。</p>
+<p>​       对称算法又可分为两类。一次只对明文中的单个位（有时对字节）运算的算法称为<strong>序列算法或序列密码</strong>。另一类算法是对明文的一组位进行运算（即运算之前将明文分为若干组，然后分别对每一组进行运算，这些位组称为分组），相应的算法称为<strong>分组算法或分组密码</strong>。</p>
+<h2 id="des"><strong>DES加密算法</strong></h2>
+<p>​       DES加密算法是一种<strong>分组密码，以64位为分组对数据加密</strong>，它的<strong>密钥长度是56位</strong>，加密解密用同一算法。DES加密算法是对密钥进行保密，而公开算法，包括加密和解密算法。这样，只有掌<strong>握了和发送方相同密钥的人</strong>才能解读由DES加密算法加密的密文数据。因此，破译DES加密算法实际上就是搜索密钥的编码。对于56位长度的密钥来说，如果用穷举法来进行搜索的话，其<strong>运算次数为2的56次方。</strong></p>
+<p><strong>3DES（Triple DES）</strong></p>
+<p>​       是基于DES的对称算法，对一块数据<strong>用三个不同的密钥进行三次加密</strong>，强度更高；</p>
+<h2 id="aes"><strong>AES加密算法</strong></h2>
+<p>​       AES加密算法是密码学中的高级加密标准，该加密算法采用<strong>对称分组密码体制</strong>，<strong>密钥长度的最少支持为128、192、256，分组长度128位</strong>，算法应易于各种硬件和软件实现。这种加密算法是美国联邦政府采用的区块加密标准，AES标准用来替代原先的DES，已经被多方分析且广为全世界所使用。</p>
+<h2 id="rsa"><strong>RSA加密算法</strong></h2>
+<p>​       RSA加密算法是目前最有影响力的<strong>公钥加密算法，并且被普遍认为是目前最优秀的公钥方案之一。RSA是第一个能同时用于加密和数宇签名的算法</strong>，它能够抵抗到目前为止已知的所有密码攻击，已被ISO推荐为公钥数据加密标准。RSA加密算法基于一个十分简单的数论事实：<strong>将两个大素数相乘十分容易，但想要对其乘积进行因式分解却极其困难，因此可以将乘积公开作为加密密钥。</strong></p>
+<h2 id="dsa"><strong>DSA加密算法</strong></h2>
+<p>​       DSA是<strong>基于整数有限域离散对数</strong>难题的，DSA的一个重要特点<strong>是两个素数公开</strong>，这样，当使用别人的p和q时，即使不知道私钥，你也能确认它们是否是随机产生的，还是作了手脚。这一点，RSA算法做不到。</p>
+<p>​       相比于RSA，DSA 只用于签名，而 RSA 可用于签名和加密。</p>
+<h2 id="base64"><strong>Base64加密算法</strong></h2>
+<p>​       Base64加密算法是网络上最常见的用于<strong>传输8bit字节代码的编码方式之一，Base64编码可用于在HTTP环境下传递较长的标识信息。</strong></p>
+<h2 id="md5"><strong>MD5加密算法</strong></h2>
+<p>​       MD5为计算机安全领域广泛使用的一种<strong>散列函数</strong>，用以提供消息的完整性保护。</p>
+<p>​       MD5被广泛用于各种软件的密码认证和钥匙识别上。MD5用的是哈希函数，它的典型应用是对一段信息产生信息摘要，以防止被篡改。MD5的典型应用是<strong>对一段Message产生fingerprin指纹，以防止被“篡改”。</strong>如果再有—个第三方的认证机构，用MD5还可以<strong>防止文件作者的“抵赖”</strong>，这就是所谓的数字签名应用。MD5还广泛用于操作系统的登陆认证上，如UNIX、各类BSD系统登录密码、数字签名等诸多方。</p>
+<h2 id="sha1"><strong>SHA1加密算法</strong></h2>
+<p>​       <strong>SHA1是和MD5一样流行的消息摘要算法</strong>。SHA加密算法模仿MD4加密算法。</p>
+<p>​       SHA1主要适用于数字签名标准里面定义的<strong>数字签名算法</strong>。对于长度小于2“64位的消息，SHA1会产生一个160位的消息摘要。当接收到消息的时候，这个消息摘要可以用来验证数据的完整性。在传输的过程中，数据很可能会发生变化，那么这时候就会产生不同的消息摘要。SHA1不可以从消息摘要中复原信息，而且两<strong>个不同的消息不会产生同样的消息摘要</strong>。这样，SHA1就可以验证数据的完整性，所以说<strong>SHA1是为了保证文件完整性</strong>的技术。</p>
+<p>​       SHA1是一种比MD5的安全性强的算法，理论上，凡是采取“消息摘要”方式的数字验证算法都是<strong>有“碰撞”的——也就是两个不同的东西算出的消息摘要相同，互通作弊图就是如此</strong>。但是安全性高的算法要找到指定数据的“碰撞”很困难，而利用公式来计算“碰撞”就更困难一目前为止通用安全算法中<strong>仅有MD5被破解</strong>。</p>
+<p>各种加密算法比较如下：</p>
+<p>对称加密算法(加解密密钥相同)</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>名称</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>密钥长度</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>运算速度</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>安全性</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>资源消耗</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>DES</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>56位</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>较快</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>低</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>中</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3DES</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>112位或168位</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>慢</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>中</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>AES</strong></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>128、192、256位</strong></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>快</strong></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>高</strong></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>低</strong></td>
+</tr>
+</tbody>
+</table>
+<p>非对称算法(加密密钥和解密密钥不同)</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>名称</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>成熟度</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>安全性(取决于密钥长度)</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>运算速度</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>资源消耗</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>RSA</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>慢</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>DSA</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>快</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>只能用于数字签名</td>
+</tr>
+</tbody>
+</table>
+<p>散列算法比较</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>名称</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>安全性</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>速度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>SHA-1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>慢</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MD5</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>中</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>快</td>
+</tr>
+</tbody>
+</table>
+<p>对称与非对称算法比较</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>名称</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>密钥管理</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>安全性</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>速度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>对称算法</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>比较难,不适合互联网,一般用于内部系统</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>中</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>快好几个数量级(软件加解密速度至少快100倍,每秒可以加解密数M比特数据),适合<strong>大数据量的加解密处理</strong></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>非对称算法</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>密钥容易管理</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>高</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>慢,适合小数据量加解密或数据签名</strong></td>
+</tr>
+</tbody>
+</table>
+<p>以上给出了DES，3DES，AES，RSA等常见加密算法的介绍，后面将陆续推送每一种加密算法的详细实现流程以及相关的JAVA实现代码。 </p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

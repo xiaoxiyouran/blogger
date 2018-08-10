@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>05 类型转换</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="05">05 类型转换</h1>
+<p>类型转换从根本上说是类型铸造，或者说是把数据从一种类型转换为另一种类型。在 C# 中，类型铸造有两种形式：</p>
+<ul>
+<li><strong>隐式类型转换</strong> - 这些转换是 C# 默认的以安全方式进行的转换, 不会导致数据丢失。例如，从小的整数类型转换为大的整数类型，从派生类转换为基类。</li>
+<li><strong>显式类型转换</strong> - 显式类型转换，即强制类型转换。显式转换需要强制转换运算符，而且强制转换会造成数据丢失。</li>
+</ul>
+<p>下面的实例显示了一个显式的类型转换：</p>
+<pre><code>namespace TypeConversionApplication
+{
+	class ExplicitConversion
+	{
+		static void Main(string[] args)
+		{
+			double d = 5673.74;
+			int i;
+
+			// 强制转换 double 为 int
+			i = (int)d;
+			Console.WriteLine(i);
+			Console.ReadKey();
+
+		}
+	}
+}
+</code></pre>
+
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code>5673
+</code></pre>
+
+<h2 id="c">C# 类型转换方法</h2>
+<p>C# 提供了下列内置的类型转换方法：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>序号</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToBoolean</strong> 如果可能的话，把类型转换为布尔型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToByte</strong> 把类型转换为字节类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToChar</strong> 如果可能的话，把类型转换为单个 Unicode 字符类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToDateTime</strong> 把类型（整数或字符串类型）转换为 日期-时间 结构。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>5</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToDecimal</strong> 把浮点型或整数类型转换为十进制类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>6</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToDouble</strong> 把类型转换为双精度浮点型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>7</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToInt16</strong> 把类型转换为 16 位整数类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToInt32</strong> 把类型转换为 32 位整数类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>9</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToInt64</strong> 把类型转换为 64 位整数类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>10</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToSbyte</strong> 把类型转换为有符号字节类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>11</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToSingle</strong> 把类型转换为小浮点数类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>12</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToString</strong> 把类型转换为字符串类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>13</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToType</strong> 把类型转换为指定类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>14</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToUInt16</strong> 把类型转换为 16 位无符号整数类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>15</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToUInt32</strong> 把类型转换为 32 位无符号整数类型。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>16</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>ToUInt64</strong> 把类型转换为 64 位无符号整数类型。</td>
+</tr>
+</tbody>
+</table>
+<p>下面的实例把不同值的类型转换为字符串类型：</p>
+<pre><code>namespace TypeConversionApplication
+{
+	class StringConversion
+	{
+		static void Main(string[] args)
+		{
+			int i = 75;
+			float f = 53.005f;
+			double d = 2345.7652;
+			bool b = true;
+
+			Console.WriteLine(i.ToString());
+			Console.WriteLine(f.ToString());
+			Console.WriteLine(d.ToString());
+			Console.WriteLine(b.ToString());
+			Console.ReadKey();
+
+		}
+	}
+}
+</code></pre>
+
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code>75
+53.005
+2345.7652
+True
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

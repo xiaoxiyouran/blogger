@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>测试</title>
+<link rel="stylesheet" href="css/sidebar.css"> <!--初始化文件-->
+<script src="js/sidebar.js"></script> <!--rem适配js-->
+
+<style mce_bogus="1">
+body { margin: 0px;  }  
+iframe {border: 0px;}
+</style>  
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
+
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav" >
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src="./global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+ <!-- <frame src='./global_sidebar.html' name='left' frameborder="1" bordercolor="#999999"> -->
+  
+</div>
+
+<!-- <iframe id="frame3d" name="frame3d" frameborder="0" width="100%" scrolling="auto"  
+    style="margin-top: -4px;" onload="this.style.height=document.body.clientHeight-84"  
+    height="100%" src="./map.jsp" mce_src="map.jsp"></iframe>    -->
+
+<!-- <h2>右侧侧边栏</h2>
+<p>点击以下菜单图标打开侧边栏，并显示在右侧。</p> -->
+<div>
+ <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; 打开</span>
+</div>
+<!-- for content -->
+<div >    
+其它的一些内容
+</div>
+
+
+
+</body>
+</html>

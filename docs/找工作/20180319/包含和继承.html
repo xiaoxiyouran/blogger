@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>包含和继承</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">包含和继承</h1>
+<p>这里需要补充的是包含(has-a)和继承（is-a）的关系</p>
+<p>在《代码大全》这本书的第六章中提到了有关包含与继承的一些原则，我摘取如下：</p>
+<p>​    一、包含("has a")</p>
+<p>​    包含表示<strong>一个类含有一个基本数据元素或对象。包含是面向对象编程的主力技术。</strong></p>
+<p>​    (1)通过包含来实现"has a"的关系。</p>
+<p>​    (2)在<strong>万不得已时通过private继承来实现"has a"的关系。</strong></p>
+<p>​    (3)<strong>警惕有超过有7个数据成员的类。</strong></p>
+<p>​    二、继承("is a")</p>
+<p>​    继承的概念是说<strong>一个类是另一个类的一种特化。</strong></p>
+<p>​    (1)采用<strong>public继承实现"is a"的关系。</strong></p>
+<p>​    (2)<strong>要么采用继承并进行详细说明，要么就不要用它</strong>。</p>
+<p>​    (3)确保<strong>只继承需要继承的部分。派生类可以继承成员函数的接口和/或实现。</strong></p>
+<p>​    (4)<strong>不要"覆盖"一个不可覆盖的成员函数。</strong>派生类中的成员函数不要与基类中不可覆盖的成员函数重名。<strong>【如果重名会隐藏】</strong></p>
+<p>​    (5)<strong>尽量使用多态，避免大量的类型检查。</strong></p>
+<p>​    (6)让所有的数据都是private而非protected。【数据尽量用private】</p>
+<p>​    </p>
+<p>三、何时使用继承、何时使用包含</p>
+<p>​    (1)如果多个类<strong>共享数据</strong>而非行为，应该创建这些类可以包含的共用对象。</p>
+<p>​    (2)如果多个<strong>类共享行为而非数据，应该让它们从共同的基类继承而来，并在基类里定义共用的子程序。</strong></p>
+<p>​    (3)如果多个类<strong>既共享行为又共享数据</strong>，应该让它们从共同的基类继承而来，并在基类里定义共用的数据和子程序。</p>
+<p>​    (4)当你想由<strong>基类控制接口时，使用继承；当你想自己控制接口时，使用包含。</strong></p>
+<p>总结：</p>
+<p>1- 包含万不得已可以用 private 继承实现</p>
+<p>2- 继承是由public 继承实现的。</p>
+<p>用的选择</p>
+<p>1- 如果是共享数据，用包含</p>
+<p>2- 如果共享行为或者既共享数据又共享行为，得用继承</p>
+<p>3- 想使用基类控制接口（实现多态），用继承； 想自己控制接口，用包含。</p>
+<hr />
+<p>1）组合(has-a)关系可以显式地获得被包含类（继承中称为父类）的对象，而继承(is-a)则是隐式地获得父类的对象，被包含类和父类对应，而组合外部类和子类对应。</p>
+<p>2）组合关系在运行期决定，而继承关系在编译期就已经决定了。</p>
+<p>3）组合是在组合类和被包含类之间的一种松耦合关系，而继承则是父类和子类之间的一种紧耦合关系。</p>
+<p>4）当选择使用组合关系时，在组合类中包含了外部类的对象，组合类可以调用外部类必须的方法，而使用继承关系时，父类的所有方法和变量都被子类无条件继承，子类不能选择。</p>
+<p>5）最重要的一点，使用继承关系时，可以实现类型的回溯，即用父类变量引用子类对象，这样便可以实现多态，而组合没有这个特性。</p>
+<p>6）还有一点需要注意，如果你确定复用另外一个类的方法永远不需要改变时，应该使用组合，因为组合只是简单地复用被包含类的接口，而继承除了复用父类的接口外，它甚至还可以覆盖这些接口，修改父类接口的默认实现，这个特性是组合所不具有的。</p>
+<p>7）从逻辑上看，组合最主要地体现的是一种整体和部分的思想，例如在电脑类是由内存类，CPU类，硬盘类等等组成的，而继承则体现的是一种可以回溯的父子关系，子类也是父类的一个对象。</p>
+<p>8）这两者的区别主要体现在类的抽象阶段，在分析类之间的关系时就应该确定是采用组合还是采用继承。</p>
+<p>9）引用网友的一句很经典的话应该更能让大家分清继承和组合的区别：组合可以被说成“我请了个老头在我家里干活” ，继承则是“我父亲在家里帮我干活"。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

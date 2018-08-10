@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180723HTTPConnection</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180723httpconnection">20180723HTTPConnection</h1>
+<p>httplib是一个相对底层的http请求模块，其上有专门的包装模块，如urllib内建模块，goto等第三方模块，但是封装的越高就越不灵活，比如urllib模块里请求错误时就不会返回结果页的内容，只有头信息，对于某些需要检测错误请求返回值的场景就不适用，所以就得用这个模块了。</p>
+<p>1、class httplib.HTTPConnection</p>
+<p>说明： </p>
+<p>该类用于创建一个http类型的请求链接</p>
+<p>原型： </p>
+<p>HTTPConnection(host[, port[, strict[, timeout]]])</p>
+<ul>
+<li>host: 请求的服务器host，不能带http://开头</li>
+<li>port: 服务器web服务端口 </li>
+<li>strict: 是否严格检查请求的状态行，就是http1.0/1.1 协议版本的那一行，即请求的第一行，默认为False，为True时检查错误会抛异常 </li>
+<li>timeout: 单次请求的超时时间，没有时默认使用httplib模块内的全局的超时时间</li>
+</ul>
+<pre><code class="python">实例：
+conn1 = HTTPConnection('www.baidu.com:80')
+conn2 = HTTPconnection('www.baidu.com',80)
+conn3 = HTTPConnection('www.baidu.com',80,True,10)
+
+错误实例：
+conn3 = HTTPConnection('www.baidu.com:80',True,10)
+</code></pre>
+
+<p><br></p>
+<p>返回： </p>
+<ul>
+<li>HTTPConnection类会实例并返回一个HTTPConnection对象</li>
+</ul>
+<p>2、class httplib.HTTPSConnection </p>
+<p>说明： </p>
+<p>该类用于创建一个https类型的请求链接 </p>
+<p>原型：</p>
+<p>HTTPSConnection(host[, port[, key_file[, cert_file[, strict[, timeout]]]]])</p>
+<ul>
+<li>key_file:一个包含PEM格式的私钥文件</li>
+<li>
+<p>cert_file:一个包含PEM格式的认证文件 </p>
+</li>
+<li>
+<p>other：其它同http参数</p>
+</li>
+</ul>
+<p><br></p>
+<p>实例： </p>
+<pre><code class="python">conn3 = HTTPSConnection('accounts.google.com',443,key_file,cert_file,True,10)
+</code></pre>
+
+<p>返回： </p>
+<p>同样返回一个HTTPSConnection对象 </p>
+<p><br></p>
+<p>注意：</p>
+<p>要创建https链接，必须要保证底层的socket模块是支持ssl的编译模式，即编译时ssl选项的开关是开着的</p>
+<p><br> </p>
+<p>3、HTTPConnection对象request方法：</p>
+<p>说明：</p>
+<p>发送一个请求</p>
+<p>原型：</p>
+<p>conn.request(method, url[, body[, headers]])</p>
+<ul>
+<li>method: 请求的方式，如'GET','POST','HEAD','PUT','DELETE'等</li>
+<li>url: 请求的网页路径。如：'/index.html'</li>
+<li>body: 请求是否带数据，该参数是一个字典</li>
+<li>headers: 请求是否带头信息，该参数是一个字典，不过键的名字是指定的http头关键字</li>
+</ul>
+<p><br></p>
+<p>实例：</p>
+<pre><code class="python">conn.request('GET', '/', '', {'user-agent':'test'})
+</code></pre>
+
+<p><br> </p>
+<p>返回： </p>
+<p>无返回，其实就是相对于向服务其发送数据，但是没有最后回车</p>
+<p><br></p>
+<p>4、HTTPConnection对象getresponse方法</p>
+<p>说明：</p>
+<p>获取一个http响应对象，相当于执行最后的2个回车</p>
+<p>原型/实例：</p>
+<pre><code class="python">res = conn.getresponse()
+</code></pre>
+
+<p>返回：</p>
+<p>HTTPResponse对象</p>
+<p><br> </p>
+<p>5、HTTPConnection对象close()方法</p>
+<p>说明：</p>
+<p>关闭指定的httpconnect链接</p>
+<p>实例：</p>
+<pre><code class="python">conn.close()
+</code></pre>
+
+<p><br> </p>
+<p>6、HTTPResponse对象read方法</p>
+<p>说明：</p>
+<p>获得http响应的内容部分，即网页源码</p>
+<p>原型：</p>
+<p><code>python
+body = res.read([amt])</code></p>
+<p>amt: 读取指定长度的字符，默认为空，即读取所有内容</p>
+<p>实例：</p>
+<pre><code class="python">body = res.read()
+pbody = res.read(10)
+</code></pre>
+
+<p>返回：</p>
+<p>网页内容字符串 </p>
+<p><br></p>
+<p>7、HTTPResponse对象的其它方法或属性</p>
+<p>方法：</p>
+<p>getheaders()</p>
+<p>获得所有的响应头内容，是一个元组列表[(name,value),(name2,value2)]</p>
+<p>getheader(name[,default])</p>
+<p>获得指定的头内容</p>
+<p>fileno()</p>
+<p>socket的fileno</p>
+<p><br></p>
+<p>属性：</p>
+<p>msg</p>
+<p>所有的头信息，和getheaders方法一样，只不过这个是原始未处理的字符串</p>
+<p>status</p>
+<p>当次请求的状态</p>
+<p>version</p>
+<p>当次请求的http协议版本，10是http1.0, 11是http/1.1</p>
+<p>reason</p>
+<p>当次请求的结果的表述内容，200是ok，404是Not Found</p>
+<p><br></p>
+<p>总体实例： </p>
+<pre><code class="python">#!/usr/bin/env python  
+# -*- coding: utf-8 -*-  
+import httplib
+import urllib
+def sendhttp():
+	data = urllib.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})   
+	headers = {&quot;Content-type&quot;: &quot;application/x-www-form-urlencoded&quot;,
+			   &quot;Accept&quot;: &quot;text/plain&quot;}
+	try:
+	conn = httplib.HTTPConnection('bugs.python.org')    # 注意这个是请求的服务器主机地址
+
+	conn.request('POST', '/', data, headers)            # '/' url 是服务器上的地址
+	httpres = conn.getresponse()
+
+	body = httpres.read()       # 可以获取读取的内容
+
+	if httpres.status !=200:    # 通过返回的状态码判断状态
+		print &quot;error.&quot;
+	d = json.load(body)         # 用来解析 body
+	if d[&quot;status&quot;]!= 1:
+		print &quot;http 请求失败&quot;
+		exit(1)
+	return d                    # d[&quot;data&quot;] 属性应该是获取 ‘/’ 目录下的所有文件名。
+	print httpres.status
+	print httpres.reason
+	print httpres.read()         
+
+	finally:
+		if con:
+			conn.close();
+
+
+if __name__ == '__main__': 
+	sendhttp() 
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

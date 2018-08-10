@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c?tpId=13&amp;tqId=11205&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">正则表达式匹配</a></p>
+<p>九度OJ：未收录</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/053-正则表达式匹配">053-正则表达式匹配</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51542072">剑指Offer--053-正则表达式匹配</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="right">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c?tpId=13&amp;tqId=11205&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">053-正则表达式匹配</a></td>
+<td align="center">未收录</td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51542072">剑指Offer--053-正则表达式匹配</a></td>
+<td align="right"><a href="https://github.com/gatieme/CodingInterviews/tree/master/053-正则表达式匹配">053-正则表达式匹配</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>同样的题目</p>
+<p><a href="http://blog.csdn.net/gatieme/article/details/51049244">LeetCode题解--10. Regular Expression Matching</a></p>
+</blockquote>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>请实现一个函数用来匹配包括'.'和'<em>'的正则表达式。模式中的字符'.'表示任意一个字符，而'</em>'表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab<em>ac</em>a"匹配，但是与"aa.a"和"ab*a"均不匹配</p>
+</blockquote>
+<p><strong>样例输入</strong></p>
+<blockquote>
+<p>"a","ab*a"</p>
+</blockquote>
+<p><strong>样例输出</strong></p>
+<blockquote>
+<p>false</p>
+</blockquote>
+<h1 id="dfs">分治–类似与深度优先搜索DFS</h1>
+<hr />
+<p>我们会分治搜索的方法来查看，</p>
+<ul>
+<li>
+<p>考虑特殊情况即<em>s字符串或者</em>p字符串结束。</p>
+</li>
+<li>
+<p>s字符串结束，要求<em>p也结束或者间隔‘’ （例如p=”a</em>b*c……”），否则无法匹配</p>
+</li>
+<li>
+<p><em>s字符串未结束，而</em>p字符串结束，则无法匹配</p>
+</li>
+<li>
+<p><em>s字符串与</em>p字符串均未结束</p>
+</li>
+<li>
+<p>(p+1)字符不为’‘，则只需比较s字符与<em>p字符，若相等则递归到(s+1)字符串与</em>(p+1)字符串的比较，否则无法匹配。</p>
+</li>
+<li>
+<p>(p+1)字符为’‘，则p字符可以匹配<em>s字符串中从0开始任意多（记为i）等于</em>p的字符，然后递归到(s+i+1)字符串与*(p+2)字符串的比较，</p>
+</li>
+</ul>
+<p>只要匹配一种情况就算完全匹配。</p>
+<pre><code class="cpp">
+///if      p[j+1] == '*' -&gt; (i + 1, j + 1)
+///else if p[i] == p[j] -&gt; (i + 1, j + 2) or (i, j+2)
+///else -&gt; (i, j+2)
+
+class Solution
+{
+public:
+	bool match(const char *s, const char *p)
+	{
+		if (*p == '\0')         //  正则p到底末尾时
+		{
+			return !(*s);       //  如果串s页到达末尾，则匹配成功
+		}
+
+		int slen = strlen(s), plen = strlen(p);
+
+		if (plen == 1           //  如果正则串只有一个长度
+		|| *(p + 1) != '*')     //  如果匹配*
+		{
+			//
+			return slen &amp;&amp; (p[0] == '.' || *s == *p)
+				&amp;&amp; match(s + 1, p + 1);
+		}
+		else
+		{
+			//  匹配一个字符
+			while (*s != '\0' &amp;&amp; (*p == '.' || *s == *p))
+			{
+				if (match(s++, p + 2))
+				{
+					return true;
+				}
+			}
+		}
+
+		//  匹配0个字符
+		return match(s, p + 2);
+	}
+};
+</code></pre>
+
+<h1 id="_3">动态规划</h1>
+<hr />
+<p>dp[i][j] 表示 s[0..i] 和 p[0..j] 是否 match，</p>
+<ul>
+<li>
+<p>当 p[j] != ‘*’，b[i + 1][j + 1] = b[i][j] &amp;&amp; s[i] <mark> p[j] ，</p>
+</li>
+<li>
+<p>当 p[j] </mark> ‘*’ 要再分类讨论，具体可以参考 DP C++，还可以压缩下把 dp 降成一维：</p>
+</li>
+</ul>
+<p>下面是那位大神的代码</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	bool match(string s, string p) {
+		/**
+		 * f[i][j]: if s[0..i-1] matches p[0..j-1]
+		 * if p[j - 1] != '*'
+		 *      f[i][j] = f[i - 1][j - 1] &amp;&amp; s[i - 1] == p[j - 1]
+		 * if p[j - 1] == '*', denote p[j - 2] with x
+		 *      f[i][j] is true iff any of the following is true
+		 *      1) &quot;x*&quot; repeats 0 time and matches empty: f[i][j - 2]
+		 *      2) &quot;x*&quot; repeats &gt;= 1 times and matches &quot;x*x&quot;: s[i - 1] == x &amp;&amp; f[i - 1][j]
+		 * '.' matches any single character
+		 */
+		int m = s.size(), n = p.size();
+		vector&lt;vector&lt;bool&gt;&gt; f(m + 1, vector&lt;bool&gt;(n + 1, false));
+
+		f[0][0] = true;
+		for (int i = 1; i &lt;= m; i++)
+			f[i][0] = false;
+		// p[0.., j - 3, j - 2, j - 1] matches empty iff p[j - 1] is '*' and p[0..j - 3] matches empty
+		for (int j = 1; j &lt;= n; j++)
+			f[0][j] = j &gt; 1 &amp;&amp; '*' == p[j - 1] &amp;&amp; f[0][j - 2];
+
+		for (int i = 1; i &lt;= m; i++)
+			for (int j = 1; j &lt;= n; j++)
+				if (p[j - 1] != '*')
+					f[i][j] = f[i - 1][j - 1] &amp;&amp; (s[i - 1] == p[j - 1] || '.' == p[j - 1]);
+				else
+					// p[0] cannot be '*' so no need to check &quot;j &gt; 1&quot; here
+					f[i][j] = f[i][j - 2] || (s[i - 1] == p[j - 2] || '.' == p[j - 2]) &amp;&amp; f[i - 1][j];
+
+		return f[m][n];
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

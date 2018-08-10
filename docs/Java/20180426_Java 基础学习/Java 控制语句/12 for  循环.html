@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>12 for  循环</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="12-for">12 for  循环</h1>
+<p>Java <strong>for循环</strong>用于多次迭代程序的一部分，或者多次执行同一个代码块。如果迭代次数是固定的，建议使用<code>for</code>循环。</p>
+<p>java中有三种类型的<code>for</code>循环。如下所示 -</p>
+<ul>
+<li>简单<code>for</code>循环</li>
+<li><code>for-each</code>或增强型<code>for</code>循环</li>
+<li>标记<code>for</code>循环</li>
+</ul>
+<h2 id="1-javafor">1. Java简单For循环</h2>
+<p>简单的<code>for</code>循环与<code>C/C++</code>相同。我们可以初始化变量，检查条件和增加/减少变量的值。</p>
+<p><strong>语法：</strong></p>
+<pre><code class="java">for(initialization;condition;incr/decr){  
+	//code to be executed  
+}
+</code></pre>
+
+<p>执行流程图如下所示 -</p>
+<p><img alt="img" src="12_01.png" /></p>
+<p><strong>示例：</strong></p>
+<pre><code class="Java">public class ForExample {  
+	public static void main(String[] args) {  
+		for(int i=1;i&lt;=10;i++){  
+			System.out.println(i);  
+		}  
+	}  
+}
+</code></pre>
+
+<p>执行上面的代码，输出如下 -</p>
+<pre><code class="java">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</code></pre>
+
+<h2 id="2-java-for-each">2. Java for-each循环</h2>
+<p><code>for-each</code>循环用于在java中遍历数组或集合。它比简单的<code>for</code>循环更容易使用，因为不需要递增值和使用下标符号。</p>
+<p><strong>语法：</strong></p>
+<pre><code class="java">for(Type var:array){  
+   //code to be executed  
+}
+</code></pre>
+
+<p><strong>示例：</strong></p>
+<pre><code class="java">public class ForEachExample  {
+	public static void main(String[] args) {
+		int arr[] = { 12, 23, 44, 56, 78 };
+		for (int i : arr) {
+			System.out.println(i);      /// 有意思的是，如果是 i + ' '; 会加上' ' 的 ASCII， 所以应该用 &quot; &quot; 
+		}
+	}
+}
+</code></pre>
+
+<p>执行上面的代码，得到如下结果 -</p>
+<pre><code class="java">12
+23
+44
+56
+78
+</code></pre>
+
+<h2 id="3-javafor">3. Java标记For循环</h2>
+<p>我们可以让每个<code>for</code>循环的名称。 为此，在<code>for</code>循环之前使用标签。它是有用的，如果在嵌套<code>for</code>循环中，可以使用<code>break/continue</code>指定循环。</p>
+<p>通常，<code>break</code>和<code>continue</code>关键字断开/继续最内循环。</p>
+<p><strong>语法：</strong></p>
+<pre><code class="java">labelname:  
+for(initialization;condition;incr/decr){  
+	//code to be executed  
+}
+</code></pre>
+
+<p><strong>示例：</strong></p>
+<pre><code class="java">public class LabeledForExample  {
+	public static void main(String[] args) {
+		aa: for (int i = 1; i &lt;= 3; i++) {
+			bb: for (int j = 1; j &lt;= 3; j++) {
+				if (i == 2 &amp;&amp; j == 2) {
+					break aa;       /// 如果是continue，则是从外层开始，重新下一轮的迭代
+				}
+				System.out.println(i + &quot; &quot; + j);
+			}
+		}  /// 是跳出到标记块所在区域的下面。
+	}
+}
+</code></pre>
+
+<p>执行上面的代码，得到如下结果 -</p>
+<pre><code class="java">1 1
+1 2
+1 3
+2 1
+</code></pre>
+
+<p>如果使用<code>break bb</code>;它将打断内循环，这是任何循环的默认行为。</p>
+<pre><code class="java">public class LabeledForExample {
+	public static void main(String[] args) {
+		aa: for (int i = 1; i &lt;= 3; i++) {
+			bb: for (int j = 1; j &lt;= 3; j++) {
+				if (i == 2 &amp;&amp; j == 2) {
+					break bb;
+				}
+				System.out.println(i + &quot; &quot; + j);
+			}
+		}
+	}
+}
+</code></pre>
+
+<p>执行上面的代码，得到如下结果 -</p>
+<pre><code class="Shell">1 1
+1 2
+1 3
+2 1
+3 1
+3 2
+3 3
+</code></pre>
+
+<h2 id="4-java">4. Java无限循环</h2>
+<p>在<code>for</code>循环中，如果使用两个分号<code>;</code>，则它对于循环将是不定式的。</p>
+<p><strong>语法：</strong></p>
+<pre><code class="Java">for(;;){  
+	//code to be executed  
+}
+</code></pre>
+
+<p><strong>示例：</strong></p>
+<pre><code class="Java">public class ForExample {
+	public static void main(String[] args) {
+		for (;;) {
+			System.out.println(&quot;infinitive loop&quot;);
+		}
+	}
+}
+</code></pre>
+
+<p>执行上面的代码，得到如下结果 -</p>
+<pre><code class="java">infinitive loop
+infinitive loop
+infinitive loop
+infinitive loop
+infinitive loop
+ctrl+c
+</code></pre>
+
+<blockquote>
+<p>提示： 在执行上面的程序时，您需要按<code>ctrl + c</code>退出程序。</p>
+</blockquote>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

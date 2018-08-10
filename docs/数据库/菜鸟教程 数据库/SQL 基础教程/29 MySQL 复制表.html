@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>29 MySQL 复制表</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="29-mysql">29 MySQL 复制表</h1>
+<ol>
+<li>另一种完整复制表的方法:</li>
+</ol>
+<p><code>mysql
+   CREATE TABLE targetTable LIKE sourceTable;
+   INSERT INTO targetTable SELECT * FROM sourceTable;</code></p>
+<p>其他:</p>
+<p>可以拷贝一个表中其中的一些字段:</p>
+<p><code>Mysql
+   CREATE TABLE newadmin AS
+   (
+	   SELECT username, password FROM admin
+   )</code></p>
+<p>可以将新建的表的字段改名:</p>
+<p><code>mysql
+   CREATE TABLE newadmin AS
+   (  
+	   SELECT id, username AS uname, password AS pass FROM admin
+   )</code></p>
+<p>可以拷贝一部分数据:</p>
+<p><code>Mysql
+   CREATE TABLE newadmin AS
+   (
+	   SELECT * FROM admin WHERE LEFT(username,1) = 's'
+   )</code></p>
+<p>可以在创建表的同时定义表中的字段信息:</p>
+<p><code>Mysql
+   CREATE TABLE newadmin
+   (
+	   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY
+   )
+   AS
+   (
+	   SELECT * FROM admin
+   )</code></p>
+<p>​</p>
+<ol>
+<li>​</li>
+</ol>
+<p><strong>来给大家区分下mysql复制表的两种方式。</strong></p>
+<p><strong>第一、只复制表结构到新表</strong></p>
+<p><code>mysql
+   create table 新表 select * from 旧表 where 1=2</code></p>
+<p>或者</p>
+<p><code>mysql
+   create table 新表 like 旧表</code></p>
+<p><strong>第二、复制表结构及数据到新表</strong></p>
+<p><code>mysql
+   create table 新表 select * from 旧表</code></p>
+<p>​</p>
+<hr />
+<p>原文： http://www.runoob.com/mysql/mysql-clone-tables.html</p>
+<p>如果我们需要完全的复制MySQL的数据表，包括表的结构，索引，默认值等。 如果仅仅使用<strong>CREATE TABLE ... SELECT</strong> 命令，是无法实现的。</p>
+<p>本章节将为大家介绍如何<strong>完整的复制MySQL数据</strong>表，步骤如下：</p>
+<ul>
+<li>使用 <strong>SHOW CREATE TABLE</strong> 命令获取创建数据表(<strong>CREATE TABLE</strong>) 语句，该语句包含了原数据表的结构，索引等。</li>
+<li>复制以下命令显示的SQL语句，修改数据表名，并执行SQL语句，通过以上命令 将完全的复制数据表结构。</li>
+<li>如果你想复制表的内容，你就可以使用 <strong>INSERT INTO ... SELECT</strong> 语句来实现。</li>
+</ul>
+<h3 id="_1">实例</h3>
+<p>尝试以下实例来复制表 runoob_tbl 。</p>
+<p><strong>步骤一：</strong></p>
+<p>获取数据表的完整结构。</p>
+<pre><code class="mysql">mysql&gt; SHOW CREATE TABLE runoob_tbl \G;
+*************************** 1. row ***************************
+	   Table: runoob_tbl
+Create Table: CREATE TABLE `runoob_tbl` (
+  `runoob_id` int(11) NOT NULL auto_increment,
+  `runoob_title` varchar(100) NOT NULL default '',
+  `runoob_author` varchar(40) NOT NULL default '',
+  `submission_date` date default NULL,
+  PRIMARY KEY  (`runoob_id`),
+  UNIQUE KEY `AUTHOR_INDEX` (`runoob_author`)
+) ENGINE=InnoDB 
+1 row in set (0.00 sec)
+
+ERROR:
+No query specified
+</code></pre>
+
+<p><strong>步骤二：</strong></p>
+<p>修改SQL语句的数据表名，并执行SQL语句。</p>
+<pre><code class="Mysql">mysql&gt; CREATE TABLE `clone_tbl` (
+	 `runoob_id` int(11) NOT NULL auto_increment,
+	 `runoob_title` varchar(100) NOT NULL default '',
+	 `runoob_author` varchar(40) NOT NULL default '',
+	 `submission_date` date default NULL,
+	 PRIMARY KEY  (`runoob_id`),
+	 UNIQUE KEY `AUTHOR_INDEX` (`runoob_author`)
+	 ) ENGINE=InnoDB;
+Query OK, 0 rows affected (1.80 sec)
+</code></pre>
+
+<p><strong>步骤三：</strong></p>
+<p>执行完第二步骤后，你将在数据库中创建新的克隆表 clone_tbl。 如果你<strong>想拷贝数据表的数据</strong>你可以使用 <strong>INSERT INTO... SELECT</strong> 语句来实现。</p>
+<pre><code class="Mysql">mysql&gt; INSERT INTO clone_tbl (runoob_id,
+							runoob_title,
+							runoob_author,
+							submission_date)
+	 SELECT runoob_id,runoob_title, 
+			runoob_author,submission_date
+	 FROM runoob_tbl;
+Query OK, 3 rows affected (0.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+</code></pre>
+
+<p>执行以上步骤后，你将完整的复制表，包括表结构及表数据。</p>
+<p>事实上，我上面用的 唯一键【一直到做 唯一 索引用】有重复的。</p>
+<pre><code class="mysql"> UNIQUE KEY AUTHOR_INDEX (runoob_author)
+</code></pre>
+
+<p>所以改该表的结构如下：</p>
+<pre><code class="mysql"># 先删除该索引
+mysql&gt; drop index AUTHOR_INDEX on clone_tbl;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+# 重新添加 唯一键 为该id
+mysql&gt; ALTER TABLE clone_tbl ADD UNIQUE KEY `unique_index`(`runoob_id`);
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+# 复制数据
+mysql&gt; INSERT INTO clone_tbl (runoob_id, runoob_title, runoob_author,         submission_date)  
+SELECT runoob_id, runoob_title, runoob_author, submission_date 
+FROM runoob_tbl;
+Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180403_Windows和Linux进程间通信区别</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180403_windowslinux">20180403_Windows和Linux进程间通信区别</h1>
+<pre><code class="cpp">windows 中 管道分为匿名和命名，
+Linux中 消息，工作，访问模式
+
+windows 中有油槽： 一个对多个发（广播）
+Linux中： 消息队列，多个对一个发
+
+Socket 通信：不同机器之间的通信
+</code></pre>
+
+<p>多进程和多线程本质上就是将原来一个进程或者线程处理的任务分给了多个进程或者线程，也可以说是将原来一个CPU处理的任务分给了多个CPU处理，类似于随着生产力的发展，原来一个人包打天下的个人英雄主义时代被分工合作的团队取代一样。</p>
+<p>既然是一个团队，就必然涉及到<strong>分工合作</strong>问题，并行程序的设计本质上就是解决“分工”和“合作”的问题。其中“分工”主要是后面讲到“并行程序设计模式”，而“合作”则是本篇重点要讨论的问题。</p>
+<p>相信大家做过项目的都知道所谓合作其实就是<strong>“通信”和“冲突解决”</strong>。常见的“通信”有开会、电话、邮件、甚至QQ等，无非是为了交换信息，而“冲突解决”其实就是为了解决资源不足，大家抢着用的问题。</p>
+<p>可能许多菜鸟、大侠以及网上的很多博客都和和我开始一样，将“通信”和“冲突解决”混为一谈了，一说到进程间通信，就会口若悬河的冒出一大堆名词：管道、信号量、消息队列、互斥。。。。。这里面有的是“通信”（<strong>管道、消息队列）</strong>，有的是“冲突解决”（信号量、互斥），并不是一类东东。</p>
+<p>下面我们分别从“通信”和“冲突解决”两方面来比较Windows和Linux。</p>
+<h2 id="11-windows">1.1        Windows进程间通信</h2>
+<p>标准（例如《Windows系统编程》里面提到的）的Windows进程间通信有三个：匿名管道、命名管道（又叫FIFO）、邮槽（MailSlot），实际上常用的还有一个：共享内存。之所以说它不是标准的，我猜测可能是共享内存设计本意不是为了进程间通信用的，而是为了内存映射用的。</p>
+<h3 id="111">1.1.1   匿名管道</h3>
+<p>顾名思义：匿名管道就是“匿名”的“管道”。为什么这样拆开呢？正所谓名如其人，通过名字我们就可以了解大概这是个什么东东。</p>
+<p>匿名：之所以叫做“匿名”，当然是因为没有名字了，但为什么会没有名字呢？没有名字又有什么好处呢？其实很简单了，“匿名”当然是不想让其它人知道了，说白了这个“匿名管道”<strong>就是只给父子进程用的，别人不需要也不可能知道名字的。</strong></p>
+<p>管道：说道管道，你是否想到了“下水管道”、“煤气管道”等？对了，和这些管道本质上是一样的，就是可以传送东西的，所以叫做管道。要注意匿名管道是<strong>“单向流通”（也叫半双工）的。</strong></p>
+<h3 id="112">1.1.2   命名管道</h3>
+<p>聪明的你看到这个名字肯定就会产生如下两个想法，我们就一一来解答：</p>
+<p>1）和匿名管道看起来很像</p>
+<p>是的，命名管道就是相对匿名管道来说的。</p>
+<p>2）命名管道和匿名管道有什么差别？</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>对比点</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>匿名管道</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>命名管道</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>消息格式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>字符</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>二进制</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>命名管道可以控制读消息的长度</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>工作模式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>半双工</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>全双工</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>NA</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>访问模式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>只能在一台机器上</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>可以跨网络</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>NA</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>通信模式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>一对一，父子进程用</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>一对多，不同的进程都可以用</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>一个命名管道可以有多个实例</td>
+</tr>
+</tbody>
+</table>
+<h3 id="113">1.1.3   邮槽</h3>
+<p>邮槽和命名管道类似，都是有名字的，也可以跨网络进行通信，既然是这样，为什么Windows还要设计邮槽呢？其实也没有什么玄虚，说简单点就是管道都是“点对点”的（命名管道虽然是一对多，但具体的通信还是1对1进行的），而<strong>邮槽是为了提供一种“广播”通信机制（王婆卖瓜一下：微软还不如将邮槽叫做“广播”：-P）。</strong></p>
+<p>下面我们看看邮槽和命名管道的对比：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>对比点</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>邮槽</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>命名管道</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>消息格式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>数据包</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>二进制</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>命名管道可以控制读消息的长度</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>工作模式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>单向</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>全双工</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>广播当然是单向的了</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>访问模式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>可以跨网络</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>可以跨网络</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>NA</td>
+</tr>
+</tbody>
+</table>
+<h3 id="114">1.1.4   共享内存</h3>
+<p>就像前面提到的一样，共享内存并不是正统的进程间通信的机制，共享内存其实只不过是Windows“内存映射文件”的一个特殊用法而已。</p>
+<p>然而实际中共享内存在进程间通信却比较常见，从使用方便性上来说，共享内存其实没有前面介绍的方便（必须结合互斥、事件等一起使用），但为什么应用比较多呢？关键在于<strong>共享内存性能很高。</strong></p>
+<p>共享内存应该是<strong>介于匿名管道和命名管道之间的通信方式</strong>，为什么这么说呢？主要有如下几个原因：</p>
+<p><strong>1）共享内存和匿名管道相比：共享内存有名称，可用于多个进程通信，这点像命名管道；</strong></p>
+<p><strong>2）共享内存和命名管道相比：共享内存只能在一台机器上使用，不能跨网络，这点和匿名管道类似</strong></p>
+<p><strong>3）共享内存是双向的，这点又和命名管道类似。</strong></p>
+<h2 id="12-linux">1.2        Linux进程间通信</h2>
+<p>介绍完了Windows，介绍Linux就相对轻松一些了，虽然Windows和Linux形同水火，打的不可开交，但实际上说白了，它们并不是两个完全不同的东东，在很多的地方都相似，进程间通信也不例外。</p>
+<p>Linux的进程间通信主要有<strong>管道、命名管道、消息队列、共享内存、信号量，</strong>其中信号量Semaphore其实是为了同步用的，因此我这里就放到下一篇关于同步的博文中去分析。另外，很多人将信号signal也作为进程间通信，但我认为信号更像是为了同步而设计的，因此也放到下一篇博文中去分析。</p>
+<h3 id="121">1.2.1   管道</h3>
+<p>Linux的管道和Windows的管道是一样的，这里就不详细介绍了。</p>
+<p>需要注意的是<strong>Linux多了一个叫做“流管道”的东东</strong>，除了流管道是全双工（也就是双向）外，流管道其它都和管道一样。</p>
+<h3 id="122">1.2.2   命名管道</h3>
+<p>Linux的命名管道和Windows的<strong>命名管道差异就比较大了</strong>，主要对比如下：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>对比点</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Linux</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Windows</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>消息格式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>字节流</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>二进制</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Windows更牛</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>工作模式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>半双工</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>全双工</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Windows更牛</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>访问模式</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>只能在一台机器上</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>可以跨网络</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Windows更牛</td>
+</tr>
+</tbody>
+</table>
+<h3 id="123">1.2.3   消息队列</h3>
+<p>这个是Linux特有的进程通信方式，我感觉它有点像邮槽，都能够实现一对多。不过消息队列和邮槽的方向正好相反<strong>：消息队列是一堆进程向一个进程发，邮槽是一个进程向一堆进程发</strong>。</p>
+<p>消息队列还有一个牛B的特性就是<strong>消息队列的消息可以分优先级，进程不一定非要取第一个消息，也可以取指定消息优先级的消息。</strong>因此这个特性又可用于多对多通信，即：不同的收方指定不同的优先级。当然实际应用中应该没人会这么用，直接创建多个消息队列是最方便、最简单、效率最高的方法。</p>
+<h3 id="124">1.2.4   共享内存</h3>
+<p>Linux的共享内存机制和Windows本质上是一样的，即都是利用了内存映射的功能。不过<strong>Linux将“内存映射到内存”包装成了“共享内存”，而不像Windows，在使用的时候通过指定不同的参数来区分是“内存映射到文件”还是“共享内存”，</strong>所以各位大侠可能在网上有时能够看到有人将<strong>“内存映射”和“共享内存”</strong>都说是Linux进程间通信的方式，原因就在这里。</p>
+<h2 id="13-os">1.3        OS间进程通信</h2>
+<p>前面分别介绍了Windows和Linux进程间通信，看到这里，你肯定会有疑问：什么？还有OS进程间通信？不同OS之间的进程是不可能通信的！</p>
+<p>是的，从操作系统层面来说，Windows的进程和Linux的进程当然是不能通信的，但如果从网络层面来说，两台机器总是要通信的吧？不可能Windows只能和Windows通信，Linux只和Linux通信吧？</p>
+<p>说到这里估计你已经恍然大悟了：不就是<strong>Socket通信么？</strong></p>
+<p><strong>是的，就是它，虽然它是用于机器间通信的</strong>，但大家想想，机器间通信不就是各个应用程序通信么？各个应用程序不就是对应操作系统中的一个或者多个进程么？</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

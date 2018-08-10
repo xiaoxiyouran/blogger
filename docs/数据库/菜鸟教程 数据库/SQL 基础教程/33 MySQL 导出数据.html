@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>33 MySQL 导出数据</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="33-mysql">33 MySQL 导出数据</h1>
+<hr />
+<p>原文： http://www.runoob.com/mysql/mysql-database-export.html</p>
+<p>MySQL中你可以使用<strong>SELECT...INTO OUTFILE</strong>语句来简单的导出数据到文本文件上。</p>
+<hr />
+<h2 id="select-into-outfile">使用 SELECT ... INTO OUTFILE 语句导出数据</h2>
+<p>以下实例中我们将数据表 runoob_tbl 数据导出到 /tmp/tutorials.txt 文件中:</p>
+<pre><code class="mysql">mysql&gt; SELECT * FROM runoob_tbl 
+	 INTO OUTFILE '/tmp/tutorials.txt';
+</code></pre>
+
+<p>你可以通过命令选项来设置数据输出的指定格式，以下实例为<strong>导出 CSV 格式</strong>：</p>
+<pre><code class="Mysql">mysql&gt; SELECT * FROM passwd INTO OUTFILE '/tmp/tutorials.txt'
+	 FIELDS TERMINATED BY ',' ENCLOSED BY '&quot;'
+	 LINES TERMINATED BY '\r\n';
+</code></pre>
+
+<p>在下面的例子中，生成一个文件，各值用逗号隔开。这种格式可以被许多程序使用。</p>
+<pre><code class="Mysql">SELECT a,b,a+b INTO OUTFILE '/tmp/result.text'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '&quot;'
+LINES TERMINATED BY '\n'
+FROM test_table;
+</code></pre>
+
+<h3 id="select-into-outfile_1">SELECT ... INTO OUTFILE 语句有以下属性:</h3>
+<ul>
+<li><strong>LOAD DATA INFILE</strong>是SELECT ... INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT ... INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。</li>
+<li>SELECT...INTO OUTFILE 'file_name'形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。</li>
+<li><strong>输出不能是一个已存在的文件</strong>。防止文件数据被篡改。</li>
+<li>你需要有一个登陆服务器的账号来检索文件。否则 SELECT ... INTO OUTFILE 不会起任何作用。</li>
+<li>在UNIX中，<strong>该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你就可以读取该文件，但可能无法将其删除。</strong></li>
+</ul>
+<hr />
+<h2 id="_1">导出表作为原始数据</h2>
+<p>mysqldump是mysql用于<strong>转存储数据库的实用程序</strong>。它主要产生一个SQL脚本，其中包含从头重新创建数据库所必需的命令CREATE TABLE INSERT等。</p>
+<p>使用mysqldump导出数据<strong>需要使用 --tab 选项来指定导出文件指定的目录</strong>，该目标必须是可写的。</p>
+<p>以下实例将数据表 runoob_tbl 导出到 /tmp 目录中：</p>
+<pre><code class="Mysql"># 退出数据库 且关掉服务时执行。
+$ mysqldump -u root -p --no-create-info \
+			--tab=~/Desltop RUNOOB runoob_tbl;
+password ******
+</code></pre>
+
+<hr />
+<h2 id="sql">导出SQL格式的数据</h2>
+<p>导出SQL格式的数据到指定文件，如下所示：</p>
+<pre><code class="Mysql"># 有时候得用 sudo 权限
+[22:53@cookie /usr/bin #36]$ sudo mysqldump -u root -p RUNOOB runoob_tbl &gt; ~/Desktop/dump.txt
+Enter password:
+********
+
+</code></pre>
+
+<p>以上命令创建的文件内容如下：</p>
+<pre><code class="Mysql">-- MySQL dump 8.23
+--
+-- Host: localhost    Database: RUNOOB
+---------------------------------------------------------
+-- Server version       3.23.58
+
+--
+-- Table structure for table `runoob_tbl`
+--
+
+CREATE TABLE runoob_tbl (
+  runoob_id int(11) NOT NULL auto_increment,
+  runoob_title varchar(100) NOT NULL default '',
+  runoob_author varchar(40) NOT NULL default '',
+  submission_date date default NULL,
+  PRIMARY KEY  (runoob_id),
+  UNIQUE KEY AUTHOR_INDEX (runoob_author)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `runoob_tbl`
+--
+
+INSERT INTO runoob_tbl 
+	   VALUES (1,'Learn PHP','John Poul','2007-05-24');
+INSERT INTO runoob_tbl 
+	   VALUES (2,'Learn MySQL','Abdul S','2007-05-24');
+INSERT INTO runoob_tbl 
+	   VALUES (3,'JAVA Tutorial','Sanjay','2007-05-06');
+</code></pre>
+
+<p>如果你需要导出整个数据库的数据，可以使用以下命令：</p>
+<pre><code class="Mysql">$ mysqldump -u root -p RUNOOB &gt; database_dump.txt
+password ******
+</code></pre>
+
+<p>如果需要备份所有数据库，可以使用以下命令：</p>
+<pre><code class="Mysql">$ mysqldump -u root -p --all-databases &gt; database_dump.txt
+password ******
+</code></pre>
+
+<p>--all-databases 选项在 MySQL 3.23.12 及以后版本加入。</p>
+<p>该方法可用于<strong>实现数据库的备份策略</strong>。</p>
+<hr />
+<h2 id="_2">将数据表及数据库拷贝至其他主机</h2>
+<p>如果你需要将数据拷贝至其他的 MySQL 服务器上, 你可以<strong>在 mysqldump 命令中指定数据库名及数据表</strong>。</p>
+<p>在源主机上执行以下命令，将数据备份至 dump.txt 文件中:</p>
+<pre><code class="Shell">$ mysqldump -u root -p database_name table_name &gt; dump.txt
+password *****
+</code></pre>
+
+<p>如果完整备份数据库，则无需使用特定的表名称。</p>
+<p>如果你需要<strong>将备份的数据库导入到MySQL服务器中</strong>，可以使用以下命令，使用以下命令你需要确认数据库已经创建：</p>
+<pre><code class="Shell">$ mysql -u root -p database_name &lt; dump.txt
+password *****
+你也可以使用以下命令将导出的数据直接导入到远程的服务器上，但请确保两台服务器是相通的，是可以相互访问的：&lt;/p&gt;
+$ mysqldump -u root -p database_name \
+	   | mysql -h other-host.com database_name
+</code></pre>
+
+<p>以上命令中<strong>使用了管道来将导出的数据导入到指定的远程主机上</strong>。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

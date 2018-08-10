@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_20180411Adaboost自适应增强学习1 = tree.createNode('20180411 Adaboost 自适应增强学习',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180411Adaboost算法原理分析和实例_代码简明易懂_html2 = _20180411Adaboost自适应增强学习1.createChildNode("<a href = './20180411 Adaboost 自适应增强学习/20180411Adaboost算法原理分析和实例_代码 简明易懂.html' target = 'right'>20180411Adaboost算法原理分析和实例_代码 简明易懂.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180411Adaboost算法原理分析和实例_代码简明易懂_pdf2 = _20180411Adaboost自适应增强学习1.createChildNode("<a href = './20180411 Adaboost 自适应增强学习/20180411Adaboost算法原理分析和实例_代码 简明易懂.pdf' target = 'right'>20180411Adaboost算法原理分析和实例_代码 简明易懂.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180411决策树之CART1 = tree.createNode('20180411 决策树之CART',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180411决策树CART_html2 = _20180411决策树之CART1.createChildNode("<a href = './20180411 决策树之CART/20180411 决策树 CART.html' target = 'right'>20180411 决策树 CART.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180411决策树CART_pdf2 = _20180411决策树之CART1.createChildNode("<a href = './20180411 决策树之CART/20180411 决策树 CART.pdf' target = 'right'>20180411 决策树 CART.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180411图像预处理1 = tree.createNode('20180411 图像预处理',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180411图像预处理中的特征提取_html2 = _20180411图像预处理1.createChildNode("<a href = './20180411 图像预处理/20180411图像预处理中的特征提取.html' target = 'right'>20180411图像预处理中的特征提取.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180411图像预处理中的特征提取_pdf2 = _20180411图像预处理1.createChildNode("<a href = './20180411 图像预处理/20180411图像预处理中的特征提取.pdf' target = 'right'>20180411图像预处理中的特征提取.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180426图像特征提取三大法宝_html2 = _20180411图像预处理1.createChildNode("<a href = './20180411 图像预处理/20180426图像特征提取三大法宝.html' target = 'right'>20180426图像特征提取三大法宝.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180426图像特征提取三大法宝_pdf2 = _20180411图像预处理1.createChildNode("<a href = './20180411 图像预处理/20180426图像特征提取三大法宝.pdf' target = 'right'>20180426图像特征提取三大法宝.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412PHash以图搜图1 = tree.createNode('20180412 PHash 以图搜图',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180412PHash以图搜图_html2 = _20180412PHash以图搜图1.createChildNode("<a href = './20180412 PHash 以图搜图/20180412 PHash 以图搜图.html' target = 'right'>20180412 PHash 以图搜图.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412PHash以图搜图_pdf2 = _20180412PHash以图搜图1.createChildNode("<a href = './20180412 PHash 以图搜图/20180412 PHash 以图搜图.pdf' target = 'right'>20180412 PHash 以图搜图.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412RFGBDTXGBoost面试级整理1 = tree.createNode('20180412 RF GBDT XGBoost 面试级整理',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180412RFGBDTXGBoost面试级整理_html2 = _20180412RFGBDTXGBoost面试级整理1.createChildNode("<a href = './20180412 RF GBDT XGBoost 面试级整理/20180412 RF GBDT XGBoost 面试级整理.html' target = 'right'>20180412 RF GBDT XGBoost 面试级整理.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412baggingboostCARTID3C45和随机森林之间的比较1 = tree.createNode('20180412 bagging boost CART ID3 C45 和 随机森林之间的比较',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180412baggingboostCARTID3C45和随机森林之间的比较_html2 = _20180412baggingboostCARTID3C45和随机森林之间的比较1.createChildNode("<a href = './20180412 bagging boost CART ID3 C45 和 随机森林之间的比较/20180412 bagging boost CART ID3 C45 和 随机森林之间的比较.html' target = 'right'>20180412 bagging boost CART ID3 C45 和 随机森林之间的比较.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412机器学习相关图谱1 = tree.createNode('20180412 机器学习相关图谱',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180412机器学习相关图谱_html2 = _20180412机器学习相关图谱1.createChildNode("<a href = './20180412 机器学习相关图谱/20180412 机器学习相关图谱.html' target = 'right'>20180412 机器学习相关图谱.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412正则化1 = tree.createNode('20180412 正则化',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180412正则化_html2 = _20180412正则化1.createChildNode("<a href = './20180412 正则化/20180412 正则化.html' target = 'right'>20180412 正则化.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412正则化_pdf2 = _20180412正则化1.createChildNode("<a href = './20180412 正则化/20180412 正则化.pdf' target = 'right'>20180412 正则化.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412随机森林RF1 = tree.createNode('20180412 随机森林RF',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180412_随机森林RF_html2 = _20180412随机森林RF1.createChildNode("<a href = './20180412 随机森林RF/20180412_ 随机森林 RF.html' target = 'right'>20180412_ 随机森林 RF.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180412xgboost1 = tree.createNode('20180412xgboost',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_280412xgboost_html2 = _20180412xgboost1.createChildNode("<a href = './20180412xgboost/280412xgboost.html' target = 'right'>280412xgboost.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_280412xgboost_pdf2 = _20180412xgboost1.createChildNode("<a href = './20180412xgboost/280412xgboost.pdf' target = 'right'>280412xgboost.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180426EM算法1 = tree.createNode('20180426 EM算法',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180426whatisEM_pdf2 = _20180426EM算法1.createChildNode("<a href = './20180426 EM算法/20180426 whatisEM.pdf' target = 'right'>20180426 whatisEM.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180426感性的理解EM算法_html2 = _20180426EM算法1.createChildNode("<a href = './20180426 EM算法/20180426 感性的理解EM算法.html' target = 'right'>20180426 感性的理解EM算法.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180427图像处理1 = tree.createNode('20180427 图像处理',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180426霍夫变换直线检测_html2 = _20180427图像处理1.createChildNode("<a href = './20180427 图像处理/20180426 霍夫变换  直线检测.html' target = 'right'>20180426 霍夫变换  直线检测.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180426霍夫变换直线检测_pdf2 = _20180427图像处理1.createChildNode("<a href = './20180427 图像处理/20180426 霍夫变换  直线检测.pdf' target = 'right'>20180426 霍夫变换  直线检测.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_强化学习1 = tree.createNode('强化学习',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_MDP马尔科夫决策过程2 = _强化学习1.createChildNode('MDP 马尔科夫决策过程',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180329_什么是强化学习_html3 = _MDP马尔科夫决策过程2.createChildNode("<a href = './强化学习/MDP 马尔科夫决策过程/20180329_什么是强化学习.html' target = 'right'>20180329_什么是强化学习.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180329_什么是强化学习_pdf3 = _MDP马尔科夫决策过程2.createChildNode("<a href = './强化学习/MDP 马尔科夫决策过程/20180329_什么是强化学习.pdf' target = 'right'>20180329_什么是强化学习.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_条件随机场CRF_隐马模型HMM_最大熵隐马模型MEMM1 = tree.createNode('条件随机场CRF - 隐马模型HMM-最大熵隐马模型MEMM',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180329_条件随机场隐马模型和最大熵隐马模型的比较_html2 = _条件随机场CRF_隐马模型HMM_最大熵隐马模型MEMM1.createChildNode("<a href = './条件随机场CRF - 隐马模型HMM-最大熵隐马模型MEMM/20180329_条件随机场 隐马模型 和 最大熵隐马模型的比较.html' target = 'right'>20180329_条件随机场 隐马模型 和 最大熵隐马模型的比较.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180329_条件随机场隐马模型和最大熵隐马模型的比较_pdf2 = _条件随机场CRF_隐马模型HMM_最大熵隐马模型MEMM1.createChildNode("<a href = './条件随机场CRF - 隐马模型HMM-最大熵隐马模型MEMM/20180329_条件随机场 隐马模型 和 最大熵隐马模型的比较.pdf' target = 'right'>20180329_条件随机场 隐马模型 和 最大熵隐马模型的比较.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_梯度下降和随机梯度下降1 = tree.createNode('梯度下降和随机梯度下降',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180329_GD_梯度下降_和SGD_随机梯度下降__html2 = _梯度下降和随机梯度下降1.createChildNode("<a href = './梯度下降和随机梯度下降/20180329_GD(梯度下降)和SGD(随机梯度下降).html' target = 'right'>20180329_GD(梯度下降)和SGD(随机梯度下降).html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180329_GD_梯度下降_和SGD_随机梯度下降__pdf2 = _梯度下降和随机梯度下降1.createChildNode("<a href = './梯度下降和随机梯度下降/20180329_GD(梯度下降)和SGD(随机梯度下降).pdf' target = 'right'>20180329_GD(梯度下降)和SGD(随机梯度下降).pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_深度学习1 = tree.createNode('深度学习',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180329_什么是深度学习_html2 = _深度学习1.createChildNode("<a href = './深度学习/20180329_什么是深度学习.html' target = 'right'>20180329_什么是深度学习.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180329_什么是深度学习_pdf2 = _深度学习1.createChildNode("<a href = './深度学习/20180329_什么是深度学习.pdf' target = 'right'>20180329_什么是深度学习.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_深度强化学习1 = tree.createNode('深度强化学习',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180329_什么是深度强化学习_html2 = _深度强化学习1.createChildNode("<a href = './深度强化学习/20180329_什么是深度强化学习.html' target = 'right'>20180329_什么是深度强化学习.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180329_什么是深度强化学习_pdf2 = _深度强化学习1.createChildNode("<a href = './深度强化学习/20180329_什么是深度强化学习.pdf' target = 'right'>20180329_什么是深度强化学习.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_生成模型和判别式模型的比较1 = tree.createNode('生成模型和判别式模型的比较',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180330_生成式模型VS判别式模型_html2 = _生成模型和判别式模型的比较1.createChildNode("<a href = './生成模型和判别式模型的比较/20180330_生成式模型 VS 判别式模型.html' target = 'right'>20180330_生成式模型 VS 判别式模型.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180330_生成式模型VS判别式模型_pdf2 = _生成模型和判别式模型的比较1.createChildNode("<a href = './生成模型和判别式模型的比较/20180330_生成式模型 VS 判别式模型.pdf' target = 'right'>20180330_生成式模型 VS 判别式模型.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_集成学习1 = tree.createNode('集成学习',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180329_集成学习原理小结_html2 = _集成学习1.createChildNode("<a href = './集成学习/20180329_集成学习原理小结.html' target = 'right'>20180329_集成学习原理小结.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180329_集成学习原理小结_pdf2 = _集成学习1.createChildNode("<a href = './集成学习/20180329_集成学习原理小结.pdf' target = 'right'>20180329_集成学习原理小结.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

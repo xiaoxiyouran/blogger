@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2?tpId=13&amp;tqId=11206&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">表示数值的字符串</a></p>
+<p>九度OJ：未收录</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/054-表示数值的字符串">054-表示数值的字符串</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51559282">剑指Offer--054-表示数值的字符串</a>
+| 牛客OJ | 九度OJ | CSDN题解 | GitHub代码 | 
+| ------------- |:-------------:| -----:| -----:|
+|<a href="http://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2?tpId=13&amp;tqId=11206&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">054-表示数值的字符串</a> | 未收录 | <a href="http://blog.csdn.net/gatieme/article/details/51559282">剑指Offer--054-表示数值的字符串</a> | <a href="https://github.com/gatieme/CodingInterviews/tree/master/054-表示数值的字符串">054-表示数值的字符串</a> |</p>
+</blockquote>
+<h1 id="_2">题目描述</h1>
+<hr />
+<blockquote>
+<p>请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。</p>
+</blockquote>
+<p>例如，
+字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。
+但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。</p>
+<h1 id="_3">分析</h1>
+<hr />
+<p>我们首先分析一下子<strong>可能是数值的字符串的格式</strong>
+在数值之前可能有一个表示正负的’-‘或者’+’。
+接下来是若干个0到9的数位表示数值的整数部分（在某些小数里可能没有数值的整数部分）。
+如果数值是一个小数，那么在小数点后面可能会有若干个0到9的数位表示数值的小数部分。如果数值用科学计数法表示，接下来是一个’e’或者‘E’，以及紧跟着的一个整数（可以有正负号）表示指数。 
+　　
+判断一个字符串是否符合上述模式时，
+<em>    首先看第一个字符是不是正负号。
+</em>    如果是，在字符串上移动一个字符，继续扫描剩余的字符串中0到9的数位。
+<em>    如果是一个小数，则将遇到小数点。
+</em>    另外，如果是用科学计数法表示的数值，在整数或者小数的后面还有可能遇到’e’或者’E’。</p>
+<h1 id="_4">代码</h1>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+class Solution
+{
+public:
+	bool isNumeric(char* str)
+	{
+		if(str == NULL)
+		{
+			return false;
+		}
+
+		//  可能遇见符号+/-
+		if(*str == '+' || *str == '-')
+		{
+			++str;
+		}
+
+		if(*str == '\0')
+		{
+			return false;
+		}
+
+		bool numberic = true;
+
+		//  处理可能遇见的数字
+		ScanDigits(&amp;str);
+
+		if(*str != '\0')
+		{
+			if(*str == '.')
+			{
+				++str;
+				ScanDigits(&amp;str);
+
+				if(*str == 'e' || *str == 'E')
+				{
+					numberic = IsExponential(&amp;str);
+				}
+			}
+			else if(*str == 'e' || *str == 'E')
+			{
+				numberic = IsExponential(&amp;str);
+			}
+			else
+			{
+
+				numberic = false;
+			}
+		}
+
+		return numberic &amp;&amp; *str == '\0';
+
+	}
+
+
+	void ScanDigits(char **str)
+	{
+		while(**str != '\0'
+		  &amp;&amp; (**str &gt;= '0' &amp;&amp; **str &lt;= '9'))
+		{
+			++(*str);
+		}
+	}
+
+	bool IsExponential(char **str)
+	{
+		if(**str != 'e' &amp;&amp; **str != 'E')
+		{
+			return false;
+		}
+
+		++(*str);
+
+		if(**str == '+' || **str == '-')
+		{
+			++(*str);
+		}
+		if(**str == '\0')
+		{
+			return false;
+		}
+		ScanDigits(str);
+
+		return (**str == '\0') ? true : false;
+	}
+
+
+
+};
+
+
+int __tmain( )
+{
+	Solution solu;
+
+	cout &lt;&lt;solu.isNumeric(&quot;1a23&quot;) &lt;&lt;endl;
+
+	return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

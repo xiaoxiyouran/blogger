@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180414 归并排序的算法说明</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180414">20180414 归并排序的算法说明</h1>
+<hr />
+<p>原文链接： https://blog.csdn.net/a130737/article/details/38228369</p>
+<p>归并排序（merge sort）是一个时间复杂度为O（nlogn）的基于比较的排序算法（comparison based sorting algorithm）。 归并排序大多数实现（implementation）都将其实现成了一个stable sort, 所谓的stable sort的意思就是the implementation preserves the input order of equal elements in the sorted order。</p>
+<p>merge sort 也采用了divide and conquer(分治技术） 的排序算法。 由John von Neumann于1945年发明的。 </p>
+<p>我们知道， 快排序的平均情况下时间复杂度是O（nlogn）, 最坏情况下为O（n^2）。 归并排序的好处就是时间复杂度总是O（nlogn）.。 所以归并排序在时间方面可以beats quick sort。</p>
+<p>下面对merge sort做出详细说明：</p>
+<p>例如， 我们想要对如下数组精心排序：
+<img alt="img" src="https://img-blog.csdn.net/20140728134649827?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>merge sort 的思想是将一个problem break into 2 subproblems。 </p>
+<p>（1）divide the array into 2 equal halves(假如分隔位置在数组的中间（记为mid位置）， mid 之前为the first subarray, 之后为the second subarray):</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728135132702?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>(2) 现在假如我们somehow 将这两个子数组排好序了， 接下来我们的任务就是将这两个子数组merge称为一个大的排好序的数组。 注意这三个数组时独立位于内存之中的（可见merge sort 的空间复杂度会比较大）。</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728135521102?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>我们的merge算法如下。 现在我们将上图左边的数组记为L， 右边的数组记为R。  首先第一步，比较L的第一个未选中的数据和R中第一个未选中的数据， 找出最小的数据， 为位于L中的1. 我们将这个值放在A中。 然后移动L的索引到下一个元素2， R的索引记录不懂， 比较， 发现2大， 将2 放到A的第二个位置。 在移动L中的索引， 到达4， R的不动， 4 比3大， 所以将3 放在A的第三个位置， 移动R的索引记录到下一个元素。 以此类推， 直至R（或者L）的元素均位于A中， 然后将L（或者R）剩余的元素均拷贝到A中。 即完成排序。</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728135504156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>上述算法的伪代码如下：</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728140619907?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>现在我们说说如何排序。</p>
+<p>解决办法是我们可以进一步的将数组或者list 进行进一步的细分：</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728140902678?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>到达最后一步的时候， 然后开始从下网上归并（merge）。</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728141037167?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>最终结果如下：</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728140910796?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>归并排序的伪代码如下：</p>
+<p><img alt="img" src="https://img-blog.csdn.net/20140728141813343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEzMDczNw<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>算法实现：</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180729error pycharm AttributeError module object has no attribute main</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180729error-pycharm-attributeerror-module-object-has-no-attribute-main">20180729error pycharm AttributeError module object has no attribute main</h1>
+<p>AttributeError: 'module' object has no attribute 'main’</p>
+<p>pycharm 安装 flask 时候报错</p>
+<pre><code class="shell">pycharm版本：2017.2.3
+python版本：2.7
+pip版本：10.0.1
+</code></pre>
+
+<h1 id="_1">报错</h1>
+<p><img alt="image-20180729172917169" src="image-20180729172917169.png" /></p>
+<pre><code class="shell">Traceback (most recent call last):
+  File &quot;/Applications/PyCharm.app/Contents/helpers/packaging_tool.py&quot;, line 192, in main
+	retcode = do_install(pkgs)
+  File &quot;/Applications/PyCharm.app/Contents/helpers/packaging_tool.py&quot;, line 109, in do_install
+	return pip.main(['install'] + pkgs)
+AttributeError: 'module' object has no attribute 'main'
+</code></pre>
+
+<h1 id="_2">原因</h1>
+<p>新版pip中的main函数已经发生了变化，是pycharm的原因</p>
+<blockquote>
+<p>参考： 
+<a href="http://coffeebrother.cn/post/35/">PyCharm 2017.3 在pip10.0.0版本中报错（module ‘pip’ has no attribute ‘main’）</a></p>
+</blockquote>
+<h1 id="_3">解决</h1>
+<p>方式一</p>
+<pre><code>通过 pip 命令手动安装
+</code></pre>
+
+<p>方式二 
+根据报错提示中的路径</p>
+<pre><code>&quot;/Applications/PyCharm.app/Contents/helpers/packaging_tool.py&quot;
+</code></pre>
+
+<p>打开文件，如果在mac中找不到文件，可以使用打开</p>
+<pre><code>$ vim &quot;/Applications/PyCharm.app/Contents/helpers/packaging_tool.py&quot;
+</code></pre>
+
+<p>打开后找到如下代码</p>
+<pre><code class="python">def do_install(pkgs):
+	try:
+		import pip
+	except ImportError:
+		error_no_pip()
+	return pip.main(['install'] + pkgs)
+
+
+def do_uninstall(pkgs):
+	try:
+		import pip
+	except ImportError:
+		error_no_pip()
+	return pip.main(['uninstall', '-y'] + pkgs)
+</code></pre>
+
+<p>先注释，添加如下代码：</p>
+<pre><code class="python">def do_install(pkgs):
+	try:
+		try:
+			from pip._internal import main
+		except Exception:
+			from pip import main
+	except ImportError:
+		error_no_pip()
+	return main(['install'] + pkgs)
+
+
+def do_uninstall(pkgs):
+	try:
+		try:
+			from pip._internal import main
+		except Exception:
+			from pip import main
+	except ImportError:
+		error_no_pip()
+	return main(['uninstall', '-y'] + pkgs)
+</code></pre>
+
+<p>问题成功解决.</p>
+<p>参考： https://blog.csdn.net/mouday/article/details/80075144</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

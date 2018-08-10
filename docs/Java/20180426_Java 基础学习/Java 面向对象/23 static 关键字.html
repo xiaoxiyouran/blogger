@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180427 static 关键字</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180427-static">20180427 static 关键字</h1>
+<p>1- 静态(<code>static</code>)可以是：</p>
+<ol>
+<li>变量(也称为类变量)</li>
+<li>方法(也称为类方法)</li>
+<li><strong>代码块</strong></li>
+<li>嵌套类</li>
+</ol>
+<p>静态变量：使程序存储器高效（节省内存）</p>
+<hr />
+<p>原文：https://www.yiibai.com/java/static-keyword-in-java.html</p>
+<p>java中的<code>static</code>关键字主要用于内存管理。我们可以应用java <code>static</code>关键字在变量，方法，块和嵌套类中。 <code>static</code>关键字属于类，而不是类的实例。</p>
+<p>静态(<code>static</code>)可以是：</p>
+<ol>
+<li>变量(也称为类变量)</li>
+<li>方法(也称为类方法)</li>
+<li><strong>代码块</strong></li>
+<li>嵌套类</li>
+</ol>
+<h2 id="1-java">1. Java静态变量</h2>
+<p>如果将一个变量声明为<code>static</code>，它就是所谓的静态变量了。</p>
+<ul>
+<li>静态变量可以用于引用所有对象的公共属性(对于每个对象不是唯一的)。如：员工公司名称，学生所在的大学名称。</li>
+</ul>
+<p><strong>静态变量的优点：</strong></p>
+<ul>
+<li>它能<strong>使程序存储器高效(即它节省内存)</strong>。</li>
+</ul>
+<p><strong>理解不使用静态变量的问题</strong></p>
+<pre><code class="java">class Student{  
+	 int rollno;  
+	 String name;  
+	 String college=&quot;ITS&quot;;  
+}
+</code></pre>
+
+<p>假设在一所学校有<code>500</code>名学生，现在所有实例数据成员将在每次创建对象时获取内存。所有学生都有其唯一的注册ID：<code>rollno</code>和　<code>name</code> ，因此实例数据成员没有什么问题。<code>college</code> 指的是所有对象的共同属性。如果使它静态化(使用<code>static</code>关键字修饲)，这个字段将只获得内存一次。</p>
+<blockquote>
+<p>Java静态属性被共享给所有对象。</p>
+</blockquote>
+<p><strong>静态变量的示例</strong></p>
+<pre><code class="java">//Program of static variable  
+
+class Student8 {
+	int rollno;
+	String name;
+	static String college = &quot;ITS&quot;;
+
+	Student8(int r, String n) {
+		rollno = r;
+		name = n;
+	}
+
+	void display() {
+		System.out.println(rollno + &quot; &quot; + name + &quot; &quot; + college);
+	}
+
+	public static void main(String args[]) {
+		Student8 s1 = new Student8(111, &quot;Karan&quot;);
+		Student8 s2 = new Student8(222, &quot;Aryan&quot;);
+
+		s1.display();
+		s2.display();
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="java">111 Karan ITS
+222 Aryan ITS
+</code></pre>
+
+<p>创建对象示例图如下所示 -</p>
+<p><img alt="img" src="23_01.jpg" /></p>
+<p><strong>不使用静态变量的计数器程序</strong></p>
+<p>在这个例子中，我们创建了一个名为<code>count</code>的实例变量用来统计创建对象的数目，它在构造函数中执行递增。 由于实例变量在创建对象时要获取内存，每个对象都将具有实例变量的副本，如果它被递增了，它也不会反映到其他对象中。所以每个对象在<code>count</code>变量中的值还是<code>1</code>。</p>
+<pre><code class="java">class Counter {
+	int count = 0;// will get memory when instance is created
+
+	Counter() {
+		count++;
+		System.out.println(count);
+	}
+
+	public static void main(String args[]) {
+
+		Counter c1 = new Counter();
+		Counter c2 = new Counter();
+		Counter c3 = new Counter();
+
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="java">1
+1
+1
+</code></pre>
+
+<p><strong>计数器静态变量的程序</strong>
+如上所述，静态变量将只获取一次内存，如果任何对象更改静态变量的值，它将保留其值，所有实例均可访问同一变量值。</p>
+<pre><code class="java">class Counter2 {
+	static int count = 0;// will get memory only once and retain its value
+
+	Counter2() {
+		count++;
+		System.out.println(count);
+	}
+
+	public static void main(String args[]) {
+
+		Counter2 c1 = new Counter2();
+		Counter2 c2 = new Counter2();
+		Counter2 c3 = new Counter2();
+
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="java">1
+2
+3
+</code></pre>
+
+<h2 id="2-java">2. Java静态方法</h2>
+<p>如果在任何方法上应用<code>static</code>关键字，此方法称为静态方法。</p>
+<ul>
+<li>静态方法属于类，而不属于类的对象。</li>
+<li>可以直接调用静态方法，而无需创建类的实例。</li>
+<li>静态方法可以访问静态数据成员，并可以更改静态数据成员的值。</li>
+</ul>
+<p><strong>静态方法的示例</strong></p>
+<pre><code class="java">//Program of changing the common property of all objects(static field).  
+
+class Student9 {
+	int rollno;
+	String name;
+	static String college = &quot;ITS&quot;;
+
+	static void change() {
+		college = &quot;BBDIT&quot;;
+	}
+
+	Student9(int r, String n) {
+		rollno = r;
+		name = n;
+	}
+
+	void display() {
+		System.out.println(rollno + &quot; &quot; + name + &quot; &quot; + college);
+	}
+
+	public static void main(String args[]) {
+		Student9.change();
+
+		Student9 s1 = new Student9(111, &quot;Karan&quot;);
+		Student9 s2 = new Student9(222, &quot;Aryan&quot;);
+		Student9 s3 = new Student9(333, &quot;Sonoo&quot;);
+
+		s1.display();
+		s2.display();
+		s3.display();
+	}
+}
+</code></pre>
+
+<p>上面代码执行输出以下结果 -</p>
+<pre><code class="java">111 Karan BBDIT
+222 Aryan BBDIT
+333 Sonoo BBDIT
+</code></pre>
+
+<p><strong>执行正常计算的静态方法的另一个示例:</strong></p>
+<pre><code class="Java">//Program to get cube of a given number by static method  
+
+class Calculate {
+	static int cube(int x) {
+		return x * x * x;
+	}
+
+	public static void main(String args[]) {
+		int result = Calculate.cube(5);
+		System.out.println(result);
+	}
+}
+</code></pre>
+
+<p>上面代码执行输出以下结果 -</p>
+<pre><code class="java">125
+</code></pre>
+
+<p><strong>静态方法的限制</strong></p>
+<p>静态方法有两个主要限制。它们分别是：</p>
+<ul>
+<li>静态方法不能直接使用非静态数据成员或调用非静态方法。</li>
+<li><code>this</code>和<code>super</code>两个关键字不能在静态上下文中使用。</li>
+</ul>
+<pre><code class="Java">class A {
+	int a = 40;// non static
+
+	public static void main(String args[]) {
+		System.out.println(a);
+	}
+}
+</code></pre>
+
+<p>上面代码执行输出以下结果 -</p>
+<pre><code class="java">[编译错误！]Compile Time Error
+</code></pre>
+
+<p><strong>为什么java main方法是静态的？</strong></p>
+<p>这是因为对象不需要调用静态方法，如果它是非静态方法，jvm首先要创建对象，然后调用main()方法，这将导致额外的内存分配的问题。</p>
+<h2 id="3-java">3. Java静态块</h2>
+<p>Java中的静态块主要有两个作用：</p>
+<ul>
+<li>用于初始化静态数据成员。</li>
+<li>它在类加载时在main方法之前执行。</li>
+</ul>
+<p><strong>静态块的示例</strong></p>
+<pre><code class="java">class A2 {
+	static {
+		System.out.println(&quot;static block is invoked&quot;);
+	}
+
+	public static void main(String args[]) {
+		System.out.println(&quot;Hello main&quot;);
+	}
+}
+</code></pre>
+
+<p>上面代码执行输出以下结果 -</p>
+<pre><code class="java">static block is invoked
+Hello main
+</code></pre>
+
+<p><strong>可以执行程序没有main()方法吗？</strong>
+<strong>答：</strong>是的，一种方式是静态块，但在以前旧的JDK版本中，不是在JDK 1.7。</p>
+<pre><code class="java">class A3 {
+	static {
+		System.out.println(&quot;static block is invoked&quot;);
+		System.exit(0);
+	}
+}
+</code></pre>
+
+<p>上面代码执行输出以下结果 -</p>
+<pre><code class="Java">static block is invoked
+</code></pre>
+
+<p>在JDK7及以上版本中，输出将为：</p>
+<pre><code class="java">错误: 在类 Main 中找不到 main 方法, 请将 main 方法定义为:
+   public static void main(String[] args)
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

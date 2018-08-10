@@ -1,0 +1,467 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180321_Hadoop 不同节点间的通信机制</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180321_hadoop">20180321_Hadoop 不同节点间的通信机制</h1>
+<pre><code class="sh">总结如下：
+1- 不同节点间通过RPC机制进行通信
+2- 自己实现了一套节点通信机制，称为Hadoop IPC（Inter-Process Communication，进程间通信）
+3- 这是一种简洁，低消耗的通信机制，可以精确控制进程间通信中如连接、超时、缓存等细节。
+4- Hadoop IPC机制的实现使用了Java动态代理，Java NIO等技术。
+</code></pre>
+
+<hr />
+<p>原文链接： http://blog.csdn.net/workformywork/article/details/17391725</p>
+<p><strong><em><u>后面代码未整理！！！</u></em></strong></p>
+<p>在Hadoop中，不同节点间使用RPC机制进行通信，在Java中比较典型的RPC是RMI(Remote Method Invocation)的调用方式，虽然Hadoop使用Java语言实现的，但是Hadoop并没有使用RMI实现RPC，而是实现了一套自己独有的节点通信机制，称为Hadoop IPC（Inter-Process Communication，进程间通信）。这是一种简洁，低消耗的通信机制，可以精确控制进程间通信中如连接、超时、缓存等细节。Hadoop IPC机制的实现使用了Java动态代理，Java NIO等技术。关于Java动态代理技术可以参考博文<a href="http://blog.csdn.net/workformywork/article/details/17370551">Java动态代理</a>，Java NIO技术可以参考博文<a href="http://blog.csdn.net/workformywork/article/details/17024743">Java NIO</a>。</p>
+<h2 id="hadoop-ipc">如何使用Hadoop IPC</h2>
+<p>与Hadoop IPC相关的几个类在org.apache.hadoop.ipc包中，共7个类文件。根据Hadoop提供的IPC机制，下面就来着手开发一个使用Hadoop IPC实现客户端调用服务器端方法的示例，这个示例源于《Hadoop技术内幕：深入解析Hadoop Common和HDFS架构设计与实现原理》这本书，功能是返回服务器端的一个文件信息，文件信息的类为IPCFileStatus：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>package org.hadoopinternal.ipc;  </li>
+<li></li>
+<li>import java.io.DataInput;  </li>
+<li>import java.io.DataOutput;  </li>
+<li>import java.io.IOException;  </li>
+<li>import java.util.Date;  </li>
+<li></li>
+<li>import org.apache.hadoop.io.Text;  </li>
+<li>import org.apache.hadoop.io.Writable;  </li>
+<li>import org.apache.hadoop.io.WritableFactories;  </li>
+<li>import org.apache.hadoop.io.WritableFactory;  </li>
+<li></li>
+<li>public class IPCFileStatus implements Writable {      </li>
+<li>​    private String filename;  </li>
+<li>​    private long time;  </li>
+<li>​      </li>
+<li>​    public IPCFileStatus() {          </li>
+<li>​    }  </li>
+<li>​      </li>
+<li>​    public IPCFileStatus(String filename) {  </li>
+<li>​        this.filename=filename;  </li>
+<li>​        this.time=(new Date()).getTime();  </li>
+<li>​    }  </li>
+<li></li>
+<li>​    public String getFilename() {  </li>
+<li>​        return filename;  </li>
+<li>​    }  </li>
+<li>​      </li>
+<li>​    public void setFilename(String filename) {  </li>
+<li>​        this.filename = filename;  </li>
+<li>​    }  </li>
+<li>​      </li>
+<li>​    public long getTime() {  </li>
+<li>​        return time;  </li>
+<li>​    }  </li>
+<li>​      </li>
+<li>​    public void setTime(long time) {  </li>
+<li>​        this.time = time;  </li>
+<li>​    }  </li>
+<li>​      </li>
+<li>​    public String toString() {  </li>
+<li>​        return "File: "+filename+" Create at "+(new Date(time));   </li>
+<li>​    }  </li>
+<li></li>
+<li>​    @Override  </li>
+<li>​    public void readFields(DataInput in) throws IOException {  </li>
+<li>​        this.filename = Text.readString(in);  </li>
+<li>​        this.time = in.readLong();        </li>
+<li>​    }  </li>
+<li></li>
+<li>​    @Override  </li>
+<li>​    public void write(DataOutput out) throws IOException {  </li>
+<li>​        Text.writeString(out, filename);  </li>
+<li>​        out.writeLong(time);  </li>
+<li>​    }  </li>
+<li>}  </li>
+</ol>
+<p>由于IPCFileStatus类的对象需要从服务器端传到客户端，所以就需要进行序列化，Writable接口就是Hadoop定义的一个序列化接口，与Java中的Serializable接口类似，但是强化了Serializable的功能。</p>
+<p>由于客户端要调用服务器的方法，所以客户端需要知道服务器有哪些方法可以调用，在IPC中使用的是定义公共接口的方法，<strong>如定义一个IPC接口，客户端和服务器端都知道这个接口，客户端通过IPC获取到一个服务器端这个实现了接口的引用，待要调用服务器的方法时，直接使用这个引用来调用方法，这样就可以调用服务器的方法了。</strong>定义一个服务器端和客户端共有的接口IPCQueryStatus：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>package org.hadoopinternal.ipc;  </li>
+<li></li>
+<li>import org.apache.hadoop.ipc.VersionedProtocol;  </li>
+<li></li>
+<li>public interface IPCQueryStatus extends VersionedProtocol {  </li>
+<li>​    IPCFileStatus getFileStatus(String filename);  </li>
+<li>}  </li>
+</ol>
+<p>在接口IPCQueryStatus中，定义了一个getFileStatus(String filename)方法根据文件名得到一个IPCFileStatus对象，注意到IPCQueryStatus接口继承自接口org.apache.hadoop.ipc.VersionedProtocol接口，VersionedProtocol接口是Hadoop IPC接口必须继承的一个接口，它定义了一个方法getProtocolVersion()，用于返回服务器端的接口实现的版本号，有两个参数，分别是协议接口对应的接口名称protocol和客户端期望服务器的版本号clientVersion，主要作用是检查通信双方的接口是否一致，VersionedProtocol的代码如下：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>package org.apache.hadoop.ipc;  </li>
+<li></li>
+<li>import java.io.IOException;  </li>
+<li></li>
+<li>public interface VersionedProtocol {  </li>
+<li>​    </li>
+<li>public long getProtocolVersion(String protocol,   </li>
+<li>​                                 long clientVersion) throws IOException;  </li>
+<li>}  </li>
+</ol>
+<p>定义好了接口，那么在服务器端就需要有一个接口的实现类，用于实现具体的业务逻辑，下面的IPCQueryStatusImpl类实现了IPCQueryStatus接口，仅仅简单实现了IPCQueryStatus规定两个方法，代码如下：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>package org.hadoopinternal.ipc;  </li>
+<li></li>
+<li>import java.io.IOException;  </li>
+<li></li>
+<li>public class IPCQueryStatusImpl implements IPCQueryStatus {   </li>
+<li>​    public IPCQueryStatusImpl() {}  </li>
+<li>​    @Override  </li>
+<li>​    public IPCFileStatus getFileStatus(String filename) {  </li>
+<li>​        IPCFileStatus status=new IPCFileStatus(filename);  </li>
+<li>​        System.out.println("Method getFileStatus Called, return: "+status);  </li>
+<li>​        return status;  </li>
+<li>​    }  </li>
+<li>​    /** </li>
+<li>​     * 用于服务器与客户端，进行IPC接口版本检查，再服务器返回给客户端时调用，如果服务器端的IPC版本与客户端不一致 </li>
+<li>​     * 那么就会抛出版本不一致的异常 </li>
+<li>​     */  </li>
+<li>​    @Override  </li>
+<li>​    public long getProtocolVersion(String protocol, long clientVersion) throws IOException {  </li>
+<li>​        System.out.println("protocol: "+protocol);  </li>
+<li>​        System.out.println("clientVersion: "+clientVersion);  </li>
+<li>​        return IPCQueryServer.IPC_VER;  </li>
+<li>​    }  </li>
+<li>}  </li>
+</ol>
+<p>getFileStatus()方法根据参数filename创建了一个IPCFileStatus对象，getProtocolVersion()方法返回服务器端使用的接口版本。接口和实现类都完成之后就可以用客户端和服务器进行通信了。服务器端进行一些成员变量的初始化，然后使用Socket绑定IP，然后在某个端口上监听客户端的请求，代码如下：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>package org.hadoopinternal.ipc;  </li>
+<li></li>
+<li>import org.apache.hadoop.conf.Configuration;  </li>
+<li>import org.apache.hadoop.ipc.RPC;  </li>
+<li>import org.apache.hadoop.ipc.Server;  </li>
+<li></li>
+<li>public class IPCQueryServer {  </li>
+<li>​    public static final int IPC_PORT = 32121;  </li>
+<li>​    public static final long IPC_VER = 5473L;  </li>
+<li>​      </li>
+<li>​    public static void main(String[] args) {  </li>
+<li>​        try {  </li>
+<li>​            Configuration conf = new Configuration();  </li>
+<li>​            IPCQueryStatusImpl queryService=new IPCQueryStatusImpl();  </li>
+<li>​            System.out.println(conf);  </li>
+<li>​            Server server = RPC.getServer(queryService, "0.0.0.0", IPC_PORT, 1, true, conf);  </li>
+<li>​            server.start();  </li>
+<li>​              </li>
+<li>​            System.out.println("Server ready, press any key to stop");  </li>
+<li>​            System.in.read();  </li>
+<li>​              </li>
+<li>​            server.stop();  </li>
+<li>​            System.out.println("Server stopped");  </li>
+<li>​        } catch (Exception e) {  </li>
+<li>​            e.printStackTrace();  </li>
+<li>​        }  </li>
+<li>​    }  </li>
+<li>}  </li>
+</ol>
+<p>在服务器端先创建一个IPCQueryStatusImpl的对象，传递到RPC.getServer()方法中。服务器端使用RPC.getServer()方法穿给创建服务器端对象server，代码中RPC.getServer()方法的几个参数说明如下：</p>
+<ul>
+<li>第一个参数queryService标识该服务器对象对外提供的服务对象实例，即客户端所要调用的具体对象，下面客户端的代码调用的接口如此对应；</li>
+<li>第二个参数"0.0.0.0"表示监绑定所有的IP地址；</li>
+<li>第三个参数IPC_PORT表示监听的端口；</li>
+<li>第四个参数1表示Server端的Handler实例（线程）的个数为1</li>
+<li>第五个参数true表示打开调用方法日志；</li>
+<li>第六个参数是Configuration对象，用于定制Server端的配置</li>
+</ul>
+<p>创建Server对象之后，调用Server.start()方法开始监听客户端的请求，并根据客户端的请求提供服务。</p>
+<p>客户端需要先获取到一个代理对象，然后才能进行方法调用，在IPC中，使用RPC.getProxy()方法获取代理对象。客户端的代码如下：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>package org.hadoopinternal.ipc;  </li>
+<li></li>
+<li>import java.net.InetSocketAddress;  </li>
+<li></li>
+<li>import org.apache.hadoop.conf.Configuration;  </li>
+<li>import org.apache.hadoop.ipc.RPC;  </li>
+<li></li>
+<li>public class IPCQueryClient {  </li>
+<li>​    public static void main(String[] args) {  </li>
+<li>​        try {  </li>
+<li>​            System.out.println("Interface name: "+IPCQueryStatus.class.getName());  </li>
+<li>​            System.out.println("Interface name: "+IPCQueryStatus.class.getMethod("getFileStatus", String.class).getName());  </li>
+<li>​              </li>
+<li>​            InetSocketAddress addr=new InetSocketAddress("localhost", IPCQueryServer.IPC_PORT);  </li>
+<li>​              </li>
+<li>​            IPCQueryStatus query=(IPCQueryStatus) RPC.getProxy(IPCQueryStatus.class, IPCQueryServer.IPC_VER, addr,new Configuration());  </li>
+<li>​            IPCFileStatus status=query.getFileStatus("/tmp/testIPC");  </li>
+<li>​            System.out.println(status);  </li>
+<li>​            RPC.stopProxy(query);  </li>
+<li>​        } catch (Exception e) {  </li>
+<li>​            e.printStackTrace();  </li>
+<li>​        }  </li>
+<li>​    }  </li>
+<li>}  </li>
+</ol>
+<p>客户端的代码很简单，首先构造一个要请求服务器的网络地址（IP和端口），然后通过RPC.getProxy()方法获取到一个IPCQueryStatus对象，然后进行相应的方法调用。其中客户端代码中RPC.getProxy()方法的参数说明如下：</p>
+<ul>
+<li>
+<p>第一个参数是IPC接口对象，可以通过IPC接口的静态成员class直接获得。接口的静态成员class保存了该接口的java.lang.Class实例，它表示正在运行的Java应用程序中的类和接口，提供一系列与Java反射相关的重要功能；</p>
+</li>
+<li>
+<p>第二个参数是接口版本，由于接口会根据需求不断地进行升级，形成多个版本的IPC接口，如果客户端和服务器端使用的IPC接口版本不一致，结果将是灾难性的，所以在建立IPC时，需要对IPC的双方进行版本检查 ；</p>
+</li>
+<li>
+<p>第三个参数是服务器的Socket地址，用于建立IPC的底层TCP连接；</p>
+</li>
+<li>
+<p>第四个参数是Configuration对象，用于定制IPC客户端参数；</p>
+</li>
+</ul>
+<p>客户端的代码编写完成之后就可以运行程序了，先启动服务器端，再运行一个客户端，就完成了一次客户端调用服务器的过程，客户端调用了服务器端IPCQueryStatusImpl对象的getFileStatus()方法，服务器端返回了方法调用结果即IPCFileStatus对象。</p>
+<p>客户端是如何调用服务器的呢？使用了Java动态代理方式，简单分析一下客户端的调用过程。</p>
+<p>首先通过RPC.getProxy()方法获得一个远程调用对象，其实在创建对象的过程中并没有与服务器端交互，只是在远程对象创建成功之后调用了服务器端检查服务器接口版本的方法，所以在上面的示例的运行过程中，IPCQueryStatusImpl的检查服务器版本的方法getProtocolVersion()会先调用，这次调用是在RPC.getProxy()方法调用过程中进行的，将下面的两行代码注释掉，也同样会调用getProtocolVersion()方法</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>IPCFileStatus status=query.getFileStatus("/tmp/testIPC");  </li>
+<li>System.out.println(status);  </li>
+</ol>
+<p>RPC.getProxy()方法有9个重载方法，其中8个方法都是调用的那个有9个参数的重载方法，下面来看看这个实际调用的方法，代码如下：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">view plain</a> <a href="http://blog.csdn.net/workformywork/article/details/17391725#">copy</a></p>
+<ol>
+<li>/** Construct a client-side proxy object that implements the named protocol, </li>
+<li>
+<ul>
+<li>talking to a server at the named address.  </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>@see #getProxy(Class, long, InetSocketAddress, UserGroupInformation, Configuration, SocketFactory, int) </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>@param connectionRetryPolicy 如果方法执行失败，指定一种重试策略，这个参数如果为null，那么会在Client.ConnectionId.getConnectionId()方法中创建 </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>@param checkVersion 是否检查服务器端接口版本 </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>@return 返回一个客户端的代理对象 </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>*/  </li>
+</ul>
+</li>
+<li>public static VersionedProtocol getProxy(  </li>
+<li>​      Class&lt;? extends VersionedProtocol&gt; protocol,  </li>
+<li>​      long clientVersion, InetSocketAddress addr, UserGroupInformation ticket,  </li>
+<li>​      Configuration conf, SocketFactory factory, int rpcTimeout,  </li>
+<li>​      RetryPolicy connectionRetryPolicy,  </li>
+<li>​      boolean checkVersion) throws IOException {  </li>
+<li></li>
+<li>​    if (UserGroupInformation.isSecurityEnabled()) {  </li>
+<li>​      SaslRpcServer.init(conf);  </li>
+<li>​    }  </li>
+<li>​    final Invoker invoker = new Invoker(protocol, addr, ticket, conf, factory,  </li>
+<li>​        rpcTimeout, connectionRetryPolicy);  </li>
+<li>​    //构造一个实现了protocol接口的Java动态代理对象  </li>
+<li>​    VersionedProtocol proxy = (VersionedProtocol)Proxy.newProxyInstance(  </li>
+<li>​        protocol.getClassLoader(), new Class[]{protocol}, invoker);  </li>
+<li>​      </li>
+<li>​    if (checkVersion) {  </li>
+<li>​      checkVersion(protocol, clientVersion, proxy);//调用getProtocolVersion()  </li>
+<li>​    }  </li>
+<li>​    return proxy;  </li>
+<li>}  </li>
+</ol>
+<p>在该方法中，先创建一个Invoker对象(暂时不讨论安全相关的代码)，然后再调用Proxy.newProxyInstance()方法创建一个动态代理对象，而Invoker类则实现了InvocationHandler接口，这样对代理对象proxy的所有方法调用都会重定向到Invoker类的invoke()方法中。动态代理对象创建成功之后，就检查服务器接口的版本，在checkVersion()方法中会调用代理对象的getProtocolVersion()方法，所以这个getProtocolVersion()方法会重定向到Invoker类的invoke()方法中。具体的调用代码在以后分析客户端的时候再来分析。</p>
+<p>EOF</p>
+<h2 id="reference">Reference</h2>
+<p>《Hadoop技术内幕：深入解析Hadoop Common和HDFS架构设计与实现原理》</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

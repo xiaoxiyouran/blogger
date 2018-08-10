@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>nth_element 指定元素排序</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="nth_element">nth_element 指定元素排序</h1>
+<h2 id="1-">1- <strong>模板函数</strong></h2>
+<p>头文件: <code>&lt;algorithm&gt;</code></p>
+<p>函数名: std::nth_element</p>
+<p>对给定范围[first,last)内的元素进行重新布置.方法是,nth位置的元素放置的值就是把所有元素排序后在nth位置的值.把所有不大于nth的值放到nth的前面,把所有不小于nth的值放到nth后面.对<strong>给定范围内的元素"排序".</strong>【有点像快排】</p>
+<p><strong>函数原型</strong></p>
+<pre><code class="cpp">template &lt;class RandomAccessIterator&gt;
+void nth_element(RandomAccessIterator first, RandomAccessIterator nth,RandomAccessIterator last);
+
+template &lt;class RandomAccessIterator, class StrictWeakOrdering&gt;
+void nth_element(RandomAccessIterator first, RandomAccessIterator nth,RandomAccessIterator last, StrictWeakOrdering comp);      // 最后一个变成了严格弱排序？
+</code></pre>
+
+<h2 id="2-">2- 参数</h2>
+<ul>
+<li>first, last       随机访问迭代器.指定了需要重新"排序"的范围.包括first,但不包括last.</li>
+<li>nth               随机访问迭代器.指向范围[first,last)内的一个位置.这个位置将放置排序后应该放于此位置的元素.</li>
+<li>comp      二元函数. 返回bool. 表明是否第一个参数应该排序到第二个参数的前面.此函数不应该修改参数值.可以是一个函数指针或函数对象.</li>
+</ul>
+<h2 id="3-">3- 返回</h2>
+<p>void</p>
+<p>简单的说nth_element算法仅排序第nth个元素（从0开始的索引）</p>
+<p>如iarray [first,last) 元素区间排序后  iarray[nth] 就是第nth大的元素（从0开始）</p>
+<p>要注意的是[first,nth) [nth,last)内 的大小循序还不一定，只能确定iarray[nth]是第nth大的元素。</p>
+<p>当然 [first,nth) 肯定是不大于 [nth,last)的。</p>
+<h2 id="4-">4-简单测试代码如下</h2>
+<p>要注意的是，此函数只是将第nth大的元素排好了位置，但并没有返回值</p>
+<p>所以要知道第nth大的元素 还得进行一步，cout&lt;&lt;iarray[nth]&lt;&lt;endl; nth既那个位子</p>
+<pre><code class="cpp">#include &lt;iostream&gt;  
+#include &lt;algorithm&gt;  
+using namespace std;  
+
+int main() {  
+	int iarray[]={5,6,15,89,7,2,1,3,52,63,12,64,47};  
+	int len=sizeof(iarray)/sizeof(int);  
+	int i;  
+	for(i=0;i&lt;len;i++)  
+	   cout&lt;&lt;iarray[i]&lt;&lt;&quot; &quot;;  
+	nth_element(iarray,iarray+6,iarray+len);         //排序第6个元素  
+	cout&lt;&lt;endl;  
+
+  for(i=0;i&lt;len;i++)  
+	   cout&lt;&lt;iarray[i]&lt;&lt;&quot; &quot;;  
+	cout&lt;&lt;&quot;  第6-th个元素     &quot;&lt;&lt;iarray[6]&lt;&lt;endl;  
+}  
+</code></pre>
+
+<hr />
+<h2 id="5-">5- 另一个例子</h2>
+<p>班上有10个学生，我想知道分数排在倒数第4名的学生。</p>
+<p>如果要满足上述需求，可以用sort排好序，然后取第4位（因为是由小到大排), 更聪明的朋友会用partial_sort, 只排前4位，然后得到第4位。其实这时你还是浪费，因为前两位你根本没有必要排序，此时，你就需要nth_element:</p>
+<p>对于上述实例需求，你只需要按下面要求修改1.4中的程序： ???</p>
+<pre><code class="cpp">stable_sort(vect.begin(), vect.end(),less&lt;student&gt;());
+</code></pre>
+
+<p>替换为：</p>
+<pre><code class="cpp">nth_element(vect.begin(), vect.begin()+3, vect.end(),less&lt;student&gt;());
+</code></pre>
+
+<p>运行结果为：</p>
+<pre><code class="cpp">------before sort...
+Tom: 74
+Jimy: 56
+Mary: 92
+Jessy: 85
+Jone: 56
+Bush: 52
+Winter: 77
+Andyer: 63
+Lily: 76
+Maryia: 89
+-----after sort ....
+Jone: 56
+Bush: 52
+Jimy: 56
+Andyer: 63
+Jessy: 85
+Mary: 92
+Winter: 77
+Tom: 74
+Lily: 76
+Maryia: 89
+</code></pre>
+
+<p>第四个是谁？Andyer，这个倒霉的家伙。为什么是begin()+3而不是+4? 我开始写这篇文章的时候也没有在意，后来在ilovevc 的提醒下，发现了这个问题。begin()是第一个，begin()+1是第二个，... begin()+3当然就是第四个了。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>201080605 解决 Python 读取 GB 级大文件</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="201080605-python-gb">201080605 解决 Python 读取 GB 级大文件</h1>
+<hr />
+<p>原文： https://github.com/Shuang0420/Shuang0420.github.io/wiki/python%E8%AF%BBGB%E7%BA%A7%E5%A4%A7%E6%96%87%E4%BB%B6</p>
+<p>在python中读取文件一般来说有三种“读”的方法：.read()、.readline() 和 .readlines()。对于小文件，调用read()会一次性读取文件的全部内容，调用readline()每次读取一行内容，或者调用readlines()一次读取所有内容并按行返回list，都可以非常方便的实现，然而如果一次性读取GB级的文件，内存很容易就爆了。</p>
+<p>今天尝试用python读取2.5GB的文件时就出现了out of memory错误。</p>
+<pre><code>[4217343.669075] Out of memory: Kill process 32152 (python) score 565 or sacrifice child
+</code></pre>
+
+<p>于是总结了两种python读大文件的方法，虽然其实我出错的原因并不是读文件😁</p>
+<hr />
+<h3 id="with-open">首推with open( )</h3>
+<p>其实之前有很长一段时间不知道with open()的神奇作用，直到这次遇到问题，才发现它的奇妙之处。原来python中用with语句打开和关闭文件，包括了抛出一个内部块异常，并且，for line in f其实是将文件对象f视为一个迭代器，自动的采用缓冲IO和内存管理，所以不必担心大文件。让系统来处理，其实是最简单的方式，交给解释器，就万事大吉了。</p>
+<pre><code class="python">#If the file is line based
+with open('...') as f:
+	for line in f:
+		process(line) # 
+
+</code></pre>
+
+<h3 id="read-in-chunks">Read In Chunks</h3>
+<p>这是正常情况下大家都会想到的办法，就是将大文件分割成若干小文件处理，处理完每个小文件后释放该部分内存。可以参照之前的这篇文《python提高读文件效率》</p>
+<blockquote>
+<p><a href="https://github.com/Shuang0420/Shuang0420.github.io/wiki/python%E6%8F%90%E9%AB%98%E8%AF%BB%E6%96%87%E4%BB%B6%E6%95%88%E7%8E%87">https://github.com/Shuang0420/Shuang0420.github.io/wiki/python%E6%8F%90%E9%AB%98%E8%AF%BB%E6%96%87%E4%BB%B6%E6%95%88%E7%8E%87</a></p>
+</blockquote>
+<p>代码如下</p>
+<pre><code class="python">file = open(&quot;sample.txt&quot;)
+while 1:
+lines = file.readlines(100000)
+if not lines:
+	break
+for line in lines:
+	pass # do something
+
+</code></pre>
+
+<p>或者</p>
+<pre><code class="python">def read_in_chunks(filePath, chunk_size=1024*1024):
+	&quot;&quot;&quot;
+	Lazy function (generator) to read a file piece by piece.
+	Default chunk size: 1M
+	You can set your own chunk size 
+	&quot;&quot;&quot;
+	file_object = open(filePath)
+	while True:
+		chunk_data = file_object.read(chunk_size)
+		if not chunk_data:
+			break
+		yield chunk_data
+if __name__ == &quot;__main__&quot;:
+	filePath = './path/filename'
+	for chunk in read_in_chunks(filePath):
+		process(chunk) # 
+
+</code></pre>
+
+<p>顺便提一下我遇到的问题，因为后面测试需要，我将读取的文件按行存到了list里面，memory使用率一路飙升过50%，这真是作死的节奏……之后我取了前500行做测试，memory始终稳定保持在3.5%，问题解决。</p>
+<blockquote>
+<p>参考链接 <a href="http://chenqx.github.io/2014/10/29/Python-fastest-way-to-read-a-large-file/">http://chenqx.github.io/2014/10/29/Python-fastest-way-to-read-a-large-file/</a></p>
+</blockquote>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

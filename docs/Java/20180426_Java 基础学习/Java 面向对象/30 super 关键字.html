@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>30 super 关键字</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="30-super">30 super 关键字</h1>
+<p>java中的<code>super</code>关键字是一个<strong>引用变量，用于引用直接父类对象</strong>。</p>
+<p>每当创建子类的实例时，父类的实例被隐式创建，由<code>super</code>关键字引用变量引用。</p>
+<p>java <code>super</code>关键字的用法如下：</p>
+<ul>
+<li><code>super</code>可以用来引<strong>用直接父类的实例变量</strong>。【调用被子类同名变量或字段隐藏的 父类变量】</li>
+<li><code>super</code>可以用来<strong>调用直接父类方法</strong>。【调用父类中被子类覆盖掉的同名方法】</li>
+<li><code>super()</code>可以用于<strong>调用直接父类构造函数</strong>。</li>
+</ul>
+<h2 id="1-super">1. super用于引用直接父类实例变量</h2>
+<p>可以使用<code>super</code>关键字来访问父类的数据成员或字段。 如果父类和子类具<strong>有相同的字段</strong>，则使用<code>super</code>来指定为父类数据成员或字段。</p>
+<pre><code class="java">class Animal {
+	String color = &quot;white&quot;;
+}
+
+class Dog extends Animal {
+	String color = &quot;black&quot;;
+
+	void printColor() {
+		System.out.println(color);// prints color of Dog class
+		System.out.println(super.color);// prints color of Animal class
+	}
+}
+
+class TestSuper1 {
+	public static void main(String args[]) {
+		Dog d = new Dog();
+		d.printColor();
+	}
+}
+</code></pre>
+
+<p>执行上面代码，输出结果如下 -</p>
+<pre><code class="java">black
+white
+</code></pre>
+
+<p>在上面的例子中，<code>Animal</code>和<code>Dog</code>都有一个共同的属性：<code>color</code>。 如果我们打印<code>color</code>属性，它将默认打印当前类的颜色。 要访问父属性，需要使用<code>super</code>关键字指定。</p>
+<h2 id="2-super">2. 通过 super 来调用父类方法</h2>
+<p><code>super</code>关键字也可以用于调用父类方法。 如果子类包含与父类相同的方法，则应使用<code>super</code>关键字指定父类的方法。 换句话说，如果方法被覆盖就可以使用 <code>super</code> 关键字来指定父类方法。</p>
+<pre><code class="java">class Animal {
+	void eat() {
+		System.out.println(&quot;eating...&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void eat() {
+		System.out.println(&quot;eating bread...&quot;);
+	}
+
+	void bark() {
+		System.out.println(&quot;barking...&quot;);
+	}
+
+	void work() {
+		super.eat();
+		bark();
+	}
+}
+
+class TestSuper2 {
+	public static void main(String args[]) {
+		Dog d = new Dog();
+		d.work();
+	}
+}
+</code></pre>
+
+<p>执行上面代码，输出结果如下 -</p>
+<pre><code class="java">black
+white
+</code></pre>
+
+<p>在上面的例子中，<code>Animal</code>和<code>Dog</code>两个类都有<code>eat()</code>方法，如果要调用<code>Dog</code>类中的<code>eat()</code>方法，它将默认调用<code>Dog</code>类的<code>eat()</code>方法，因为<strong>当前类的优先级比父类的高</strong>。
+所以要调用父类方法，需要使用<code>super</code>关键字指定。</p>
+<h2 id="3-super">3. 使用 super 来调用父类构造函数</h2>
+<p><code>super</code>关键字也可以用于调用父类构造函数。下面来看一个简单的例子：</p>
+<pre><code class="Java">class Animal {
+	Animal() {
+		System.out.println(&quot;animal is created&quot;);
+	}
+}
+
+class Dog extends Animal {
+	Dog() {
+		super();
+		System.out.println(&quot;dog is created&quot;);
+	}
+}
+
+class TestSuper3 {
+	public static void main(String args[]) {
+		Dog d = new Dog();
+	}
+}
+</code></pre>
+
+<blockquote>
+<p>注意：如果没有使用<code>super()</code>或<code>this()</code>，则<code>super()</code><strong>在每个类构造函数中由编译器自动添加。</strong></p>
+</blockquote>
+<p><img alt="img" src="30_01.jpg" /></p>
+<p>我们知道，如果没有构造函数，编译器会自动提供默认构造函数。 但是，它还添加了<code>super()</code>作为第一个语句。</p>
+<p>下面是<code>super</code>关键字的另一个例子，这里<code>super()</code>由编译器隐式提供。</p>
+<pre><code class="Java">class Animal {
+	Animal() {
+		System.out.println(&quot;animal is created&quot;);
+	}
+}
+
+class Dog extends Animal {
+	Dog() {
+		System.out.println(&quot;dog is created&quot;);
+	}
+}
+
+class TestSuper4 {
+	public static void main(String args[]) {
+		Dog d = new Dog();
+	}
+}
+
+</code></pre>
+
+<p>执行上面代码，输出结果如下 -</p>
+<pre><code class="Java">animal is created
+dog is created
+</code></pre>
+
+<h2 id="super">super实际使用示例</h2>
+<p>下面来看看<code>super</code>关键字的实际用法。 在这里，<code>Emp</code>类继承了<code>Person</code>类，所以<code>Person</code>的所有属性都将默认继承到<code>Emp</code>。 要初始化所有的属性，可使用子类的父类构造函数。 这样，我们重用了父类的构造函数。</p>
+<pre><code class="Java">class Person {
+	int id;
+	String name;
+
+	Person(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+}
+
+class Emp extends Person {
+	float salary;
+
+	Emp(int id, String name, float salary) {
+		super(id, name);        // reusing parent constructor
+		this.salary = salary;
+	}
+
+	void display() {
+		System.out.println(id + &quot; &quot; + name + &quot; &quot; + salary);
+	}
+}
+
+class TestSuper5 {
+	public static void main(String[] args) {
+		Emp e1 = new Emp(1, &quot;ankit&quot;, 45000f);
+		e1.display();
+	}
+}
+
+</code></pre>
+
+<p>执行上面代码，输出结果如下 -</p>
+<pre><code class="java">1 ankit 45000
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

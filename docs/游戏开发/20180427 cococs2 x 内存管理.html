@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180427 cococs2 x 内存管理</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180427-cococs2-x">20180427 cococs2 x 内存管理</h1>
+<hr />
+<p>原文： http://www.newbieol.com/information/61.html</p>
+<blockquote>
+<p>到现在内存已经非常便宜，但是也不是可以无限大的让你去使用，特别是在移动端，那么点内存，那么多 APP要抢着用，搞不好你占的内存太多了，系统直接干掉你的APP，所以我们又要老生常谈了——内存管理。那么在Cocos2d-x中，它是如何进行内存管理的呢？</p>
+</blockquote>
+<p>对于探究内存管理这种比较抽象的东西，最简单的方法就是通过代码来研究，首先通过创建一个简单的场景来看看Cocos2d-x在完成创建一个对象的时候，它都干了些什么。</p>
+<p>创建一个Scene：　　</p>
+<pre><code class="cpp">auto scene = Scene::create();
+</code></pre>
+
+<p>函数create是一个静态函数，看看create函数的源码：</p>
+<pre><code class="cpp">Scene *Scene::create(){
+	Scene *ret = new Scene();
+	if (ret &amp;&amp; ret-&gt;init())
+	{
+		ret-&gt;autorelease();
+		return ret;
+	}
+	else
+	{
+		CC_SAFE_DELETE(ret);
+		return nullptr;
+	}
+</code></pre>
+
+<p>现在就涉及到了Cocos2d-x的内存管理相关的知识了。在Cocos2d-x中，关于对象的创建与初始化都是使用的new和init函数搭配的方式，这种方式叫做二段式创建，由于C++中，构造函数没有返回值，无法通过构造函数确定初始化的成功与失败，所以在Cocos2d-x中就大行其道的使用了这种二段式创建的方式，用起来还不错，以后在自己的项目中，也可以采用。</p>
+<p>由于这种方式在Cocos2d-x中经常被使用，所以触控那帮家伙就搞了个宏：CREATE_FUNC。如果想让我们的类也使用这种<strong>二段式</strong>创建的方式，只需要在我们的类中加入以下代码：</p>
+<pre><code class="cpp">CREATE_FUNC(classname);
+</code></pre>
+
+<p>同时，需要定义一个init函数，这就OK了。我们来看看这个宏：</p>
+<pre><code class="cpp">#define CREATE_FUNC(__TYPE__) 
+static __TYPE__* create() 
+{ 
+	__TYPE__ *pRet = new __TYPE__();    
+	if (pRet &amp;&amp; pRet-&gt;init())     
+	{ 
+		pRet-&gt;autorelease();         
+		return pRet;     
+	}     
+	else     
+	{        
+		delete pRet; 
+		pRet = NULL;         
+		return NULL;     
+	} 
+}
+</code></pre>
+
+<p>话说这些东西也都是基础的C++知识，没有多少需要说的了，当你看到代码中的ret-&gt;autorelease()，一脸茫然，是的，你已经看到了Cocos2d-x的内存管理的触角了。</p>
+<p>ret-&gt;autorelease()是什么?当我使用create函数创建了场景以后，我并没有去delete，这也没有问题。问题就发生在autorelease的使用上。序幕说完了，让我们真正的开始Cocos2d-x的内存管理吧。</p>
+<p>在Cocos2d-x中，关于内存管理的类有：</p>
+<h4 id="ref">Ref类</h4>
+<p>AutoreleasePool类;</p>
+<p>PoolManager类。Ref类几乎是Cocos2d-x中所有类的父类，它是Cocos2d-x中内存管理的最重要的一环;上面说的autorelease函数就Ref类的成员函数，Cocos2d-x中所有继承自Ref的类，都可以使用Cocos2d-x的内存管理。</p>
+<p>AutoreleasePool类用来管理自动释放对象。</p>
+<p>PoolManager用来管理所有的AutoreleasePool，这个类是使用单例模式实现的。</p>
+<p>下面就通过对上述三个类的源码进行分析，看看Cocos2d-x到底是如何进行内存管理的。</p>
+<p>先来看看Ref类的定义，以下是Ref类的头文件定义：</p>
+<pre><code class="cpp">class CC_DLL Ref{public:
+	/**
+	* 获取对象的所有权
+	* 增加对象的引用计数
+	*/
+	void retain();
+
+	/**
+	* 立即释放对象的所有权
+	* 同时会减少对象的引用计数，当引用计数达到0时，直接销毁这个对象
+	*/
+	void release();
+
+	/**
+	* 自动释放对象的所有权
+	* 将对象添加到自动释放池
+	* 当在下一帧开始前，当前的自动释放池会被回收掉，并且对自动释放池中的所有对象
+	* 执行一次release操作，当对象的引用计数为0时，对象会被释放掉。
+	*/
+	Ref* autorelease();
+
+	/**
+	* 获得对象的当前引用计数
+	* 当创建对象的时候，引用计数为1
+	*/
+	unsigned int getReferenceCount() const;};
+</code></pre>
+
+<p>对于release函数的实现，这里需要特别总结一下，先看看它的实现：</p>
+<pre><code class="cpp">void Ref::release(){
+	CCASSERT(_referenceCount &gt; 0, &quot;reference count should greater than 0&quot;);
+	--_referenceCount;
+
+	if (_referenceCount == 0)
+	{#if defined(COCOS2D_DEBUG) &amp;&amp; (COCOS2D_DEBUG &gt; 0)
+	  auto poolManager = PoolManager::getInstance();
+	  if (!poolManager-&gt;getCurrentPool()-&gt;isClearing() &amp;&amp; poolManager-&gt;isObjectInPools(this))
+	  {
+		// 这里是非常重要的一点，在我们使用Cocos2d-x中经常出错的地方
+		// 当引用计数为0，同时这个对象还存在于autorelease池中的时候，就会出现一个断言错误
+		// 可以想到，当这个对象引用计数为0时，就表示需要释放掉，如果它还在autorelease池中，
+		// 当在autorelease池中再次被释放时，就会出现错误，这种错误是不了解Cocos2d-x内存管理的
+		// 编程人员经常犯的错误
+		// 出现这个错误的原因在于new/retain和autorelease/release没有对应使用引起的
+		CCASSERT(false, &quot;The reference shouldn't be 0 because it is still in autorelease pool.&quot;);
+	  }#endif
+	  delete this;
+	}}
+</code></pre>
+
+<p>上面也说道了，对于new和autorelease需要匹配使用，retain和release也需 要匹配使用，否则就会出现断言错误，或者内存泄露;在非Debug模式下，就可能直接闪退了。这就是为什么我们在使用create函数的时候，new成功 以后，就顺便调用了autorelease，将该对象放入到自动释放池中;而当我们再次想获取该对象并使用该对象的时候，需要使用retain再次获得该 对象的所有权，当然了，在使用完成以后，你应该记得调用release去手动完成释放工作，这是你的任务。例如以下代码：</p>
+<pre><code class="cpp">auto obj = Scene::create();obj-&gt;autorelease(); // Error
+</code></pre>
+
+<p>这是错误的，在create中，在创建成功的情况下，已经将obj对象放到了autorelease pool中了;当你再次放入autorelease pool后，当销毁autorelease pool以后，就会出现两次销毁一个对象的情况，出现程序的crash。再例如以下代码也是错误的：</p>
+<pre><code class="cpp">auto obj = Scene::create();obj-&gt;release(); // Error
+</code></pre>
+
+<p>当使用create函数创建对象以后，obj没有所有权，当再次调用release时，就会出现错误的对象释放。而正确的做法应该如下：</p>
+<pre><code class="cpp">auto obj = Scene::create(); // 这里retain和release对应，release一个已经被autorelease过的对象（例如通过create函数构造的对象）必须先retainobj-&gt;retain();obj-&gt;release();
+</code></pre>
+
+<p>这引用计数，又让我想起了COM中的AddRef和Release。</p>
+<h4 id="autoreleasepool">AutoreleasePool类</h4>
+<p>AutoreleasePool类是Ref类的友元类，先来看看Autorelease类的声明。</p>
+<pre><code class="cpp">class CC_DLL AutoreleasePool{public:
+	/**
+	* 不能在堆上创建AutoreleasePool对象，只能在栈上创建
+	* 这就决定过了，当出了对应的作用域，AutoreleasePool对象就会被自动释放，例如RAII技巧实现的
+	*/
+	AutoreleasePool();
+
+	/**
+	* 创建一个带有指定名字的autorelease pool对象
+	* 对于调试来说，这个名字是非常有用的。
+	*/
+	AutoreleasePool(const std::string &amp;name);
+
+	~AutoreleasePool();
+
+	/**
+	* 向autorelease pool中添加一个ref对象
+	* 同一个对象可以多次加入同一个自动释放池中（貌似会触发断言错误）
+	* 当自动释放池被销毁的时候，它会依次调用自动释放池中对象的release()函数
+	*/
+	void addObject(Ref *object);
+
+	/**
+	* 清理自动释放池
+	* 依次调用自动释放池中对象的release()函数
+	*/
+	void clear();#if defined(COCOS2D_DEBUG) &amp;&amp; (COCOS2D_DEBUG &gt; 0)
+	/**
+	* 判断当前是否正在执行自动释放池的清理操作
+	*/
+	bool isClearing() const { return _isClearing; };#endif
+
+	/**
+	* 判断自动释放池是否包含指定的Ref对象
+	*/
+	bool contains(Ref* object) const;
+
+	/**
+	* 打印autorelease pool中所有的对象
+	*/
+	void dump();private:
+	/**
+	* 所有的对象都是使用的std::vector来存放的
+	*/
+	std::vector&lt;Ref*&gt; _managedObjectArray;
+	std::string _name;#if defined(COCOS2D_DEBUG) &amp;&amp; (COCOS2D_DEBUG &gt; 0)
+	/**
+	*  The flag for checking whether the pool is doing `clear` operation.
+	*/
+	bool _isClearing;#endif};
+</code></pre>
+
+<p>对于AutoreleasePool类来说，它的实现很简单，就是将简单的将对象保存在一个std::vector中，在释放这个AutoreleasePool的时候，对保存在std::vector中的对象依次调用对应的release函数，从而完成对象的自动释放。</p>
+<h4 id="poolmanager">PoolManager类</h4>
+<p>这货又是干什么的?当我们在阅读AutoreleasePool的源码的时候，在它的构造函数中，你会发现如下代码：</p>
+<pre><code class="cpp">AutoreleasePool::AutoreleasePool(): 
+	_name(&quot;&quot;)#if defined(COCOS2D_DEBUG) &amp;&amp; (COCOS2D_DEBUG &gt; 0), 
+	_isClearing(false)#endif
+{
+	_managedObjectArray.reserve(150);
+	PoolManager::getInstance()-&gt;push(this);
+}
+</code></pre>
+
+<p>在AutoreleasePool的析构函数中，又有如下代码：</p>
+<pre><code class="cpp">AutoreleasePool::~AutoreleasePool(){
+	CCLOGINFO(&quot;deallocing AutoreleasePool: %p&quot;, this);
+	clear();
+	PoolManager::getInstance()-&gt;pop();}
+
+</code></pre>
+
+<p>哦，原来，我们把AutoreleasePool对象又放到了PoolManager里了;原 来，PoolManager类就是用来管理所有的AutoreleasePool的类，也是使用的单例模式来实现的。该PoolManger有一个存放 AutoreleasePool对象指针的stack，该stack是由std::vector实现的。需要注意的是，cocos2d-x的单例类都不是 线程安全的，跟内存管理紧密相关的PoolManager类也不例外，因此在多线程中使用cocos2d-x的接口需要特别注意内存管理的问题。接下来，我们先看看PoolManager的头文件定义。</p>
+<pre><code class="cpp">class CC_DLL PoolManager{public:
+	/**
+	* 获得单例
+	*/
+	static PoolManager* getInstance();
+
+	/**
+	* 销毁单例
+	*/
+	static void destroyInstance();
+
+	/**
+	* 获得当前的autorelease pool，在引擎中，至少会有一个autorelease pool
+	* 在需要的时候，我们可以创建我们自己的release pool，然后将这个autorelease pool添加到PoolManager中
+	*/
+	AutoreleasePool *getCurrentPool() const;
+
+	/**
+	* 判断指定的对象是否在其中的一个autorelease pool中
+	*/
+	bool isObjectInPools(Ref* obj) const;
+
+	friend class AutoreleasePool;private:
+	PoolManager();
+	~PoolManager();
+
+	/**
+	* 将AutoreleasePool对象添加到PoolManager中
+	*/
+	void push(AutoreleasePool *pool);
+
+	/**
+	* 从PoolManager中移除AutoreleasePool对象
+	*/
+	void pop();
+
+	static PoolManager* s_singleInstance;
+
+	/**
+	* 用来保存所有的AutoreleasePool对象
+	*/
+	std::deque&lt;AutoreleasePool*&gt; _releasePoolStack;
+	AutoreleasePool *_curReleasePool;};
+
+</code></pre>
+
+<p>关于PoolManager中各个函数的实现也是非常简单的，这里不做累述，各位可以去阅读Cocos2d-x的源码。</p>
+<h4 id="_1">问题来了</h4>
+<p>说了这么多，代码也列了这么多，我们create一个对象以后，放到了 AutoreleasePool中去了，最终，在调用AutoreleasePool的clear函数的时候，会对AutoreleasePool管理的 所有对象依次调用release操作。啊哈!貌似哪里不对，我一直都没有说最终谁会调用这个clear函数啊?是的。看下面这段在导演类中的代码，我想你 会明白的。</p>
+<pre><code class="cpp">void DisplayLinkDirector::mainLoop(){
+	if (_purgeDirectorInNextLoop)
+	{
+		_purgeDirectorInNextLoop = false;
+		purgeDirector();
+	}
+	else if (! _invalid)
+	{
+		drawScene();
+
+		// release the objects
+		PoolManager::getInstance()-&gt;getCurrentPool()-&gt;clear();
+	}}
+</code></pre>
+
+<p>上面的代码说明的事实是：在图像渲染的主循环中，如果当前的图形对象是在当前帧，则调用显示函数，并 调用AutoreleasePool::clear()减少这些对象的引用计数。mainLoop是每一帧都会自动调用的，所以下一帧时这些对象都被当前 的AutoreleasePool对象release了一次。这也是AutoreleasePool「自动」的来由。</p>
+<h4 id="_2">总结</h4>
+<p>好了，总结的差不多了，对于Cocos2d-x中的内存管理总结的差不多了。对于Cocos2d-x 中的内存管理，我个人认为，请时刻关注着这个对象的引用计数，retain和release，new和autorelease需要匹配使用，防止不必要的 错误发生。总结了这么多，还是那句话。</p>
+<p>纸上得来终觉浅，绝知此事要躬行。</p>
+<p>只有经过实际的使用，在经过代码的洗练，才能更好的去掌握这些。在Cocos2d-x中，很多地方已 经进行了autorelease，或者retain了，我们就不必再次进行这些操作，比如create，再比如在调用addChild方法添加子节点时， 自动调用了retain。对应的通过removeChild，移除子节点时，自动调用了release。这些地方稍微不注意，就可能会让你掉入“坑”中。 努力吧，伙计们。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

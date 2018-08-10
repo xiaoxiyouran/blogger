@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>Queue 容器</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="queue">Queue 容器</h1>
+<p>C++队列queue模板类的定义在<queue>头文件中,queue 模板类需要两个模板参数，一个是元素类型，一个容器类型，元素类型是必要的，容器类型是可选的，默认为deque 类型。</p>
+<p>C++队列Queue是一种容器适配器，它给予程序员一种先进先出(FIFO)的数据结构。</p>
+<h2 id="1-queue">1- queue</h2>
+<p><strong>C++队列Queue类成员函数如下:</strong></p>
+<p>back()返回最后一个元素</p>
+<p>empty()如果队列空则返回真</p>
+<p>front()返回第一个元素</p>
+<p>pop()删除第一个元素</p>
+<p>push()在末尾加入一个元素</p>
+<p>size()返回队列中元素的个数</p>
+<p>queue 的基本操作举例如下：</p>
+<pre><code class="cpp">queue入队，如例：q.push(x); 将x 接到队列的末端。
+queue出队，如例：q.pop(); 弹出队列的第一个元素，注意，并不会返回被弹出元素的值。
+访问queue队首元素，如例：q.front()，即最早被压入队列的元素。
+访问queue队尾元素，如例：q.back()，即最后被压入队列的元素。
+判断queue队列空，如例：q.empty()，当队列空时，返回true。
+访问队列中的元素个数，如例：q.size()
+</code></pre>
+
+<p><strong>C++ stl队列queue示例代码1:</strong></p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt; 
+#include&lt;queue&gt; 
+using namespace std;
+
+int main(){
+	int e,n,m;
+	queue q1;
+
+	for(int i=0;i&lt;10;i++)
+	   q1.push(i);
+
+	if(!q1.empty())
+		cout&lt;&lt;&quot;dui lie  bu kong\n&quot;;
+
+	n=q1.size();
+	cout&lt;n;
+</code></pre>
+
+<hr />
+<h2 id="2-priority_queue">2- priority_queue</h2>
+<p>在头文件<code>&lt;queue&gt;</code>中还包含一种特殊的队列，priority_queue(优先队列）。优先队列与队列的差别在于优先队列不是按照入队的顺序出队，而是按照队列中元素的优先权顺序出队（默认为大者优先，也可以通过指定算子来指定自己的优先顺序）。</p>
+<p>priority_queue模板类有三个模板参数，<strong>第一个是元素类型，第二个容器类型，第三个是比较算子</strong>。其中后两个都可以省略，默认容器为vector，默认算子为less，即小的往前排，大的往后排（出队时序列尾的元素出队）。</p>
+<p><img alt="" src="default_queue.png" /></p>
+<p>定义priority_queue对象的示例代码如下：</p>
+<pre><code class="cpp">priority_queue&lt;int&gt; q1;
+priority_queue&lt; pair&lt;int, int&gt; &gt; q2;                    // 注意在两个尖括号之间一定要留空格。
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt; &gt; q3;      // 定义小的先出队
+
+</code></pre>
+
+<p>priority_queue的基本操作与queue相同。</p>
+<p>初学者在使用priority_queue时，最困难的可能就是如何定义比较算子了。</p>
+<p>1- 如果是基本数据类型，或已定义了比较运算符的类，可以直接用STL的less算子和greater算子——<strong>默认为使用less算子，即小的往前排，大的先出队。</strong></p>
+<p>2- 如果要定义自己的比较算子，方法有多种，这里介绍其中的一种：重载比较运算符。<strong>优先队列试图将两个元素x和y代入比较运算符(对less算子，调用 x<y，对greater算子，调用x>y)，若结果为真，则x排在y前面，y将先于x出队，反之，则将y排在x前面，x将先出队。</strong> ？？？ 【用greater，就是小的先出列，用less，就是大的先出列。】</p>
+<p>看下面这个简单的示例：</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+class T{
+public:
+int x, y, z;
+T(int a, int b, int c):x(a), y(b), z(c){}
+};
+
+bool operator &lt; (const T &amp;t1, const T &amp;t2){
+	return t1.z &lt; t2.z; // 按照z的顺序来决定t1和t2的顺序
+}
+
+main(){               /// 可以没有返回值？
+  priority_queue&lt;T&gt; q;
+  q.push(T(4,4,3));
+  q.push(T(2,2,5));
+  q.push(T(1,5,4));
+  q.push(T(3,3,6));
+
+  while (!q.empty()){
+	  T t = q.top(); q.pop();       // 取完之后要pop
+	  cout &lt;&lt; t.x &lt;&lt; &quot; &quot; &lt;&lt; t.y &lt;&lt; &quot; &quot; &lt;&lt; t.z &lt;&lt; endl;
+  }
+  return 1;
+}
+</code></pre>
+
+<p>输出结果为(注意是按照z的顺序从大到小出队的)：</p>
+<pre><code>3 3 6
+2 2 5
+1 5 4
+4 4 3
+</code></pre>
+
+<p>如果上面的运算符改了比较的函数</p>
+<pre><code class="cpp">bool operator &gt; (const T &amp;t1, const T &amp;t2){
+	return t1.z &gt; t2.z;
+}
+</code></pre>
+
+<p>从小到大出队，结果为： </p>
+<pre><code class="cpp">4 4 3
+1 5 4
+2 2 5
+3 3 6
+</code></pre>
+
+<p>如果我们把第一个例子中的比较运算符重载为：</p>
+<pre><code class="cpp">bool operator &lt; (const T &amp;t1, const T &amp;t2){
+	return t1.z &gt; t2.z; // 按照z的顺序来决定t1和t2的顺序
+}
+</code></pre>
+
+<p>则第一个例子的程序会得到和第二个例子的程序相同的输出结果。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

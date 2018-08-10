@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>[浅谈MySql的存储引擎（表类型）](http://www.cnblogs.com/lina1006/archive/2011/04/29/2032894.html)</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="mysql"><a href="http://www.cnblogs.com/lina1006/archive/2011/04/29/2032894.html">浅谈MySql的存储引擎（表类型）</a></h1>
+<p><strong>什么是MySql数据库</strong></p>
+<p>​    通常意义上，数据库也就是数据的集合，具体到计算机上数据库可以是存储器上一些文件的集合或者一些内存数据的集合。</p>
+<p>​    我们通常说的MySql数据库，sql server数据库等等其实是数据库管理系统，它们可以存储数据，并提供查询和更新数据库中的数据的功能等等。根据数据库如何存储数据和如何操作数据的实现机制不同，这些数据库之间即有区别又有共同点。</p>
+<p>​    MySql数据库是开放源代码的关系型数据库。目前，它可以提供的功能有：支持sql语言、子查询、存储过程、触发器、视图、索引、事务、锁、外键约束和影像复制等。在后期，我们会详细讲解这些功能。</p>
+<p>​    同Oracle 和SQL Server等大型数据库系统一样，MySql也是客户/服务器系统并且是单进程多线程架构的数据库。</p>
+<p>​    MySql区别于其它数据库系统的一个重要特点是支持插入式存储引擎。</p>
+<p><strong>那么什么是存储引擎呢？</strong></p>
+<p>​    存储引擎说白了就是如何<strong>存储数据、如何为存储的数据建立索引和如何更新、查询数据</strong>等技术的实现方法。因为在关系数据库中数据的存储是以表的形式存储的，所以存储引擎也可以称为表类型（即存储和操作此表的类型）。</p>
+<p>​    在<strong>Oracle 和SQL Server等数据库中只有一种存储引擎</strong>，所有数据存储管理机制都是一样的。</p>
+<p>而<strong>MySql数据库提供了多种存储引擎。</strong>用户可以根据不同的需求为数据表选择不同的存储引擎，用户也可以根据自己的需要编写自己的存储引擎。</p>
+<hr />
+<p><strong>MySql中有哪些存储引擎？</strong> </p>
+<p>​    1 <strong>MyISAM：</strong>这种引擎是mysql最早提供的。这种引擎又可以分为静态MyISAM、动态MyISAM 和压缩MyISAM三种：</p>
+<p>​    <strong>静态<strong><em>*MyISAM</em></strong>*：</strong>如果数据表中的各数据列的长度都是预先固定好的，服务器将自动选择这种表类型。因为数据表中每一条记录所占用的空间都是一样的，所以这种表存取和更新的效率非常高。当数据受损时，恢复工作也比较容易做。</p>
+<p>​    <strong>动态<strong><em>*MyISAM</em></strong>*：</strong>如果数据表中出现varchar、xxxtext或xxxBLOB字段时，服务器将自动选择这种表类型。相对于静态MyISAM，这种表<strong>存储空间比较小，但由于每条记录的长度不一，所以多次修改数据后，数据表中的数据就可能离散的存储在内存中，进而导致执行效率下降。</strong>同时，内存中也可能会出现很多碎片。因此，这种类型的表要经常用optimize table 命令或优化工具来进行碎片整理。</p>
+<p>​    <strong>压缩<strong><em>*MyISAM</em></strong>*：</strong>以上说到的两种类型的表都可以用<strong>myisamchk工具压缩。这种类型的表进一步减小了占用的存储，但是这种表压缩之后不能再被修改。另外，因为是压缩数据，所以这种表在读取的时候要先时行解压缩。</strong></p>
+<p>​    但是，不管是何种MyISAM表，<strong>目前它都不支持事务，行级锁和外键约束的功能。</strong></p>
+<p>​    <strong>2</strong> MyISAM Merge引擎：<strong>这种类型是MyISAM类型的一种变种。</strong>合并表是将几个相同的MyISAM表合并为一个<strong>虚表。常应用于日志和数据仓库。</strong></p>
+<p>​    3 InnoDB：</p>
+<p>InnoDB表类型可以看作是对MyISAM的<strong>进一步更新产品，它提供了事务、行级锁机制和外键约束的功能。</strong></p>
+<hr />
+<p><strong>我知道一般情况下插入查询比较多的适合用myisam， 更新比较多或者财务之类的表用innoDB比较好，</strong></p>
+<p>myisam 不支持事务，你试试开两个窗口，其中一个插入一条数据，再没有commit的情况下，另外一个也能看到。</p>
+<p>innodb 支持事务，具体的我就不多说了，你应该懂得。</p>
+<p>mysql中 myisam 引擎不支持事务的概念，多用于数据仓库这样查询多而事务少的情况，速度较快。</p>
+<p>mysql中 innoDB 引擎支持事务的概念，多用于web网站后台等实时的中小型事务处理后台。</p>
+<p>而oracle没有引擎的概念，oracle有OLTP和OLAP模式的区分，两者的差别不大，只有参数设置上的不同。</p>
+<p>oracle无论哪种模式都是……</p>
+<hr />
+<p>​    4 memory(heap)：</p>
+<p>这种类型的数据表<strong>只存在于内存中。它使用散列索引，所以数据的存取速度非常快。</strong></p>
+<p>因为是存在于内存中，所以这种类型常<strong>应用于临时表中。</strong></p>
+<p>​    5 archive：</p>
+<p>这种类型<strong>只支持select 和 insert语句，而且不支持索引。常应用于日志记录和聚合分析方面。</strong></p>
+<p>​    当然MySql支持的表类型不止上面几种。</p>
+<p>​    下面我们介绍一下如何查看和设置数据表类型。</p>
+<p><strong>MySql中关于存储引擎的操作</strong></p>
+<p>​    <strong>1 查看数据库可以支持的存储引擎</strong>
+	用show engines; 命令可以显示当前数据库支持的存储引擎情况，如图1所示：</p>
+<p>​                                             图1 数据库的存储引擎</p>
+<p><img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042915351012.jpg" />
+	由上图可见当前系统的默认数据表类型是MyISAM。当然，我们可以通过修改数据库配置文件中的选项，设定默认表类型。
+	<strong>2 查看表的结构等信息的若干命令</strong>
+	要查看表的定义结构等信息可以使用以下几种命令：
+	2.1Desc[ribe] <strong>tablename</strong>; //查看数据表的结构
+	例如，查看表t1的结构，可得下图。</p>
+<p>​                                         图2：查看表t1的结构
+ <img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042915383940.jpg" />
+	2.2 Show create table <strong>tablename</strong>; //显示表的创建语句
+	同上查询表t1,得下图：</p>
+<p>​                                          图3 显示创建表t1的语句</p>
+<p><img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042915395151.jpg" />
+	2.3 show table status like ‘<strong>tablename’</strong>\G显示表的当前状态值</p>
+<p>​     同上查询表t1,得下图：</p>
+<p>​                    图4 显示表t1 的当前状态值</p>
+<p><strong><img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042915420183.jpg" /></strong>
+	综上可见，后两种方式都可以帮助我们查看某一表的存储引擎类型（图中已用红色方框标出）。
+	<strong>3  设置或修改表的存储引擎</strong>
+	3.1创建数据库表时设置存储存储引擎的基本语法是：
+Create table <strong>*tableName<strong><em>(
+***columnName</em></strong>(列名1)  type(数据类型)  attri(属性设置),
+</strong>*columnName<strong><em>(列名2)  type(数据类型)  attri(属性设置),
+……..) engine = ***engineName</em></strong></p>
+<p>例如,假设要创建一个名为user的表,此表包括id,用户名username和性别sex三个字段，并且要设置表类型为merge。则可用如下的方式创建此数据表，</p>
+<pre><code class="mys">create table user(
+
+  id int not null auto_increment,
+
+  username char(20) not null,
+
+  sex char(2),
+
+  primary key(id)
+
+) engine=merge
+</code></pre>
+
+<p>具体执行结果见下图：</p>
+<p>​            图5 创建表user </p>
+<p><img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042916205573.jpg" />                                                                                                                                                                                                                                      </p>
+<p>查看创建后表user的信息，可见表的当前存储引擎是merge，如图所示：</p>
+<p>​             图6 显示表t1 的当前状态值</p>
+<p><img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042915500588.jpg" /></p>
+<p>​    3.2修改存储引擎，可以用命令Alter table <strong>tableName</strong> engine =<strong>engineName</strong></p>
+<p>假如，若需要将表user的存储引擎修改为archive类型，则可使用命令alter table user engine=archive。如下图所示：</p>
+<p>​             图7 修改表user的存储引擎</p>
+<p><img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042915513579.jpg" />
+查看修改后的表类型，可见表类型已经变为archive类型。</p>
+<p>​             图8 显示表user修改后的状态值
+ <img alt="img" src="https://pic002.cnblogs.com/images/2011/146783/2011042915521074.jpg" />
+小结
+	 在本文中主要介绍了什么是MySql数据库，并进一步引出了它的一个重要特性， 即<strong>插入式的多存储引擎机制。</strong>然后，简单介绍了什么是存储引擎和MySql中几种主要的存储引擎。最后，介绍了如何查看数据库支持的所有存储引擎，如何查看数据库表的存储引擎类型及如何设置或修改表的存储引擎类型。刚刚入门学习MySql,文中有错误之处，还请大家多多指导!</p>
+<hr />
+<p>mysql有多种存储引擎，目前常用的是 MyISAM 和 InnoDB 这两个引擎，除了这两个引擎以为还有许多其他引擎，有官方的，也有一些公司自己研发的。这篇文章主要简单概述一下常用常见的 MySQL 引擎，一则这是面试中常被问到的问题，二则这也是数据库设计中不可忽略的问题，用合适的引擎可以更好的适应业务场景，提高业务效率。</p>
+<h2 id="myisam">MyISAM</h2>
+<p>MyISAM 是 mysql 5.5.5 之前的默认引擎，它支持 B-tree/FullText/R-tree 索引类型。</p>
+<p>锁级别为表锁，表锁优点是<strong>开销小，加锁快；缺点是锁粒度大，发生锁冲动概率较高，容纳并发能力低，这个引擎适合查询为主的业务。</strong></p>
+<p><strong>此引擎不支持事务，也不支持外键。</strong></p>
+<p><strong>MyISAM强调了快速读取操作</strong>。它存储表的行数，于是SELECT COUNT(*) FROM TABLE时只需要直接读取已经保存好的值而不需要进行全表扫描。</p>
+<h2 id="innodb">InnoDB</h2>
+<p>InnoDB 存储引擎最大的亮点就是<strong>支持事务，支持回滚，它支持 Hash/B-tree /R-tree索引类型。</strong></p>
+<p>锁级别为行锁，行锁优点是适用于高并发的频繁表修改，高并发是性能优于 MyISAM。缺点是系统消耗较大，索引<strong>不仅缓存自身，也缓存数据，相比 MyISAM 需要更大的内存。</strong></p>
+<p>InnoDB 中<strong>不保存表的具体行数，也就是说，执行 select count(*) from table时，InnoDB 要扫描一遍整个表来计算有多少行。</strong></p>
+<p><strong>支持事务，支持外键。</strong></p>
+<h3 id="acid">ACID 事务</h3>
+<p><strong>A</strong> 事务的原子性(Atomicity)：指一个事务要么全部执行，要么不执行。也就是说一个事务不可能只执行了一半就停止了。比如你从取款机取钱，这个事务可以分成两个步骤：1）划卡，2）出钱。不可能划了卡,而钱却没出来，这两步必须同时完成，要么就不完成。
+<strong>C</strong> 事务的一致性(Consistency)：指事务的运行并不改变数据库中数据的一致性。例如，完整性约束了a+b=10，一个事务改变了a，那么b也应该随之改变。
+<strong>I</strong> 独立性(Isolation）：事务的独立性也有称作隔离性，是指两个以上的事务不会出现交错执行的状态。因为这样可能会导致数据不一致。
+<strong>D</strong> 持久性(Durability）：事务的持久性是指事务执行成功以后，该事务所对数据库所作的更改便是持久的保存在数据库之中，不会无缘无故的回滚。</p>
+<h2 id="memory">Memory</h2>
+<p>Memory 是内存级别存储引擎，数据存储在内存中，所以他能够存储的数据量较小。</p>
+<p>因为内存的特性，存储引擎对数据的一致性支持较差。锁级别为表锁，不支持事务。但访问速度非常快，并且默认使用 hash 索引。</p>
+<p>Memory存储引擎使用存<strong>在内存中的内容来创建表，每个Memory表只实际对应一个磁盘文件，在磁盘中表现为.frm文件。</strong></p>
+<h3 id="_1">总结</h3>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MyISAM</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>InnoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>存储结构</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>每张表被存放在三个文件：<strong>frm-格</strong>定义MYD(MYData)-数据文件MYI(MYIndex)-索引文件</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>所有的表都保存在同一个数据文件中（也可能是多个文件，或者是独立的表空间文件），InnoDB表的大小只受限于操作系统文件的大小，一般为2GB</strong></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>存储空间</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MyISAM可被压缩，存储空间较小</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>InnoDB的表需要更多的内存和存储，它会在主内存中建立其专用的缓冲池用于高速缓冲数据和索引</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>可移植性、备份及恢复</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>由于MyISAM的数据是以文件的形式存储，所以在跨平台的数据转移中会很方便。在备份和恢复时可单独针对某个表进行操作</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>免费的方案可以是拷贝数据文件、备份 binlog，或者用 mysqldump，在数据量达到几十G的时候就相对痛苦了</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>事务安全</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>不支持 每次查询具有原子性</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>支持 具有事务(commit)、回滚(rollback)和崩溃修复能力(crash recovery capabilities)的事务安全(transaction-safe (ACID compliant))型表</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>AUTO_INCREMENT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MyISAM表可以和其他字段一起建立联合索引</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>InnoDB中必须包含只有该字段的索引</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>SELECT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MyISAM更优</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>INSERT</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>InnoDB更优</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>UPDATE</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>InnoDB更优</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>DELETE</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>InnoDB更优 它不会重新建立表，而是一行一行的删除</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>COUNT without WHERE</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>MyISAM更优。因为MyISAM保存了表的具体行数</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>InnoDB没有保存表的具体行数，需要逐行扫描统计，就很慢了</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>COUNT with WHERE</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>一样</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>一样，InnoDB也会锁表</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>锁</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>只支持表锁</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>支持表锁、行锁 行锁大幅度提高了多用户并发操作的新能。但是InnoDB的行锁，只是在WHERE的主键是有效的，非主键的WHERE都会锁全表的</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>外键</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>不支持</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>支持</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>FULLTEXT全文索引</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>支持</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>不支持（5.6.4以上支持英文全文索引） 可以通过使用Sphinx从InnoDB中获得全文索引，会慢一点</td>
+</tr>
+</tbody>
+</table>
+<p>互联网项目中随着硬件成本的降低及缓存、中间件的应用，一般我们选择都以 InnoDB 存储引擎为主，很少再去选择 MyISAM 了。而业务真发展的一定程度时，自带的存储引擎无法满足时，这时公司应该是有实力去自主研发满足自己需求的存储引擎或者购买商用的存储引擎了。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

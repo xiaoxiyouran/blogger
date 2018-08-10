@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>重载 覆盖 隐藏</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">重载 覆盖 隐藏</h1>
+<pre><code class="cpp">重载：
+	· 范围相同(作用域相同)
+	· 函数名相同，参数不同
+	· 和返回值无关
+
+覆盖：
+	· 作用域不同(父类和子类)
+	· 父类有virtual
+	· 函数名字和参数必须相同
+
+隐藏：
+	· 作用域不同(父类和子类)
+	· 基类的函数不是virtual，子类又重新定义了该函数，无论参数相同不相同都是隐藏
+	· 如果是virtual 函数， 参数相同就是覆盖，参数不同就是隐藏。[参数必须不同]
+
+
+</code></pre>
+
+<p>重载 覆盖 隐藏是C++中最为常见的几种函数相关的概念，特别是在存在虚函数的类继承中特别容易混淆。因此，区分三个概念是非常重要的。</p>
+<h3 id="overload">重载（overload）</h3>
+<ul>
+<li>
+<p>重载是在一个类中，相同的函数名，不同的参数，可以实现重载。跟返回值无关，返回值不同，不能叫做重载。</p>
+</li>
+<li>
+<p>不是两个函数的名字相同就能构成重载。</p>
+</li>
+<li>
+<p>全局函数和类的成员函数同名也不算重载，因为函数的作用域不同。例如</p>
+</li>
+</ul>
+<p><code>void Print();//全局函数
+  class A{
+	public:
+	void Print();
+  };</code></p>
+<ul>
+<li>
+<p>不论Print的函数是否不同，都不算重载。如果某个类的成员要调用全局函数时候，必须用::Print();</p>
+</li>
+<li>
+<p>还有就是C++是C的一个扩展，如果C++要调用C语言编译后的C函数改怎么办？比如void foo(int x,int y);C语言编译的时候产生的库中的名字是_foo,而C++的编译器会产生_foo_int_int这样的名字来应付重载。由于编译后的名字不同，C++不能直接调用C函数。C++提供了一个C连接交换指定符号extern "C"{ void foo(int x, int y );//或者#include ".h"}来解决</p>
+</li>
+</ul>
+<h3 id="override">覆盖（override）</h3>
+<p>覆盖发生在虚函数的继承时候发生的，而且发生在不同的范围内，基类和子类。函数前必须有virtual。而重载有没有virtual无所谓。而且<strong>函数名字和参数必须相同</strong>。如果参数不同，就是隐藏，不是重载哦。</p>
+<h3 id="hide">隐藏（hide）</h3>
+<p>隐藏发生在继承时候。如果基类的函数不是virtual，子类又重新定义了该函数，无论参数相同不相同都是隐藏。如果是virtual 函数， 参数相同就是覆盖，参数不同就是隐藏。</p>
+<p>举个例子：</p>
+<pre><code>class Base{
+public:
+	virtual void f(float x);
+	void g(float x);
+	void h(float x);
+};
+class Derived{
+	void f(float x);//覆盖
+	void f(int x);//隐藏
+	void g(float x);//隐藏
+	void h(int x);//隐藏
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

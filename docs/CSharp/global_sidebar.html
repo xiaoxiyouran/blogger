@@ -1,0 +1,171 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_CSharp笔记相关1 = tree.createNode('CSharp 笔记相关',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180703深度拷贝数组_html2 = _CSharp笔记相关1.createChildNode("<a href = './CSharp 笔记相关/20180703 深度拷贝数组.html' target = 'right'>20180703 深度拷贝数组.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180705拷贝构造函数_html2 = _CSharp笔记相关1.createChildNode("<a href = './CSharp 笔记相关/20180705 拷贝构造函数.html' target = 'right'>20180705 拷贝构造函数.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_EffectiveCsharp1 = tree.createNode('Effective Csharp',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_book2 = _EffectiveCsharp1.createChildNode('book',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Effective_Csharp_pdf3 = _book2.createChildNode("<a href = './Effective Csharp/book/Effective_Csharp.pdf' target = 'right'>Effective_Csharp.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_More_Effective_Csharp中文版_改善Csharp程序的50个具体办法_pdf3 = _book2.createChildNode("<a href = './Effective Csharp/book/More_Effective_Csharp中文版_改善Csharp程序的50个具体办法.pdf' target = 'right'>More_Effective_Csharp中文版_改善Csharp程序的50个具体办法.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_fromthebook2 = _EffectiveCsharp1.createChildNode('from the book',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_ch03 = _fromthebook2.createChildNode('ch0',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_00常用命名空间_html4 = _ch03.createChildNode("<a href = './Effective Csharp/from the book/ch0/00常用命名空间.html' target = 'right'>00常用命名空间.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_ch13 = _fromthebook2.createChildNode('ch1',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_01第一章使用泛型_html4 = _ch13.createChildNode("<a href = './Effective Csharp/from the book/ch1/01 第一章 使用泛型.html' target = 'right'>01 第一章 使用泛型.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_条目一使用1_x框架API的泛型版本_html4 = _ch13.createChildNode("<a href = './Effective Csharp/from the book/ch1/条目一 使用1_x 框架API的泛型版本.html' target = 'right'>条目一 使用1_x 框架API的泛型版本.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_01使用属性Property代替public直接访问数据成员_html2 = _EffectiveCsharp1.createChildNode("<a href = './Effective Csharp/01 使用属性Property 代替public 直接访问数据成员.html' target = 'right'>01 使用属性Property 代替public 直接访问数据成员.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02使用readonly而不是const_html2 = _EffectiveCsharp1.createChildNode("<a href = './Effective Csharp/02 使用readonly 而不是const.html' target = 'right'>02 使用readonly 而不是const.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_03选择is或as而不是强制类型转换_html2 = _EffectiveCsharp1.createChildNode("<a href = './Effective Csharp/03 选择is 或as 而不是强制类型转换.html' target = 'right'>03 选择is 或as 而不是强制类型转换.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04使用条件特性_html2 = _EffectiveCsharp1.createChildNode("<a href = './Effective Csharp/04 使用条件特性.html' target = 'right'>04 使用条件特性.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_05总是提供ToString方法_html2 = _EffectiveCsharp1.createChildNode("<a href = './Effective Csharp/05 总是提供ToString 方法.html' target = 'right'>05 总是提供ToString 方法.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_学习日记1 = tree.createNode('学习日记',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180717打印出当前堆栈信息2 = _学习日记1.createChildNode('20180717打印出当前堆栈信息',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180717打印出当前堆栈信息_html3 = _20180717打印出当前堆栈信息2.createChildNode("<a href = './学习日记/20180717打印出当前堆栈信息/20180717打印出当前堆栈信息.html' target = 'right'>20180717打印出当前堆栈信息.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_201807006单向链表的实现和使用_html2 = _学习日记1.createChildNode("<a href = './学习日记/201807006 单向链表的实现和使用.html' target = 'right'>201807006 单向链表的实现和使用.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180705Csharp在项目中的第一天_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180705 Csharp 在项目中的第一天.html' target = 'right'>20180705 Csharp 在项目中的第一天.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180705传值调用和传引用调用_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180705 传值调用和传引用调用.html' target = 'right'>20180705 传值调用和传引用调用.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180706树结构的使用_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180706 树结构的使用.html' target = 'right'>20180706 树结构的使用.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180708反射_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180708 反射.html' target = 'right'>20180708 反射.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180709单链表的使用_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180709 单链表的使用.html' target = 'right'>20180709 单链表的使用.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180710Hashtable的几种排序_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180710 Hashtable 的几种排序.html' target = 'right'>20180710 Hashtable 的几种排序.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180710多叉树_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180710 多叉树.html' target = 'right'>20180710 多叉树.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180710字符串的比较_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180710 字符串的比较.html' target = 'right'>20180710 字符串的比较.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180710对象的深拷贝_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180710 对象的深拷贝.html' target = 'right'>20180710 对象的深拷贝.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180710显示调试信息_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180710 显示调试信息.html' target = 'right'>20180710 显示调试信息.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180711Csharp解析json文件_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180711 Csharp 解析json文件.html' target = 'right'>20180711 Csharp 解析json文件.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180712clone一个对象_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180712 clone 一个对象.html' target = 'right'>20180712 clone 一个对象.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180712创建一个单态实例对象_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180712 创建一个单态实例对象.html' target = 'right'>20180712 创建一个单态实例对象.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713Dictionary字典的几种遍历_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 Dictionary 字典的几种遍历.html' target = 'right'>20180713 Dictionary 字典的几种遍历.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713csharp经验总结_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 csharp 经验总结.html' target = 'right'>20180713 csharp 经验总结.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713srt设置字幕格式的一些参考_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 srt 设置字幕格式的一些参考.html' target = 'right'>20180713 srt 设置字幕格式的一些参考.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713substring的用法_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 substring 的用法.html' target = 'right'>20180713 substring 的用法.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713switch_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 switch.html' target = 'right'>20180713 switch.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713使用列表初始化字典_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 使用列表初始化字典.html' target = 'right'>20180713 使用列表初始化字典.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713写一个基本的词法分析器_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 写一个基本的词法分析器.html' target = 'right'>20180713 写一个基本的词法分析器.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713判断两个字符是否相等_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 判断两个字符是否相等.html' target = 'right'>20180713 判断两个字符是否相等.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713反射_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 反射.html' target = 'right'>20180713 反射.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713哈希表按值排序数组取子数组_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 哈希表按值排序 数组取子数组.html' target = 'right'>20180713 哈希表按值排序 数组取子数组.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713多叉树的遍历_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 多叉树的遍历.html' target = 'right'>20180713 多叉树的遍历.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713没有联合体使用object代替_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 没有联合体使用object 代替.html' target = 'right'>20180713 没有联合体使用object 代替.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713深度拷贝数组和字典_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 深度拷贝数组和字典.html' target = 'right'>20180713 深度拷贝数组和字典.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180713队列Queue_html2 = _学习日记1.createChildNode("<a href = './学习日记/20180713 队列Queue.html' target = 'right'>20180713 队列Queue.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_菜鸟教程1 = tree.createNode('菜鸟教程',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_Csharp_test2 = _菜鸟教程1.createChildNode('Csharp_test',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+__vs3 = _Csharp_test2.createChildNode('.vs',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Csharp_test4 = __vs3.createChildNode('Csharp_test',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_DesignTimeBuild5 = _Csharp_test4.createChildNode('DesignTimeBuild',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_v145 = _Csharp_test4.createChildNode('v14',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_v155 = _Csharp_test4.createChildNode('v15',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Server6 = _v155.createChildNode('Server',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_sqlite37 = _Server6.createChildNode('sqlite3',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Csharp_test3 = _Csharp_test2.createChildNode('Csharp_test',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Properties4 = _Csharp_test3.createChildNode('Properties',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_bin4 = _Csharp_test3.createChildNode('bin',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Debug5 = _bin4.createChildNode('Debug',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_obj4 = _Csharp_test3.createChildNode('obj',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Debug5 = _obj4.createChildNode('Debug',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_00Csharp用visualstudio调试_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/00 Csharp 用visual studio 调试.html' target = 'right'>00 Csharp 用visual studio 调试.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_01C_教程_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/01 C# 教程.html' target = 'right'>01 C# 教程.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02C_简介_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/02 C# 简介.html' target = 'right'>02 C# 简介.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_03基本语法_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/03 基本语法.html' target = 'right'>03 基本语法.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04数据类型_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/04 数据类型.html' target = 'right'>04 数据类型.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_05类型转换_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/05 类型转换.html' target = 'right'>05 类型转换.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_07变量_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/07 变量.html' target = 'right'>07 变量.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_08常量_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/08  常量.html' target = 'right'>08  常量.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_09运算符_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/09 运算符.html' target = 'right'>09 运算符.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_10判断_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/10 判断.html' target = 'right'>10 判断.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_Csharp语法糖_html2 = _菜鸟教程1.createChildNode("<a href = './菜鸟教程/C sharp 语法糖.html' target = 'right'>C sharp 语法糖.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_ConvertToDouble和DoubleParse的区别_html1 = tree.createNode("<a href = './Convert ToDouble 和 Double Parse 的区别.html' target = 'right'>Convert ToDouble 和 Double Parse 的区别.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

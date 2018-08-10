@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180620 全局变量的使用</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180620">20180620 全局变量的使用</h1>
+<h2 id="_1">编译单元（模块）</h2>
+<p>1- 很多程序员最怕的就是处理连接错误(LINK ERROR), 因为它不像<mark>编译错误那样可以给出你程序错误的具体位置</mark>，</p>
+<p>2- 但是如果你经常使用gcc，makefile等工具在linux或者嵌入式下做开发工作的话，那么你可能非常的理解编译与连接的区别！当在VC这样的开发工具上编写完代码，点击编译按钮准备生成exe文件时，VC其实做了两步工作，第一步，将<mark>每个.cpp(.c)和相应.h文件编译成obj文件</mark>；</p>
+<p>第二步，将工程中所有的obj文件进行LINK生成最终的.exe文件，那么错误就有可能在两个地方产生，一个是<mark>编译时</mark>的错误，这个主要是语法错误，另一个是<mark>连接错误，主要是重复定义变量</mark>等。</p>
+<p>3- 编译单元就是指在<mark>编译阶段生成的每个obj文件</mark>，一个obj文件就是一个编译单元，也就是说一个cpp(.c)和它相应的.h文件共同组成了一个编译单元，一个工程由很多个编译单元组成，每个obj文件里包含了变量存储的相对地址等 。</p>
+<p><br></p>
+<h2 id="_2">声明与定义的区别</h2>
+<p>函数或变量在<mark>声明</mark>时，<mark>并没有给它实际的物理内存空间</mark>，它有时候可以保证你的程序编译通过， 但是当函数或变量定义的时候，它就在内存中有了实际的物理空间，如果你在编译模块中引用的<mark>外部变量没有在整个工程中任何一个地方定义的话</mark>， 那么即使它在编译时可以通过，在连接时也会报错，因为程序在内存中找不到这个变量！你也可以这样理解， 对同一个变量或函数的<mark>声明可以有多次，而定义只能有一次!</mark></p>
+<p><br></p>
+<h2 id="extern">extern 的作用</h2>
+<p>1- extern有两个作用，</p>
+<ul>
+<li>第一个,当它与"C"一起连用时，如: extern "C" void fun(int a, int b); 则告诉编译器在编译fun这个函数名时按着C的规则去翻译相应的函数名而不是C++的， C++的规则在翻译这个函数名时会把fun这个名字变得面目全非，可能是fun@aBc_int_int#%$也可能是别的，这要看编译器的"脾气"了(不同的编译器采用的方法不一样)，为什么这么做呢，因为C++支持函数的重载啊，在这里不去过多的论述这个问题，如果你有兴趣可以去网上搜索，相信你可以得到满意的解释!</li>
+<li>当extern不与"C"在一起修饰变量或函数时，如在头文件中: extern int g_Int;  它的作用就是声明函数或全局变量的作用范围的关键字，其声明的函数和变量可以在本模块活其他模块中使用，记住<mark>它是一个声明不是定义</mark>!也就是说B模块(编译单元)要是引用模块(编译单元)A中定义的全局变量或函数时，它只要包含A模块的头文件即可, 在编译阶段，模块B虽然找不到该函数或变量，但它不会报错，它会在连接时从模块A生成的目标代码中找到此函数。</li>
+</ul>
+<p><br></p>
+<h3 id="extern_1">extern 修饰的全局变量</h3>
+<p>1- 头文件中声明全局变量：</p>
+<pre><code class="cpp">// test1.h
+#ifndef TEST1H
+#define TEST1H
+	extern char g_str[]; // 声明全局变量g_str
+	void fun1();
+#endif
+</code></pre>
+
+<p>在源代码文件中定义全局变量：</p>
+<pre><code class="cpp">// test1.cpp
+#include &quot;test1.h&quot;
+
+char g_str[] = &quot;123456&quot;; // 定义全局变量g_str
+
+void fun1()
+{
+   cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<p>以上是test1模块， 它的编译和连接都可以通过,如果我们还有test2模块也想使用g_str,只需要在原文件中引用就可以了：</p>
+<pre><code class="cpp">// test2.cpp
+ #include &quot;test1.h&quot;         // 包含头文件就可以了。
+void fun2()
+{
+  cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<p>以上test1和test2可以同时编译连接通过，如果你感兴趣的话可以用ultraEdit打开test1.obj,你可以在里面着"123456"这个字符串,但是你却不能在test2.obj里面找到，这是因为g_str是整个工程的全局变量，<mark>在内存中只存在一份,</mark> test2.obj这个编译单元不需要再有一份了，不然会在连接时报告重复定义这个错误!     </p>
+<p>有些人喜欢把全局变量的声明和定义放在一起，这样可以防止忘记了定义，如把上面test1.h改为</p>
+<pre><code class="cpp">// test1.h
+   extern char g_str[] = &quot;123456&quot;; // 这个时候相当于没有extern
+</code></pre>
+
+<p>然后把test1.cpp中的g_str的定义去掉,这个时候再编译连接test1和test2两个模块时，会报连接错误，这是因为你把全局变量g_str的定义放在了头文件之后，test1.cpp这个模块包含了test1.h所以定义了一次g_str,而 test2.cpp也包含了test1.h所以再一次定义了g_str, 这个时候连接器在连接test1和test2时发现两个g_str。</p>
+<pre><code class="cpp">// test1.cpp
+#include &quot;test1.h&quot;
+
+// char g_str[] = &quot;123456&quot;; // 定义全局变量g_str
+
+void fun1()
+{
+   cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<pre><code class="cpp">// test2.cpp
+ #include &quot;test1.h&quot;         // 包含头文件就可以了。
+void fun2()
+{
+  cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<p>如果你非要把g_str的定义放在test1.h中的话，那么就把test2的代码中#include "test1.h"去掉 换成:</p>
+<pre><code class="cpp">// test2.cpp
+   extern char g_str[];
+	void fun2()
+	{
+		cout &lt;&lt; g_str &lt;&lt; endl;
+	}
+</code></pre>
+
+<p>这个时候编译器就知道g_str是引自于外部的一个编译模块了，不会在本模块中再重复定义一个出来，但是我想说这样做非常糟糕，因为你由于<mark>无法在test2.cpp中使用#include "test1.h"</mark>, 那么test1.h中声明的其他函数你也无法使用了，除非也用都用extern修饰，这样的话你光声明的函数就要一大串，而且头文件的作用就是要给外部提供接口使用的，所以 请记住， <mark>只在头文件中做声明</mark>，真理总是这么简单。</p>
+<p><br></p>
+<h2 id="static">用static修饰的全局变量</h2>
+<p>1- 首先，我要告诉你static与extern是一对<mark>“水火不容</mark>”的家伙，也就是说extern和static不能同时修饰一个变量；</p>
+<p>其次，static修饰的全局变量<mark>声明与定义同时进行</mark>，也就是说当你在头文件中使用static声明了全局变量后，它也同时被定义了；</p>
+<p>最后，static修饰全局变量的<mark>作用域只能是本身的编译单元</mark>，也就是说它的“全局”只对本编译单元有效，其他编译单元则看不到它,如:</p>
+<pre><code class="cpp"> // test1.h:
+ #ifndef TEST1H
+ #define TEST1H
+ static char g_str[] = &quot;123456&quot;;        // 声明 + 定义一个静态变量
+ void fun1();
+ #endif
+</code></pre>
+
+<pre><code class="cpp">// test1.cpp
+#include &quot;test1.h&quot;
+
+void fun1()
+{
+	cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<pre><code class="cpp">// test2.cpp
+#include &quot;test1.h&quot;
+
+void fun2()
+{
+	cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<p>上两个编译单元可以连接成功, 当你打开test1.obj时，你可以在它里面找到字符串"123456", 同时你也可以在test2.obj中找到它们，它们之所以可以连接成功而没有报重复定义的错误是因为虽然它们有相同的内容，但是存储的物理地址并不一样，就像是<mark>两个不同变量赋了相同的值一样，而这两个变量分别作用于它们各自的编译单元</mark>。</p>
+<p>也许你比较较真，自己偷偷的跟踪调试上面的代码,结果你发现两个编译单元（test1, test2）的g_str的内存地址相同，于是你下结论static修饰的变量也可以作用于其他模块，但是我要告诉你，那是你的编译器在欺骗你，大多数编译器都对代码都有<mark>优化功能</mark>，以达到生成的目标程序更节省内存，执行效率更高，当编译器在连接各个编译单元的时候，它会把相同内容的内存只拷贝一份，比如上面的"123456", 位于两个编译单元中的变量都是同样的内容，那么在连接的时候它在内存中就只会存在一份了， 如果你把上面的代码改成下面的样子，你马上就可以拆穿编译器的谎言:</p>
+<pre><code class="cpp">// test1.cpp:
+#include &quot;test1.h&quot;
+
+void fun1()
+{
+	g_str[0] = 'a';
+	cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<pre><code class="cpp">// test2.cpp
+#include &quot;test1.h&quot;
+
+void fun2()
+{
+	cout &lt;&lt; g_str &lt;&lt; endl;
+}
+</code></pre>
+
+<pre><code class="cpp">void main()
+	{
+		fun1(); // a23456
+		fun2(); // 123456
+	}
+</code></pre>
+
+<p>这个时候你在跟踪代码时，就会发现两个编译单元中的g_str地址并不相同，因为你在一处修改了它，所以编译器被强行的恢复内存的原貌，在内存中存在了两份拷贝给两个模块中的变量使用。</p>
+<p>​    正是因为static有以上的特性，所以一般<mark>定义static全局变量时，都把它放在原文件中</mark>而不是头文件，这样就不会给其他模块造成不必要的信息污染，同样记住这个原则吧！</p>
+<p><br></p>
+<h2 id="const">const修饰的全局常量</h2>
+<p>const修饰的全局常量用途很广，比如软件中的错误信息字符串都是用全局常量来定义的。const修饰的全局常量据有跟static相同的特性，即它们只能作用于本编译模块中，但是<mark>const可以与extern连用来声明该常量可以作用于其他编译模块中</mark>, 如</p>
+<pre><code class="cpp">// xx.h
+#ifndef _XX_
+#define _XX_
+extern const char g_str[];
+#endif
+</code></pre>
+
+<p>​    然后在原文件中别忘了定义:</p>
+<pre><code class="cpp">// xx.cpp
+#inclue &quot;xx.h&quot;
+const char g_str[] = &quot;123456&quot;;
+</code></pre>
+
+<p>​    所以当const单独使用时它就与static相同，而当与extern一起合作的时候，它的特性就跟extern的一样了！所以对const我没有什么可以过多的描述，</p>
+<p>我只是想提醒你，<code>const char* g_str = "123456"</code>与<code>const char g_str[] = “123465"</code>是不同的， 前面那个const 修饰的是<code>char *</code>而不是g_str,它的g_str并不是常量，它被看做是一个定义了的全局变量（可以被其他编译单元使用），</p>
+<p>所以如果你像让<code>char *g_str</code>遵守const的全局常量的规则，最好这么定义 <code>const char* const g_str="123456”</code> </p>
+<p>转自http://wrchen.blog.sohu.com/71617539.html</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

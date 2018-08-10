@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180331_Java根类Object的方法说明</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180331_javaobject">20180331_Java根类Object的方法说明</h1>
+<pre><code class="cpp">这篇文章对于Object类的方法介绍的还算挺详细的：
+
+1- 类相关：hashCode, equals, toString, getClass
+   线程相关：notify， notifyAll, wait
+   垃圾回收：finalize
+</code></pre>
+
+<p>Java中的Object类是所有类的父类，它提供了以下11个方法：</p>
+<ol>
+<li>public final native Class&lt;?&gt; getClass()</li>
+<li>public native int hashCode()</li>
+<li>public boolean equals(Object obj)</li>
+<li>protected native Object clone() throws CloneNotSupportedException</li>
+<li>public String toString()</li>
+<li>public final native void notify()</li>
+<li>public final native void notifyAll()</li>
+<li>public final native void wait(long timeout) throws InterruptedException</li>
+<li>public final void wait(long timeout, int nanos) throws InterruptedException</li>
+<li>public final void wait() throws InterruptedException</li>
+<li>protected void finalize() throws Throwable { }</li>
+</ol>
+<p>下面我们一个个方法进行分析，看这些方法到底有什么作用：</p>
+<h3 id="getclass">getClass方法</h3>
+<p>getClass方法是一个final方法，不允许子类重写，并且也是一个native方法。</p>
+<p>返回当前运行时对象的Class对象，注意这里是运行时，比如以下代码中n是一个Number类型的实例，但是java中数值默认是Integer类型，所以getClass方法返回的是java.lang.Integer：</p>
+<pre><code>&quot;str&quot;.getClass() // class java.lang.String
+&quot;str&quot;.getClass == String.class // true
+Number n = 0;
+Class&lt;? extends Number&gt; c = n.getClass(); // class java.lang.Integer
+</code></pre>
+
+<h3 id="hashcode">hashCode方法</h3>
+<p>hashCode方法也是一个native方法。</p>
+<p>该方法返回对象的哈希码，主要使用在哈希表中，比如JDK中的HashMap。</p>
+<p>哈希码的通用约定如下：</p>
+<ol>
+<li>在java程序执行过程中，在一个对象没有被改变的前提下，无论这个对象被调用多少次，hashCode方法都会返回相同的整数值。对象的哈希码没有必要在不同的程序中保持相同的值。</li>
+<li>如果2个对象使用equals方法进行比较并且相同的话，那么这2个对象的hashCode方法的值也必须相等。</li>
+<li>如果根据equals方法，得到两个对象不相等，那么这2个对象的hashCode值不需要必须不相同。但是，不相等的对象的hashCode值不同的话可以提高哈希表的性能。</li>
+</ol>
+<p>通常情况下，不同的对象产生的哈希码是不同的。默认情况下，对象的哈希码是通过将该对象的内部地址转换成一个整数来实现的。</p>
+<p>String的hashCode方法实现如下， 计算方法是 s[0]<em>31^(n-1) + s[1]</em>31^(n-2) + … + s[n-1]，其中s[0]表示字符串的第一个字符，n表示字符串长度：</p>
+<pre><code>public int hashCode() {
+	int h = hash;
+	if (h == 0 &amp;&amp; value.length &gt; 0) {
+		char val[] = value;
+
+		for (int i = 0; i &lt; value.length; i++) {
+			h = 31 * h + val[i];
+		}
+		hash = h;
+	}
+	return h;
+}
+</code></pre>
+
+<p>比如”fo”的hashCode = 102 <em>31^1 + 111 = 3273， “foo”的hashCode = 102</em> 31^2 + 111 * 31^1 + 111 = 101574 (‘f’的ascii码为102, ‘o’的ascii码为111)</p>
+<p>hashCode在哈希表HashMap中的应用：</p>
+<pre><code>// Student类，只重写了hashCode方法
+public static class Student {
+
+	private String name;
+	private int age;
+
+	public Student(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+}
+
+Map&lt;Student, String&gt; map = new HashMap&lt;Student, String&gt;();
+Student stu1 = new Student(&quot;fo&quot;, 11);
+Student stu2 = new Student(&quot;fo&quot;, 22);
+map.put(stu1, &quot;fo&quot;);
+map.put(stu2, &quot;fo&quot;);
+</code></pre>
+
+<p>上面这段代码中，map中有2个元素stu1和stu2。但是这2个元素是在哈希表中的同一个数组项中的位置，也就是在同一串链表中。 但是为什么stu1和stu2的hashCode相同，但是两条元素都插到map里了，这是因为map判断重复数据的条件是 <strong>两个对象的哈希码相同并且(两个对象是同一个对象或者两个对象相等[equals为true])</strong>。 所以再给Student重写equals方法，并且只比较name的话，这样map就只有1个元素了。</p>
+<pre><code>@Override
+public boolean equals(Object o) {
+	if (this == o) return true;
+	if (o == null || getClass() != o.getClass()) return false;
+	Student student = (Student) o;
+	return this.name.equals(student.name);
+}
+</code></pre>
+
+<p>这个例子直接说明了hashCode中通用约定的第三点：</p>
+<p>第三点：如果根据equals方法，得到两个对象不相等，那么这2个对象的hashCode值不需要必须不相同。但是，不相等的对象的hashCode值不同的话可以提高哈希表的性能。 –&gt; 上面例子一开始没有重写equals方法，导致两个对象不相等，但是这两个对象的hashCode值一样，所以导致这两个对象在同一串链表中，影响性能。</p>
+<p>当然，还有第三种情况，那就是equals方法相等，但是hashCode的值不相等。</p>
+<p>这种情况也就是违反了通用约定的第二点：</p>
+<p>第二点：<strong>如果2个对象使用equals方法进行比较并且相同的话，那么这2个对象的hashCode方法的值也必须相等。</strong> 违反这一点产生的后果就是如果一个stu1实例是Student(“fo”, 11)，stu2实例是Student(“fo”, 11)，那么这2个实例是相等的，但是他们的hashCode不一样，这样是导致哈希表中都会存入stu1实例和stu2实例，但是实际情况下，stu1和stu2是重复数据，只允许存在一条数据在哈希表中。所以这一点是非常重点的，再强调一下：<strong>如果2个对象的equals方法相等，那么他们的hashCode值也必须相等，反之，如果2个对象hashCode值相等，但是equals不相等，这样会影响性能，所以还是建议2个方法都一起重写。</strong></p>
+<h3 id="equals">equals方法</h3>
+<p>比较两个对象是否相等。Object类的默认实现，即比较2个对象的内存地址是否相等：</p>
+<pre><code>public boolean equals(Object obj) {
+	return (this == obj);
+}
+</code></pre>
+
+<p>equals方法在非空对象引用上的特性：</p>
+<ol>
+<li>reflexive，自反性。任何非空引用值x，对于x.equals(x)必须返回true</li>
+<li>symmetric，对称性。任何非空引用值x和y，如果x.equals(y)为true，那么y.equals(x)也必须为true</li>
+<li>transitive，传递性。任何非空引用值x、y和z，如果x.equals(y)为true并且y.equals(z)为true，那么x.equals(z)也必定为true</li>
+<li>consistent，一致性。任何非空引用值x和y，多次调用 x.equals(y) 始终返回 true 或始终返回 false，前提是对象上 equals 比较中所用的信息没有被修改</li>
+<li>对于任何非空引用值 x，x.equals(null) 都应返回 false</li>
+</ol>
+<p>Object类的equals方法对于任何非空引用值x和y，当x和y引用同一个对象时，此方法才返回true。这个也就是我们常说的地址相等。</p>
+<p>注意点：如果重写了equals方法，通常有必要重写hashCode方法，这点已经在hashCode方法中说明了。</p>
+<h3 id="clone">clone方法</h3>
+<p>创建并返回当前对象的一份拷贝。一般情况下，对于任何对象 x，表达式 x.clone() != x 为true，x.clone().getClass() == x.getClass() 也为true。</p>
+<p>Object类的clone方法是一个protected的native方法。</p>
+<p>由于Object本身没有实现Cloneable接口，所以不重写clone方法并且进行调用的话会发生CloneNotSupportedException异常。</p>
+<h3 id="tostring">toString方法</h3>
+<p>Object对象的默认实现，即输出类的名字@实例的哈希码的16进制：</p>
+<pre><code>public String toString() {
+	return getClass().getName() + &quot;@&quot; + Integer.toHexString(hashCode());
+}
+</code></pre>
+
+<p>toString方法的结果应该是一个简明但易于读懂的字符串。建议Object所有的子类都重写这个方法。</p>
+<h3 id="notify">notify方法</h3>
+<p>notify方法是一个native方法，并且也是final的，不允许子类重写。</p>
+<p>唤醒一个在此对象监视器上等待的线程(监视器相当于就是锁的概念)。如果所有的线程都在此对象上等待，那么只会选择一个线程。选择是任意性的，并在对实现做出决定时发生。一个线程在对象监视器上等待可以调用wait方法。</p>
+<p>直到当前线程放弃对象上的锁之后，被唤醒的线程才可以继续处理。被唤醒的线程将以常规方式与在该对象上主动同步的其他所有线程进行竞争。例如，唤醒的线程在作为锁定此对象的下一个线程方面没有可靠的特权或劣势。</p>
+<p>notify方法只能被作为此对象监视器的所有者的线程来调用。一个线程要想成为对象监视器的所有者，可以使用以下3种方法：</p>
+<ol>
+<li>执行对象的同步实例方法</li>
+<li>使用synchronized内置锁</li>
+<li>对于Class类型的对象，执行同步静态方法</li>
+</ol>
+<p>一次只能有一个线程拥有对象的监视器。</p>
+<p>如果当前线程不是此对象监视器的所有者的话会抛出IllegalMonitorStateException异常</p>
+<p>注意点：</p>
+<p><strong>因为notify只能在拥有对象监视器的所有者线程中调用，否则会抛出IllegalMonitorStateException异常</strong></p>
+<h3 id="notifyall">notifyAll方法</h3>
+<p>跟notify一样，唯一的区别就是会唤醒在此对象监视器上等待的所有线程，而不是一个线程。</p>
+<p>同样，如果当前线程不是对象监视器的所有者，那么调用notifyAll同样会发生IllegalMonitorStateException异常。</p>
+<p>以下这段代码直接调用notify或者notifyAll方法会发生IllegalMonitorStateException异常，这是因为调用这两个方法需要当前线程是对象监视器的所有者：</p>
+<pre><code>Factory factory = new Factory();
+factory.notify();
+factory.notifyAll();
+</code></pre>
+
+<h3 id="waitlong-timeout-throws-interruptedexception">wait(long timeout) throws InterruptedException方法</h3>
+<p>wait(long timeout)方法同样是一个native方法，并且也是final的，不允许子类重写。</p>
+<p>wait方法会让当前线程等待直到另外一个线程调用对象的notify或notifyAll方法，或者超过参数设置的timeout超时时间。</p>
+<p><strong>跟notify和notifyAll方法一样，当前线程必须是此对象的监视器所有者，否则还是会发生IllegalMonitorStateException异常。</strong></p>
+<p>wait方法会让当前线程(我们先叫做线程T)将其自身放置在对象的等待集中，并且放弃该对象上的所有同步要求。出于线程调度目的，线程T是不可用并处于休眠状态，直到发生以下四件事中的任意一件：</p>
+<ol>
+<li>其他某个线程调用此对象的notify方法，并且线程T碰巧被任选为被唤醒的线程</li>
+<li>其他某个线程调用此对象的notifyAll方法</li>
+<li>其他某个线程调用Thread.interrupt方法中断线程T</li>
+<li>时间到了参数设置的超时时间。如果timeout参数为0，则不会超时，会一直进行等待</li>
+</ol>
+<p>所以可以理解wait方法相当于放弃了当前线程对对象监视器的所有者(也就是说释放了对象的锁)</p>
+<p>之后，线程T会被等待集中被移除，并且重新进行线程调度。然后，该线程以常规方式与其他线程竞争，以获得在该对象上同步的权利；一旦获得对该对象的控制权，该对象上的所有其同步声明都将被恢复到以前的状态，这就是调用wait方法时的情况。然后，线程T从wait方法的调用中返回。所以，从wait方法返回时，该对象和线程T的同步状态与调用wait方法时的情况完全相同。</p>
+<p>在没有被通知、中断或超时的情况下，线程还可以唤醒一个所谓的虚假唤醒 (spurious wakeup)。虽然这种情况在实践中很少发生，但是应用程序必须通过以下方式防止其发生，即对应该导致该线程被提醒的条件进行测试，如果不满足该条件，则继续等待。换句话说，等待应总是发生在循环中，如下面的示例：</p>
+<pre><code>synchronized (obj) {
+	while (&lt;condition does not hold&gt;)
+		obj.wait(timeout);
+		... // Perform action appropriate to condition
+}
+</code></pre>
+
+<p>如果当前线程在等待之前或在等待时被任何线程中断，则会抛出InterruptedException异常。在按上述形式恢复此对象的锁定状态时才会抛出此异常。</p>
+<h3 id="waitlong-timeout-int-nanos-throws-interruptedexception">wait(long timeout, int nanos) throws InterruptedException方法</h3>
+<p>跟wait(long timeout)方法类似，多了一个nanos参数，这个参数表示额外时间（以毫微秒为单位，范围是 0-999999）。 所以超时的时间还需要加上nanos毫秒。</p>
+<p>需要注意的是 wait(0, 0)和wait(0)效果是一样的，即一直等待。</p>
+<h3 id="wait-throws-interruptedexception">wait() throws InterruptedException方法</h3>
+<p>跟之前的2个wait方法一样，只不过该方法一直等待，没有超时时间这个概念。</p>
+<p>以下这段代码直接调用wait方法会发生IllegalMonitorStateException异常，这是因为调用wait方法需要当前线程是对象监视器的所有者：</p>
+<pre><code>Factory factory = new Factory();
+factory.wait();
+</code></pre>
+
+<p>一般情况下，wait方法和notify方法会一起使用的，wait方法阻塞当前线程，notify方法唤醒当前线程，一个使用wait和notify方法的生产者消费者例子代码如下：</p>
+<pre><code>public class WaitNotifyTest {
+
+	public static void main(String[] args) {
+		Factory factory = new Factory();
+		new Thread(new Producer(factory, 5)).start();
+		new Thread(new Producer(factory, 5)).start();
+		new Thread(new Producer(factory, 20)).start();
+		new Thread(new Producer(factory, 30)).start();
+		new Thread(new Consumer(factory, 10)).start();
+		new Thread(new Consumer(factory, 20)).start();
+		new Thread(new Consumer(factory, 5)).start();
+		new Thread(new Consumer(factory, 5)).start();
+		new Thread(new Consumer(factory, 20)).start();
+	}
+
+}
+
+class Factory {
+
+	public static final Integer MAX_NUM = 50;
+
+	private int currentNum = 0;
+
+	public void consume(int num) throws InterruptedException {
+		synchronized (this) {
+			while(currentNum - num &lt; 0) {
+				this.wait();
+			}
+			currentNum -= num;
+			System.out.println(&quot;consume &quot; + num + &quot;, left: &quot; + currentNum);
+			this.notifyAll();
+		}
+	}
+
+	public void produce(int num) throws InterruptedException {
+		synchronized (this) {
+			while(currentNum + num &gt; MAX_NUM) {
+				this.wait();
+			}
+			currentNum += num;
+			System.out.println(&quot;produce &quot; + num + &quot;, left: &quot; + currentNum);
+			this.notifyAll();
+		}
+	}
+
+}
+
+class Producer implements Runnable {
+	private Factory factory;
+	private int num;
+	public Producer(Factory factory, int num) {
+		this.factory = factory;
+		this.num = num;
+	}
+	@Override
+	public void run() {
+		try {
+			factory.produce(num);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+class Consumer implements Runnable {
+	private Factory factory;
+	private int num;
+	public Consumer(Factory factory, int num) {
+		this.factory = factory;
+		this.num = num;
+	}
+	@Override
+	public void run() {
+		try {
+			factory.consume(num);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}
+</code></pre>
+
+<p>注意的是Factory类的produce和consume方法都将Factory实例锁住了，锁住之后线程就成为了对象监视器的所有者，然后才能调用wait和notify方法。</p>
+<p>输出：</p>
+<pre><code>produce 5, left: 5
+produce 20, left: 25
+produce 5, left: 30
+consume 10, left: 20
+produce 30, left: 50
+consume 20, left: 30
+consume 5, left: 25
+consume 5, left: 20
+consume 20, left: 0
+</code></pre>
+
+<h3 id="finalize">finalize方法</h3>
+<p>finalize方法是一个protected方法，Object类的默认实现是不进行任何操作。</p>
+<p>该方法的作用是实例被垃圾回收器回收的时候触发的操作，就好比 “死前的最后一波挣扎”。</p>
+<p>直接写个弱引用例子：</p>
+<pre><code>Car car = new Car(9999, &quot;black&quot;);
+WeakReference&lt;Car&gt; carWeakReference = new WeakReference&lt;Car&gt;(car);
+
+int i = 0;
+while(true) {
+	if(carWeakReference.get() != null) {
+		i++;
+		System.out.println(&quot;Object is alive for &quot;+i+&quot; loops - &quot;+carWeakReference);
+	} else {
+		System.out.println(&quot;Object has been collected.&quot;);
+		break;
+	}
+}
+
+class Car {
+	private double price;
+	private String colour;
+
+	public Car(double price, String colour){
+		this.price = price;
+		this.colour = colour;
+	}
+
+	// get set method
+
+	@Override
+	protected void finalize() throws Throwable {
+		System.out.println(&quot;i will be destroyed&quot;);
+	}
+}
+</code></pre>
+
+<p>输出：</p>
+<pre><code>....
+Object is alive for 26417 loops - java.lang.ref.WeakReference@7c2f1622
+Object is alive for 26418 loops - java.lang.ref.WeakReference@7c2f1622
+Object is alive for 26419 loops - java.lang.ref.WeakReference@7c2f1622
+Object is alive for 26420 loops - java.lang.ref.WeakReference@7c2f1622
+Object is alive for 26421 loops - java.lang.ref.WeakReference@7c2f1622
+Object is alive for 26422 loops - java.lang.ref.WeakReference@7c2f1622
+Object has been collected.
+i will be destroyed
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

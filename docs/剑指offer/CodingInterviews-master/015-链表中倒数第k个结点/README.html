@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/529d3ae5a407492994ad2a246518148a?tpId=13&amp;tqId=11167&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">链表中倒数第k个结点</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1517</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/015-链表中倒数第k个结点">015-链表中倒数第k个结点</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51133817">剑指Offer--015-链表中倒数第k个结点</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/529d3ae5a407492994ad2a246518148a?tpId=13&amp;tqId=11167&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">链表中倒数第k个结点</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1517">1517-链表中倒数第k个结点</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51133817">剑指Offer--015-链表中倒数第k个结点</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入一个链表，输出该链表中倒数第k个结点。</p>
+</blockquote>
+<h1 id="_3">分析</h1>
+<hr />
+<p>这道题我想大多数人都会有思路，因为我们已经见的很多了
+最暴力的方式,两趟遍历，第一趟先求出list的长度length，然后进而length - k得到倒数第k个节点的位置
+当然我们大多数都会知道另外一个更加高效的方法，<strong>双指针法</strong>
+其实就是第一个指针right先向前走K步，然后left和right一起走，此时两个指针差别K步，那么当right走到链表尾部的时候，left指向的就是倒数第K个节点</p>
+<p>期间要注意的问题有</p>
+<ul>
+<li>
+<p>链表可能为NULL</p>
+</li>
+<li>
+<p>链表长度可能没有K个</p>
+</li>
+</ul>
+<pre><code class="cpp">/// 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5
+/// 比如要走倒数第3个节点
+/// 那么right先走到第3 - 1个节点&amp;[2]
+/// 那么right指针向前走到其下一个节点为NULL时, left节点既是倒数第K个节点
+///  此时两个指针相差为K - 1
+
+
+/// 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5
+/// 比如要走倒数第3个节点
+/// 那么right先走到第3个节点&amp;[2]
+/// 那么right指针向前走到链表尾部为NULL时, left节点既是倒数第K个节点
+/// 此时两个指针相差为K
+class Solution
+{
+public:
+	ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
+	{
+		if(pListHead == NULL)
+		{
+			return NULL;
+		}
+		unsigned int i = 0;
+		ListNode *right = pListHead;
+
+		//  left指针先向前走K步
+		while(i &lt; k &amp;&amp; right != NULL)
+		{
+			debug &lt;&lt;&quot;index  = &quot; &lt;&lt;i &lt;&lt;&quot;, value = &quot; &lt;&lt;right-&gt;val &lt;&lt;endl;
+			right = right-&gt;next;
+			i++;
+		}
+
+		if(right == NULL &amp;&amp; i &lt; k)
+		{
+			cout &lt;&lt;&quot;the list length = &quot; &lt;&lt;i &lt;&lt;&quot; &lt; &quot; &lt;&lt;k &lt;&lt;endl;
+			return NULL;
+		}
+
+		ListNode *left = pListHead;
+		while(right != NULL)
+		{
+			debug &lt;&lt;&quot;index  = &quot; &lt;&lt;i++ &lt;&lt;&quot;, value = &quot; &lt;&lt;right-&gt;val &lt;&lt;endl;
+
+			left = left-&gt;next;
+			right = right-&gt;next;
+		}
+
+		return left;
+
+	}
+};
+</code></pre>
+
+<p>当然也可以第一个指针right先向前走K-1步，然后left和right一起走，此时两个指针差别K-1步，那么当right走到链表尾部的前一个结点时候的，left指向的就是倒数第K个节点</p>
+<pre><code class="cpp">/// 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5
+/// 比如要走倒数第3个节点
+/// 那么right先走到第3 - 1个节点&amp;[2]
+/// 那么right指针向前走到其下一个节点为NULL时, left节点既是倒数第K个节点
+/// 此时两个指针相差为K - 1
+/// 因此right需要走到链表尾部前一个结点
+
+
+/// 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5
+/// 比如要走倒数第3个节点
+/// 那么right先走到第3个节点&amp;[2]
+/// 那么right指针向前走到链表尾部为NULL时, left节点既是倒数第K个节点
+/// 此时两个指针相差为K
+/// 因此right需要走到链表尾部前
+
+class Solution
+{
+public:
+	ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
+	{
+		if(pListHead == NULL)
+		{
+			return NULL;
+		}
+		unsigned int i = 0;
+		ListNode *right = pListHead;
+
+		//  left指针先向前走K - 1步
+		while(i &lt; k - 1 &amp;&amp; right != NULL)
+		{
+			debug &lt;&lt;&quot;index  = &quot; &lt;&lt;i &lt;&lt;&quot;, value = &quot; &lt;&lt;right-&gt;val &lt;&lt;endl;
+			right = right-&gt;next;
+			i++;
+		}
+
+		if(right == NULL)
+		{
+			cout &lt;&lt;&quot;the list length = &quot; &lt;&lt;i &lt;&lt;&quot; &lt; &quot; &lt;&lt;k &lt;&lt;endl;
+			return NULL;
+		}
+
+		ListNode *left = pListHead;
+		while(right-&gt;next != NULL)
+		{
+			debug &lt;&lt;&quot;index  = &quot; &lt;&lt;i++ &lt;&lt;&quot;, value = &quot; &lt;&lt;right-&gt;val &lt;&lt;endl;
+
+			left = left-&gt;next;
+			right = right-&gt;next;
+		}
+
+		return left;
+
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

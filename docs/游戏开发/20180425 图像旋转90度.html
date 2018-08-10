@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180425 图像旋转90度</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180425-90">20180425 图像旋转90度</h1>
+<p>原文： http://www.cnblogs.com/studyzy/p/4406436.html</p>
+<p>题出自<a href="https://leetcode.com/problems/rotate-image/">https://leetcode.com/problems/rotate-image/</a> 内容为：</p>
+<p>You are given an <em>n</em> x <em>n</em> 2D matrix representing an image.</p>
+<p>Rotate the image by 90 degrees (clockwise).</p>
+<p>Follow up: 
+Could you do this in-place?</p>
+<p>简单的说就是给出一个n*n的二维数组，然后把这个数组进行90度顺时针旋转，而且不能使用额外的存储空间。</p>
+<p>最初拿到这道题想到的就是找出每个坐标的旋转规律。假设我们是2*2的矩阵：</p>
+<pre><code>a b
+c d
+</code></pre>
+
+<p>进行旋转后，那么就变成了：</p>
+<pre><code>c a
+d b
+</code></pre>
+
+<p>所以就转换成对4个数字进行轮换，而不使用额外空间的问题。最常用的交换数值而不使用额外空间的算法就是异或，比如要交换a,b的值，那么可以写为：</p>
+<pre><code>a=a^b;
+b=a^b;
+a=a^b;
+</code></pre>
+
+<p>现在是对4个数字进行轮换,轮换后的结果为a=c,b=a,c=d,d=b；</p>
+<p>所以改写成异或的算法，那么就是：</p>
+<pre><code>a = a ^ b ^ c ^ d;
+b = a ^ b ^ c ^ d;
+d = a ^ b ^ c ^ d;
+c = a ^ b ^ c ^ d;
+a = a ^ b ^ c ^ d;
+</code></pre>
+
+<p>接下来就是找出二维数组中角标与a,b,c,d的关系，这个其实不难。另外，我们在进行旋转处理时，我们只需要处理1/4的区域即可，因为处理一次就是调整了4个数，所以我们只处理二维数组中左上角的数值。</p>
+<p>下面就是具体的代码：</p>
+<pre><code>public void Rotate(int[,] matrix) 
+{
+	int n = matrix.GetLength (0);
+	for (var i = 0; i &lt; (n + 1)/2; i++)
+	{
+		for (var j = 0; j &lt; n/2; j++)
+		{
+			//var a = matrix[i, j];
+			//var b = matrix[j, n - i - 1];
+			//var d = matrix[n - i - 1, n - j - 1];
+			//var c = matrix[n - j - 1, i];
+			matrix[i, j] = matrix[i, j] ^ matrix[j, n - i - 1] ^ matrix[n - i - 1, n - j - 1] ^ matrix[n - j - 1, i];
+			matrix[j, n - i - 1] = matrix[i, j] ^ matrix[j, n - i - 1] ^ matrix[n - i - 1, n - j - 1] ^ matrix[n - j - 1, i];
+			matrix[n - i - 1, n - j - 1] = matrix[i, j] ^ matrix[j, n - i - 1] ^ matrix[n - i - 1, n - j - 1] ^ matrix[n - j - 1, i];
+			matrix[n - j - 1, i] = matrix[i, j] ^ matrix[j, n - i - 1] ^ matrix[n - i - 1, n - j - 1] ^ matrix[n - j - 1, i];
+			matrix[i, j] = matrix[i, j] ^ matrix[j, n - i - 1] ^ matrix[n - i - 1, n - j - 1] ^ matrix[n - j - 1, i];
+		}
+	}
+}
+</code></pre>
+
+<p>使用异或并不是很直观，另外一个比较直观的交换两个数据的方法是加减法：</p>
+<pre><code>a=a+b;
+b=a-b;
+a=a-b;
+</code></pre>
+
+<p>我们使用异或而不使用更直观的加减法是因为a+b的时候可能溢出，那么接下来的结果就不对了，所以不能用加减法而应该用异或。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

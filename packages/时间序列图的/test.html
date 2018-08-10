@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>flowchart.js · Playground</title>
+
+       
+</head>
+<body>
+我们都是好孩子，真心的孩子啊，相信爱，可以永远嘛？
+
+<div id="diagram"></div>
+ <script src="webfont.js"></script>
+ <script src="snap.svg-min.js"></script>
+<script src="underscore-min.js"></script>
+<script src="sequence-diagram-min.js"></script>
+<script>
+  var diagram = Diagram.parse('Title: Here is a title\n'+
+'A->B: Normal line\n' + 
+'B-->C: Dashed line\n' +
+'C->>D: Open arrow\n'+
+'D-->>A: Dashed open arrow');
+  
+diagram.drawSVG("diagram", {theme: 'hand'});
+</script>
+
+</body>
+
+</html>
+

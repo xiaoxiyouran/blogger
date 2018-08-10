@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180403_网易云面试经验</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180403_">20180403_网易云面试经验</h1>
+<p>简单起见，用M表示<a href="http://udn.yyuap.com/portal.php?mod=topic&amp;topicid=1">面试</a>官，A表示我的回答。 
+  电面： 
+​          大概下午五点左右，正在撸代码，突然收到一个电话说是网易内推面试，问我方不方便，当然说方便，然后我说我去楼下接，约好两分钟后打过来。</p>
+<p>​          M：你介绍一下自己吧。</p>
+<p>​          A：基本上按照简历上来，学校专业，研究方向，项目经验，技能啥的。</p>
+<p>​          M：进程通信的方式。</p>
+<p>​          A：管道、消息队列、socket、共享内存。</p>
+<p>​          M：解释一下管道吧。</p>
+<p>​          A：（胡乱说了一通，哈哈。。。）</p>
+<p>​          M：windows和Linux进程通信有什么不同？</p>
+<p>​          A：不太清楚，对windows编程不熟悉。</p>
+<p>​          M：平面上有很多点，要找一个半径最小的圆包含所有的点，怎么做？</p>
+<p>​          A：篇幅较大，就不详细说了。</p>
+<p>​          M：介绍一下C++11的基本特性。</p>
+<p>​          <strong>A：Lambda、变参模板、auto、decltype、constexpr、智能指针、列表初始化、正则表达式、线程库、静态断言、委托构造。。。（反正把书上看的都给解释了一遍）</strong></p>
+<p>​          M：shared_ptr和unique_ptr的区别。</p>
+<p>​          A：一个共享，一个独占引用对象。</p>
+<p>​          M：weak_ptr有什么用？</p>
+<p>​          A：和shared_ptr配合使用的，具体没用过，有些忘了。</p>
+<p>​          M：回调一个对象的成员函数，但是这个对象可能已经不存在了，怎么办？</p>
+<p>​          A：用智能指针吧。</p>
+<p>​          M：什么智能指针？</p>
+<p>​          A：shared_ptr。</p>
+<p>​          M：那如何知道对象不存在了呢？</p>
+<p>​          A：。。。不太清楚。</p>
+<p>​          M：这个就是刚才你不清楚的weak_ptr的用处了，可以判断对象是否还存在。</p>
+<p>​          A：谢谢，学习了。</p>
+<p>​          M：知道模板吗？</p>
+<p>​          A：知道，标准库大量采用了模板技术。</p>
+<p>​          M：恩，我们知道，模板是一种很强大的技术，你知道模板主要有什么缺点吗？</p>
+<p>​          A：1. 模板是一种编译期间生成代码的行为，无法进行断点调试，所以很容易产生bug；2. 大量使用模板会造成代码空间膨胀，极大的延长了编译时间。</p>
+<p>​          M：我没什么问的了，你有什么问题吗？</p>
+<p>​          A：我想知道我目前做的工作是数据挖掘，去面研发岗会有什么劣势吗？</p>
+<p>​          M：我们比较看重可塑性，知识反而是其次的。</p>
+<p>​          A：我没什么问题了。</p>
+<p>​          M：好的，那如果有消息会在一周左右通知你。</p>
+<p>一个周之后，收到电话通知到杭州现场面，结果发现高铁没票了，尼玛，果断南京转车。 
+  现场一面： 
+​          本来约好三点钟面试，结果等到了快四点吧，一面官感觉比较水，做网易云音乐的。。。</p>
+<p>​          M：你介绍一下自己吧。</p>
+<p>​          A：。。。（看着简历说了一通，等会儿总结里面介绍一下我的感受）</p>
+<p>​          M：如果来网易，你期望做什么工作？</p>
+<p>​          A：我想做一点偏研发的。</p>
+<p>​          M：客户端还是服务器？</p>
+<p>​          A：后台吧。</p>
+<p>​          M：那可能要转Java了，一般我们都用Java做后台。</p>
+<p>​          A：我无所谓，不过Java不太熟。</p>
+<p>​          M：恩，这个没关系，我们会对新人进行一个月培训，你有什么问题吗？ 
+​          A：你是什么部门呢？ 
+​          M：我是做网易云音乐的。</p>
+<p>​          A：是吗？哈哈，我天天都用诶，我认识一个浙大的学弟发起了一个开源的网易云音乐Linux客户端。</p>
+<p>​          M：那个我好像听说过。 
+​          A：你们工资大概是什么水平呢？ 
+​          M：大概16个月吧，看部门不同，今年硕士应该在12-13之间，去年有部门效益比较好，最高开到了17。</p>
+<p>​          A：我没什么问题了，谢谢你！</p>
+<p>一面总结：感觉一面看人品，有现场面的同学写了好几个算法数据结构的题目，我好像就是在吹牛？哈哈。。。我的感受就是让介绍自己的时候，多说一些，然后重点说自己的项目，我重点说了一个大数据调研的项目，然后把他引入了这个项目，然后我们就在这上面聊了很久，时间拖够了，他也就没啥问的了，所以后来我们就聊天了。 
+  现场二面： 
+​          又等了许久，迎来了二面。本来以为一面水过去了，二面要难一些，
+   我还在看KMP呢。结果二面也没让我写代码，很不爽的感觉有木有！ 
+​          M：介绍一下你自己吧。</p>
+<p>​          A：（怎么都有这个问题？又开始扯了。。。）</p>
+<p>​          M：你印象最深的项目是哪一个，你觉得有什么收获？</p>
+<p>​          A：我印象最深的是在XX（某国内一线互联网公司，具体不说是哪一个了）实习的项目，在里面做大数据的统计、分析与调研，之所以印象深，是因为我给出的数据关系到领导决策，从而直接影响我们的收入，对数据的精准性要求非常高，我觉得这个经历培养了我的严谨性和责任感，我必须对我给出的数据负责，如果出错，我会非常自责，而且我也会非常谨慎的验证我给出的结果。</p>
+<p>​          M：你是如何保证数据的准确性的？</p>
+<p>A：经过非常多的测试，首先，我在跑hadoop之前，会本地测试代码有没有bug，然后会写一个脚本与之进行double check，然后我会在集群上跑一天的数据，再通过另外一个脚本跑一天的数据，对比，如果没有差别，再跑全部任务，通过多次测试得出的结果基本上就不会出错了。</p>
+<p>​          M：说一说你对C++11的理解吧。（简历上有写C++11）</p>
+<p>​          A：我觉得C++11就是填坑。</p>
+<p>​          M：也不能说是填坑吧。</p>
+<p>​          A：恩，简单说是填坑，如果再进一步看的话，带来了一些语法糖。。。（较长，此处省略。。。）</p>
+<p>​          M：我看你的简历，感觉你开发和算法都在做，比较杂，如果你来网易，想做什么样的工作，为什么？</p>
+<p>​          A：（一面也问过类似的问题）我想做后台，因为做过C++、数据挖掘、网络爬虫方面的项目，但是没接触过后台，想接触一下这方面的技术，我本身也对研发很感兴趣。</p>
+<p>​          M：你有什么问题想问我的吗？</p>
+<p>​          A：网易旁边房价如何？（其实我很想问丁老板的猪养好了没。。。）</p>
+<p>​          M：我们周边也就一万多吧。</p>
+<p>​          A：那你们加班比起bat是什么水平呢？</p>
+<p>​          M：我们也有加班，但是和业内比起来算是中下水平吧。</p>
+<p>​          A：我没有问题了，谢谢你！</p>
+<p>​          M：恩，你去休息一下等三面吧。</p>
+<p>二面总结：感觉就是要自己抓住主动权，不停的说，我老是重点给他说大数据的项目，他是做研发的，也不太懂，感觉就是我抓住了节奏，然后给他讲各种高大上的概念，什么二价拍卖、流量实验、拍卖策略啥的。。。然后他相对来说就问得比较温和了。 
+  现场三面： 
+​          本来以为三面就是HR面了，结果虽然是HR面，但是旁边还有一个问技术的，而且一来就问我不会的，差点吓尿了。。。</p>
+<p>​          HR：你期望年薪是多少。（要不要上来就这么直接）</p>
+<p>​          A：20W以上吧。</p>
+<p>​          M：你知道索引是用什么数据结构实现的吗？</p>
+<p>​          A：不太清楚，我知道数据库是用B树实现的。</p>
+<p>​          M：为什么用B树？</p>
+<p>​          A：B树在磁盘查找次数上会比较少。</p>
+<p>​          M：具体原理知道吗？</p>
+<p>​          A：不知道。</p>
+<p>​          HR：我看你在XX实习，有offer吗？</p>
+<p>​          A：有了。</p>
+<p>​          HR：口头还是正式？</p>
+<p>​          A：周五刚给的正式offer。</p>
+<p>​          M：你最熟悉的项目是哪一个，为什么？ 
+​          A：（怎么都问这个问题。。。又重复了一遍）</p>
+<p>​          M：你是怎么保证数据准确性的？</p>
+<p>​          A：（见二面）</p>
+<p>​          HR：为什么不考虑XX公司，来网易呢？</p>
+<p>​          A：一线城市压力太大，而且我个人比较喜欢研发，XX公司给我的是数据挖掘岗位。</p>
+<p>​          M：你对算法熟悉吗？</p>
+<p>​          A：还行吧，学过。</p>
+<p>​          M：学过就算了。</p>
+<p>​          A：没事儿，可以问。</p>
+<p>​          M：你最熟悉的是什么？</p>
+<p>​          A：C++吧。</p>
+<p>​          M：说一说volatile关键字的作用吧。</p>
+<p>​          A：防止编译器优化，比如在多线程程序中。。。（省略两百字）</p>
+<p>​          Ｍ：我没问题了。</p>
+<p>​          HR：你有什么问题？</p>
+<p>​          A：。。。我来杭州因为没买到直达高铁，在南京转车，可以报销吗？</p>
+<p>​          HR：（无语。。。）这个你去前台问吧，不归我们负责。</p>
+<p>​          A：那我没什么问题了。</p>
+<p>​          HR：如果通过，我们会在一周到两周之内通知你结果。</p>
+<p>三面总结：完全没想到HR面还有技术，差点就不会了，不过还好我又靠实习项目给水过去了。。。 
+  然后出去之后工作人员就带我去食堂吃晚饭了。 </p>
+<p>总结：通过和别的同学交流，我觉得对于项目经验不够丰富的同学，基础知识就比较重要了，会问一些手写代码的题目、操作系统、TCP/IP啥的；对于项目比较丰富的同学，在介绍自己的时候，就重点介绍自己的工作，把时间拖够，面试官也就没啥时间问你了；对于所有同学，都得有一项自己拿得出手的，无论编程语言、算法、TCP/IP、Linux都可以，这样你就可以把面试官引入这个话题。 
+  最后，祝大家offer拿到手软！ </p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>Mapreduce</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="mapreduce">Mapreduce</h1>
+<h3 id="mapreduce_1">MapReduce特点：</h3>
+<ul>
+<li>易于编程</li>
+<li>良好的扩展性</li>
+<li>高容错性</li>
+<li>适合PB级海量数据的离线处理</li>
+</ul>
+<p><strong>1、hadoop1.0时期架构</strong></p>
+<p><img alt="img" src="http://img.blog.csdn.net/20160913181625493?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA<mark>/dissolve/70/gravity/Center" />
+<strong>2、hadoop2.0时期架构</strong></p>
+<p><img alt="img" src="http://img.blog.csdn.net/20160913181637774?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/Center" />
+<strong>3、hdfs架构</strong></p>
+<p><img alt="img" src="http://img.blog.csdn.net/20160913181651728?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA<mark>/dissolve/70/gravity/Center" />
+<strong>Active Namenode主 Master（只有一个），管理 HDFS 的名称空间，管理数据块映射信息；配置副本策略；处理客户端读写请求</strong>
+<strong>Secondary NameNode</strong>
+<strong>NameNode 的热备；定期合并 fsimage 和 fsedits，推送给 NameNode；当 Active NameNode 出现故障时，快速切换为新的 Active NameNode。</strong>
+<strong>Datanode</strong>
+<strong>Slave（有多个）；存储实际的数据块；执行数据块读 / 写</strong>
+<strong>Client</strong>
+<strong>与 NameNode 交互，获取文件位置信息；与 DataNode 交互，读取或者写入数据；管理 HDFS、访问 HDFS。</strong></p>
+<p><strong>4、MapReduce</strong>
+<strong>源自于 Google 的 MapReduce 论文发表于 2004 年 12 月Hadoop MapReduce 是 Google MapReduce 克隆版MapReduce特点良好的扩展性高容错性适合 PB 级以上海量数据的离线处理</strong></p>
+<p><strong>5、yarn架构</strong></p>
+<p><img alt="img" src="http://img.blog.csdn.net/20160913181708212?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/Center" />
+<strong>6、hadoop1.0与hadoop2.0比较图</strong></p>
+<p><img alt="img" src="http://img.blog.csdn.net/20160913181719931?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA<mark>/dissolve/70/gravity/Center" />
+<strong>7、Hive（基于MR的数据仓库）由Facebook开源，最初用于海量结构化日志数据统计；ETL（Extraction-Transformation-Loading）工具构建在Hadoop之上的数据仓库；数据计算使用 MapReduce，数据存储使用HDFSHive 定义了一种类 SQL 查询语言——HQL类似SQL，但不完全相同通常用于进行离线数据处理（采用 MapReduce）；可认为是一个 HQL→MR 的语言翻译器</strong></p>
+<p><strong>8、Hbase（分布式数据库）源自 Google 的 Bigtable 论文发表于 2006 年 11 月Hbase 是 Google Bigtable 克隆版</strong></p>
+<p><strong>9、Hadoop 发行版（开源版）</strong></p>
+<p><img alt="img" src="http://img.blog.csdn.net/20160913181734650?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/Center" /></p>
+<h2 id="mapreduce_2">MapReduce的编程模型</h2>
+<p>1、用户编写完MapReduce 程序后，按照一定的规则指定程序的输入和输出目录，并提交到Hadoop 集群中。作业在Hadoop 中的执行过程如图1所示。Hadoop 将输入数据切分
+成若干个输入分片（input split ，后面简称split ），并将每个split 交给一个Map   Task 处理；Map   Task 不断地从对应的split 中解析出一个个key/value ，并调用m a p ( ) 函数处理，处理完
+之后根据Reduce   Task 个数将结果分成若干个分片（partition ）写到本地磁盘；同时，每个Reduce   Ta s k 从每个M a p   Ta s k 上读取属于自己的那个partition ，然后使用基于排序的方法将
+key 相同的数据聚集在一起，调用Reduce ( ) 函数处理，并将结果输出到文件中。
+<img alt="img" src="http://img.blog.csdn.net/20140430133312203?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMTA2NzM2MA<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>​                                  图1   Word Count 程序运行过程
+2、上面的程序还缺少三个基本的组件，功能分别是：</p>
+<p>①指定输入文件格式。将输入数据切分成若干个s p l i t ，且将每个s p l i t 中的数据解析成一个个m a p ( ) 函数要求的k e y / v a l u e 对。</p>
+<p>②确定m a p ( ) 函数产生的每个k e y / v a l u e 对发给哪个R e d u c e   Ta s k 函数处理。</p>
+<p>③指定输出文件格式，即每个k e y / v a l u e 对以何种形式保存到输出文件中。</p>
+<p>​    在Hadoop   MapReduce 中，这三个组件分别是InputFormat 、Partitioner 和OutputFormat ，它们均需要用户根据自己的应用需求配置。而对于上面的Wo r d C o u n t 例子，默认情况下Hadoop 采用的默认实现正好可以满足要求，因而不必再提供。</p>
+<p>综上所述，Hadoop   MapReduce 对外提供了5 个可编程组件，分别是InputFormat 、M a p p e r 、Partitioner 、Reducer 和OutputFormat 。</p>
+<p><strong>三、Hadoop   MapReduce 作业的生命周期</strong>
+本节主要讲解Hadoop   MapReduce 作业的生命周期，即作业从提交到运行结束经历的整个过程。本节只是概要性地介绍MapReduce 作业的生命周期；</p>
+<p>假设用户编写了一个MapReduce 程序，并将其打包成x x x . j a r 文件，然后使用以下命
+令提交作业：</p>
+<p><strong>[java]</strong> <a href="http://blog.csdn.net/u011067360/article/details/24784347#">view plain</a> <a href="http://blog.csdn.net/u011067360/article/details/24784347#">copy</a></p>
+<ol>
+<li>$HADOOP_HOME/bin/hadoop jar xxx.jar \  </li>
+<li>​    -D mapred.job.name="xxx" \  </li>
+<li>​    -D mapred.map.tasks=3 \  </li>
+<li>​    -D mapred.reduce.tasks=2 \  </li>
+<li>​    -D input=/test/input \  </li>
+<li>​    -D output=/test/output  </li>
+</ol>
+<p>则该作业的运行过程如图2所示。</p>
+<p>这个过程分为以下5 个步骤：
+步骤1 　作业提交与初始化。用户提交作业后，首先由JobClient 实例将作业相关信息，比如将程序jar 包、作业配置文件、分片元信息文件等上传到分布式文件系统（一般为H D F S ）上，其中，分片元信息文件记录了每个输入分片的逻辑位置信息。然后JobClient通过R P C 通知JobTracker 。JobTracker 收到新作业提交请求后，由作业调度模块对作业进行初始化：为作业创建一个J o b I n P r o g r e s s 对象以跟踪作业运行状况，而J o b I n P r o g r e s s 则会为每个Ta s k 创建一个TaskInProgress 对象以跟踪每个任务的运行状态，TaskInProgress 可能需要管理多个“Ta s k 运行尝试”（称为“Ta s k  A t t e m p t ”）。</p>
+<p>步骤2 　任务调度与监控。前面提到，任务调度和监控的功能均由JobTracker 完成。TaskTracker 周期性地通过H e a r t b e a t 向JobTracker 汇报本节点的资源使用情况，一旦出现
+空闲资源，JobTracker 会按照一定的策略选择一个合适的任务使用该空闲资源，这由任务调度器完成。任务调度器是一个可插拔的独立模块，且为双层架构，即首先选择作业，然后
+从该作业中选择任务，其中，选择任务时需要重点考虑数据本地性。此外，JobTracker 跟踪作业的整个运行过程，并为作业的成功运行提供全方位的保障。首先，当TaskTracker 或者Ta s k 失败时，转移计算任务；其次，当某个Ta s k 执行进度远落后于同一作业的其他Ta s k 时，为之启动一个相同Ta s k ，并选取计算快的Ta s k 结果作为最终结果。</p>
+<p>步骤3 　任务运行环境准备。运行环境准备包括J V M 启动和资源隔离，均由TaskTracker 实现。TaskTracker 为每个Ta s k 启动一个独立的J V M 以避免不同Ta s k 在运行过程中相互影响；同时，TaskTracker 使用了操作系统进程实现资源隔离以防止Ta s k 滥用资源。
+步骤4 　任务执行。TaskTracker 为Ta s k 准备好运行环境后，便会启动Ta s k 。在运行过程中，每个Ta s k 的最新进度首先由Ta s k 通过R P C 汇报给TaskTracker ，再由TaskTracker汇报给JobTracker 。</p>
+<p>步骤5 　作业完成。待所有Ta s k 执行完毕后，整个作业执行成功。</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20140430134605078?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMTA2NzM2MA<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>​                                      图2  Hadoop   MapReduce 作业的生命周期</p>
+<p><strong>四、MapReduce 编程模型的实现</strong></p>
+<p>1、MapReduce 编程模型给出了其分布式编程方法，共分5 个步骤：
+  1 ）迭代（iteration ）。遍历输入数据，并将之解析成key/value 对。
+  2 ）将输入key/value 对映射（m a p ）成另外一些key/value 对。
+  3 ）依据k e y 对中间数据进行分组（grouping ）。
+  4 ）以组为单位对数据进行归约（reduce ）。
+  5 ）迭代。将最终产生的key/value 对保存到输出文件中。
+MapReduce 将计算过程分解成以上5 个步骤带来的最大好处是组件化与并行化。为了实现MapReduce 编程模型，Hadoop 设计了一系列对外编程接口。用户可通过实现这些接口完成应用程序的开发。</p>
+<p>2、MapReduce 编程接口体系结构
+MapReduce 编程模型对外提供的编程接口体系结构如图3 所示，整个编程模型位于应用程序层和MapReduce 执行器之间，可以分为两层。第一层是最基本的J a v a   A P I ，主要有5 个可编程组件，分别是InputFormat 、Mapper 、Partitioner 、Reduce r 和OutputFormat 。
+Hadoop 自带了很多直接可用的InputFormat 、Partitioner 和OutputFormat ，大部分情况下，用户只需编写Mapper 和Reducer 即可。第二层是工具层，位于基本J a v a   A P I 之上，主要是为了方便用户编写复杂的MapReduce 程序和利用其他编程语言增加MapReduce 计算平台的兼容性而提出来的。在该层中，主要提供了4 个编程工具包。</p>
+<p>J o b C o n t r o l ：方便用户编写有依赖关系的作业，这些作业往往构成一个有向图，所以 通常称为DAG （Directed   Acyclic   Graph ）作业，如第2 章中的朴素贝叶斯分类算法实现便是4 个有依赖关系的作业构成的DAG 。
+C h a i n Mapper / Chain Reduce r ：方便用户编写链式作业，即在M a p 或者Reduce 阶段存在多个Mapper ，形式如下：
+[MAPPER+ REDUCER MAPPER*]
+Hadoop   Streaming ：方便用户采用非J a v a 语言编写作业，允许用户指定可执行文件或者脚本作为Mapper / Reduce r 。
+Hadoop   Pipes ：专门为C / C + + 程序员编写MapReduce 程序提供的工具包。</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20140430135457093?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMTA2NzM2MA<mark>/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>​                                                          图3 MapReduce 编程接口体系结构</p>
+<p><strong>五、小结：</strong></p>
+<p>1、Hadoop   MapReduce 直接诞生于搜索领域，以易于编程、良好的扩展性和高容错性为设计目标。它主要由两部分组成：编程模型和运行时环境。其中，编程模型为用户提供了5
+个可编程组件，分别是InputFormat 、Mapper 、Partitioner 、Reduce r 和OutputFormat ；运行时环境则将用户的MapReduce 程序部署到集群的各个节点上，并通过各种机制保证其成功
+运行。
+2、Hadoop   MapReduce 处理的数据一般位于底层分布式文件系统中。该系统往往将用户的文件切分成若干个固定大小的block 存储到不同节点上。默认情况下，MapReduce 的每
+个Task 处理一个block 。  MapReduce 主要由四个组件构成，分别是C l i e n t 、JobTracker 、TaskTracker 和Ta s k ，它们共同保障一个作业的成功运行。一个MapReduce 作业的运行周期是，先在C l i e n t 端被提交JobTracker 上，然后由JobTracker 将作业分解成若干个Ta s k ，并对这些Ta s k 进行调度和监控，以保障这些程序运行成功，而TaskTracker 则启动JobTracker 发来的Ta s k ，并向JobTracker 汇报这些Task 的运行状态和本节点上资源的使用情况。</p>
+<h2 id="mapreduce_3">Mapreduce 的数据模型</h2>
+<p>MapReduce的数据模型：</p>
+<ul>
+<li><code>&lt;key, value&gt;</code></li>
+<li>数据由一条一条的记录组成</li>
+<li>记录之间是无序的</li>
+<li>每一条记录有一个key，和一个value</li>
+<li>key: 可以不唯一</li>
+<li>key与value的具体类型和内部结构由程序员决定，系统基 
+  本上把它们看作黑匣</li>
+</ul>
+<p>图解： 
+<img alt="这里写图片描述" src="http://img.blog.csdn.net/20160426170516520" /></p>
+<p>下面以wordcount为例说明MapReduce计算过程： 
+输入文本：</p>
+<pre><code>hello world hadoop hdfs hadoop hello hadoop hdfs1
+</code></pre>
+
+<p>map输出：</p>
+<pre><code>&lt;hello,1&gt;
+&lt;world,1&gt;
+&lt;hadoop,1&gt;
+&lt;hdfs,1&gt;
+&lt;hadoop,1&gt;
+&lt;hello,1&gt;
+&lt;hadoop,1&gt;
+&lt;hdfs,1&gt;12345678
+</code></pre>
+
+<p>shuffle(洗牌)过程把key值相同的value合并成list作为reduce输入：</p>
+<pre><code>&lt;hello,&lt;1,1&gt;&gt;
+&lt;world,1&gt;
+&lt;hadoop,&lt;1，1，1&gt;&gt;
+&lt;hdfs,&lt;1,1&gt;&gt;1234
+</code></pre>
+
+<p>reduce输出：</p>
+<pre><code>&lt;hello,2&gt;
+&lt;world,1&gt;
+&lt;hadoop,3&gt;
+&lt;hdfs,1&gt;1234
+</code></pre>
+
+<p>关于Wordcount运行例子可以参考<a href="http://blog.csdn.net/napoay/article/details/50805439">hadoop helloworld(wordcount)</a>,代码解读博客园上有一篇很详细的文章<a href="http://www.cnblogs.com/xia520pi/archive/2012/05/16/2504205.html">Hadoop集群（第6期）_WordCount运行详解</a>.</p>
+<h3 id="mapreduce_4">MapReduce守护进程：</h3>
+<p>MapReduce框架主要有两个守护进程，jobtracker和tasktracker。jobtraker是管理者，taskertracker是被管理者。</p>
+<h4 id="jobtracker">jobtracker:</h4>
+<ul>
+<li>负责接收用户提交的作业,负责启动跟踪任务执行</li>
+<li>管理所有作业(job:用户的一个计算请求)</li>
+<li>将作业分成一系列任务(task:由job拆分出来的执行单元)进行调度</li>
+<li>将任务指派给tasktracker</li>
+<li>作业/任务监控,错误处理等</li>
+</ul>
+<h4 id="tasktracker">tasktracker:</h4>
+<ul>
+<li>负责执行由jobtracker分配的任务，管理各个任务在每个节点执行情况</li>
+<li>运行MapTask和ReduceTask</li>
+<li>与Jobtracker进行交互，执行命令,并汇报任务状态</li>
+</ul>
+<h3 id="mapreduce_5">MapReduce相关概念</h3>
+<h4 id="maptask">MapTask</h4>
+<ul>
+<li>Map引擎</li>
+<li>分析每条数据记录,将数据解析传递给用户自定义的map()函数</li>
+<li>将map()函数输出写到本地磁盘（如果是map-only情况，直接输出到HDFS中）</li>
+</ul>
+<h4 id="reducetask">ReduceTask</h4>
+<ul>
+<li>Reduce引擎</li>
+<li>从MapTask上远程读取输入数据</li>
+<li>对数据进行排序</li>
+<li>将数据按照分组传递给用户编写的reduce()函数</li>
+</ul>
+<h3 id="mapreduce_6">MapReduce运行流程</h3>
+<p><img alt="mage-20180320210138" src="/var/folders/g8/p01v8pbd0ldcl4gv90pbng6c0000gn/T/abnerworks.Typora/image-201803202101385.png" /></p>
+<ul>
+<li>1.在客户端启动一个作业</li>
+<li>2.客户端向JobTracker请求作业号</li>
+<li>3.客户端向HDFS复制作业的资源文件，这些文件包括打包jar文件，配置文件,以及由客户端计算所得到的输入划分信息。这些文件都存在jobtracker专门为这个job创建的一个文件夹中，以JobID命名。输入划分信息告诉JobTracker应该为这个作业启动多少个map任务等信息</li>
+<li>4.客户端向JobTracker提交作业,JobTracker接收到作业以后，把它加入到作业队列，然后JobTracker根据自己的调度算法调度到当前作业时，根据输入划分信息,开始为每个划分新建1个task任务，并把task任务分配给tasktracker执行。这里的分配不是随便分配的,而是遵循数据本地化原则的。(数据本地化Data-Local, 就是将map任务分配给拥有该map所要处理数据的DataNode节点，并将jar拷贝到这个节点，这个叫做移动计算，不是移动数据。)</li>
+<li>5.TaskTracker每个一段时间向JobTracker发送心跳,告诉他自己仍然在运行。同时心跳中还带着其他的一些信息，比如当前map任务完成的进度。当jobtracker接收到最后一个map任务发来的信息的时候,便把作业设置为"成功", 当jobclient查询时，将成功信息返回给用户。</li>
+</ul>
+<h3 id="shuffle">shuffle过程：</h3>
+<p>shuffle是洗牌或者弄乱的意思，在MapReduce中是指从map task输出到reduce task输入这段过程。</p>
+<p><img alt="mage-20180320210331" src="/var/folders/g8/p01v8pbd0ldcl4gv90pbng6c0000gn/T/abnerworks.Typora/image-201803202103310.png" /></p>
+<p><img alt="mage-20180320210344" src="/var/folders/g8/p01v8pbd0ldcl4gv90pbng6c0000gn/T/abnerworks.Typora/image-201803202103448.png" /></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

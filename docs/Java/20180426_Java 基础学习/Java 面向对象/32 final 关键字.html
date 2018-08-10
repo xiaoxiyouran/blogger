@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>32 final 关键字</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="32-final">32 final 关键字</h1>
+<p>java中的<code>final</code>关键字用于限制用户<strong>修改变量或重写</strong>一个类或方法。 java <code>final</code>关键字可以在许多上下文中使用。 <code>final</code>可以是：</p>
+<ol>
+<li>变量</li>
+<li>方法</li>
+<li>类</li>
+</ol>
+<p><code>final</code>关键字可以应用于变量，没有值的<code>final</code>变量称为<strong>空白变量或未初始化的最终变量。 它只能在构造函数中初始化</strong>。 <strong>空白最终变量也可以是静态的，它将仅在静态块中初始化</strong>。 在之后的文章中我们将详细学习这些。 下面先学习<code>final</code>关键字的基础知识。</p>
+<h2 id="1-java-final">1. Java final变量</h2>
+<p>如果将变量设置为<code>final</code>，则不能更改<code>final</code>变量的值(它将是常量)。final关键字应用有以下几点需要注意：</p>
+<ol>
+<li><strong>禁止变量的值被改变；</strong></li>
+<li><strong>禁止方法重写；</strong></li>
+<li><strong>禁止类继承；</strong></li>
+</ol>
+<p><strong>final变量的示例</strong></p>
+<p>要改变<code>final</code>变量的值，这是不可能的，因为一个<code>final</code>变量一次分配一个值永远不能更改。如下试图修改 speedlimit 变量的值为 400，这是不允许的。</p>
+<pre><code class="Java">class Bike9 {
+	final int speedlimit = 90;// final variable
+
+	void run() {
+		speedlimit = 400; // 不可以修改 final 变量的值
+	}
+
+	public static void main(String args[]) {
+		Bike9 obj = new Bike9();
+		obj.run();
+	}
+}// end of class
+</code></pre>
+
+<p>上面代码执行后生成以下结果 -</p>
+<pre><code class="Java">[编译错误]Compile Time Error
+</code></pre>
+
+<h2 id="2-java-final">2. Java final方法</h2>
+<p>如果任何方法声明为<code>final</code>，则不能覆盖它。</p>
+<p><code>final</code>方法的示例，下面方法是不能覆盖的 -</p>
+<pre><code class="Java">class Bike {
+	final void run() {
+		System.out.println(&quot;running&quot;);
+	}
+}
+
+class Honda extends Bike {
+	void run() { // final方法,不可以重写
+		System.out.println(&quot;running safely with 100kmph&quot;);
+	}
+
+	public static void main(String args[]) {
+		Honda honda = new Honda();
+		honda.run();
+	}
+}
+</code></pre>
+
+<p>上面代码执行后生成以下结果 -</p>
+<pre><code class="shell">[编译错误]Compile Time Error
+</code></pre>
+
+<h2 id="3-java-final">3. Java final类</h2>
+<p>如果把任何一个类声明为<code>final</code>，则不能扩展它。<code>final</code>类的示例</p>
+<pre><code class="Java">final class Bike {
+}
+
+class Honda1 extends Bike { // 不可以扩展 final 类
+	void run() {
+		System.out.println(&quot;running safely with 100kmph&quot;);
+	}
+
+	public static void main(String args[]) {
+		Honda1 honda = new Honda();
+		honda.run();
+	}
+}
+</code></pre>
+
+<p>上面代码执行后生成以下结果 -</p>
+<pre><code class="Java">[编译错误]Compile Time Error
+</code></pre>
+
+<p><strong>问题：是否可继承final方法？</strong></p>
+<p><strong>答：</strong> 是的，<code>final</code>方法是继承的，但是不能覆盖它。 例如：</p>
+<pre><code class="Java">class Bike {
+	final void run() {
+		System.out.println(&quot;running...&quot;);
+	}
+}
+
+class Honda2 extends Bike {
+	public static void main(String args[]) {
+		new Honda2().run();
+	}
+}
+</code></pre>
+
+<p>上面代码执行后生成以下结果 -</p>
+<pre><code class="Java">Output:running...
+</code></pre>
+
+<p><strong>问题：什么是空白或未初始化的final变量？</strong></p>
+<p>在声明时未初始化的<code>final</code>变量称为空白<code>final</code>变量。</p>
+<p>如果要在创建一个对象时初始化变量，并且变量在初始化后就不会被改变， 这是非常有用的。 例如员工的<code>PAN CARD</code>号码。它只能在构造函数中初始化。</p>
+<p>空白<code>final</code>变量的示例</p>
+<pre><code class="Java">class Student{  
+	int id;  
+	String name;  
+	final String PAN_CARD_NUMBER;  
+	...  
+}
+
+</code></pre>
+
+<p><strong>问题：可以初始化空白的final变量吗？</strong></p>
+<p><strong>答：</strong> 是的，但只能在构造函数中。 例如：</p>
+<pre><code class="Java">class Bike10 {
+	final int speedlimit;// blank final variable
+
+	Bike10() { // 在构造函数中初始化
+		speedlimit = 70;
+		System.out.println(speedlimit);
+	}
+
+	public static void main(String args[]) {
+		new Bike10();
+	}
+}
+</code></pre>
+
+<p>上面代码执行后生成以下结果 -</p>
+<pre><code class="Java">70
+</code></pre>
+
+<h2 id="final">静态空白final变量</h2>
+<p>在声明时未初始化的静态<code>final</code>变量称为静态空白<code>final</code>变量。 它只能在静态块中初始化。</p>
+<p><strong>静态空白final变量的示例</strong></p>
+<pre><code class="Java">class A {
+	static final int data;  // static blank final variable
+	static {
+		data = 50;
+	}
+
+	public static void main(String args[]) {
+		System.out.println(A.data);
+	}
+}
+</code></pre>
+
+<p><strong>问题：什么是final参数？</strong></p>
+<p>如果将任何参数声明为<code>final</code>，则不能更改它的值。</p>
+<pre><code class="Java">class Bike11 {
+
+	int cube(final int n) {
+		n = n + 2;// can't be changed as n is final
+		// n*n*n; // 不能修改 n 的值
+		return n;
+	}
+
+	public static void main(String args[]) {
+		Bike11 b = new Bike11();
+		b.cube(5);
+	}
+}
+</code></pre>
+
+<p>上面代码执行后生成以下结果 -</p>
+<pre><code class="Java">[编译错误]Compile Time Error
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

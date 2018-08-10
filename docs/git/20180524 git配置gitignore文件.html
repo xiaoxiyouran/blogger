@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180524 git配置gitignore 文件</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180524-gitgitignore">20180524 git配置gitignore 文件</h1>
+<p>常用的就是</p>
+<pre><code class="shell"># 忽略当前目录下的build/ 文件夹
+build/ 
+# mac 下面会有这个很难搞的问价
+*.DS_Store
+</code></pre>
+
+<hr />
+<p>原文：https://www.jianshu.com/p/ea6341224e89</p>
+<p>在日常的开发中，当我们需要将一个项目提交到Git时，并不是所有的文件都需要提交，比如一些自动生成的文件，这时候就可以使用<code>.gitignore</code>来忽略一些不需要提交的文件，本文着重介绍一下<code>.gitignore</code>的配置语法。</p>
+<h2 id="_1">创建</h2>
+<p>以Android开发为例，Android Studio默认会生成一个<code>.gitignore</code>文件，而当使用Eclipse时，我们需要在提交Git之前，需要自己创建一个<code>.gitignore</code>文件，由于Windows下创建文件必须键入文件名，而要创建的<code>.gitignore</code>是没有文件名的，所以我们可以使用move命令来实现，打开Git Bash ，使用<code>mv gitignore .gitignore</code>，然后可以编辑器编辑这个文件。</p>
+<p><img alt="img" src="20180524git配置gitignore文件_01.png" /></p>
+<p><img alt="img" src="20180524git配置gitignore文件_02.png" /></p>
+<p>生成的.gitgnore</p>
+<h2 id="_2">语法规范</h2>
+<ul>
+<li>
+<p>空行或是以<code>#</code>开头的行即注释行将被忽略。</p>
+</li>
+<li>
+<p>可以在前面添加正斜杠<code>/</code>来避免递归,下面的例子中可以很明白的看出来与下一条的区别。</p>
+</li>
+<li>
+<p>可以在后面添加正斜杠<code>/</code>来忽略文件夹，例如<code>build/</code>即忽略build文件夹。</p>
+</li>
+<li>
+<p>可以使用<code>!</code>来否定忽略，即比如在前面用了<code>*.apk</code>，然后使用<code>!a.apk</code>，则这个a.apk不会被忽略。</p>
+</li>
+<li>
+<p><code>*</code>用来匹配零个或多个字符，如<code>*.[oa]</code>忽略所有以".o"或".a"结尾，</p>
+</li>
+</ul>
+<p><code>*~</code>忽略所有以<code>~</code>结尾的文件（这种文件通常被许多编辑器标记为临时文件）；</p>
+<p><code>[]</code>用来匹配括号内的任一字符，如<code>[abc]</code>，也可以在括号内加连接符，如<code>[0-9]</code>匹配0至9的数；</p>
+<p><code>?</code>用来匹配单个字符。
+   看了这么多，还是应该来个栗子：</p>
+<pre><code class="Shell"># 忽略 .a 文件
+*.a
+# 但否定忽略 lib.a, 尽管已经在前面忽略了 .a 文件
+!lib.a
+# 仅在当前目录下忽略 TODO 文件， 但不包括子目录下的 subdir/TODO
+/TODO
+# 忽略 build/ 文件夹下的所有文件
+build/
+# 忽略 doc/notes.txt, 不包括 doc/server/arch.txt
+doc/*.txt
+# 忽略所有的 .pdf 文件 在 doc/ directory 下的
+doc/**/*.pdf
+</code></pre>
+
+<p>Github给出的Android开发中使用的.gitignore<a href="https://link.jianshu.com?t=https://github.com/github/gitignore/blob/master/Android.gitignore">模板</a></p>
+<pre><code class="Shell"># Built application files
+*.apk
+*.ap_
+# Files for the Dalvik VM
+*.dex
+# Java class files
+*.class
+# Generated files
+bin/
+gen/
+out/
+# Gradle files
+.gradle/
+build/
+# Local configuration file (sdk path, etc)
+local.properties
+# Proguard folder generated by Eclipse
+proguard/
+# Log Files
+*.log
+# Android Studio Navigation editor temp files
+.navigation/
+# Android Studio captures folder
+captures/
+# Intellij
+*.iml
+# Keystore files
+*.jks
+</code></pre>
+
+<h2 id="_3">参考</h2>
+<p>另外的参考：https://blog.csdn.net/u011475134/article/details/71521725</p>
+<blockquote>
+<p><a href="https://link.jianshu.com?t=https://github.com/github/gitignore">gitignore collection on github</a>
+ <a href="https://link.jianshu.com?t=https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository#Ignoring-Files">The Ignoring Files chapter of the Pro Git book.</a></p>
+</blockquote>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

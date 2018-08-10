@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>自定义string函数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="string">自定义string函数</h1>
+<h2 id="1-string">1- string 赋值运算符举例</h2>
+<p>String::opreator=函数的优化：</p>
+<p>最一般的写法，特点：使用const string&amp; 传参防止临时对象。</p>
+<pre><code class="cpp">String&amp; String::operator =(const String &amp; rhs)  
+{  
+	if (itsString)  
+		delete [] itsString;  
+	itsLen = rhs.GetLen();  
+	itsString = new char[itsLen+1];  
+	for (unsigned short i = 0;i&lt;itsLen;i++)     /// 一个个的拷贝
+		itsString[i] = rhs[i];  
+	itsString[itsLen] = '/0';  
+	return *this;  
+}  
+</code></pre>
+
+<p><strong>a. 优化1，防止自我间接赋值，</strong>a = b; c = b; a = c; 如果没有第一个if判断，当把c赋给a的时候，删除了a.itsString，后面的拷贝就会出错。注意是<strong>if(this<mark>&amp;rhs)</strong>, 而不是<strong>if(*this</mark>rhs)</strong> .</p>
+<pre><code class="cpp">String&amp; String::operator =(const String &amp; rhs)  
+{  
+	if (this == &amp;rhs)   /// 判断地址，防止自己赋值给自己
+		return *this;  
+	if (itsString)  
+		delete [] itsString;  
+	itsLen=rhs.GetLen();  
+	itsString = new char[itsLen+1];  
+	for (unsigned short i = 0;i&lt;itsLen;i++)  
+		itsString[i] = rhs[i];  
+	itsString[itsLen] = '/0';  
+	return *this;  
+}  
+</code></pre>
+
+<p><strong>b. 优化2，不进行拷贝赋值，只是交换控制信息，而且是强异常安全：</strong></p>
+<p>构建一个临时对象，然后交换。之后临时对象自动销毁</p>
+<pre><code class="cpp">String &amp; String::operator = (String const &amp;rhs)  
+{  
+	if (this != &amp;rhs)  
+		String(rhs).swap (*this); // Copy-constructor and non-throwing swap  
+	// Old resources are released with the destruction of the temporary above  
+	return *this;  
+}  
+</code></pre>
+
+<p><strong>c. 优化3，以最原始的传值方式传参，避免临时对象创建：</strong></p>
+<p>这时候临时对象是在传参的时候创建的。</p>
+<pre><code class="cpp">String &amp; operator = (String s) // the pass-by-value parameter serves as a temporary  
+{  
+   s.swap (*this); // Non-throwing swap  
+   return *this;  
+}// Old resources released when destructor of s is called.  
+</code></pre>
+
+<p><strong>d. copy and swap 的右值优化</strong>，详见<a href="https://en.wikibooks.org/wiki/More_C++_Idioms/Copy-and-swap">https://en.wikibooks.org/wiki/More_C++_Idioms/Copy-and-swap</a></p>
+<h2 id="2-string">2- 网络版string</h2>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+class String
+{
+		public:
+				String();
+				String(const char *const);
+				String(const String &amp;);
+				~String();
+				char &amp; operator[] (unsigned short offset);
+				char operator[] (unsigned short offset)const;
+				String operator+(const String&amp;);
+				void operator+=(const String&amp;);
+				String &amp; operator= (const String &amp;);
+				unsigned short GetLen()const {return itsLen;}
+				const char * GetString()const {return itsString;}
+		private:
+				String (unsigned short);
+				char * itsString;
+				unsigned short itsLen;
+};
+String::String()
+{
+		itsString = new char[1]; //为什么设置成1，这样会导致内存1bytes无法释放吗？我觉得和itsString = new char没区别，那他为什么要设置成1，这样有什么用？21天学会C++那本书，我也有 ，书上也确实是设置成1.
+		itsString[0] = '/0';
+		itsLen=0;
+}
+String::String(unsigned short len)
+{
+		itsString = new char[len+1];
+		for (unsigned short i =0;i&lt;=len;i++)
+				itsString[i] = '/0';
+		itsLen=len;
+}
+String::String(const char * const cString)
+{
+		itsLen = strlen(cString);
+		itsString = new char[itsLen+1];
+		for (unsigned short i=0;i&lt;itsLen;i++)
+				itsString[i] = cString[i];
+		itsString[itsLen] = '/0';
+}
+String::String(const String &amp; rhs)
+{
+		itsLen = rhs.GetLen();
+		itsString = new char[itsLen+1];
+		for (unsigned short i = 0;i&lt;itsLen;i++)
+				itsString[i] = rhs[i];
+		itsString[itsLen] = '/0';
+}
+String::~String()
+{
+		delete [] itsString;
+		itsLen = 0;
+}
+String&amp; String::operator =(const String &amp; rhs)
+{
+		if (this == &amp;rhs)
+				return *this;
+		delete [] itsString;
+		itsLen=rhs.GetLen();
+		itsString = new char[itsLen+1];
+		for (unsigned short i = 0;i&lt;itsLen;i++)
+				itsString[i] = rhs[i];
+		itsString[itsLen] = '/0';
+		return *this;
+}
+char &amp; String::operator [](unsigned short offset) //这个程序这样写，起到了什么用处？？和main中的那一个对应？
+{
+		if (offset &gt; itsLen)
+				return itsString[itsLen-1]; //这个返回itslen-1到底是什么意思？为什么要减去1 ？？
+		else
+				return itsString[offset];
+}
+char String::operator [](unsigned short offset)const
+{
+		if (offset &gt; itsLen)
+				itsString[itsLen-1];
+		else
+				return itsString[offset];
+}
+String String::operator +(const String&amp; rhs)
+{
+		unsigned short totalLen = itsLen + rhs.GetLen();
+		String temp(totalLen);
+		unsigned short i;
+		for (i=0;i&lt;itsLen;i++)
+				temp[i] = itsString[i];
+		for (unsigned short j = 0;j&lt;rhs.GetLen();j++,i++)
+				temp[i] = rhs[j];
+		temp[totalLen] = '/0';
+		return temp;
+}
+void String::operator +=(const String&amp; rhs)
+{
+		unsigned short rhsLen = rhs.GetLen();
+		unsigned short totalLen = itsLen + rhsLen;
+		String temp(totalLen);
+		unsigned short i;
+		for (i = 0;i&lt;itsLen;i++)
+				temp[i] = itsString[i];
+		for (unsigned short j = 0;j&lt;rhs.GetLen();j++,i++)
+				temp[i] = rhs[i-itsLen];
+		temp[totalLen] = '/0';
+}
+int main()
+{
+
+		String s1(&quot;initial test&quot;); //调用了什么函数？
+		cout&lt;&lt;&quot;S1:/t&quot;&lt;&lt;s1.GetString()&lt;&lt;endl;
+		char *temp =&quot;Hello World&quot;;
+		s1 = temp;//调用了什么函数？
+		cout&lt;&lt;&quot;S1:/t&quot;&lt;&lt;s1.GetString()&lt;&lt;endl;
+		char tempTwo[20];
+		strcpy(tempTwo,&quot;; nice to be here!&quot;);
+		s1 += tempTwo;
+		cout&lt;&lt;&quot;tempTwo:/t&quot;&lt;&lt;tempTwo&lt;&lt;endl;
+		cout&lt;&lt;&quot;S1:/t&quot;&lt;&lt;s1.GetString()&lt;&lt;endl;
+		cout&lt;&lt;&quot;S1[4]:/t&quot;&lt;&lt;s1[4]&lt;&lt;endl;
+		cout&lt;&lt;&quot;S1[999]:/t&quot;&lt;&lt;s1[999]&lt;&lt;endl;//调用了什么函数？
+		String s2(&quot; Anoter string&quot;);//调用了什么函数？
+		String s3;
+		s3 = s1+s2;
+		cout&lt;&lt;&quot;S3:/t&quot; &lt;&lt;s3.GetString()&lt;&lt;endl;
+		String s4;
+		s4 = &quot;Why does this work?&quot;;//调用了什么函数？
+		cout&lt;&lt;&quot;S4:/t&quot;&lt;&lt;s4.GetString()&lt;&lt;endl;
+		return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

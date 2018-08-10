@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>数据库的exists 和 in</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="exists-in">数据库的exists 和 in</h1>
+<p>原文：https://www.cnblogs.com/jerome-rong/archive/2013/03/27/2985505.html</p>
+<p>数据库sql语句的exists总结 sql exists in 学习 </p>
+<p><strong>先来比较下语法：</strong></p>
+<p>--deals=交易表，areas=地域表，例如香港；我们的目的：查看有交易的地域</p>
+<p>select * from areas where id in (select city_id from deals);</p>
+<p>select * from areas where id in   (select city_id from deals where deals.city_id = areas.id);</p>
+<p>select * from areas where exists (select null     from deals where deals.city_id = areas.id);</p>
+<p>区别：</p>
+<p>EXISTS语法并没有说哪个字段落在了子查寻的结果中，而是说exists后面的语句执行的结果是不是有记录，只要有记录，则主查询语句就成立。它代表‘存在’，用来引领嵌套查询的子查询，它不返回任何数据，只产生逻辑真值‘true’与逻辑假值‘False’。由EXISTS引出的子查询，其目标列表达式通常都用*（用null也可以），因为带有EXISTS的子查询只返回真值或假值，给出列名没有实际意义。</p>
+<p><strong>性能变化的关键：</strong></p>
+<p>#1 执行的先后顺序</p>
+<p>谁是驱动表，谁先执行查询，谁后执行查询</p>
+<p>#2 执行过程</p>
+<p>exists的优点是：只要存在就返回了，这样的话很有<strong>可能不需要</strong>扫描整个表。  </p>
+<p>in需要扫描完整个表，并返回结果。</p>
+<p>所以，在字表比较小的情况下，扫描全表和部分表基本没有差别；但在大表情况下，exists就会有优势。</p>
+<p>看这两个语句：</p>
+<p>--子查询会执行完全关联，并返回所有符合条件的city_id</p>
+<p>select * from areas where id in   (select city_id from deals where deals.city_id = areas.id);</p>
+<p>--子查询的关联其实是一样的，但子查询只要查到一个结果，就返回了，所以效率还是比较高些的</p>
+<p>select * from areas where exists (select null     from deals where deals.city_id = areas.id);</p>
+<p>#3 字表查询的结果</p>
+<p>exists判断子查询的结果是不是存在，但查到什么结果，什么字段，并不关心；</p>
+<p>in      需要子查询查得的结果给主查询使用</p>
+<p><strong>in 和 Exists的用法区别</strong></p>
+<p><strong>问题和解决</strong></p>
+<p><strong>问题1：</strong></p>
+<p>--users表有1000条记录，id自增，id都大于0</p>
+<p>select * from users where exists (select * from users limit 0); --输出多少条记录？</p>
+<p>select * from users where exists (select * from users where id &lt; 0); --输出多少条记录？</p>
+<p>答案（请选中查看）：</p>
+<p>10000条</p>
+<p>0条</p>
+<p>原因：</p>
+<p>exists查询的本质，只要碰到有记录，则返回true；所以limit根本就不会去管，或者说执行不到。</p>
+<p><strong>问题2：</strong></p>
+<p>exists可以完全代替in吗？</p>
+<p>不能。</p>
+<p>例如：</p>
+<p>--没有关联字段的情况：枚举常量</p>
+<p>select * from areas where id in (4, 5, 6);</p>
+<p>--没有关联字段的情况：这样exists对子查询，要么全true，要么全false</p>
+<p>select * from areas where id in (select city_id from deals where deals.name = 'xxx'); </p>
+<p><strong>举个相关exists的sql优化例子：</strong></p>
+<p>9<em>、用exists替代in（发现好多程序员不知道这个怎么用）： </em>
+在许多基于基础表的查询中，为了满足一个条件，往往需要对另一个表进行联接。 
+在这种情况下，使用exists(或not exists)通常将提高查询的效率。 
+举例： 
+（低效） 
+select ... from table1 t1 where t1.id &gt; 10 and pno in (select no from table2 where name like 'www%'); 
+（高效） 
+select ... from table1 t1 where t1.id &gt; 10 and exists (select 1 from table2 t2 where t1.pno = t2.no and name like 'www%'); 
+10、<em>用not exists替代not in</em>： 
+在子查询中，not in子句将执行一个内部的排序和合并。 
+无论在哪种情况下，not in都是最低效的 (因为它对子查询中的表执行了一个全表遍历)。 
+为了避免使用not in，我们可以把它改写成外连接(Outer Joins)或not exists。 
+11、<em>用exists替换distinct</em>： 
+当提交一个包含一对多表信息的查询时,避免在select子句中使用distinct. 一般可以考虑用exists替换 
+举例： 
+（低效） 
+select distinct d.dept_no, d.dept_name from t_dept d, t_emp e where d.dept_no = e.dept_no; 
+（高效） 
+select d.dept_no, d.dept_name from t_dept d where exists (select 1 from t_emp where d.dept_no = e.dept_no); 
+<em>exists使查询更为迅速,因为RDBMS核心模块将在子查询的条件一旦满足后,立刻返回结果.</em> 
+12、<em>用表连接替换exists</em>： 
+通常来说，采用表连接的方式比exists更有效率。 
+举例： 
+（低效） 
+select ename from emp e where exists (select 1 from dept where dept_no = e.dept_no and dept_cat = 'W'); 
+SELECT ENAME 
+（高效） 
+select ename from dept d, emp e where e.dept_no = d.dept_no and dept_cat = 'W';</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

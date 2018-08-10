@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180425 常见的游戏开发引擎列表</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180425">20180425 常见的游戏开发引擎列表</h1>
+<p>这个单子里都是些常见的游戏开发引擎，全部都为免费使用，极个别的会在商用方面有一定的限制。之所以只收录可以免费使用的引擎是因为这样会让大家的初期投入成本较低。该列表只收录游戏引擎，不会收录Framework或某种可以用来开发游戏的技术。 </p>
+<p>Orge ： 图像引擎，也可以用来开发游戏，支持PC，Mac，LINUX，IPhone， MIT协议。 
+<a href="http://www.ogre3d.org/about">http://www.ogre3d.org/about</a> </p>
+<p>SDL： 游戏引擎，支持PC，Mac，LINUX，LGPL协议。 
+<a href="http://www.libsdl.org/index.php">http://www.libsdl.org/index.php</a> </p>
+<p>Blender： 这是一个免费的3d建模软件，也有相应的游戏模块，为没有编程经验的美术人员提供简单的游戏开发环境。但国内基本没人用这个吧，能把这个软件用好真的不容易。支持Window，Mac，Linux。 
+<a href="http://www.blender.org/">http://www.blender.org/</a> </p>
+<p>Love2d： 很小巧的一个2d游戏引擎，用Lua开发，适合没有编程经验的人使用或用来制作游戏原型。支持PC，Mac，LINUX。zlib/libpng 协议。 
+<a href="http://love2d.org/">http://love2d.org/</a> </p>
+<p><strong>cocos2d cocos3d：</strong> 针对IDevice，Android的游戏引擎，MIT协议。 
+<a href="http://www.cocos2d-iphone.org/">www.cocos2d-iphone.org</a> </p>
+<p>Libgdx： Android下的游戏开发引擎，个人觉得是Android平台上最好的游戏引擎。Apache License 2.0。 
+code.google.com/p/libgdx </p>
+<p>UDK： 虚幻游戏开发工具，最优秀的商用游戏开发引擎之一，从主机到台式电脑再到手持设备都支持。5万刀以下的项目可以免费使用。 
+<a href="http://www.udk.com/">http://www.udk.com/</a> </p>
+<p><strong>Unity：</strong> 把这个忘了，这也是个比较全能的游戏开发引擎，相对UDK要轻量些，有PC和Mac两个版本。10万刀以下的项目可以免费使用。 
+<a href="http://unity3d.com/">http://unity3d.com</a> </p>
+<p>HGE：HGE是一个非常高效的2D游戏引擎，但只支持PC，zlib/libpng License，其中的BASS只适用于非商业用途。 
+<a href="http://hge.relishgames.com/">http://hge.relishgames.com/</a> </p>
+<p>Irrlicht：和OGRE一样，也是一个比较全能的开源免费引擎，支持PC，Mac，LINUX。采用基于zlib/libpng license的私有协议。 
+<a href="http://irrlicht.sourceforge.net/">http://irrlicht.sourceforge.net/</a> </p>
+<p>Crystal Space：实时3D开发包，也可以用来开发游戏，支持PC，Mac，LINUX。LGPL协议。 
+<a href="http://www.crystalspace3d.org/main/Main_Page">http://www.crystalspace3d.org/main/Main_Page</a> </p>
+<p>Source Engine</p>
+<p>起源(source)引擎是一款3d游戏引擎，由Valve软件公司为了第一人称射击游戏《半条命2》开发，并且对其他的游戏开发者开放授权。作为一款整合引擎，起源引擎可以对开发者提供从物理模拟、画面渲染到服务器管理、用户界面设计等所有服务。引擎附带“起源开发包”和“起源电影制作人”两款程序，前一个可以制作游戏，而后一个更是业界首个专门制作游戏电影cg的程序。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

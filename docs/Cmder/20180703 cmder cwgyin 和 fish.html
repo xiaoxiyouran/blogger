@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180703 cmder cwgyin 和 fish</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180703-cmder-cwgyin-fish">20180703 cmder cwgyin 和 fish</h1>
+<p>官网：</p>
+<pre><code class="shell">http://cmder.net/
+</code></pre>
+
+<h2 id="_1">下载</h2>
+<p><a href="https://blog.csdn.net/oncealong/article/details/50459136">参考</a></p>
+<p>只有方便的快速切换到当前目录,才能提高生产力.要不然先Win+X调用命令提示符,然后再CD %指定Path%,黄花菜都凉了.</p>
+<p>接下来说下如何结合魔方和Cmder,使其快速切换到当前目录. 
+1.下载Cmder.exe,有迷你版和完全版.完全版有更多的命令,包括git和vim,可以给你贴近原生的*nix感受. 
+<a href="https://github.com/bliker/cmder/releases/download/v1.2.9/cmder.zip">完全版下载地址</a> （夕下载的是这个）
+<a href="https://github.com/bliker/cmder/releases/download/v1.2.9/cmder_mini.zip">迷你版下载地址</a> </p>
+<p><strong>mini版功能简单，很小巧，只有4M多，主要是cmd和powershell</strong>  </p>
+<p><img alt="" src="20180703_04.jpg" /></p>
+<p><strong>full版功能强大，包含了git、powershell、bash、chocolatey、Cygwin、SDK等功能</strong>  </p>
+<p><img alt="" src="20180703_05.jpg" /></p>
+<h2 id="_2">全安装版本介绍</h2>
+<h3 id="cmder">全安装版 cmder 自带的程序</h3>
+<p>全安装版 cmder 自带了 msysgit, 压缩包 23M, 除了 git 本身这个命令之外, 里面可以使用大量的 linux 命令</p>
+<p><img alt="msysgit-bin" src="msysgit-bin.png" /></p>
+<p>比如我最喜欢的 grep, curl(没有 wget), 说实话我并不知道怎么在 windows 下搜索某个目录下的文本, cmder 拯救了我, 像 vim, ssh, ls, bash, perl 更是每个都是痛点需求</p>
+<p><img alt="vim" src="vim.jpg" /><img alt="nslookup" src="http://fimg.qiniudn.com/cmder/nslookup.jpg" /> <img alt="img" src="ssh.jpg" /><img alt="img" src="tree.jpg" /></p>
+<p>左右上下分屏, 多 tab 终端, 都不在话下</p>
+<p><img alt="perl" src="perl-bash.jpg" /></p>
+<p>linux 下 bash 的快捷键大多都可以使用, 比如 清屏 <code>ctrl + l</code>, <code>ctrl + u</code>, 甚至是历史搜索 <code>ctrl + r</code> 都可以用</p>
+<p><img alt="ctrl+r" src="bash-1530621301347.png" /></p>
+<p>不多说了, 还等什么, 赶快使用 cmder 吧!</p>
+<p>你可能还需要一些小小的设置来让自己用的更</p>
+<h2 id="_3">配置</h2>
+<h3 id="_4">基本配置</h3>
+<p>1- 下载完后，解压缩就能用；</p>
+<p>2- 添加到环境变量（用户环境变量的<mark>path</mark>），这样可以不用在 Cmder 目录下运行 <code>Cmder.exe</code> 了。</p>
+<p><img alt="1530619756649" src="1530619756649.png" /></p>
+<p>3- 运行如下命令，可以将Cmder 添加到右键：</p>
+<p>添加至右键菜单：进入cmder根目录，以管理员身份运行 cmd</p>
+<pre><code class="shell">Cmder.exe /REGISTER ALL 
+</code></pre>
+
+<p>4- 打开Cmder 进行配置</p>
+<p><img alt="1530619501077" src="1530619501077.png" /></p>
+<p>加载完后默认的tasks后（<mark>点击Add default tasks</mark>）</p>
+<hr />
+<p><mark>下面这个刚开始好像不管用，后面又管用了。</mark></p>
+<p>下载后打开,右下角Show System Menu-&gt;setting-&gt;Tasks-&gt;选中{cmd},做如下修改: 
+将 <code>cmd /k "%ConEmuDir%\..\init.bat" -new_console:d:%USERPROFILE%</code> 
+改为 <code>cmd /k "%ConEmuDir%\..\init.bat" -new_console:d:%CD%</code> 
+如下图所示: </p>
+<p><img alt="" src="20180703_01.jpg" /></p>
+<p>至此设置完毕。  在任何文件夹下右键打开即可自动切换到当前路径下。  </p>
+<p><img alt="" src="20180703_02.jpg" /></p>
+<h3 id="_5">背景</h3>
+<p>当然这个完全是图好看的。 
+可以选择自己喜欢的图片，暗化之后效果不错，在 Features-Transparency 下也能弄出透明效果</p>
+<p><img alt="" src="20180703_06.jpg" /></p>
+<h3 id="_6">主题</h3>
+<p>内置了几款不错的主题，总有一款适合你，当然也支持自己设定</p>
+<p><img alt="" src="20180703_07.jpg" /></p>
+<h3 id="_7">快捷键</h3>
+<p>可以自己设置全局快捷键</p>
+<p><img alt="" src="20180703_03.jpg" /></p>
+<h3 id="_8">设置字体</h3>
+<p>cmder 默认的 console 字体已经比 windows 自带的好看 n 倍, 但还有一些小小的瑕疵, 比如下图所示, 需要一些小小的设置</p>
+<p><img alt="chinese-font-bug" src="chinese-font-bug.png" /></p>
+<p>输入 <code>win + alt + p</code> 或者 在顶部右击点击 <code>settings</code>, 进入设置页面, 去掉 monospace 选项, 看是不是中文字体正常了? 我自己还会勾选 bold 加粗, 并且把字体改大, 点击 save settings 即可, 如果你发现保存按钮是灰色, 那依然需要进入管理员权限的 cmder 来保存设置</p>
+<p><img alt="img" src="setting.png" /> </p>
+<p>字体大小的设置</p>
+<ul>
+<li>字体放大缩小： 按住<code>ctrl</code> + 鼠标滚轮上下 即可</li>
+</ul>
+<p><br></p>
+<h3 id="_9">设置默认打开的终端</h3>
+<ul>
+<li>设置默认使用cmd、PowerShell还是bash：</li>
+</ul>
+<p><img alt="img" src="6055764-a22579ee937fff8f.png" /></p>
+<h3 id="_10">设置中文编码</h3>
+<p>设置中文编码：右击cmd窗口，点击setting。在Start-up下的environment中加入: <code>set LANG=zh_CN.UTF8</code></p>
+<p><img alt="img" src="6055764-6268df25533c50cd.png" /></p>
+<h3 id="_11">设置管理员权限和打开新的终端</h3>
+<p>新开窗口打开管理员权限：新的tab页面使用快捷键： <code>ctrl+t</code>来打开， 然后会弹出如下的配置窗口。还可以设置分屏位置、启动目录以及启动的环境。</p>
+<p><img alt="img" src="6055764-a4a6f506a5757a3e.png" /></p>
+<h3 id="_12">防止字体重叠</h3>
+<p>防止字体重叠（据说..反正我没遇到过）： </p>
+<p><img alt="img" src="6055764-5a901380ec08a255.png" /></p>
+<h3 id="_13">基础功能及扩展</h3>
+<p><img alt="img" src="6055764-ef6fab867dc42114.png" /> </p>
+<ol>
+<li>tab分页 可以执行不同的任务，使用快捷键： <code>ctrl+t</code>来打开</li>
+<li>在视窗内搜索画面上出现过的关键字</li>
+<li>新增tab页按钮</li>
+<li>切换tab页按钮</li>
+<li>锁定窗口，无法输入新内容</li>
+<li>切换视窗是否提供卷轴功能，启动时可查询之前显示过的内容。</li>
+<li>左击可开启系统菜单，右击可直接开启设置 （ <code>Win+Alt+P</code>：开启设置）</li>
+</ol>
+<h3 id="aliasesvscode">设置aliases及分屏打开vscode</h3>
+<p>用文本编辑器打开安装路径下 -&gt; config -&gt; user-aliases.cmd
+ 添加相应的命令， 使得可以自定义一些短命令来替代某些长命令：</p>
+<pre><code>gc = git commit -am $1
+sublilme = &quot;E:\Microsoft VS Code\Code.exe&quot; $1 -new_console:s50H 
+</code></pre>
+
+<p>其中<code>$1</code>代表<code>gc</code>命令后面添加的参数， 并且<code>=</code>后的命令可以使用<code>&amp;</code>连接，使得gc可以一次完成多条命令任务。
+ 这样子设置以后，使用<code>gc "first commit"</code>就会替代 <code>git commit -am"first commit"</code>时。
+ 键入命令 <code>sublime</code> 就可直接在窗口右边50%横向打开vscode，若是想纵向打开则更改参数(new_console:s50V)，当中的数字作为百分比。（注意cmder窗口要足够大小才能分栏显示）</p>
+<p><img alt="img" src="6055764-7ddb2318e9b79efe.png" /> </p>
+<p>ps: 这仅仅是设置了cmd下的aliases， 如果想更改powershell下的，需要打开vendor/profile.ps1</p>
+<pre><code>Set-Alias sublime &quot;C:\Program Files\Sublime Text 3\sublime_text.exe&quot;
+</code></pre>
+
+<p>pss: 如果想打开sublime， 可能配置会麻烦一些， 可以参考该文章： <a href="https://link.jianshu.com?t=http://imweb.io/topic/56b072d05c49f9d377ed8ee2">再见2015 再见cmd</a></p>
+<h2 id="5">5. 个性化配置</h2>
+<ul>
+<li>分屏设置
+   打开 setting -&gt; key -&gt; search : split ， 即可调节左右分屏以及上下分屏了 <img alt="img" src="6055764-54b9fdfd85cf31e3.png" /> </li>
+</ul>
+<p>这个很有用，我的设置如下：</p>
+<p><mark>F5: 上下分屏</mark></p>
+<p><mark>F6: 左右分屏</mark></p>
+<ul>
+<li>
+<p>主题设置： setting -&gt; Features -&gt; Colors 选择不同的Schemes 即可， 下面可以设置一些比较细节的颜色显示</p>
+</li>
+<li>
+<p>调节背景透明度： 个人喜好问题。在 setting -&gt; Features -&gt; Transparency 。 第一个进度条的是在活跃（焦点在cmder时）的窗口透明度，第二个则是在非活跃时的窗口透明度。</p>
+</li>
+</ul>
+<h2 id="6">6. 常用快捷键及设置</h2>
+<p>对于tab操作与浏览器页的tab操作一致：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>tab操作</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>新建tab</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><mark>Ctrl + t</mark></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>关闭tab</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Ctrl + w</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>切换Tab</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Ctrl+Tab或Ctrl+1,2...</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>新建CMD</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Shift + Alt + 1</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>新建 PowerShell</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Shift + Alt + 2</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>全屏操作</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Alt + Enter</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cmder_1">cmder 的设置</h2>
+<p>添加 ll 等命令在cmder-&gt;config-&gt;aliases，打开aliases。并将:</p>
+<p>l=ls --show-control-chars</p>
+<p>la=ls -aF --show-control-chars</p>
+<p>ll=ls -alF --show-control-chars</p>
+<p>ls=ls --show-control-chars -F</p>
+<p>添加至文件末尾，用于增强命令并添加颜色区分。</p>
+<h2 id="_14">参考文献</h2>
+<p>1- https://blog.csdn.net/csdn_moming/article/details/50968258</p>
+<p>2- http://bg.biedalian.com/2014/09/11/cmder.html</p>
+<p>3- https://www.jianshu.com/p/979db1a96f6d (划重点)</p>
+<p>4-https://lfire.github.io/2017/03/08/cmder-cygwin-chinese/</p>
+<p>5- 附上最后一个更详细的介绍： https://jeffjade.com/2016/01/13/2016-01-13-windows-software-cmder/</p>
+<p>这个并未总结进来。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

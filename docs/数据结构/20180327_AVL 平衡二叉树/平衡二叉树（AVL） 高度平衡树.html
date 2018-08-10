@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>平衡二叉树（AVL） 高度平衡树</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="avl">平衡二叉树（AVL） 高度平衡树</h1>
+<pre><code class="sh">1- 注意，平衡二叉树首先就是二叉搜索树[满足左小，右大的特征]。 但是二叉搜索树不太平衡，最极端的情况会出现单链树
+
+2- 往右转就右旋，判断该怎么旋，看Pivot 节点的方向。
+
+</code></pre>
+
+<h2 id="1-">1- 平衡二叉树的概念</h2>
+<p>在<a href="http://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6">计算机科学</a>中，<strong>AVL树</strong>是最先发明的<a href="http://zh.wikipedia.org/wiki/%E8%87%AA%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91">自平衡二叉查找树</a>。在AVL树中任何节点的两个<a href="http://zh.wikipedia.org/w/index.php?title=%E5%AD%90%E8%8A%82%E7%82%B9&amp;action=edit&amp;redlink=1">子树</a>的高度最大差别为一，所以它也被称为<a href="http://zh.wikipedia.org/w/index.php?title=%E9%AB%98%E5%BA%A6%E5%B9%B3%E8%A1%A1%E6%A0%91&amp;action=edit&amp;redlink=1">高度平衡树</a>。查找、插入和删除在平均和最坏情况下都是<a href="http://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7">O</a>（log <em>n</em>）。增加和删除可能需要通过一次或多次<a href="http://zh.wikipedia.org/wiki/%E6%A0%91%E6%97%8B%E8%BD%AC">树旋转</a>来重新平衡这个树。</p>
+<p>节点的<strong>平衡因子</strong>是它的左子树的高度减去它的右子树的高度（有时相反）。带有平衡因子1、0或 -1的节点被认为是平衡的。带有平衡因子 -2或2的节点被认为是不平衡的，并需要重新平衡这个树。平衡因子可以直接存储在每个节点中，或从可能存储在节点中的子树高度计算出来。</p>
+<h2 id="2-">2- 平衡二叉树的四种旋转情况</h2>
+<p>以下图表以四列表示四种情况，每行表示在该种情况下要进行的操作。在左左和右右的情况下，只需要进行一次旋转操作；在左右和右左的情况下，需要进行两次旋转操作。</p>
+<p><img alt="" src="./AVL" title="树.png" /></p>
+<blockquote>
+<p>1.单向右旋：由于在*a的左子树根节点的右子树上插入节点，a的平衡因子由1变为2，向右顺时针旋转。</p>
+<p>2.单向左旋：由于在*a的右子树根节点的右子树上插入节点，a的平衡因子由1变为2，向左顺时针旋转。</p>
+<p>3.先左后右：由于在*a的右子树根节点的右子树上插入节点，a的平衡因子由1变为2，做两次旋转，先左旋转，再右旋转。</p>
+<p>4.先右后左：由于在*a的右子树根节点的左子树上插入节点，a的平衡因子由1变为2，做两次旋转，先右旋转，再左旋转。</p>
+</blockquote>
+<p>​      <strong>精华：</strong></p>
+<pre><code>    LL：单右转
+
+	RR：单左转
+
+	LR：先左后右
+
+	RL：先右后左
+</code></pre>
+
+<h2 id="3-">3- 插入</h2>
+<p>向AVL树插入可以通过如同它是未平衡的二叉查找树一样把给定的值插入树中，接着自底向上向根节点折回，于在插入期间成为不平衡的所有节点上进行旋转来完成。因为折回到根节点的路途上最多有1.44乘log n个节点，而每次AVL旋转都耗费恒定的时间，<strong>插入处理在整体上耗费O(log n) 时间。</strong></p>
+<h2 id="4-">4- 删除</h2>
+<p>从AVL树中删除可以通过<strong>把要删除的节点向下旋转成一个叶子节点，接着直接剪除这个叶子节点来完成。因为在旋转成叶子节点期间最多有log n个节点被旋转，</strong>而每次AVL旋转耗费恒定的时间，删除处理在整体上耗费O(log n) 时间。</p>
+<h2 id="5-">5- 查找</h2>
+<p>可以像普通二叉查找树一样的进行，所以耗费O(log <em>n</em>)时间，因为<strong>AVL树总是保持平衡</strong>的。不需要特殊的准备，树的结构不会由于查找而改变。（这是与<a href="http://zh.wikipedia.org/wiki/%E4%BC%B8%E5%B1%95%E6%A8%B9">伸展树</a>查找相对立的，它会因为查找而变更树结构。）</p>
+<hr />
+<p>左左</p>
+<pre><code class="cpp">//左左  LL
+TreeNode *SingleRotateLeft(TreeNode *t2)  
+{  
+	TreeNode *t1;  
+	t1 = t2-&gt;left;  
+		t2-&gt;left = t1-&gt;right;  
+	t1-&gt;right = t2;  
+
+	t2-&gt;height = max(getHeight(t2-&gt;left),getHeight(t2-&gt;right)) + 1;  
+	t1-&gt;height = max(getHeight(t1-&gt;left),getHeight(t1-&gt;right)) + 1;  
+	return t1;  
+} 
+</code></pre>
+
+<pre><code class="cpp">//右右  
+ TreeNode *SingleRotateRight(TreeNode *t2)  
+ {  
+	 TreeNode *t1;  
+	 t1 = t2-&gt;right;  
+	 t2-&gt;right = t1-&gt;left;  
+	 t1-&gt;left = t2;  
+
+	 t2-&gt;height = max(getHeight(t2-&gt;left),getHeight(t2-&gt;right)) + 1;  
+	 t1-&gt;height = max(getHeight(t1-&gt;left),getHeight(t1-&gt;right)) + 1;  
+	 return t1;  
+ }  
+</code></pre>
+
+<p>对于<strong>“左右”</strong>和<strong>“右左”</strong>则要进行一次<strong>双旋转</strong>，</p>
+<pre><code class="cpp">//左右  
+TreeNode * DoubleRotateLR(TreeNode *t3)  
+{  
+ t3-&gt;left = SingleRotateRight(t3-&gt;left);  
+ return SingleRotateLeft(t3);  
+}  
+</code></pre>
+
+<pre><code class="cpp">//右左  
+TreeNode * DoubleRotateRL(TreeNode *t3)  
+{  
+ t3-&gt;right = SingleRotateLeft(t3-&gt;right);  
+ return SingleRotateRight(t3);  
+}  
+</code></pre>
+
+<p>插入操作:</p>
+<p>进行插入操作时必须判断平衡树是否失衡，如果是则要进一步判断是用单旋转调整或者是双旋转进行调整。注意每次旋转调整后还要进行树高调整。</p>
+<pre><code class="cpp">
+ int getHeight(TreeNode *t)
+ {
+	if(t == NULL) return -1;
+	else return t-&gt;height;
+ }
+ bool isBalanced(TreeNode *left,TreeNode *right)
+ {
+	 return abs(getHeight(left) - getHeight(right)) &lt; 2;
+ }
+
+ TreeNode* insert(int v, TreeNode *root)
+ {
+	if(root == NULL)
+	{
+		root = new TreeNode(v);
+		return root;
+	}
+	if(v &gt; root-&gt;value) //节点插入在右子树中
+	{
+		root-&gt;right = insert(v,root-&gt;right);
+		if(!isBalanced(root-&gt;left,root-&gt;right)){
+			if(v &gt; root-&gt;right-&gt;value)
+				root = SingleRotateRight(root);
+			else
+				root = DoubleRotateRL(root);
+		}
+	}else{
+		root-&gt;left = insert(v,root-&gt;left);
+		if(!isBalanced(root-&gt;left,root-&gt;right)){
+			if(v &lt; root-&gt;left-&gt;value)
+				root = SingleRotateLeft(root);
+			else
+				root = DoubleRotateLR(root);
+		}
+	}
+	root-&gt;height = max(getHeight(root-&gt;left),getHeight(root-&gt;right)) + 1;
+	return root;
+ }
+</code></pre>
+
+<p>举个例子</p>
+<pre><code class="cpp">
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+struct TreeNode
+{
+	int bf;
+	int height;
+	int data;
+	TreeNode *leftchild;
+	TreeNode *rightchild;
+	TreeNode *parent;
+};
+int max(int a, int b)
+{
+	return a&gt;b?a:b;
+}
+
+template&lt;class obj_s&gt;
+class AVLTree
+{
+public:
+	TreeNode *root;
+public:
+	AVLTree()
+	{
+		root=NULL;
+	}
+	int getHeight(TreeNode *node);
+
+	int reComHeight(TreeNode *root);//重新计算高度
+	//四种旋转方式
+	TreeNode* LLclockRotation(TreeNode* x);
+	TreeNode* RRantiRotation(TreeNode* x);
+	TreeNode* LRanti_clockRotation(TreeNode* x);
+	TreeNode* RLclock_antiRotation(TreeNode* x);
+	//
+	TreeNode* reBalance(TreeNode* cur,int bf);
+	//插入和删除
+	TreeNode* insert(TreeNode* curr,TreeNode* prev,int num);
+	TreeNode* findDelPosition(TreeNode* root,int key);
+	//
+	TreeNode* clearTarget(TreeNode* root);
+	//
+	void toPrint(TreeNode* root,int depth=0);
+	//找待删除结点的前驱结点
+	TreeNode* FindMin(TreeNode* least);
+};
+
+template&lt;class obj_s&gt;
+int AVLTree&lt;obj_s&gt;::getHeight(TreeNode* node)
+{
+	if(node)
+		return node-&gt;height;
+	else
+		return -1;
+}
+
+template&lt;class obj_s&gt;
+int AVLTree&lt;obj_s&gt;::reComHeight(TreeNode* root)
+{
+	root-&gt;height = max(getHeight(root-&gt;leftchild), getHeight(root-&gt;rightchild)) + 1;
+	root-&gt;bf = getHeight(root-&gt;leftchild) - getHeight(root-&gt;rightchild);
+	return root-&gt;bf;
+}
+
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::LLclockRotation(TreeNode* x)
+{
+	TreeNode* y = x-&gt;leftchild;
+	x-&gt;leftchild = y-&gt;rightchild;
+	if (y-&gt;rightchild)
+		y-&gt;rightchild-&gt;parent = x;
+	y-&gt;rightchild = x;
+	y-&gt;parent = x-&gt;parent;
+	x-&gt;parent = y;
+	reComHeight(x);
+	reComHeight(y);
+	return y;
+}
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::RRantiRotation(TreeNode* x){
+	TreeNode* y = x-&gt;rightchild;
+	x-&gt;rightchild = y-&gt;leftchild;
+	if (y-&gt;leftchild)
+		y-&gt;leftchild-&gt;parent = x;
+	y-&gt;leftchild = x;
+	y-&gt;parent = x-&gt;parent;
+	x-&gt;parent = y;
+	reComHeight(x);
+	reComHeight(y);
+	return y;
+}
+
+
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::LRanti_clockRotation(TreeNode* x)
+{
+	x-&gt;leftchild = RRantiRotation(x-&gt;leftchild);
+	return LLclockRotation(x);
+}
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::RLclock_antiRotation(TreeNode* x)
+{
+	x-&gt;rightchild = LLclockRotation(x-&gt;rightchild);
+	return RRantiRotation(x);
+}
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::reBalance(TreeNode* curr, int bf)
+{
+	if(abs(bf)&lt;2)
+		return curr;
+	else
+	{
+		if(bf == -2)                    /// 右边的深了
+		{
+			if (curr-&gt;rightchild-&gt;bf&gt;0) 
+				return RLclock_antiRotation(curr);
+			else
+				return RRantiRotation(curr);
+		}
+		else if(bf == 2)
+		{
+			if (curr-&gt;leftchild-&gt;bf &lt; 0)
+				return LRanti_clockRotation(curr);
+			else
+				return LLclockRotation(curr);
+		}
+	}
+	//return NULL;
+}
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::insert(TreeNode* curr, TreeNode* prev, int num){
+	int x = 0;
+	if (!curr)
+	{
+		curr = (TreeNode*)malloc(sizeof(TreeNode));
+		curr-&gt;data = num;
+		curr-&gt;bf = 0;
+		curr-&gt;height = 0;
+		curr-&gt;parent = prev;
+		curr-&gt;leftchild = curr-&gt;rightchild = NULL;
+		x = num;
+	}
+	else if(num&lt;(curr-&gt;data))
+		curr-&gt;leftchild = insert(curr-&gt;leftchild, curr, num);
+	else if(num&gt;(curr-&gt;data))
+		curr-&gt;rightchild = insert(curr-&gt;rightchild, curr, num);
+	curr=reBalance(curr,reComHeight(curr));
+	return curr;
+}
+template&lt;class obj_s&gt;
+void AVLTree&lt;obj_s&gt;::toPrint(TreeNode* root, int depth)
+{
+	if(root-&gt;rightchild)
+		toPrint(root-&gt;rightchild, depth + 1);
+	for(int i = 0; i&lt; depth; i++)
+		printf(&quot;\t&quot;);
+	printf(&quot;%d(%d,%d)\n&quot;, root-&gt;data,root-&gt;height, root-&gt;bf);
+	if (root-&gt;leftchild)
+		toPrint(root-&gt;leftchild, depth + 1);
+}
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::FindMin(TreeNode* least){
+	if(!least-&gt;leftchild)
+		return least;
+	else
+		FindMin(least-&gt;leftchild);
+}
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::clearTarget(TreeNode* root){
+	TreeNode* par = root-&gt;parent, * temp = root;
+	if (root-&gt;leftchild&amp;&amp;root-&gt;rightchild){
+		temp = FindMin(root-&gt;rightchild);
+		root-&gt;data = temp-&gt;data;
+		root-&gt;rightchild = findDelPosition(root-&gt;rightchild, root-&gt;data);
+	}
+	else
+	{
+		if (root-&gt;leftchild){
+			root-&gt;leftchild-&gt;parent = par;
+			if (par-&gt;leftchild == root) par-&gt;leftchild = root-&gt;leftchild;
+			else if (par-&gt;rightchild == root) par-&gt;rightchild = root-&gt;leftchild;
+			root = root-&gt;leftchild;
+		}
+		else if (root-&gt;rightchild){
+			root-&gt;rightchild-&gt;parent = par;//认可问题
+			if (par-&gt;leftchild == root) par-&gt;leftchild = root-&gt;rightchild;
+			else if (par-&gt;rightchild == root) par-&gt;rightchild = root-&gt;rightchild;
+			root = root-&gt;rightchild;
+		}
+		else root = NULL;//都为NULL
+		free(temp);
+	}
+	if (root) reComHeight(root);
+	return root;
+}
+template&lt;class obj_s&gt;
+TreeNode* AVLTree&lt;obj_s&gt;::findDelPosition(TreeNode* root, int key){
+	if(key == root-&gt;data)
+		root = clearTarget(root);
+	else if(key&lt;root-&gt;data)
+		root-&gt;leftchild = findDelPosition(root-&gt;leftchild, key);
+	else if(key&gt;root-&gt;data)
+		root-&gt;rightchild = findDelPosition(root-&gt;rightchild, key);
+	if(root)
+		root = reBalance(root, reComHeight(root));
+	return root;
+
+}
+int main()
+{
+
+	int temp[10] = { 40, 60, 20, 80, 50, 30, 10, 70, 25,65 };
+	AVLTree&lt;int&gt; avl;
+	for (int i = 0; i &lt; 10; i++)
+		avl.root = avl.insert(avl.root, avl.root, temp[i]);
+	//avl.findDelPosition(avl.root, 40); 删除操作
+	avl.toPrint(avl.root);
+	system(&quot;pause&quot;);
+	return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

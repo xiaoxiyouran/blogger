@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>09  Java运算符</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="09-java">09  Java运算符</h1>
+<p>Java中的运算符是用于执行运算(加，减，乘，除等)操作的符号。例如：<code>+</code>， <code>-</code> ，<code>*</code>，<code>/</code>等。</p>
+<p>Java中有许多类型的运算符，如下所示：</p>
+<ul>
+<li>一元运算符</li>
+<li>算术运算符</li>
+<li>移位运算符</li>
+<li>关系运算符</li>
+<li>按位运算符</li>
+<li>逻辑运算符</li>
+<li>三元运算符</li>
+<li>分配运算符</li>
+</ul>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>运算符</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>后缀</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>expr++</code>， <code>expr--</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>一元</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>++expr</code>， <code>--expr</code>， <code>+expr</code>， <code>-expr</code>，<code>~</code>，<code>!</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>乘、除法</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>*</code>, <code>/</code>,<code>%</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>加、减法</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>+</code>， <code>-</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>移位</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>&lt;&lt;</code>， <code>&gt;&gt;</code>， <code>&gt;&gt;&gt;</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>关系</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>&lt;</code>， <code>&gt;</code>， <code>&lt;=</code>，<code>&gt;=</code>， <code>instanceof</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>相等</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>==</code>， <code>!=</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>按位与</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>&amp;</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>按位异或</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>^</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>按位或</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><img alt="img" src="http://www.yiibai.com/uploads/images/201703/0203/324090329_74222.png" /></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>逻辑与</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>&amp;&amp;</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>逻辑或</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><img alt="img" src="http://www.yiibai.com/uploads/images/201703/0203/211090330_42812.png" /></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>三元</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>? :</code></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>赋值</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>=</code>， <code>+=</code>， <code>-=</code>， <code>*=</code>， <code>/=</code>，<code>%=</code>，<code>&amp;=</code>， <code>^=</code>， <code>&lt;&lt;=</code>， <code>&gt;&gt;=</code>， <code>&gt;&gt;&gt;=</code>，<img alt="img" src="http://www.yiibai.com/uploads/images/201703/0203/135090332_68499.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>下面分别来看上述运行算的示例：</p>
+<h3 id="1-java">1. Java一元运算符示例：++ 和 —</h3>
+<pre><code class="java">class OperatorExample{  
+	public static void main(String args[]){  
+		int x=10;  
+		System.out.println(x++);//10 (11)  
+		System.out.println(++x);//12  
+		System.out.println(x--);//12 (11)  
+		System.out.println(--x);//10  
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">10
+12
+12
+10
+</code></pre>
+
+<h3 id="2-java2">2. Java一元运算符示例2：++ 和 —</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = 10;
+		System.out.println(a++ + ++a);// 10+12=22
+		System.out.println(b++ + b++);// 10+11=21
+
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">22
+21
+</code></pre>
+
+<h3 id="3-java3">3. Java一元运算符示例3：〜 和 ！</h3>
+<p>表面上看，一个数的位反： 就是先取负数，再减1.</p>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = -10;
+		boolean c = true;
+		boolean d = false;
+		System.out.println(~a);// -11 (minus of total positive value which
+								// starts from 0)  ， -10 - 1
+		System.out.println(~b);// 9 (positive of total minus, positive starts
+								// from 0)  ， -(-10) - 1
+		System.out.println(!c);// false (opposite of boolean value)
+		System.out.println(!d);// true
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">-11
+9
+false
+true
+</code></pre>
+
+<h3 id="4-java">4. Java算术运算符示例</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = 5;
+		System.out.println(a + b);// 15
+		System.out.println(a - b);// 5
+		System.out.println(a * b);// 50
+		System.out.println(a / b);// 2
+		System.out.println(a % b);// 0
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">15
+5
+50
+2
+0
+</code></pre>
+
+<h3 id="5-java">5. Java算术运算符示例：表达式</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		System.out.println(10 * 10 / 5 + 3 - 1 * 4 / 2);
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">21
+</code></pre>
+
+<h3 id="6-java">6. java的移位运算实例：左移</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		System.out.println(10 &lt;&lt; 2);// 10*2^2=10*4=40
+		System.out.println(10 &lt;&lt; 3);// 10*2^3=10*8=80
+		System.out.println(20 &lt;&lt; 2);// 20*2^2=20*4=80
+		System.out.println(15 &lt;&lt; 4);// 15*2^4=15*16=240
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="shell">40
+80
+80
+240
+</code></pre>
+
+<h3 id="7-java">7. java的移位运算实例：右移</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		System.out.println(10 &gt;&gt; 2);// 10/2^2=10/4=2
+		System.out.println(20 &gt;&gt; 2);// 20/2^2=20/4=5
+		System.out.println(20 &gt;&gt; 3);// 20/2^3=20/8=2
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">2
+5
+2
+</code></pre>
+
+<h3 id="8-java">8. java的移位运算实例：&gt;&gt; 和 &gt;&gt;&gt;</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		// For positive number, &gt;&gt; and &gt;&gt;&gt; works same
+		System.out.println(20 &gt;&gt; 2);
+		System.out.println(20 &gt;&gt;&gt; 2);
+		// For nagative number, &gt;&gt;&gt; changes parity bit (MSB) to 0
+		System.out.println(-20 &gt;&gt; 2);
+		System.out.println(-20 &gt;&gt;&gt; 2);
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">5
+5
+-5
+1073741819
+</code></pre>
+
+<h3 id="9-java-and">9. Java AND运算符示例：逻辑&amp;&amp;和位＆</h3>
+<p>如果第一个条件为假(<code>false</code>)，则逻辑<code>&amp;&amp;</code>运算符不检查第二个条件。它只有在第一个条件为真(<code>true</code>)时才会检查第二个条件。</p>
+<p>按位与(<code>&amp;</code>)运算符总是检查两个条件，不管第一个条件是真还是假。</p>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = 5;
+		int c = 20;
+
+		System.out.println(a &lt; b &amp;&amp; a &lt; c);// false &amp;&amp; true = false
+		System.out.println(a &lt; b &amp; a &lt; c);// false &amp; true = false
+
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">false
+false
+</code></pre>
+
+<h3 id="10-java">10. Java与运行算实例：逻辑&amp;&amp;与按位＆</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = 5;
+		int c = 20;
+		System.out.println(a &lt; b &amp;&amp; a++ &lt; c);// false &amp;&amp; true = false
+		System.out.println(a);              // 10 because second condition is not checked
+		System.out.println(a &lt; b &amp; a++ &lt; c);// false &amp;&amp; true = false
+		System.out.println(a);              // 11 because second condition is checked
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">false
+10
+false
+11
+</code></pre>
+
+<h3 id="11-java">11. Java 或运算符示例：逻辑|| 和按位 |</h3>
+<p>逻辑<code>||</code> 如果第一个条件为真(<code>true</code>)，运算符不检查第二个条件。它只在第一个条件为假(<code>false</code>)时才会检查第二个条件。</p>
+<p>按位或 <code>|</code> 运算符总是检查两个条件，不管第一个条件是真(<code>true</code>)还是假(<code>false</code>)。</p>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = 5;
+		int c = 20;
+		System.out.println(a &gt; b || a &lt; c);// true || true = true
+		System.out.println(a &gt; b | a &lt; c);// true | true = true
+		// || vs |
+		System.out.println(a &gt; b || a++ &lt; c);// true || true = true
+		System.out.println(a);// 10 because second condition is not checked
+		System.out.println(a &gt; b | a++ &lt; c);// true | true = true
+		System.out.println(a);// 11 because second condition is checked
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">true
+true
+true
+10
+true
+11
+</code></pre>
+
+<h3 id="12-java">12. Java 或运算符示例：逻辑|| 和按位 |</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 2;
+		int b = 5;
+		int min = (a &lt; b) ? a : b;
+		System.out.println(min);
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">2
+</code></pre>
+
+<p><strong>另一个例子：</strong></p>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = 5;
+		int min = (a &lt; b) ? a : b;
+		System.out.println(min);
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">5
+</code></pre>
+
+<h3 id="13-java">13. Java分配运算符示例</h3>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		int a = 10;
+		int b = 20;
+		a += 4;// a=a+4 (a=10+4)
+		b -= 4;// b=b-4 (b=20-4)
+		System.out.println(a);
+		System.out.println(b);
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">14
+16
+</code></pre>
+
+<h3 id="14-javashort">14. Java分配运算符示例：相加short类型数据</h3>
+<p>整型运算，总有一个自动转成 int 的 过程。</p>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		short a = 10;
+		short b = 10;
+		// a+=b;//a=a+b internally so fine
+		a = a + b;// 编译时错误，因为 10+10=20 现在是 int 类型
+		System.out.println(a);
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code>编译时错误....
+</code></pre>
+
+<p><strong>类型转换后：</strong></p>
+<pre><code class="java">class OperatorExample {
+	public static void main(String args[]) {
+		short a = 10;
+		short b = 10;
+		a = (short) (a + b);// 20 which is int now converted to short
+		System.out.println(a);
+	}
+}
+</code></pre>
+
+<p>输出结果如下：</p>
+<pre><code class="java">20
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>33 多态</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="33">33 多态</h1>
+<p>Java中的多态是一个概念，通过它我们可以通过不同的方式执行单个动作(方法)。 多态性派生自<code>2</code>个希腊词：“<code>poly</code>”和“<code>morphs</code>”。 词语“<code>poly</code>”意为许多，“<code>morphs</code>”意为形式。 所以多态表示为多种形式。</p>
+<p>在Java中有两种类型的多态性：编译时多态性和运行时多态性。 我们可以通过方法重载和方法覆盖在java中执行多态性。</p>
+<p>如果在Java中重载静态方法，它就是编译时多态性的例子。 这里，我们将关注Java中的运行时多态性。</p>
+<h2 id="1-java">1. Java运行时多态性</h2>
+<p>运行时多态性或动态方法分派是一个过程，它对重写方法的调用在运行时体现而不是编译时。</p>
+<p>在此过程中，通过超类的引用变量调用重写的方法。 要调用的方法基于引用的对象。</p>
+<p>了解运行时多态性之前，让我们先来向上转换。</p>
+<p><strong>向上转换</strong></p>
+<p>当父类的引用变量引用子类的对象时，称为向上转换。 例如：</p>
+<pre><code class="Java">class A{}  
+class B extends A{}  
+A a=new B();  //向上转换...
+</code></pre>
+
+<p><strong>Java运行时多态性示例1</strong></p>
+<p>在这个例子中，我们创建两个类：<code>Bike</code>和<code>Splendar</code>。 <code>Splendar</code>类扩展<code>Bike</code>类并覆盖其<code>run()</code>方法。通过父类(<code>Bike</code>)的引用变量调用<code>run</code>方法。 因为它引用子类对象，并且子类方法覆盖父类方法，子类方法在运行时被调用。</p>
+<pre><code class="Java">因为方法调用是由JVM不是编译器决定的，所以它被称为运行时多态性。
+</code></pre>
+
+<pre><code class="Java">class Bike {
+	void run() {
+		System.out.println(&quot;running&quot;);
+	}
+}
+
+class Splender extends Bike {
+	void run() {
+		System.out.println(&quot;running safely with 60km&quot;);
+	}
+
+	public static void main(String args[]) {
+		Bike b = new Splender();// upcasting - 向上转换
+		b.run();
+	}
+}
+</code></pre>
+
+<p>执行上面代码得到以下结果 -</p>
+<pre><code class="Java">running safely with 60km.
+</code></pre>
+
+<p><strong>Java运行时多态性示例2：Bank</strong></p>
+<p>考虑一种情况，<code>Bank</code>类是一个提供获得利率的方法的类。 但是，利率可能因银行而异。 例如，<code>SBI</code>，<code>ICICI</code>和<code>AXIS</code>银行分别提供<code>8.4％</code>，<code>7.3％</code>和<code>9.7％</code>的利率。</p>
+<p><img alt="img" src="33_01.png" /></p>
+<blockquote>
+<p>注意：此示例也在方法覆盖中给出，但没有向上转换。</p>
+</blockquote>
+<pre><code class="Java">class Bank {
+	float getRateOfInterest() {
+		return 0;
+	}
+}
+
+class SBI extends Bank {
+	float getRateOfInterest() {
+		return 8.4f;
+	}
+}
+
+class ICICI extends Bank {
+	float getRateOfInterest() {
+		return 7.3f;
+	}
+}
+
+class AXIS extends Bank {
+	float getRateOfInterest() {
+		return 9.7f;
+	}
+}
+
+class TestPolymorphism {
+	public static void main(String args[]) {
+		Bank b;
+		b = new SBI();
+		System.out.println(&quot;SBI Rate of Interest: &quot; + b.getRateOfInterest());
+		b = new ICICI();
+		System.out.println(&quot;ICICI Rate of Interest: &quot; + b.getRateOfInterest());
+		b = new AXIS();
+		System.out.println(&quot;AXIS Rate of Interest: &quot; + b.getRateOfInterest());
+	}
+}
+
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="Java">SBI Rate of Interest: 8.4
+ICICI Rate of Interest: 7.3
+AXIS Rate of Interest: 9.7
+</code></pre>
+
+<p><strong>Java运行时多态性示例3：Shape</strong></p>
+<pre><code class="Java">class Shape { // 基类(形状)
+	void draw() {
+		System.out.println(&quot;drawing...&quot;);
+	}
+}
+
+class Rectangle extends Shape {
+	void draw() {
+		System.out.println(&quot;drawing rectangle...&quot;);
+	}
+}
+
+class Circle extends Shape {
+	void draw() {
+		System.out.println(&quot;drawing circle...&quot;);
+	}
+}
+
+class Triangle extends Shape {
+	void draw() {
+		System.out.println(&quot;drawing triangle...&quot;);
+	}
+}
+
+class TestPolymorphism2 {
+	public static void main(String args[]) {
+		Shape s;
+		s = new Rectangle();
+		s.draw();
+		s = new Circle();
+		s.draw();
+		s = new Triangle();
+		s.draw();
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="Shell">SBI Rate of Interest: 8.4
+ICICI Rate of Interest: 7.3
+AXIS Rate of Interest: 9.7
+</code></pre>
+
+<p><strong>Java运行时多态性示例4：Animal</strong></p>
+<pre><code class="Java">class Animal {
+	void eat() {
+		System.out.println(&quot;eating...&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void eat() {
+		System.out.println(&quot;eating bread...&quot;);
+	}
+}
+
+class Cat extends Animal {
+	void eat() {
+		System.out.println(&quot;eating rat...&quot;);
+	}
+}
+
+class Lion extends Animal {
+	void eat() {
+		System.out.println(&quot;eating meat...&quot;);
+	}
+}
+
+class TestPolymorphism3 {
+	public static void main(String[] args) {
+		Animal a;
+		a = new Dog();
+		a.eat();
+		a = new Cat();
+		a.eat();
+		a = new Lion();
+		a.eat();
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="Shell">eating bread...
+eating rat...
+eating meat...
+</code></pre>
+
+<h2 id="java">Java运行时多态性与数据成员</h2>
+<p>上面示例中，都是有关方法被覆盖而不是数据成员，因此运行时多态性不能由数据成员实现。
+在下面给出的例子中，这两个类都有一个数据成员:<code>speedlimit</code>，通过引用子类对象的父类的引用变量来访问数据成员。 由于<strong>我们访问的数据成员没有被重写，因此它将访问父类的数据成员。</strong></p>
+<blockquote>
+<p><strong>规则： 运行时多态性不能由数据成员实现。</strong></p>
+</blockquote>
+<pre><code class="Java">class Bike {
+	int speedlimit = 90;
+}
+
+class Honda3 extends Bike {
+	int speedlimit = 150;
+
+	public static void main(String args[]){  
+		Bike obj=new Honda3();  
+		System.out.println(obj.speedlimit);//90 
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="java">90
+</code></pre>
+
+<h2 id="java_1">Java运行时多态性与多级继承</h2>
+<p>下面让我们来看看一个带有多级继承的运行时多态性的简单例子。</p>
+<pre><code class="Java">class Animal {
+	void eat() {
+		System.out.println(&quot;eating&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void eat() {
+		System.out.println(&quot;eating fruits&quot;);
+	}
+}
+
+class BabyDog extends Dog {
+	void eat() {
+		System.out.println(&quot;drinking milk&quot;);
+	}
+
+	public static void main(String args[]) {
+		Animal a1, a2, a3;
+		a1 = new Animal();
+		a2 = new Dog();
+		a3 = new BabyDog();
+		a1.eat();
+		a2.eat();
+		a3.eat();
+	}
+}
+</code></pre>
+
+<p>上面代码执行结果如下 -</p>
+<pre><code class="shell">eating
+eating fruits
+drinking Milk
+</code></pre>
+
+<p><strong>尝试下面一段代码的输出：</strong></p>
+<pre><code class="Java">class Animal {
+	void eat() {
+		System.out.println(&quot;animal is eating...&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void eat() {
+		System.out.println(&quot;dog is eating...&quot;);
+	}
+}
+
+class BabyDog1 extends Dog {
+	public static void main(String args[]) {
+		Animal a = new BabyDog1();
+		a.eat();
+	}
+}
+
+</code></pre>
+
+<p>执行上述代码，结果如下：</p>
+<pre><code class="Java">Dog is eating
+</code></pre>
+
+<p>因为，<code>BabyDog</code>不会覆盖<code>eat()</code>方法，所以这里是<code>Dog</code>类的<code>eat()</code>方法被调用。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

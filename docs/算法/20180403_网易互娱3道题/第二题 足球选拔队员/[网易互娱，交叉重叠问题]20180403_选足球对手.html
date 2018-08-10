@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>[网易互娱，交叉重叠问题]20180403_选足球对手</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180403_">[网易互娱，交叉重叠问题]20180403_选足球对手</h1>
+<p><img alt="" src="./20180403_网易互娱足球.jpeg" /></p>
+<p><img alt="" src="./20180403_网易互娱足球_02.jpeg" /></p>
+<p><img alt="" src="./20180403_网易互娱足球_03.jpeg" /></p>
+<p><img alt="" src="./20180403_网易互娱足球_04.jpeg" /></p>
+<p>题目的思路是，先各自选指定数目，比如X和Y个，然后重复了k个，分别从排序后的X与Y中，各自取剩下的K个，然后在这K 中取不重复的K个，来替换刚才重复的k个值。</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+void dfs(int X, int Y,multimap&lt;int,int&gt;&amp; xx, bool&amp; flag,multimap&lt;int,int&gt;&amp; yy, vector&lt;int&gt;&amp; occupy,int&amp; res ){
+	if( xx.size() &lt; X || yy.size() &lt; Y ){
+		flag =  false;
+		return ;
+	}
+
+	int i =0;
+	int min = INT_MAX;
+	vector&lt;int&gt; vecX;
+	vector&lt;int&gt; vecX_val;
+	for( auto it = xx.rbegin(); it != xx.rend(); it ++ ){
+//        cout &lt;&lt; it -&gt; first &lt;&lt; it -&gt; second &lt;&lt; endl;
+		if( i &lt; X ){
+			occupy.push_back(it -&gt; second);
+			if( it -&gt;first &lt; min ){
+				min = it -&gt;first;
+			}
+			i++;
+
+		}
+		vecX.push_back(it -&gt; second);
+		vecX_val.push_back(it -&gt; first);
+	}
+
+
+	vector&lt;int&gt; vecY;
+	vector&lt;int&gt; vecY_val;
+	i = 0;
+	for( auto it = yy.rbegin(); it != yy.rend(); it ++ ){
+//        cout &lt;&lt; it -&gt; first &lt;&lt; it -&gt; second &lt;&lt; endl;
+		if( i &lt; Y ){
+			occupy.push_back(it -&gt; second);
+			if( it -&gt;first &lt; min ){
+				min = it -&gt;first;
+
+			}
+			i++;
+		}
+		vecY.push_back(it -&gt; second);
+		vecY_val.push_back(it-&gt;first);
+	}
+
+	sort(occupy.begin(),occupy.end());
+	vector&lt;int&gt; chong;
+	for( int i=0; i&lt; occupy.size();i++ ){
+		if( occupy[i] == occupy[i+1] ){
+			chong.push_back(occupy[i]);
+		}
+	}
+
+	int cchong = chong.size();
+	vector&lt;int&gt; xxCC;
+	vector&lt;int&gt;  yyCC;
+	vector&lt;int&gt;  xxCC_val;
+	vector&lt;int&gt; yyCC_val;
+	for( int j= X; j &lt; X + cchong; j++ ){
+		if(j &lt; vecX.size()){
+			xxCC.push_back(vecX[j]);
+			xxCC_val.push_back(vecX_val[j]);
+		}else{
+			break;
+		}
+
+	}
+
+	for( int j= Y; j &lt; Y + cchong; j++ ){
+		if(j &lt; vecY.size()){
+			yyCC.push_back(vecY[j]);
+			yyCC_val.push_back(vecY_val[j]);
+		}else{
+			break;
+		}
+
+	}
+
+	int m =0;
+	map&lt;int,int&gt; mymap;     /// 其实用set就可以。
+	while( mymap.size() &lt; cchong ){
+		if(xxCC_val.size()&gt;0  &amp;&amp; yyCC_val.size() &gt; 0){
+			/// 这个地方应该用一个map来处理。
+			if( xxCC_val[0] &gt;= yyCC_val[0] ){
+				if( min &gt; xxCC_val[0] ){
+					min = xxCC_val[0];
+				}
+				mymap.insert(make_pair(xxCC[0],xxCC_val[0]));   // 如果有重复的，下次插入相同的数时，不会改变mymap的大小，因为之前已经用过该值，会自动跳到下一个值，然后重新进行比较。
+				xxCC_val.erase(xxCC_val.begin());
+				xxCC.erase(xxCC.begin());
+			}else{
+				if( min &gt; yyCC_val[0] ){
+					min = yyCC_val[0];
+				}
+				mymap.insert(make_pair(yyCC[0],yyCC_val[0]));
+				yyCC_val.erase(yyCC_val.begin());
+				yyCC.erase(yyCC.begin());
+			}
+
+		}else if( xxCC_val.size() &gt; 0 &amp;&amp; yyCC_val.size() == 0 ){
+			if( min &gt; xxCC_val[0] ){
+				min = xxCC_val[0];
+			}
+			mymap.insert(make_pair(xxCC[0],xxCC_val[0] ));
+			xxCC_val.erase(xxCC_val.begin());
+			xxCC.erase(xxCC.begin());
+
+		}else if( xxCC_val.size() == 0 &amp;&amp; yyCC_val.size() &gt; 0 ){
+			if( min &gt; yyCC_val[0] ){
+				min = yyCC_val[0];
+			}
+			mymap.insert(make_pair(yyCC[0],yyCC_val[0]));
+			yyCC_val.erase(yyCC_val.begin());
+			yyCC.erase(yyCC.begin());
+		}else{
+			flag = false;
+			break;
+		}
+	}
+
+	res = min;
+
+}
+
+
+//struct IN{
+//    int N,X,Y;
+//    int arr[N][2];
+//};
+int main(){
+   int zu;
+	cin &gt;&gt; zu;
+
+	vector&lt;int&gt; output;     /// 存放每组将要输出的值
+	for( int i=0; i&lt;zu; i++ ){
+		int N,X, Y;
+		cin &gt;&gt; N &gt;&gt; X &gt;&gt; Y;
+		int arr[N][2];
+		for(int i=0; i&lt; N;i++){
+			int tmp1 , tmp2;
+			cin &gt;&gt; tmp1 &gt;&gt; tmp2;
+			arr[i][0] = tmp1;
+			arr[i][1] = tmp2;
+		}
+
+		multimap&lt;int,int&gt; xx;
+		multimap&lt;int, int&gt; yy;
+		for( int i=0; i &lt; N; i++ ){
+			xx.insert(make_pair(arr[i][0],i));
+		}
+
+		for( int i=0; i &lt; N; i++ ){
+			yy.insert(make_pair(arr[i][1],i));
+		}
+
+		int res;
+		vector&lt;int&gt; occupy;
+		bool flag = true;
+		dfs(X, Y,xx, flag,yy, occupy,res );
+
+		if(! flag){
+			output.push_back(0);
+		}else{
+			output.push_back(res );
+		}
+	}
+
+	for( auto val: output )
+		cout &lt;&lt; val &lt;&lt; endl;
+
+		   return 0;
+}
+
+</code></pre>
+
+<p>测试用例如下：</p>
+<pre><code class="cpp">3
+5 2 2
+100 0
+0 99
+95 95
+96 0
+0 97
+6 1 3
+99 99
+100 0
+0 100
+100 100
+100 0
+100 0
+4 2 2
+100 0
+100 0
+100 0
+0 100
+
+输出结果如下：
+96
+99
+0
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

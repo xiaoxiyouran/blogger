@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>链接</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&amp;tqId=11179&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">二叉搜索树与双向链表</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1503</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/027-二叉搜索树与双向链表">027-二叉搜索树与双向链表</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51234524">剑指Offer--027-二叉搜索树与双向链表</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&amp;tqId=11179&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">二叉搜索树与双向链表</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1503">1503-二叉搜索树与双向链表</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51234524">剑指Offer--027-二叉搜索树与双向链表</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。</p>
+<h1 id="_3">分析</h1>
+<hr />
+<ul>
+<li>
+<p>二叉排序树的每个节点均由两个指针指向其两个孩子，双向链表中每个节点又都有两个指针指向其前驱和后继</p>
+</li>
+<li>
+<p>二叉排序树的左节点的值 &lt; 根结点的值 &lt; 右子节点的值，其中序遍历就是一个排序好的信息串</p>
+</li>
+</ul>
+<p>因此我们可以通过如下两种方法来实现
+<em>    中序遍历来实现二叉搜索树向双向链表的转换，访问过程需修改为链接操作
+</em>    把左子树和右子树都转换成排序的双向链表之后再和根节点链接起来，整棵二叉搜索树就转换成了排序的双向链表</p>
+<h1 id="_4">中序递归</h1>
+<hr />
+<p>采用中序遍历，而中序遍历中当前结点的前一个节点</p>
+<ul>
+<li>
+<p>要么是当前结点的左子树的的最右孩子</p>
+</li>
+<li>
+<p>要么是当前结点其前一个节点的右孩子</p>
+</li>
+</ul>
+<p>对于第二种，我们好判断，但是对于第一种方式，无法快速的找到其左子树的最右孩子，因此我们链接的时候需要保存其前驱节点，我们称之为lastNode节点</p>
+<h2 id="lastnode">用递归函数的参数保存lastNode节点</h2>
+<hr />
+<p>在我们的递归函数中，我们用lastNode保存前一个访问的节点，我们采用中序访问的方式，将访问当前结点currNode的操作转换为将当前节点currNode与前一个节点lastNode链接成链表的方式。</p>
+<p>由于我们每次需要更新lastNode的值，因为我们传递的参数是指向lastNode的指针pLastNode</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+#ifdef __tmain
+
+struct TreeNode
+{
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+//  TreeNode(int x)
+//  :val(x), left(NULL), right(NULL)
+//  {
+//  }
+};
+
+#endif  //  __tmain
+
+class Solution
+{
+public:
+	/**
+	 * [Convert description]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-23T21:02:08+0800
+	 * @param     pRootOfTree              [二叉排序树的根]
+	 * @return                             [转换成的链表的头结点]
+	 */
+	TreeNode* Convert(TreeNode* pRootOfTree)
+	{
+		if(pRootOfTree == NULL)
+		{
+			return NULL;
+		}
+		TreeNode *pLastNode = NULL;
+		ConvertRecursion(pRootOfTree, &amp;pLastNode);
+
+		// 当递归结束后,*pLastNode指向了双向链表的尾结点
+		TreeNode *node = pLastNode;
+		while(pLastNode != NULL
+		   &amp;&amp; pLastNode-&gt;left != NULL)
+		{
+		   pLastNode = pLastNode-&gt;left;
+		}
+
+		return pLastNode;
+	}
+
+	/**
+	 * [ConvertRecursion 递归的将root为根的二叉排序树专户才能成双向链表]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-23T22:33:00+0800
+	 * @param     root                     [当前递归的二叉排序树的根节点]
+	 * @param     pLastNode                [中序遍历中指向前一个节点的指针]
+	 */
+	void ConvertRecursion(TreeNode *root, TreeNode **pLastNode)
+	{
+		if(root == NULL)
+		{
+			return;
+		}
+		TreeNode *currNode = root;
+
+		//////////////////////////
+		/// 首先中序 递归左子树
+		//////////////////////////
+		if(currNode-&gt;left != NULL)
+		{
+			ConvertRecursion(root-&gt;left, pLastNode);
+		}
+
+
+		//////////////////////////
+		/// 接着中序开始访问根节点
+		/// 在这里访问的过程演变为将左子树的根与根节点链接成一个链表
+		//////////////////////////
+
+		///  开始链接左子树和当前根节点
+		//  *pLastNode -=&gt; currNode
+		currNode-&gt;left = *pLastNode; //
+		if(*pLastNode != NULL)
+		{
+			(*pLastNode)-&gt;right = currNode;
+		}
+		else
+		{
+			debug &lt;&lt;&quot;lastNode is NULL&quot; &lt;&lt;endl;
+		}
+
+		debug &lt;&lt;((*pLastNode == NULL) ? -1 : (*pLastNode)-&gt;val) &lt;&lt;&quot;, &quot; &lt;&lt;currNode-&gt;val &lt;&lt;endl;
+		system(&quot;PAUSE&quot;);
+		//  更新上一个访问的指针域
+		//  由于要更新前一个指针的指针域
+		//  因此需要使用其指针来修改其指向
+		*pLastNode = currNode;
+
+		//  中序遍历
+		if(currNode-&gt;right != NULL)
+		{
+			ConvertRecursion(currNode-&gt;right, pLastNode);
+		}
+	}
+};
+
+
+
+int __tmain( )
+{
+	//    4
+	//  3   5
+	//2
+	TreeNode tree[4];
+	tree[0].val = 4;
+	tree[0].left = &amp;tree[1];
+	tree[0].right = &amp;tree[2];
+	tree[1].val = 3;
+	tree[1].left = &amp;tree[3];
+	tree[1].right = NULL;
+	tree[2].val = 5;
+	tree[2].left = NULL;
+	tree[2].right = NULL;
+	tree[3].val = 2;
+	tree[3].left = NULL;
+	tree[3].right = NULL;
+
+
+	Solution solu;
+	TreeNode *head = solu.Convert(tree);
+	while(head != NULL)
+	{
+		cout &lt;&lt;head-&gt;val &lt;&lt;&quot; &quot;;
+		head = head-&gt;right;
+	}
+	return 0;
+}
+</code></pre>
+
+<h2 id="staticerror">递归的过程中，用static的error的问题</h2>
+<hr />
+<blockquote>
+<p>还记得<a href="http://blog.csdn.net/gatieme/article/details/51214182#t3">剑指Offer--025-二叉树中和为某一值的路径</a>
+中递归方法另外一种写法的时候，递归的参数path我们用了一个static的局部变量来存储，但是在这里我们的尝试没有成功，因为这里当一次转换完成，lastNode并没有被清掉，因此进行下一次转换之前我们的结果会跟上一次的结果串在一起</p>
+</blockquote>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+#ifdef __tmain
+
+struct TreeNode
+{
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	/*
+
+	 TreeNode(int x)
+	:val(x), left(NULL), right(NULL)
+	{
+	}*/
+};
+
+#endif  //  __tmain
+
+class Solution
+{
+public:
+	/**
+	 * [Convert description]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-23T21:02:08+0800
+	 * @param     pRootOfTree              [二叉排序树的根]
+	 * @return                             [转换成的链表的头结点]
+	 */
+	TreeNode* Convert(TreeNode* pRootOfTree)
+	{
+		if(pRootOfTree == NULL)
+		{
+			return NULL;
+		}
+		TreeNode *pLastNode = ConvertRecursion(pRootOfTree);
+
+		// 当递归结束后,*pLastNode指向了双向链表的尾结点
+		TreeNode *node = pLastNode;
+//        debug &lt;&lt;pLastNode-&gt;val &lt;&lt;endl;
+		while(pLastNode != NULL
+		   &amp;&amp; pLastNode-&gt;left != NULL)
+		{
+//            debug &lt;&lt;pLastNode-&gt;val &lt;&lt;&quot; &quot;;
+			pLastNode = pLastNode-&gt;left;
+		}
+
+		return pLastNode;
+	}
+
+	/**
+	 * [ConvertRecursion 递归的将root为根的二叉排序树专户才能成双向链表]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-23T22:33:00+0800
+	 * @param     root                     [当前递归的二叉排序树的根节点]
+	 * @param     pLastNode                [中序遍历中指向前一个节点的指针]
+	 */
+	TreeNode* ConvertRecursion(TreeNode *root)
+	{
+		if(root == NULL)
+		{
+			return NULL;
+		}
+		TreeNode *currNode = root;
+		static TreeNode *lastNode = NULL;
+		//////////////////////////
+		/// 首先中序 递归左子树
+		//////////////////////////
+		if(currNode-&gt;left != NULL)
+		{
+			lastNode = ConvertRecursion(root-&gt;left);
+		}
+
+
+		//////////////////////////
+		/// 接着中序开始访问根节点
+		/// 在这里访问的过程演变为将左子树的根与根节点链接成一个链表
+		//////////////////////////
+
+		///  开始链接左子树和当前根节点
+		//  *pLastNode -=&gt; currNode
+		currNode-&gt;left = lastNode; //
+		if(lastNode != NULL)
+		{
+			lastNode-&gt;right = currNode;
+		}
+		else
+		{
+			debug &lt;&lt;&quot;lastNode is NULL&quot; &lt;&lt;endl;
+		}
+		debug &lt;&lt;((lastNode == NULL) ? -1 : lastNode-&gt;val) &lt;&lt;&quot;, &quot; &lt;&lt;currNode-&gt;val &lt;&lt;endl;
+
+		//  更新上一个访问的指针域
+		//  由于要更新前一个指针的指针域
+		//  因此需要使用其指针来修改其指向
+		if(currNode != NULL)
+		{
+			lastNode = currNode;
+		}
+		//  中序遍历
+		if(currNode-&gt;right != NULL)
+		{
+			lastNode = ConvertRecursion(currNode-&gt;right);
+		}
+
+		return lastNode;
+	}
+};
+
+
+
+int __tmain( )
+{
+	//    4
+	//  3
+	//2
+	TreeNode tree[3];
+	tree[0].val = 4;
+	tree[0].left = &amp;tree[1];
+	tree[0].right = NULL;
+	tree[1].val = 3;
+	tree[1].left = &amp;tree[2];
+	tree[1].right = NULL;
+	tree[2].val = 2;
+	tree[2].left = NULL;
+	tree[2].right = NULL;
+
+
+	Solution solu;
+	TreeNode *head = solu.Convert(tree);
+	while(head != NULL)
+	{
+		cout &lt;&lt;head-&gt;val &lt;&lt;&quot; &quot;;
+		head = head-&gt;right;
+	}
+
+
+
+	TreeNode tree2[4];
+	tree2[0].val = 4;
+	tree2[0].left = &amp;tree2[1];
+	tree2[0].right = &amp;tree2[2];
+	tree2[1].val = 3;
+	tree2[1].left = &amp;tree2[3];
+	tree2[1].right = NULL;
+	tree2[2].val = 5;
+	tree2[2].left = NULL;
+	tree2[2].right = NULL;
+	tree2[3].val = 2;
+	tree2[3].left = NULL;
+	tree2[3].right = NULL;
+
+	Solution solu2;
+	head = solu2.Convert(tree2);
+	while(head != NULL)
+	{
+		cout &lt;&lt;head-&gt;val &lt;&lt;&quot; &quot;;
+		head = head-&gt;right;
+	}
+	return 0;
+}
+
+</code></pre>
+
+<blockquote>
+<p>当然关于这个问题，我们也有其他的解决方法，比如将lastnode保存成一个成员对象</p>
+<p>但是我们通过参数保存的方法，这种方式更具有一般性，对于那些面向过程性的语言，也能更好的移植</p>
+</blockquote>
+<h2 id="_5">非递归中序遍历实现</h2>
+<hr />
+<p>用栈来模拟递归栈我们实现中序遍历的非递归版本，</p>
+<p>将输出的过程更改为双向链表的链接，主要是将前驱节点preNode和当前访问节点currNode链接起来，这个时候需要注意的是第一个节点的处理（head的前驱节点为NULL）</p>
+<pre><code class="cpp">class Solution
+{
+public:
+
+	TreeNode* Convert(TreeNode* root)
+	{
+		if(root == NULL)
+		{
+			debug &lt;&lt;&quot;The tree is NULL...&quot; &lt;&lt;endl;
+		}
+
+		stack&lt;TreeNode *&gt; nstack;
+		TreeNode *currNode = root;
+		TreeNode *preNode = NULL;
+		TreeNode *head = NULL;
+
+		//  开始遍历整个二叉树
+		while(currNode != NULL || nstack.empty() != true)
+		{
+			// 不输出当前根节点，但是递归直至当前根节点node的最左端
+			while(currNode != NULL)
+			{
+				nstack.push(currNode);
+				currNode = currNode-&gt;left;
+			}
+
+			//  此时栈顶的元素是当前最左元素
+			//  它应该被输出
+			if(nstack.empty( ) != true)
+			{
+				currNode = nstack.top( );
+				debug &lt;&lt;currNode-&gt;val;
+				nstack.pop( );
+
+				//  第一个节点
+				if(preNode == NULL)
+				{
+					head = currNode;
+					preNode = currNode;
+				}
+				else
+				{
+					preNode-&gt;right = currNode;
+					currNode-&gt;left = preNode;
+					preNode = currNode;
+				}
+				currNode = currNode-&gt;right;
+
+			}
+		}
+		return head;
+	}
+};
+</code></pre>
+
+<h1 id="_6">递归将左右子树变换为链表后，将他们与根链接成链表</h1>
+<hr />
+<p>这个算法的流程就是</p>
+<p>1  递归root左子树，并且与root与左子树链接起来</p>
+<ul>
+<li>
+<p>递归将root的左子树变换为双向链表，并且返回左子树根在链表中的位置节点</p>
+</li>
+<li>
+<p>通过左子树的根的最后的最右子节点，即左子树链表的最后一个节点是root的前驱</p>
+</li>
+</ul>
+<p>2  递归root右子树，并且与root与右子树链接起来</p>
+<ul>
+<li>
+<p>递归将root的右子树变换为双向链表，并且返回左子树根在链表中的位置节点</p>
+</li>
+<li>
+<p>通过右子树的根的最后的最左子节点，即右子树链表的第一个节点是root的后继</p>
+</li>
+</ul>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+#ifdef __tmain
+
+struct TreeNode
+{
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+//  TreeNode(int x)
+//  :val(x), left(NULL), right(NULL)
+//  {
+//  }
+};
+
+#endif  //  __tmain
+
+class Solution
+{
+public:
+	/**
+	 * [Convert description]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-23T21:02:08+0800
+	 * @param     pRootOfTree              [二叉排序树的根]
+	 * @return                             [转换成的链表的头结点]
+	 */
+	TreeNode* Convert(TreeNode* pRootOfTree)
+	{
+		if(pRootOfTree == NULL)
+		{
+			return NULL;
+		}
+		TreeNode *pLastNode = ConvertRecursion(pRootOfTree);
+
+		// 当递归结束后,*pLastNode指向了双向链表的尾结点
+		TreeNode *node = pLastNode;
+		while(pLastNode != NULL
+		   &amp;&amp; pLastNode-&gt;left != NULL)
+		{
+		   pLastNode = pLastNode-&gt;left;
+		}
+
+		return pLastNode;
+	}
+
+	/**
+	 * [ConvertRecursion 递归的将root为根的二叉排序树专户才能成双向链表]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-23T22:33:00+0800
+	 * @param     root                     [当前递归的二叉排序树的根节点]
+	 */
+	TreeNode* ConvertRecursion(TreeNode *root)
+	{
+		if(root == NULL)
+		{
+			debug &lt;&lt;&quot;NULL&quot; &lt;&lt;endl;
+			return NULL;
+		}
+
+		//////////////////////////
+		/// 首先 递归左子树
+		//////////////////////////
+		TreeNode *lastNode = NULL;
+		if(root-&gt;left != NULL)
+		{
+			///  递归将左子树转换为双向链表, 并且返回左子树的根节点
+			lastNode = ConvertRecursion(root-&gt;left);
+
+			//  递归左子树完成后
+			//  lastNode节点指向了左子树的根节点
+			//  但是root的前驱应该是原来左子树的最右子节点, 即转换成链表的最后一个节点,
+			while(lastNode != NULL &amp;&amp; lastNode-&gt;right != NULL)
+			{
+				lastNode = lastNode-&gt;right;
+			}
+
+			root-&gt;left = lastNode; //
+			lastNode-&gt;right = root;     ///  无需判断lastNode是否为NULL, 因为我们的函数为root = NULL的是不进行递归的
+			debug &lt;&lt;lastNode-&gt;val &lt;&lt;&quot;, &quot; &lt;&lt;root-&gt;val &lt;&lt;endl;
+
+		}
+
+
+		//////////////////////////
+		/// 接着 递归右子树
+		//////////////////////////
+		TreeNode *nextNode = NULL;
+		if(root-&gt;right != NULL)
+		{
+			//  递归将左子树转换为双向链表, 并且返回左子树的根节点
+			nextNode = ConvertRecursion(root-&gt;right);
+
+			//  递归左子树完成后
+			//  lastNode节点应该是其左子树的最右节点
+			//  即转换成链表的最后一个节点
+			while(nextNode-&gt;left != NULL)
+			{
+				nextNode = nextNode-&gt;left;
+			}
+			nextNode-&gt;left = root;
+			root-&gt;right = nextNode;
+			debug &lt;&lt;root-&gt;val &lt;&lt;&quot;, &quot; &lt;&lt;nextNode-&gt;val &lt;&lt;endl;
+		}
+
+		return root;
+	}
+};
+
+
+
+int __tmain( )
+{
+	//    4
+	//  3   5
+	//2
+	TreeNode tree[4];
+	tree[0].val = 4;
+	tree[0].left = &amp;tree[1];
+	tree[0].right = &amp;tree[2];
+	tree[1].val = 3;
+	tree[1].left = &amp;tree[3];
+	tree[1].right = NULL;
+	tree[2].val = 5;
+	tree[2].left = NULL;
+	tree[2].right = NULL;
+	tree[3].val = 2;
+	tree[3].left = NULL;
+	tree[3].right = NULL;
+
+
+	Solution solu;
+	TreeNode *head = solu.Convert(tree);
+	while(head != NULL)
+	{
+		cout &lt;&lt;head-&gt;val &lt;&lt;&quot; &quot;;
+		head = head-&gt;right;
+	}
+	return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

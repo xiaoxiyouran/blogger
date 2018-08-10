@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>Convert ToDouble 和 Double Parse 的区别</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="convert-todouble-double-parse">Convert ToDouble 和 Double Parse 的区别</h1>
+<h2 id="converttodouble-doubleparse">Convert.ToDouble 和 Double.Parse 的区别</h2>
+<p><strong>实际上 Convert.ToDouble内部调用了 Double.Parse：</strong></p>
+<p>(1)对于参数为null的时候：</p>
+<ul>
+<li>Convert.ToDouble参数为 <mark>null 时，返回 0.0</mark>；</li>
+<li>Double.Parse 参数为 null 时，<mark>抛出异常</mark>。</li>
+</ul>
+<p>(2)对于参数为""的时候：</p>
+<ul>
+<li>Convert.ToDouble参数为 "" 时，抛出异常；</li>
+<li>Double.Parse 参数为 "" 时，抛出异常。</li>
+</ul>
+<p>(3)其它区别：</p>
+<ul>
+<li>Convert.ToDouble可以<mark>转换的类型较多</mark>；</li>
+<li>Double.Parse <mark>只能</mark>转换数字类型的字符串。</li>
+<li>Double.TryParse 与 Double.Parse 又较为类似，但它<mark>不会产生异常</mark>，转换成功返回 true，转换失败返回 false。最后一个参数为输出值，如果<mark>转换失败，输出值为 0.0</mark>。</li>
+</ul>
+<p>附测试代码：</p>
+<pre><code class="csharp">using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			try
+			{
+				//string a = &quot;0.2&quot;;
+				//string a = null;
+				string a = &quot;&quot;;
+				try
+				{
+					double d1 = Double.Parse(a);
+				}
+				catch (Exception err)
+				{
+					Console.WriteLine(&quot;d1转换出错:&quot; + err.Message);
+				}
+
+				try
+				{
+					double d2 = Convert.ToDouble(a);
+				}
+				catch (Exception err)
+				{
+					Console.WriteLine(&quot;d2转换出错:&quot; + err.Message);
+
+				}
+
+				try
+				{
+					double d3;
+					Double.TryParse(a,out d3);
+				}
+				catch (Exception err)
+				{
+					Console.WriteLine(&quot;d3转换出错:&quot; + err.Message);
+				}
+			}
+			finally
+			{
+				Console.ReadKey();
+			}
+
+		}
+	}
+}
+</code></pre>
+
+<p>&lt; br&gt;</p>
+<h2 id="converttoint32-intparse">Convert.ToInt32() 与int.Parse() 的区别</h2>
+<p>没搞清楚Convert.ToInt32和int.Parse()的细细微区别时千万别乱用，否则可能会产生无法预料的结果，举例来说：假如从url中取一个参数page的值，我们知道这个值是一个int，所以即可以用<code>Convert.ToInt32(Request.QueryString["page”])</code>，也可以用,<code>int.Parse(Request.QueryString["page”])</code>，但是如果page这个参数在url中不存在，那么前者将返回0，0可能是一个有效的值，所以你不知道url中原来根本就没有这个参数而继续进行下一下的处理，这就可能产生意想不到的效果，而用<mark>后一种办法的话没有page这个参数会抛出异常</mark>，我们可以捕获异常然后再做相应的处理，比如<mark>提示用户缺少参数，而不是把参数值当做0来处理</mark>。</p>
+<p><strong>(1)这两个方法的最大不同是它们对null值的处理方法：</strong></p>
+<p><mark>Convert.ToInt32(null)会返回0</mark>而不会产生任何异常，但<mark>int.Parse(null)则会产生异常</mark>。</p>
+<p><strong>(2)对数据进行四舍五入时候的区别</strong></p>
+<p><code>a.Convert.ToInt32(double value)</code></p>
+<p>如果 value 为两个整数中间的数字，则返回<mark>二者中的偶数</mark>；即 3.5转换为4，4.5 转换为 4，而 5.5 转换为 6。 不过4.6可以转换为5，4.4转换为4</p>
+<p>b. int.Parse("4.5")</p>
+<p>直接报错:"<mark>输入字符串的格式不正确</mark>".</p>
+<p>c. int(4.6) = 4</p>
+<p>Int转化其他数值类型为Int时<mark>没有四舍五入，强制转换</mark></p>
+<p><strong>(3)对被转换类型的区别</strong></p>
+<p>int.Parse 是<mark>转换 String为int</mark></p>
+<p>Convert.ToInt32是<mark>转换继承自Object的对象为int的</mark>(可以有很多其它类型的数据).</p>
+<p>你得到一个<mark>object对象,你想把它转换为int,用int.Parse就不可以</mark>,要用Convert.ToInt32.</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

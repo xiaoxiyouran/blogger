@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>00 Mac 下安装mysql</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="00-mac-mysql">00 Mac 下安装mysql</h1>
+<p>1- 最新版本的，安装的时候会让设置root 用户密码。所以不用记录临时密码。</p>
+<p>2- 启动</p>
+<p>终端界面下输入</p>
+<pre><code>sudo /usr/local/mysql/support-files/mysql.server start
+</code></pre>
+
+<p>启动mysql服务,启动成功后继续输入</p>
+<pre><code>mysql -u root -p
+</code></pre>
+
+<p>此时终端将让你输入密码12345678</p>
+<hr />
+<p>原文:https://blog.csdn.net/soslinken/article/details/78927963</p>
+<h1 id="mysql-dmg">下载mysql dmg安装包</h1>
+<p>在msql 官方网站上下载 mysql 社区版本的dmg安装包</p>
+<blockquote>
+<p><a href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></p>
+</blockquote>
+<h1 id="gui">GUI安装</h1>
+<p>下载完成后，打开dmg文件后，会出现后缀名为pkg的安装文件。 
+<img alt="这里写图片描述" src="00_01.png" /></p>
+<p>双击执行，验证安装包结束之后就会进入mysql的gui安装界面。 
+<img alt="这里写图片描述" src="00_02.png" /> 
+然后就下一步下一步下一步，直到安装结束。</p>
+<h1 id="root">默认root 密码</h1>
+<p>与windows下安装不同的是，mac os 下安装完成后不会让你配置root用户。会默认生成一个root用户并给予一个随机的密码。随机密码生成后会在mac os的系统通知里生成一条系统通知消息。</p>
+<h4 id="_1"><strong>随机生成的密码一定要用记事本记下来，后面要用，非常重要，非常重要，非常重要！！！</strong></h4>
+<p>系统状态栏 右上角 列表图标 
+<img alt="这里写图片描述" src="00_03.png" /></p>
+<p>点击列表图标后，展开系统通知界面 
+<img alt="这里写图片描述" src="00_04.png" /> 
+在其中就能看到随机生成的root密码。</p>
+<h1 id="_2">配置环境变量</h1>
+<pre><code class="shell">$ cd ~
+$ vim ./.bash_profile
+</code></pre>
+
+<p>进入vim 编辑环境。 
+按下i 进入 insert 模式 
+输入</p>
+<pre><code class="shell">export PATH=$PATH:/usr/local/mysql/bin
+</code></pre>
+
+<p>按下esc 退出 insert 模式 
+输入</p>
+<pre><code>:wq
+</code></pre>
+
+<p>保存配置文件。 
+在终端界面下输入</p>
+<pre><code>source ~/.bash_profile 
+echo $PATH
+</code></pre>
+
+<p>查看系统环境变量是否设置成功。</p>
+<h1 id="mysql">启动 mysql 服务</h1>
+<p>终端界面下输入</p>
+<pre><code>sudo /usr/local/mysql/support-files/mysql.server start
+</code></pre>
+
+<p>启动mysql服务,启动成功后继续输入</p>
+<pre><code>mysql -u root -p
+</code></pre>
+
+<p>此时终端将让你输入密码，使用之前在系统通知中获取到的随机密码。 
+<img alt="这里写图片描述" src="https://img-blog.csdn.net/20171229090109809?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc29zbGlua2Vu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" /></p>
+<p>登录进入msql 控制台后，使用 set password 指令将随机密码修改为用户自定义的密码。</p>
+<pre><code>set password = password('123456');
+</code></pre>
+
+<p>至此安装mysql 成功！此时就可以愉快的使用mysql 服务了。</p>
+<h1 id="_3">没有记录随机密码的重置密码方案</h1>
+<pre><code>mysqladmin -u root password [password]
+</code></pre>
+
+<p>执行该命令，会有一个警告提示，但是密码仍旧是修改成功了。 
+再使用修改后的密码登录，即可使用mysql服务。</p>
+<hr />
+<h2 id="error-the-server-quit-without-updating-pid-file-usrlocalmysqldatacookiedemacbook-prolocalpid">ERROR! The server quit without updating PID file (/usr/local/mysql/data/CookiedeMacBook-Pro.local.pid).</h2>
+<p>这种问题一查是第三种：https://blog.csdn.net/cjfeii/article/details/48494089</p>
+<p>即安装完就已经启动了。</p>
+<h3 id="1-homemysqldatamysqlpid">1 可能是/home/mysql/data/mysql.pid文件没有写的权限</h3>
+<pre><code># chown -R mysql:mysql /home/mysql/data
+or
+# chmod -R 755 /home/mysql/data1
+</code></pre>
+
+<h3 id="2">2 初始化数据库</h3>
+<pre><code>/usr/bin/mysql_install_db --user=mysql
+</code></pre>
+
+<h3 id="3-mysql">3 可能进程里已经存在mysql进程</h3>
+<pre><code># ps -ef|grep mysqld
+# kill -9  ${mysql_pid}
+</code></pre>
+
+<h3 id="4-mysql">4 可能是第二次在机器上安装mysql，有残余数据影响了服务的启动。</h3>
+<pre><code># rm /home/mysql/data/mysql-bin.index
+</code></pre>
+
+<h3 id="5-selinuxcentosselinux">5 selinux惹的祸，如果是centos系统，默认会开启selinux</h3>
+<pre><code># cat /etc/selinux/config
+SELINUX=disabled
+
+# reboot
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

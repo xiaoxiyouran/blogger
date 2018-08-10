@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>04 数据类型</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="04">04 数据类型</h1>
+<p>在 C# 中，变量分为以下几种类型：</p>
+<ul>
+<li>值类型（Value types）</li>
+<li>引用类型（Reference types）</li>
+<li>指针类型（Pointer types）</li>
+</ul>
+<h2 id="value-types">值类型（Value types）</h2>
+<p>值类型变量可以直接分配给一个值。它们是从类 <strong>System.ValueType</strong> 中派生的。</p>
+<p>值类型直接包含数据。比如 <strong>int、char、float</strong>，它们分别存储数字、字符、浮点数。当您声明一个 <strong>int</strong> 类型时，系统分配内存来存储值。</p>
+<p>下表列出了 C# 2010 中可用的值类型：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>类型</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>描述</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>范围</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>bool</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>布尔值</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>True 或 False</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>False</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>byte</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8 位无符号整数</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0 到 255</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>char</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>16 位 Unicode 字符</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>U +0000 到 U +ffff</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>'\0'</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>decimal</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>128 位精确的十进制值，28-29 有效位数</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(-7.9 x 1028 到 7.9 x 1028) / 100 到 28</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0.0M</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>double</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>64 位双精度浮点型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>(+/-)5.0 x 10-324 到 (+/-)1.7 x 10308</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0.0D</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>float</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>32 位单精度浮点型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-3.4 x 1038 到 + 3.4 x 1038</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0.0F</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>int</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>32 位有符号整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-2,147,483,648 到 2,147,483,647</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>long</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>64 位有符号整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-923,372,036,854,775,808 到 9,223,372,036,854,775,807</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0L</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>sbyte</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8 位有符号整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-128 到 127</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>short</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>16 位有符号整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-32,768 到 32,767</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>uint</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>32 位无符号整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0 到 4,294,967,295</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ulong</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>64 位无符号整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0 到 18,446,744,073,709,551,615</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ushort</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>16 位无符号整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0 到 65,535</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>0</td>
+</tr>
+</tbody>
+</table>
+<p>如需得到一个类型或一个变量在特定平台上的准确尺寸，可以使用 <strong>sizeof</strong> 方法。表达式 <em>sizeof(type)</em> 产生以字节为单位存储对象或类型的存储尺寸。下面举例获取任何机器上 <em>int</em> 类型的存储尺寸：</p>
+<pre><code>namespace DataTypeApplication
+{
+   class Program
+   {
+	  static void Main(string[] args)
+	  {
+		 Console.WriteLine(&quot;Size of int: {0}&quot;, sizeof(int));
+		 Console.ReadLine();
+	  }
+   }
+}
+</code></pre>
+
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code>Size of int: 4
+</code></pre>
+
+<h2 id="reference-types">引用类型（Reference types）</h2>
+<p>引用类型不包含存储在变量中的实际数据，但它们包含对变量的引用。</p>
+<p>换句话说，它们指的是一个内存位置。使用多个变量时，引用类型可以指向一个内存位置。如果内存位置的数据是由一个变量改变的，其他变量会自动反映这种值的变化。<strong>内置的</strong> 引用类型有：<strong>object</strong>、<strong>dynamic</strong> 和 <strong>string</strong>。</p>
+<h3 id="object">对象（Object）类型</h3>
+<p><strong>对象（Object）类型</strong> 是 C# 通用类型系统（Common Type System - CTS）中所有数据类型的终极基类。Object 是 System.Object 类的别名。所以对象（Object）类型可以被分配任何其他类型（值类型、引用类型、预定义类型或用户自定义类型）的值。但是，在分配值之前，需要先进行类型转换。</p>
+<p>当一个值类型转换为对象类型时，则被称为 <strong>装箱</strong>；另一方面，当一个对象类型转换为值类型时，则被称为 <strong>拆箱</strong>。</p>
+<pre><code>object obj;
+obj = 100; // 这是装箱
+</code></pre>
+
+<h3 id="dynamic">动态（Dynamic）类型</h3>
+<p>您可以存储任何类型的值在动态数据类型变量中。这些变量的类型检查是在运行时发生的。</p>
+<p>声明动态类型的语法：</p>
+<pre><code>dynamic &lt;variable_name&gt; = value;
+</code></pre>
+
+<p>例如：</p>
+<pre><code>dynamic d = 20;
+</code></pre>
+
+<p>动态类型与对象类型相似，但是对象类型变量的类型检查是在编译时发生的，而动态类型变量的类型检查是在运行时发生的。</p>
+<h3 id="string">字符串（String）类型</h3>
+<p><strong>字符串（String）类型</strong> 允许您给变量分配任何字符串值。字符串（String）类型是 System.String 类的别名。它是从对象（Object）类型派生的。字符串（String）类型的值可以通过两种形式进行分配：引号和 @引号。</p>
+<p>例如：</p>
+<pre><code>String str = &quot;runoob.com&quot;;
+</code></pre>
+
+<p>一个 @引号字符串：</p>
+<pre><code>@&quot;runoob.com&quot;;
+</code></pre>
+
+<p>C# string 字符串的前面可以加 @（称作"逐字字符串"）将转义字符（\）当作普通字符对待，比如：</p>
+<pre><code>string str = @&quot;C:\Windows&quot;;
+</code></pre>
+
+<p>等价于：</p>
+<pre><code>string str = &quot;C:\\Windows&quot;;
+</code></pre>
+
+<p>@ 字符串中可以任意换行，换行符及缩进空格都计算在字符串长度之内。</p>
+<pre><code>string str = @&quot;&lt;script type=&quot;&quot;text/javascript&quot;&quot;&gt;
+	&lt;!--
+	--&gt;
+&lt;/script&gt;&quot;;
+</code></pre>
+
+<p>用户自定义引用类型有：class、interface 或 delegate。我们将在以后的章节中讨论这些类型。</p>
+<h2 id="pointer-types">指针类型（Pointer types）</h2>
+<p>指针类型变量存储另一种类型的内存地址。C# 中的指针与 C 或 C++ 中的指针有相同的功能。</p>
+<p>声明指针类型的语法：</p>
+<pre><code>type* identifier;
+</code></pre>
+
+<p>例如：</p>
+<pre><code>char* cptr;
+int* iptr;
+</code></pre>
+
+<p>我们将在章节"不安全的代码"中讨论指针类型。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

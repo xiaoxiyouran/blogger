@@ -1,0 +1,154 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_菜鸟教程数据库1 = tree.createNode('菜鸟教程 数据库',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_SQL基础教程2 = _菜鸟教程数据库1.createChildNode('SQL 基础教程',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_00Mac下安装mysql_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/00 Mac 下安装mysql.html' target = 'right'>00 Mac 下安装mysql.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_01常见的数据库_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/01 常见的数据库.html' target = 'right'>01 常见的数据库.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02SQL简介_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/02 SQL 简介.html' target = 'right'>02 SQL 简介.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_03SQL语法_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/03 SQL 语法.html' target = 'right'>03 SQL 语法.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04MySQL的启动关闭和新增用户_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/04 MySQL 的启动 关闭 和 新增用户.html' target = 'right'>04 MySQL 的启动 关闭 和 新增用户.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04mysql验证是否安装和修改管理员密码_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/04 mysql 验证是否安装和修改管理员密码.html' target = 'right'>04 mysql 验证是否安装和修改管理员密码.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_05MySQL连接_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/05 MySQL 连接.html' target = 'right'>05 MySQL 连接.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_06MySQL创建数据库_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/06 MySQL 创建数据库.html' target = 'right'>06 MySQL 创建数据库.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_07MySQL删除数据库_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/07 MySQL 删除数据库.html' target = 'right'>07 MySQL 删除数据库.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_08MySQL选择数据库_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/08 MySQL 选择数据库.html' target = 'right'>08 MySQL 选择数据库.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_09MySQL数据类型_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/09 MySQL 数据类型.html' target = 'right'>09 MySQL 数据类型.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_10MySQL创建数据表_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/10 MySQL 创建数据表.html' target = 'right'>10 MySQL 创建数据表.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_11MySQL删除数据表_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/11 MySQL 删除数据表.html' target = 'right'>11 MySQL 删除数据表.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_12MySQL插入数据_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/12 MySQL 插入数据.html' target = 'right'>12 MySQL 插入数据.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_13MySQL查询数据_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/13 MySQL 查询数据.html' target = 'right'>13 MySQL 查询数据.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_14MySQLWHERE子句_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/14 MySQL WHERE 子句.html' target = 'right'>14 MySQL WHERE 子句.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_15MySQLUPDATE修改更新_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/15 MySQL UPDATE 修改更新.html' target = 'right'>15 MySQL UPDATE 修改更新.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_16MySQLDELETE语句_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/16 MySQL DELETE 语句.html' target = 'right'>16 MySQL DELETE 语句.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_17MySQLLIKE子句_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/17 MySQL LIKE 子句.html' target = 'right'>17 MySQL LIKE 子句.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_18MySQLUNION操作符_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/18 MySQL UNION 操作符.html' target = 'right'>18 MySQL UNION 操作符.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_19MySQL排序_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/19 MySQL 排序.html' target = 'right'>19 MySQL 排序.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20MySQLGROUPBY语句_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/20 MySQL GROUP BY 语句.html' target = 'right'>20 MySQL GROUP BY 语句.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_21执行外部mysql脚本_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/21 执行外部 mysql脚本.html' target = 'right'>21 执行外部 mysql脚本.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_22Mysql连接的使用_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/22 Mysql 连接的使用.html' target = 'right'>22 Mysql 连接的使用.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_23MySQLNULL值处理_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/23 MySQL NULL 值处理.html' target = 'right'>23 MySQL NULL 值处理.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_24MySQL正则表达式_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/24 MySQL 正则表达式.html' target = 'right'>24 MySQL 正则表达式.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_25MySQL事务_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/25 MySQL 事务.html' target = 'right'>25 MySQL 事务.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_26MySQLALTER命令_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/26 MySQL ALTER命令.html' target = 'right'>26 MySQL ALTER命令.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_27MySQL索引_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/27 MySQL 索引.html' target = 'right'>27 MySQL 索引.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_28MySQL临时表_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/28 MySQL 临时表.html' target = 'right'>28 MySQL 临时表.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_29MySQL复制表_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/29 MySQL 复制表.html' target = 'right'>29 MySQL 复制表.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_30MySQL序列使用_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/30 MySQL 序列使用.html' target = 'right'>30 MySQL 序列使用.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_31MySQL处理重复数据_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/31 MySQL 处理重复数据.html' target = 'right'>31 MySQL 处理重复数据.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_32MySQL及SQL注入_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/32 MySQL 及 SQL 注入.html' target = 'right'>32 MySQL 及 SQL 注入.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_33MySQL导出数据_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/33 MySQL 导出数据.html' target = 'right'>33 MySQL 导出数据.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_34MySQL导入数据_html3 = _SQL基础教程2.createChildNode("<a href = './菜鸟教程 数据库/SQL 基础教程/34 MySQL 导入数据.html' target = 'right'>34 MySQL 导入数据.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_面试常问1 = tree.createNode('面试常问',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_部分函数依赖_完全依赖_传递函数依赖2 = _面试常问1.createChildNode('部分函数依赖-完全依赖-传递函数依赖',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_部分函数依赖_传递函数依赖_完全函数依赖和三种范式的区别_html3 = _部分函数依赖_完全依赖_传递函数依赖2.createChildNode("<a href = './面试常问/部分函数依赖-完全依赖-传递函数依赖/部分函数依赖，传递函数依赖，完全函数依赖 和三种范式的区别.html' target = 'right'>部分函数依赖，传递函数依赖，完全函数依赖 和三种范式的区别.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_部分函数依赖_传递函数依赖_完全函数依赖和三种范式的区别_pdf3 = _部分函数依赖_完全依赖_传递函数依赖2.createChildNode("<a href = './面试常问/部分函数依赖-完全依赖-传递函数依赖/部分函数依赖，传递函数依赖，完全函数依赖 和三种范式的区别.pdf' target = 'right'>部分函数依赖，传递函数依赖，完全函数依赖 和三种范式的区别.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180403_MySQL慢查询_分析SQL执行效率浅谈_html2 = _面试常问1.createChildNode("<a href = './面试常问/20180403_MySQL慢查询&分析SQL执行效率浅谈.html' target = 'right'>20180403_MySQL慢查询&分析SQL执行效率浅谈.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180410数据库的exists和in_html2 = _面试常问1.createChildNode("<a href = './面试常问/20180410数据库的exists 和 in.html' target = 'right'>20180410数据库的exists 和 in.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_E_R模型和E_R分析_html2 = _面试常问1.createChildNode("<a href = './面试常问/E-R模型 和 E-R分析.html' target = 'right'>E-R模型 和 E-R分析.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_E_R模型和E_R分析_pdf2 = _面试常问1.createChildNode("<a href = './面试常问/E-R模型 和 E-R分析.pdf' target = 'right'>E-R模型 和 E-R分析.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_MySQL中的Myisam和innodb的区别_html2 = _面试常问1.createChildNode("<a href = './面试常问/MySQL中的Myisam 和 innodb的区别.html' target = 'right'>MySQL中的Myisam 和 innodb的区别.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_MySQL中的Myisam和innodb的区别_pdf2 = _面试常问1.createChildNode("<a href = './面试常问/MySQL中的Myisam 和 innodb的区别.pdf' target = 'right'>MySQL中的Myisam 和 innodb的区别.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_NoSQL_html2 = _面试常问1.createChildNode("<a href = './面试常问/NoSQL.html' target = 'right'>NoSQL.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_NoSQL_pdf2 = _面试常问1.createChildNode("<a href = './面试常问/NoSQL.pdf' target = 'right'>NoSQL.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库的隔离级别_html2 = _面试常问1.createChildNode("<a href = './面试常问/数据库的隔离级别.html' target = 'right'>数据库的隔离级别.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库的隔离级别_pdf2 = _面试常问1.createChildNode("<a href = './面试常问/数据库的隔离级别.pdf' target = 'right'>数据库的隔离级别.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库索引_html2 = _面试常问1.createChildNode("<a href = './面试常问/数据库索引.html' target = 'right'>数据库索引.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库索引_pdf2 = _面试常问1.createChildNode("<a href = './面试常问/数据库索引.pdf' target = 'right'>数据库索引.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库范式_html2 = _面试常问1.createChildNode("<a href = './面试常问/数据库范式.html' target = 'right'>数据库范式.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库范式_pdf2 = _面试常问1.createChildNode("<a href = './面试常问/数据库范式.pdf' target = 'right'>数据库范式.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库锁_html2 = _面试常问1.createChildNode("<a href = './面试常问/数据库锁.html' target = 'right'>数据库锁.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库锁_pdf2 = _面试常问1.createChildNode("<a href = './面试常问/数据库锁.pdf' target = 'right'>数据库锁.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20418redis_html1 = tree.createNode("<a href = './20418 redis.html' target = 'right'>20418 redis.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

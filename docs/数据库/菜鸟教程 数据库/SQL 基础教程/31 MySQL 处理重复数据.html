@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>31 MySQL 处理重复数据</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="31-mysql">31 MySQL 处理重复数据</h1>
+<hr />
+<p>原文： http://www.runoob.com/mysql/mysql-handling-duplicates.html</p>
+<p>有些 MySQL 数据表中可能存在重复的记录，<strong>有些情况我们允许重复数据的存在，但有时候我们也需要删除这些重复的数据</strong>。</p>
+<p>本章节我们将为大家介绍如何<strong>防止</strong>数据表出现重复数据及如何<strong>删除</strong>数据表中的重复数据。</p>
+<hr />
+<h2 id="_1">防止表中出现重复数据</h2>
+<p>你可以在MySQL数据表中设置指定的字段为  PRIMARY KEY（主键）  或者  UNIQUE（唯一） 索引来保证数据的唯一性。</p>
+<p>让我们尝试一个实例：下表中无索引及主键，所以该表允许出现多条重复记录。</p>
+<pre><code class="mysql">CREATE TABLE person_tbl
+(
+	first_name CHAR(20),
+	last_name CHAR(20),
+	sex CHAR(10)
+);
+</code></pre>
+
+<p>如果你想设置表中字段first_name，last_name数据不能重复，你可以设置<strong>双主键模式</strong>来设置数据的唯一性， 如果你设置了双主键，那么<strong>那个键的默认值不能为NULL，可设置为NOT NULL</strong>。如下所示：</p>
+<pre><code class="Mysql">CREATE TABLE person_tbl
+(
+   first_name CHAR(20) NOT NULL,
+   last_name CHAR(20) NOT NULL,
+   sex CHAR(10),
+   PRIMARY KEY (last_name, first_name)
+);
+</code></pre>
+
+<p>如果我们设置了唯一索引，那么在插入重复数据时，SQL语句将无法执行成功,并抛出错。</p>
+<p>INSERT IGNORE INTO与INSERT INTO的区别就是<strong>INSERT IGNORE会忽略数据库中已经存在的数据，如果数据库没有数据，就插入新的数据，如果有数据的话就跳过这条数据</strong>。这样就可以<strong>保留数据库中已经存在数据，达到在间隙中插入数据的目的</strong>。</p>
+<p>以下实例使用了INSERT IGNORE INTO，执行后不会出错，也不会向数据表中插入重复数据：</p>
+<pre><code class="Mysql">mysql&gt; INSERT IGNORE INTO person_tbl (last_name, first_name)
+	 VALUES( 'Jay', 'Thomas');
+Query OK, 1 row affected (0.00 sec)
+mysql&gt; INSERT IGNORE INTO person_tbl (last_name, first_name)
+	 VALUES( 'Jay', 'Thomas');
+Query OK, 0 rows affected (0.00 sec)
+</code></pre>
+
+<p>INSERT IGNORE INTO当插入数据时，在设置了记录的唯一性后，如果插入重复数据，<strong>将不返回错误，只以警告形式返回</strong>。 而REPLACE INTO into如果存在primary 或 unique相同的记录，则先删除掉。再插入新记录。</p>
+<p>另一种<strong>设置数据的唯一性方法是添加一个UNIQUE索引</strong>，如下所示：</p>
+<pre><code class="Mysql">CREATE TABLE person_tbl
+(
+   first_name CHAR(20) NOT NULL,
+   last_name CHAR(20) NOT NULL,
+   sex CHAR(10)
+   UNIQUE (last_name, first_name)
+);
+</code></pre>
+
+<hr />
+<h2 id="_2">统计重复数据</h2>
+<p>以下我们将统计表中 first_name 和 last_name的重复记录数：</p>
+<pre><code>mysql&gt; SELECT COUNT(*) as repetitions, last_name, first_name
+	 FROM person_tbl
+	 GROUP BY last_name, first_name
+	 HAVING repetitions &gt; 1;
+</code></pre>
+
+<p>以上查询语句将返回 person_tbl 表中重复的记录数。 一般情况下，查询重复的值，请执行以下操作：</p>
+<ul>
+<li>确定哪一列包含的值可能会重复。</li>
+<li>在<strong>列选择列表使用COUNT(*)列出的那些列。</strong></li>
+<li>在<strong>GROUP BY子句中列出的列</strong>。</li>
+<li><strong>HAVING子句设置重复数大于1</strong>。</li>
+</ul>
+<hr />
+<h2 id="_3">过滤重复数据</h2>
+<p>如果你需要读取不重复的数据可以在 SELECT 语句中<strong>使用 DISTINCT 关键字来过滤重复数据</strong>。</p>
+<pre><code class="Mysql">mysql&gt; SELECT DISTINCT last_name, first_name
+	 FROM person_tbl;
+</code></pre>
+
+<p>你也可以使用 GROUP BY 来读取数据表中不重复的数据：</p>
+<pre><code class="Mysql">mysql&gt; SELECT last_name, first_name
+	 FROM person_tbl
+	 GROUP BY (last_name, first_name);
+</code></pre>
+
+<hr />
+<h2 id="_4">删除重复数据</h2>
+<p>如果你想删除数据表中的重复数据，你可以使用以下的SQL语句：</p>
+<pre><code class="Mysql">mysql&gt; CREATE TABLE tmp SELECT last_name, first_name, sex FROM person_tbl  GROUP BY (last_name, first_name, sex);
+mysql&gt; DROP TABLE person_tbl;
+mysql&gt; ALTER TABLE tmp RENAME TO person_tbl;
+</code></pre>
+
+<p>当然你也可以在数据表中添加 INDEX（索引） 和 PRIMAY KEY（主键）这种简单的方法来删除表中的重复记录。方法如下：</p>
+<pre><code class="Mysql">mysql&gt; ALTER IGNORE TABLE person_tbl
+	 ADD PRIMARY KEY (last_name, first_name);
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

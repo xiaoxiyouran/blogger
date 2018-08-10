@@ -1,0 +1,168 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_201803171 = tree.createNode('20180317',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_8皇后问题_html2 = _201803171.createChildNode("<a href = './20180317/8 皇后问题.html' target = 'right'>8 皇后问题.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_8皇后问题_pdf2 = _201803171.createChildNode("<a href = './20180317/8 皇后问题.pdf' target = 'right'>8 皇后问题.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_JVM_8__JVM知识点总览_高级Java工程师面试必备_html2 = _201803171.createChildNode("<a href = './20180317/JVM（8）：JVM知识点总览-高级Java工程师面试必备.html' target = 'right'>JVM（8）：JVM知识点总览-高级Java工程师面试必备.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_JVM_8__JVM知识点总览_高级Java工程师面试必备_pdf2 = _201803171.createChildNode("<a href = './20180317/JVM（8）：JVM知识点总览-高级Java工程师面试必备.pdf' target = 'right'>JVM（8）：JVM知识点总览-高级Java工程师面试必备.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_MySQL索引原理及慢查询优化_html2 = _201803171.createChildNode("<a href = './20180317/MySQL索引原理及慢查询优化.html' target = 'right'>MySQL索引原理及慢查询优化.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCPIP等网络协议补充_html2 = _201803171.createChildNode("<a href = './20180317/TCP IP  等网络协议补充.html' target = 'right'>TCP IP  等网络协议补充.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCPIP等网络协议补充_pdf2 = _201803171.createChildNode("<a href = './20180317/TCP IP  等网络协议补充.pdf' target = 'right'>TCP IP  等网络协议补充.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCP滑动窗口协议_html2 = _201803171.createChildNode("<a href = './20180317/TCP 滑动窗口协议.html' target = 'right'>TCP 滑动窗口协议.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCP滑动窗口协议_pdf2 = _201803171.createChildNode("<a href = './20180317/TCP 滑动窗口协议.pdf' target = 'right'>TCP 滑动窗口协议.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCP_IP详解_快速重传与快速恢复_CSDN博客_pdf2 = _201803171.createChildNode("<a href = './20180317/TCP-IP详解：快速重传与快速恢复 - CSDN博客.pdf' target = 'right'>TCP-IP详解：快速重传与快速恢复 - CSDN博客.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCP建立连接和断开连接_GetAlert_博客园_pdf2 = _201803171.createChildNode("<a href = './20180317/TCP建立连接和断开连接 - GetAlert - 博客园.pdf' target = 'right'>TCP建立连接和断开连接 - GetAlert - 博客园.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCP的阻塞和重传机制_轩脉刃_博客园_pdf2 = _201803171.createChildNode("<a href = './20180317/TCP的阻塞和重传机制 - 轩脉刃 - 博客园.pdf' target = 'right'>TCP的阻塞和重传机制 - 轩脉刃 - 博客园.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_TCP重传机制_CSDN博客_pdf2 = _201803171.createChildNode("<a href = './20180317/TCP重传机制 - CSDN博客.pdf' target = 'right'>TCP重传机制 - CSDN博客.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_const的用法_html2 = _201803171.createChildNode("<a href = './20180317/const 的用法.html' target = 'right'>const 的用法.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_const的用法_pdf2 = _201803171.createChildNode("<a href = './20180317/const 的用法.pdf' target = 'right'>const 的用法.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_linuxsocket编程相关问题_CSDN博客_pdf2 = _201803171.createChildNode("<a href = './20180317/linux socket编程相关问题 - CSDN博客.pdf' target = 'right'>linux socket编程相关问题 - CSDN博客.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_linux网络编程_____TCP连接及相关问题_CSDN博客_pdf2 = _201803171.createChildNode("<a href = './20180317/linux网络编程-----TCP连接及相关问题 - CSDN博客.pdf' target = 'right'>linux网络编程-----TCP连接及相关问题 - CSDN博客.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_linux网络编程_____TCP连接及相关问题_html2 = _201803171.createChildNode("<a href = './20180317/linux网络编程-----TCP连接及相关问题.html' target = 'right'>linux网络编程-----TCP连接及相关问题.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_linux网络编程_____TCP连接及相关问题_pdf2 = _201803171.createChildNode("<a href = './20180317/linux网络编程-----TCP连接及相关问题.pdf' target = 'right'>linux网络编程-----TCP连接及相关问题.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_一个正方体上三组相对面的面上4个顶点的和都相等_html2 = _201803171.createChildNode("<a href = './20180317/一个正方体上三组相对面的面上4个顶点的和都相等.html' target = 'right'>一个正方体上三组相对面的面上4个顶点的和都相等.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_一个正方体上三组相对面的面上4个顶点的和都相等_pdf2 = _201803171.createChildNode("<a href = './20180317/一个正方体上三组相对面的面上4个顶点的和都相等.pdf' target = 'right'>一个正方体上三组相对面的面上4个顶点的和都相等.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_字符串的组合问题_html2 = _201803171.createChildNode("<a href = './20180317/字符串的组合问题.html' target = 'right'>字符串的组合问题.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_字符串的组合问题_pdf2 = _201803171.createChildNode("<a href = './20180317/字符串的组合问题.pdf' target = 'right'>字符串的组合问题.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_彻底弄懂activity的四大模式_html2 = _201803171.createChildNode("<a href = './20180317/彻底弄懂activity 的四大模式.html' target = 'right'>彻底弄懂activity 的四大模式.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_彻底弄懂activity的四大模式_pdf2 = _201803171.createChildNode("<a href = './20180317/彻底弄懂activity 的四大模式.pdf' target = 'right'>彻底弄懂activity 的四大模式.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_快速排序_html2 = _201803171.createChildNode("<a href = './20180317/快速排序.html' target = 'right'>快速排序.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_快速排序_pdf2 = _201803171.createChildNode("<a href = './20180317/快速排序.pdf' target = 'right'>快速排序.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_总结的JVM面试题_html2 = _201803171.createChildNode("<a href = './20180317/总结的JVM面试题.html' target = 'right'>总结的JVM面试题.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_总结的JVM面试题_pdf2 = _201803171.createChildNode("<a href = './20180317/总结的JVM面试题.pdf' target = 'right'>总结的JVM面试题.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库索引的实现原理_html2 = _201803171.createChildNode("<a href = './20180317/数据库索引的实现原理.html' target = 'right'>数据库索引的实现原理.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库索引的实现原理_pdf2 = _201803171.createChildNode("<a href = './20180317/数据库索引的实现原理.pdf' target = 'right'>数据库索引的实现原理.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_浅谈C__多态性_html2 = _201803171.createChildNode("<a href = './20180317/浅谈C++多态性.html' target = 'right'>浅谈C++多态性.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_浅谈C__多态性_pdf2 = _201803171.createChildNode("<a href = './20180317/浅谈C++多态性.pdf' target = 'right'>浅谈C++多态性.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_浅谈MySQL引擎的用法和区别_html2 = _201803171.createChildNode("<a href = './20180317/浅谈MySQL引擎的用法和区别.html' target = 'right'>浅谈MySQL引擎的用法和区别.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_浅谈MySQL引擎的用法和区别_pdf2 = _201803171.createChildNode("<a href = './20180317/浅谈MySQL引擎的用法和区别.pdf' target = 'right'>浅谈MySQL引擎的用法和区别.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_腾讯面试题04_进程和线程的区别__html2 = _201803171.createChildNode("<a href = './20180317/腾讯面试题04.进程和线程的区别？.html' target = 'right'>腾讯面试题04.进程和线程的区别？.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_腾讯面试题04_进程和线程的区别__pdf2 = _201803171.createChildNode("<a href = './20180317/腾讯面试题04.进程和线程的区别？.pdf' target = 'right'>腾讯面试题04.进程和线程的区别？.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_虚函数表的实现机制_html2 = _201803171.createChildNode("<a href = './20180317/虚函数表的实现机制.html' target = 'right'>虚函数表的实现机制.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_虚函数表的实现机制_pdf2 = _201803171.createChildNode("<a href = './20180317/虚函数表的实现机制.pdf' target = 'right'>虚函数表的实现机制.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_触发器_html2 = _201803171.createChildNode("<a href = './20180317/触发器.html' target = 'right'>触发器.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_触发器_pdf2 = _201803171.createChildNode("<a href = './20180317/触发器.pdf' target = 'right'>触发器.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_设计模式_html2 = _201803171.createChildNode("<a href = './20180317/设计模式.html' target = 'right'>设计模式.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_201803181 = tree.createNode('20180318',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_Exists语句_html2 = _201803181.createChildNode("<a href = './20180318/Exists 语句.html' target = 'right'>Exists 语句.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_Exists语句_pdf2 = _201803181.createChildNode("<a href = './20180318/Exists 语句.pdf' target = 'right'>Exists 语句.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库中groupby和having语法使用详解_html2 = _201803181.createChildNode("<a href = './20180318/数据库中group by和having语法使用详解.html' target = 'right'>数据库中group by和having语法使用详解.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_数据库中groupby和having语法使用详解_pdf2 = _201803181.createChildNode("<a href = './20180318/数据库中group by和having语法使用详解.pdf' target = 'right'>数据库中group by和having语法使用详解.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_201803191 = tree.createNode('20180319',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_Java之美_从菜鸟到高手演变_之数据结构2 = _201803191.createChildNode('Java之美[从菜鸟到高手演变]之数据结构',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_Java之美_从菜鸟到高手演变_之数据结构基础_线性表_栈和队列_数组和字符串_html3 = _Java之美_从菜鸟到高手演变_之数据结构2.createChildNode("<a href = './20180319/Java之美[从菜鸟到高手演变]之数据结构/Java之美[从菜鸟到高手演变]之数据结构基础、线性表、栈和队列、数组和字符串.html' target = 'right'>Java之美[从菜鸟到高手演变]之数据结构基础、线性表、栈和队列、数组和字符串.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_Java之美_从菜鸟到高手演变_之数据结构基础_线性表_栈和队列_数组和字符串_pdf3 = _Java之美_从菜鸟到高手演变_之数据结构2.createChildNode("<a href = './20180319/Java之美[从菜鸟到高手演变]之数据结构/Java之美[从菜鸟到高手演变]之数据结构基础、线性表、栈和队列、数组和字符串.pdf' target = 'right'>Java之美[从菜鸟到高手演变]之数据结构基础、线性表、栈和队列、数组和字符串.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_Java之美_从菜鸟到高手演变_之数据结构基础之树_二叉树_html3 = _Java之美_从菜鸟到高手演变_之数据结构2.createChildNode("<a href = './20180319/Java之美[从菜鸟到高手演变]之数据结构/Java之美[从菜鸟到高手演变]之数据结构基础之树、二叉树.html' target = 'right'>Java之美[从菜鸟到高手演变]之数据结构基础之树、二叉树.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_Java之美_从菜鸟到高手演变_之数据结构基础之树_二叉树_pdf3 = _Java之美_从菜鸟到高手演变_之数据结构2.createChildNode("<a href = './20180319/Java之美[从菜鸟到高手演变]之数据结构/Java之美[从菜鸟到高手演变]之数据结构基础之树、二叉树.pdf' target = 'right'>Java之美[从菜鸟到高手演变]之数据结构基础之树、二叉树.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_112PathSum_html2 = _201803191.createChildNode("<a href = './20180319/112 Path Sum.html' target = 'right'>112 Path Sum.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_112PathSum_pdf2 = _201803191.createChildNode("<a href = './20180319/112 Path Sum.pdf' target = 'right'>112 Path Sum.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_113_PathSumII_html2 = _201803191.createChildNode("<a href = './20180319/113. Path Sum II.html' target = 'right'>113. Path Sum II.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_113_PathSumII_pdf2 = _201803191.createChildNode("<a href = './20180319/113. Path Sum II.pdf' target = 'right'>113. Path Sum II.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_114FlattenBinaryTreetoLinkedList_html2 = _201803191.createChildNode("<a href = './20180319/114 Flatten Binary Tree to Linked List.html' target = 'right'>114 Flatten Binary Tree to Linked List.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_114FlattenBinaryTreetoLinkedList_pdf2 = _201803191.createChildNode("<a href = './20180319/114 Flatten Binary Tree to Linked List.pdf' target = 'right'>114 Flatten Binary Tree to Linked List.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_Java23种设计模式_html2 = _201803191.createChildNode("<a href = './20180319/Java 23 种设计模式.html' target = 'right'>Java 23 种设计模式.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_Java23种设计模式_pdf2 = _201803191.createChildNode("<a href = './20180319/Java 23 种设计模式.pdf' target = 'right'>Java 23 种设计模式.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_包含和继承_html2 = _201803191.createChildNode("<a href = './20180319/包含和继承.html' target = 'right'>包含和继承.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_包含和继承_pdf2 = _201803191.createChildNode("<a href = './20180319/包含和继承.pdf' target = 'right'>包含和继承.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_201803201 = tree.createNode('20180320',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_110BalancedBinaryTree_html2 = _201803201.createChildNode("<a href = './20180320/110 Balanced Binary Tree.html' target = 'right'>110 Balanced Binary Tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_110BalancedBinaryTree_pdf2 = _201803201.createChildNode("<a href = './20180320/110 Balanced Binary Tree.pdf' target = 'right'>110 Balanced Binary Tree.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_111MinimumDepthofBinaryTree_html2 = _201803201.createChildNode("<a href = './20180320/111 Minimum Depth of Binary Tree.html' target = 'right'>111 Minimum Depth of Binary Tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_111MinimumDepthofBinaryTree_pdf2 = _201803201.createChildNode("<a href = './20180320/111 Minimum Depth of Binary Tree.pdf' target = 'right'>111 Minimum Depth of Binary Tree.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_面试1 = tree.createNode('面试',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_数据库2 = _面试1.createChildNode('数据库',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_20180308数据库常问_html3 = _数据库2.createChildNode("<a href = './面试/数据库/20180308数据库常问.html' target = 'right'>20180308数据库常问.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180308数据库常问_pdf3 = _数据库2.createChildNode("<a href = './面试/数据库/20180308数据库常问.pdf' target = 'right'>20180308数据库常问.pdf</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

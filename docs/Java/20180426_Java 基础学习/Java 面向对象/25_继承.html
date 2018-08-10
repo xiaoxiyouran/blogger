@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>25_继承</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="25_">25_继承</h1>
+<p>1- 继承： 代码重用，可覆盖（重写）父类中的方法。</p>
+<p>2- 用extends 关键字</p>
+<p>3- <em>Java</em>中默认只有一种继承（相当于C++<em>中的公有继承</em>）</p>
+<hr />
+<p>Java中的继承是一种机制，表示为一个对象获取父对象的所有属性和行为。</p>
+<p>在Java中继承是：可以创建基于现有类构建新的类。 当您从现有类继承时，就可以重复使用父类的方法和字段，也可以在继承的新类中添加新的方法和字段。</p>
+<p>继承表示<strong>IS-A</strong>关系，也称为父子关系。</p>
+<h2 id="java">为什么在java中使用继承？</h2>
+<p>对于方法覆盖(因此可以实现运行时的多态性)，提高代码可重用性。在Java中，子类可继承父类中的方法，而不需要重新编写相同的方法。但有时子类并不想原封不动地继承父类的方法，而是想作一定的修改，这就需要采用方法的<strong>重写(覆盖)</strong>。</p>
+<p><strong>Java继承的语法</strong></p>
+<pre><code class="java">class Subclass-name extends Superclass-name  
+{  
+   //methods and fields  
+}
+</code></pre>
+
+<p><code>extends</code>关键字表示正在从现有类派生创建的新类。 “<code>extends</code>”的含义是增加功能。在Java的术语中，继承的类称为父类或超类，新类称为子或子类。</p>
+<p><strong>Java继承示例</strong></p>
+<p><img alt="img" src="http://www.yiibai.com/uploads/images/201703/0603/842090342_85538.jpg" /></p>
+<p>如上图所示，<code>Programmer</code>是子类，<code>Employee</code>是超类。 两个类之间的关系是<code>Programmer IS-A Employee</code>. 它表示 <code>Programmer</code> 是一种 <code>Employee</code> 的类型。</p>
+<p>参考下面示例代码的实现 -</p>
+<pre><code class="java">class Employee {
+	float salary = 40000;
+}
+
+class Programmer extends Employee {
+	int bonus = 10000;
+
+	public static void main(String args[]) {
+		Programmer p = new Programmer();
+		System.out.println(&quot;Programmer salary is:&quot; + p.salary);
+		System.out.println(&quot;Bonus of Programmer is:&quot; + p.bonus);
+	}
+}
+</code></pre>
+
+<p>执行上面代码得到以下结果 -</p>
+<pre><code class="java">Programmer salary is:40000.0
+Bonus of programmer is:10000
+</code></pre>
+
+<p>在上面的例子中，<code>Programmer</code>对象可以访问自身类以及<code>Employee</code>类的字段，即提高了代码可重用性。</p>
+<h2 id="java_1">java继承类型</h2>
+<p>在类的基础上，在java中可以有三种类型的继承：单一，多级和分层。在Java编程中，仅能通过接口支持多重和混合继承。稍后章节中我们将了解学习接口的应用。</p>
+<p><img alt="img" src="http://www.yiibai.com/uploads/images/201703/0603/816090354_21318.jpg" /></p>
+<blockquote>
+<p>注意：在java中的类不支持多继承。</p>
+</blockquote>
+<p>当一个类扩展多个类，即被称为多重继承。 例如：</p>
+<p><img alt="img" src="http://www.yiibai.com/uploads/images/201703/0603/372090352_40634.jpg" /></p>
+<h3 id="1">(1). 单一继承示例</h3>
+<p>文件 <code>TestInheritance.java</code> 中的代码如下 -</p>
+<pre><code class="java">class Animal {
+	void eat() {
+		System.out.println(&quot;eating...&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void bark() {
+		System.out.println(&quot;barking...&quot;);
+	}
+}
+
+class TestInheritance {
+	public static void main(String args[]) {
+		Dog d = new Dog();
+		d.bark();
+		d.eat();
+	}
+}
+</code></pre>
+
+<p>执行上面代码得到以下结果 -</p>
+<pre><code class="java">barking...
+eating...
+</code></pre>
+
+<h3 id="2">(2). 多级继承示例</h3>
+<p>文件 <code>TestInheritance2.java</code> 中的代码如下 -</p>
+<pre><code class="java">class Animal {
+	void eat() {
+		System.out.println(&quot;eating...&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void bark() {
+		System.out.println(&quot;barking...&quot;);
+	}
+}
+
+class BabyDog extends Dog {
+	void weep() {
+		System.out.println(&quot;weeping...&quot;);
+	}
+}
+
+class TestInheritance2 {
+	public static void main(String args[]) {
+		BabyDog d = new BabyDog();
+		d.weep();
+		d.bark();
+		d.eat();
+	}
+}
+</code></pre>
+
+<p>执行上面代码得到以下结果 -</p>
+<pre><code class="java">weeping...
+barking...
+eating...
+</code></pre>
+
+<h3 id="3">(3). 多级继承示例</h3>
+<p>文件 <code>TestInheritance3.java</code> 中的代码如下 -</p>
+<pre><code class="java">class Animal {
+	void eat() {
+		System.out.println(&quot;eating...&quot;);
+	}
+}
+
+class Dog extends Animal {
+	void bark() {
+		System.out.println(&quot;barking...&quot;);
+	}
+}
+
+class Cat extends Animal {
+	void meow() {
+		System.out.println(&quot;meowing...&quot;);
+	}
+}
+
+class TestInheritance3 {
+	public static void main(String args[]) {
+		Cat c = new Cat();
+		c.meow();
+		c.eat();
+		// c.bark();//C.T.Error
+	}
+}
+</code></pre>
+
+<p>执行上面代码得到以下结果 -</p>
+<pre><code class="java">meowing...
+eating...
+</code></pre>
+
+<p><strong>问题：为什么在Java中不支持多重继承？</strong></p>
+<p>为了降低复杂性并简化语言，Java中不支持多重继承。想象一个：<strong>A</strong>，<strong>B</strong>和<strong>C</strong>是三个类。 <strong>C</strong>类继承<strong>A</strong>和<strong>B</strong>类。 如果<strong>A</strong>和<strong>B</strong>类有相同的方法，并且从子类对象调用它，<strong>A</strong>或<strong>B</strong>类的调用方法会有歧义。</p>
+<p>因为编译时错误比运行时错误好，如果继承<code>2</code>个类，java会在编译时报告错误。 所以无论子类中是否有相同的方法，都会有报告编译时错误。例如下面的代码是编译出错的。</p>
+<pre><code class="java">class A {
+	void msg() {
+		System.out.println(&quot;Hello&quot;);
+	}
+}
+
+class B {
+	void msg() {
+		System.out.println(&quot;Welcome&quot;);
+	}
+}
+
+class C extends A,B
+{//suppose if it were  
+
+ Public Static
+
+	void main(String args[]) {
+		C obj = new C();
+		obj.msg();// Now which msg() method would be invoked?
+	}
+
+}    
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

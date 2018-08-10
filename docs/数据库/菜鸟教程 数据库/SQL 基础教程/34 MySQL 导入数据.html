@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>34 MySQL 导入数据</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="34-mysql">34 MySQL 导入数据</h1>
+<hr />
+<p>原文：http://www.runoob.com/mysql/mysql-database-import.html</p>
+<p>MySQL中可以使用两种简单的方式来导入MySQL导出的数据。</p>
+<hr />
+<h2 id="load-data">使用 LOAD DATA 导入数据</h2>
+<p>MySQL 中提供了LOAD DATA INFILE语句来插入数据。 以下实例中将从当前目录中读取文件 dump.txt ，将该文件中的数据插入到当前数据库的 mytbl 表中。</p>
+<pre><code class="Mysql">mysql&gt; LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl;
+</code></pre>
+
+<p>如果指定LOCAL关键词，则表明<strong>从客户主机上按路径读取文件</strong>。如果没有指定，则文件在服务器上按路径读取文件。</p>
+<p>你能明确地在LOAD DATA语句中指出列值的分隔符和行尾标记，但是默认标记是定位符和换行符。</p>
+<p>两个命令的 FIELDS 和 LINES 子句的语法是一样的。两个子句都是可选的，但是如果两个同时被指定，<strong>FIELDS 子句必须出现在 LINES 子句之前。</strong></p>
+<p>如果用户指定一个 FIELDS 子句，它的子句 （TERMINATED BY、[OPTIONALLY] ENCLOSED BY 和 ESCAPED BY) 也是可选的，不过，用户<strong>必须至少指定它们中的一个。</strong></p>
+<pre><code class="Mysql">mysql&gt; LOAD DATA LOCAL INFILE 'dump.txt' INTO TABLE mytbl
+	 FIELDS TERMINATED BY ':'
+	 LINES TERMINATED BY '\r\n';
+</code></pre>
+
+<p>LOAD DATA 默认情况下是按照数据文件中列的顺序插入数据的，<strong>如果数据文件中的列与插入表中的列不一致，则需要指定列的顺序。</strong></p>
+<p>如，在数据文件中的列顺序是 a,b,c，但在插入表的列顺序为b,c,a，则数据导入语法如下：</p>
+<pre><code>mysql&gt; LOAD DATA LOCAL INFILE 'dump.txt' 
+	 INTO TABLE mytbl (b, c, a);
+</code></pre>
+
+<hr />
+<h2 id="mysqlimport">使用 mysqlimport 导入数据</h2>
+<p>mysqlimport客户端提供了LOAD DATA INFILEQL语句的一个命令行接口。mysqlimport的大多数选项直接对应LOAD DATA INFILE子句。</p>
+<p>从文件 dump.txt 中将数据导入到 mytbl 数据表中, 可以使用以下命令：</p>
+<pre><code class="shell">$ mysqlimport -u root -p --local database_name dump.txt
+password *****
+</code></pre>
+
+<p>mysqlimport命令可以指定选项来设置指定格式,命令语句格式如下：</p>
+<pre><code class="Shell">$ mysqlimport -u root -p --local --fields-terminated-by=&quot;:&quot; \
+   --lines-terminated-by=&quot;\r\n&quot;  database_name dump.txt
+password *****
+</code></pre>
+
+<p>mysqlimport 语句中使用 --columns 选项来设置列的顺序：</p>
+<pre><code class="shell">$ mysqlimport -u root -p --local --columns=b,c,a \
+	database_name dump.txt
+password *****
+</code></pre>
+
+<hr />
+<h2 id="mysqlimport_1">mysqlimport的常用选项介绍</h2>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>选项</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-d or --delete</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>新数据导入数据表中之前删除数据数据表中的所有信息</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-f or --force</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>不管是否遇到错误，mysqlimport将强制继续插入数据</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-i or --ignore</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>mysqlimport跳过或者忽略那些有相同唯一 关键字的行， 导入文件中的数据将被忽略。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-l or -lock-tables</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>数据被插入之前锁住表，这样就防止了， 你在更新数据库时，用户的查询和更新受到影响。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>-r or -replace</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>这个选项与－i选项的作用相反；此选项将替代 表中有相同唯一关键字的记录。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>--fields-enclosed- by= char</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>指定文本文件中数据的记录时以什么括起的， 很多情况下 数据以双引号括起。 默认的情况下数据是没有被字符括起的。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>--fields-terminated- by=char</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>指定各个数据的值之间的分隔符，在句号分隔的文件中， 分隔符是句号。您可以用此选项指定数据之间的分隔符。 默认的分隔符是跳格符（Tab）</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>--lines-terminated- by=str</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>此选项指定文本文件中行与行之间数据的分隔字符串 或者字符。 默认的情况下mysqlimport以newline为行分隔符。 您可以选择用一个字符串来替代一个单个的字符： 一个新行或者一个回车。</td>
+</tr>
+</tbody>
+</table>
+<p>mysqlimport命令常用的选项还有<strong>-v 显示版本</strong>（version）， <strong>-p 提示输入密码</strong>（password）等。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

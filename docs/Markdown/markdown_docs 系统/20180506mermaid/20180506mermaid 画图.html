@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180506mermaid 画图</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180506mermaid">20180506mermaid 画图</h1>
+<p>关于画时间序列图的，在<code>时间序列图</code>文件夹，</p>
+<p>流程图的在<code>flowchart未用</code>文件夹</p>
+<p>这两个也可以拿来支持画图。但是第一个渲染速度太慢，而且编译器还得重新改很多地方，暂时不支持它。</p>
+<p>这两个怎么用，可以看例子。具体找源文件，可以从这个网址找起：http://www.sysctl.me/2017/11/11/Draw%20Diagrams%20With%20Markdown/</p>
+<hr />
+<p>画图的原文链接： http://www.sysctl.me/2017/11/11/Draw%20Diagrams%20With%20Markdown/</p>
+<p>下载包： https://mermaidjs.github.io/ 下面的<code>remark.js</code></p>
+<p>使用方法： https://github.com/gnab/remark/wiki/Adding-graphs-via-Mermaid</p>
+<h2 id="_1">序列图</h2>
+<h3 id="1">例子1</h3>
+<pre><code>​```mermaid
+%% Example of sequence diagram
+  sequenceDiagram
+	Alice-&gt;&gt;Bob: Hello Bob, how are you?
+	alt is sick
+	Bob-&gt;&gt;Alice: Not so good :(
+	else is well
+	Bob-&gt;&gt;Alice: Feeling fresh like a daisy
+	end
+	opt Extra response
+	Bob-&gt;&gt;Alice: Thanks for asking
+	end
+
+</code></pre>
+
+<div class="mermaid">   graph LR;
+		A(Central Message Router);
+		B(R TD);
+		C(XYZ);
+		D(S Writer);
+		A-->|R TD Router|B;
+		B-->C;
+		C-->|XYZ Router|D;
+</div>
+
+<div class="mermaid">%% Example of sequence diagram
+  sequenceDiagram
+	Alice->>Bob: Hello Bob, how are you?
+	alt is sick
+	Bob->>Alice: Not so good :(
+	else is well
+	Bob->>Alice: Feeling fresh like a daisy
+	end
+	opt Extra response
+	Bob->>Alice: Thanks for asking
+	end
+
+
+</div>
+
+<h3 id="_2">转换</h3>
+<p>html 转成了如下文档：</p>
+<pre><code>&lt;pre&gt;&lt;code class=&quot;mermaid&quot;&gt;%% Example of sequence diagram
+  sequenceDiagram
+	Alice-&amp;gt;&amp;gt;Bob: Hello Bob, how are you?
+	alt is sick
+	Bob-&amp;gt;&amp;gt;Alice: Not so good :(
+	else is well
+	Bob-&amp;gt;&amp;gt;Alice: Feeling fresh like a daisy
+	end
+	opt Extra response
+	Bob-&amp;gt;&amp;gt;Alice: Thanks for asking
+	end
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+<p>对比发现：</p>
+<p>只要兑换一下标签就可以了：</p>
+<pre><code> &lt;div class=&quot;mermaid&quot;&gt;%% Example of sequence diagram
+  sequenceDiagram
+	Alice-&gt;&gt;Bob: Hello Bob, how are you?
+	alt is sick
+	Bob-&amp;gt;&amp;gt;Alice: Not so good :(
+	else is well
+	Bob-&amp;gt;&amp;gt;Alice: Feeling fresh like a daisy
+	end
+	opt Extra response
+	Bob-&amp;gt;&amp;gt;Alice: Thanks for asking
+	end
+
+&lt;/div&gt;
+</code></pre>
+
+<h2 id="_3">流程图</h2>
+<pre><code>​```mermaid
+graph LR
+A[Hard edge] --&gt;B(Round edge)
+	B --&gt; C{Decision}
+	C --&gt;|One| D[Result one]
+	C --&gt;|Two| E[Result two]
+
+</code></pre>
+
+<div class="mermaid">graph LR
+A[Hard edge] -->B(Round edge)
+	B --> C{Decision}
+	C -->|One| D[Result one]
+	C -->|Two| E[Result two]
+</div>
+
+<h2 id="_4">甘特图</h2>
+<pre><code>​```mermaid
+%% Example with slection of syntaxes 不要在这里写注释，渲染不出来
+		gantt
+		dateFormat  YYYY-MM-DD
+		title Adding GANTT diagram functionality to mermaid
+
+		section A section
+		Completed task            :done,    des1, 2014-01-06,2014-01-08
+		Active task               :active,  des2, 2014-01-09, 3d
+		Future task               :         des3, after des2, 5d
+		Future task2               :         des4, after des3, 5d
+
+		section Critical tasks
+		Completed task in the critical line :crit, done, 2014-01-06,24h
+		Implement parser and jison          :crit, done, after des1, 2d
+		Create tests for parser             :crit, active, 3d
+		Future task in critical line        :crit, 5d
+		Create tests for renderer           :2d
+		Add to mermaid                      :1d
+
+		section Documentation
+		Describe gantt syntax               :active, a1, after des1, 3d
+		Add gantt diagram to demo page      :after a1  , 20h
+		Add another diagram to demo page    :doc1, after a1  , 48h
+
+		section Last section
+		Describe gantt syntax               :after doc1, 3d
+		Add gantt diagram to demo page      : 20h
+		Add another diagram to demo page    : 48h
+
+</code></pre>
+
+<div class="mermaid">        gantt
+		dateFormat  YYYY-MM-DD
+		title Adding GANTT diagram functionality to mermaid
+
+		section A section
+		Completed task            :done,    des1, 2014-01-06,2014-01-08
+		Active task               :active,  des2, 2014-01-09, 3d
+		Future task               :         des3, after des2, 5d
+		Future task2               :         des4, after des3, 5d
+
+		section Critical tasks
+		Completed task in the critical line :crit, done, 2014-01-06,24h
+		Implement parser and jison          :crit, done, after des1, 2d
+		Create tests for parser             :crit, active, 3d
+		Future task in critical line        :crit, 5d
+		Create tests for renderer           :2d
+		Add to mermaid                      :1d
+
+		section Documentation
+		Describe gantt syntax               :active, a1, after des1, 3d
+		Add gantt diagram to demo page      :after a1  , 20h
+		Add another diagram to demo page    :doc1, after a1  , 48h
+
+		section Last section
+		Describe gantt syntax               :after doc1, 3d
+		Add gantt diagram to demo page      : 20h
+		Add another diagram to demo page    : 48h
+</div>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

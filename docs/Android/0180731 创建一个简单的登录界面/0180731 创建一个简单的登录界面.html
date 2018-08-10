@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180731 创建一个简单的登录界面</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180731">20180731 创建一个简单的登录界面</h1>
+<p>视频地址： https://www.bilibili.com/video/av14627040/</p>
+<h2 id="activity">创建一个activity</h2>
+<p>res/layout/Activity_edit_text.xml</p>
+<pre><code class="java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;!--改成相对布局，
+并删掉没用的信息,
+设置内边距15个dp--&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	android:layout_width=&quot;match_parent&quot;
+	android:layout_height=&quot;match_parent&quot;
+	android:padding=&quot;15dp&quot;
+	&gt;
+
+	&lt;!--设置输入文字大小，
+	并设置颜色为橙色
+	弹出数字键盘：  android:inputType=&quot;number&quot;
+	设置圆角边框
+	设置左右内间距
+	左边设置图标
+	设置图标的距离
+	设置最大行数： 1行
+
+	设置顶部间距
+	--&gt;
+	&lt;EditText
+		android:id=&quot;@+id/et_1&quot;
+		android:layout_width=&quot;match_parent&quot;
+		android:layout_height=&quot;50dp&quot;
+		android:textSize=&quot;16sp&quot;
+		android:textColor=&quot;#FFAD33&quot;
+		android:hint=&quot;用户名&quot;
+		android:background=&quot;@drawable/bg_username&quot;
+		android:paddingLeft=&quot;10dp&quot;
+		android:paddingRight=&quot;10dp&quot;
+		android:drawablePadding=&quot;5dp&quot;
+		android:drawableLeft=&quot;@drawable/icon_user&quot;
+
+		android:maxLines=&quot;1&quot;
+
+		android:layout_marginTop=&quot;50dp&quot;
+		/&gt;
+	&lt;!-- 设置密码框在用户名的下方，
+	   并设置顶间距
+	   设置密码格式为密文： android:inputType=&quot;textPassword&quot;
+	   --&gt;
+	&lt;EditText
+		android:id=&quot;@+id/et_2&quot;
+		android:layout_width=&quot;match_parent&quot;
+		android:layout_height=&quot;50dp&quot;
+		android:textSize=&quot;16sp&quot;
+		android:textColor=&quot;#FFAD33&quot;
+		android:inputType=&quot;textPassword&quot;
+		android:hint=&quot;密码&quot;
+		android:layout_below=&quot;@id/et_1&quot;
+		android:layout_marginTop=&quot;15dp&quot;
+		android:background=&quot;@drawable/bg_username&quot;
+		android:paddingLeft=&quot;10dp&quot;
+		android:paddingRight=&quot;10dp&quot;
+
+		android:maxLines=&quot;1&quot;
+
+		android:drawablePadding=&quot;5dp&quot;
+		android:drawableLeft=&quot;@drawable/icon_password&quot;
+		/&gt;
+
+	&lt;!--设置按钮按压变色 bg_btn4.xml
+
+	设置文字的颜色为白色
+	--&gt;
+	&lt;Button
+		android:id=&quot;@+id/btn_login&quot;
+		android:layout_width=&quot;match_parent&quot;
+		android:layout_height=&quot;50dp&quot;
+		android:layout_below=&quot;@id/et_2&quot;
+		android:layout_marginTop=&quot;40dp&quot;
+
+		android:text=&quot;登录&quot;
+		android:background=&quot;@drawable/bg_btn4&quot;
+
+		android:textColor=&quot;#fff&quot;
+		android:textSize=&quot;20sp&quot;
+		/&gt;
+
+&lt;/RelativeLayout&gt;
+
+</code></pre>
+
+<p>具体的资源文件在 drawable文件下面， 像icon_user 和 icon_password 一般放在 drawable-xxhdpi 文件夹下<strong>（如果没有就手动创建）</strong></p>
+<h2 id="edittextactivity">创建 EditTextActivity</h2>
+<p>一般创建好 layout 文件后, 就会在 java/EditTextActivity.java 操纵脚本</p>
+<pre><code class="java">package com.xiaoxiyouran.myapplication;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class EditTextActivity extends AppCompatActivity {
+
+	//    为登录按钮设置一个点击事件
+	private Button mBtnLogin;   // 1- 声明这个控件
+
+	private EditText mEtUserName;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_edit_text);
+
+		mBtnLogin = (Button) findViewById(R.id.btn_login);   // 2- 获取按钮
+
+		mBtnLogin.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(EditTextActivity.this, &quot;登录成功&quot;/*显示的文字*/, Toast.LENGTH_SHORT/*显示的时间*/).show(); // 必须调用 show() 才会显示成功
+			}
+		});
+
+		mEtUserName = (EditText) findViewById(R.id.et_1);
+		// 添加内容变化时的监听事件
+		mEtUserName.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				Log.d(&quot;edittext&quot;, s.toString());    // 打印内容
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
+
+	}
+}
+</code></pre>
+
+<p>如果想在MainActivity 中添加跳转脚本的话，MainActivity.java 如下： </p>
+<pre><code class="java">package com.xiaoxiyouran.myapplication;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+
+	private Button mButtonEditText;                                     // 1- 声明这个控件
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+
+		mButtonEditText = (Button) findViewById(R.id.btn_edittext);     // 2- 在 activity_main 中找到这个控件
+		mButtonEditText.setOnClickListener(new View.OnClickListener() { // 3- 添加监听事件
+			@Override
+			public void onClick(View v) {
+				// 界面跳转
+				Intent intent = new Intent(MainActivity.this, EditTextActivity.class);
+				startActivity(intent);
+			}
+		});
+
+	}
+}
+
+</code></pre>
+
+<h2 id="androidmanifestxml">注册 AndroidManifest.xml</h2>
+<p>一般来说创建好一个activity后，会自动添加到 AndroidManifest.xml, 如下：</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+	package=&quot;com.xiaoxiyouran.myapplication&quot;&gt;
+
+	&lt;application
+		android:allowBackup=&quot;true&quot;
+		android:icon=&quot;@mipmap/ic_launcher&quot;
+		android:label=&quot;@string/app_name&quot;
+		android:roundIcon=&quot;@mipmap/ic_launcher_round&quot;
+		android:supportsRtl=&quot;true&quot;
+		android:theme=&quot;@style/AppTheme&quot;&gt;
+
+		 &lt;activity android:name=&quot;.MainActivity&quot;&gt;
+		 &lt;intent-filter&gt;
+		 &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+
+		 &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+		 &lt;/intent-filter&gt;
+		 &lt;/activity&gt;
+
+
+		&lt;!--声明一个activity--&gt;
+		&lt;activity android:name=&quot;.EditTextActivity&quot;&gt;&lt;/activity&gt;
+	&lt;/application&gt;
+
+&lt;/manifest&gt;
+</code></pre>
+
+<p><br></p>
+<p>具体源代码详见unmd.</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>[dfs,bfs,未完]126.  Word Ladder II</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="dfsbfs126-word-ladder-ii">[dfs,bfs,未完]126.  Word Ladder II</h1>
+<p>Given two words (<em>beginWord</em> and <em>endWord</em>), and a dictionary's word list, find all shortest transformation sequence(s) from <em>beginWord</em> to <em>endWord</em>, such that:</p>
+<ol>
+<li>Only one letter can be changed at a time</li>
+<li>Each transformed word must exist in the word list. Note that <em>beginWord</em> is <em>not</em> a transformed word.</li>
+</ol>
+<p>For example,</p>
+<p>Given:
+<em>beginWord</em> = <code>"hit"</code>
+<em>endWord</em> = <code>"cog"</code>
+<em>wordList</em> = <code>["hot","dot","dog","lot","log","cog"]</code></p>
+<p>Return</p>
+<pre><code>  [
+	[&quot;hit&quot;,&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;cog&quot;],
+	[&quot;hit&quot;,&quot;hot&quot;,&quot;lot&quot;,&quot;log&quot;,&quot;cog&quot;]
+  ]
+</code></pre>
+
+<p><strong>Note:</strong></p>
+<ul>
+<li>Return an empty list if there is no such transformation sequence.</li>
+<li>All words have the same length.</li>
+<li>All words contain only lowercase alphabetic characters.</li>
+<li>You may assume no duplicates in the word list.</li>
+<li>You may assume <em>beginWord</em> and <em>endWord</em> are non-empty and are not the same.</li>
+</ul>
+<p><strong>UPDATE (2017/1/20):</strong>
+The <em>wordList</em> parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes.</p>
+<p>第一种方法最简单的就是dfs, 但是超时了。</p>
+<pre><code class="cpp">class Solution {
+public:
+	int minLen = INT_MAX;
+	int cmp(string&amp; fir, string&amp; sec){
+		int differ = 0;
+		// std::unordered_map&lt;int,string&gt; mymap;
+		for(int i =0; i&lt; fir.length(); i++ ) {
+			if( fir[i] != sec[i] )
+				differ++;
+		}
+		return differ;
+	}
+
+	void nextValidWords(string&amp; beginWord, vector&lt;string&gt;&amp; wordList, vector&lt;string&gt;&amp; next){
+		for( int i=0; i &lt; wordList.size(); i ++ ){
+
+			if( cmp(beginWord, wordList[i]) == 1 ){
+				next.push_back(wordList[i]);
+//                wordList.erase(wordList.begin() + i);
+			}
+		}
+	}
+
+	void dfs(string beginWord,string&amp; endWord, vector&lt;string&gt;&amp; wordList,int&amp; pathLen, vector&lt;string&gt;&amp; tmp,vector&lt;vector&lt;string&gt;&gt;&amp; res ){
+		if( beginWord == endWord ){
+			if(pathLen &lt; minLen){
+				minLen = pathLen;
+				res.clear();
+				res.push_back(tmp);
+			}else if(pathLen == minLen){
+				res.push_back(tmp);
+			}
+			return;
+		}
+		vector&lt;string&gt; next;
+		nextValidWords(beginWord, wordList, next);
+		for(int i = 0; i&lt; next.size(); i++){
+			++pathLen;
+			tmp.push_back(next[i]);
+			wordList.erase( find(wordList.begin(),wordList.end(),next[i]) );        /// 需要注意的是这里删除指定的元素
+			dfs(next[i],endWord,wordList,pathLen,tmp, res);
+			wordList.push_back(next[i]);                                            /// 然后这里又添加回来
+			tmp.pop_back();
+			--pathLen;
+		}
+
+	}
+
+	vector&lt;vector&lt;string&gt;&gt; findLadders(string beginWord,string endWord, vector&lt;string&gt; wordList) {
+		vector&lt;string&gt; tmp;
+		vector&lt;vector&lt;string&gt;&gt; res;
+		int pathLen =0;
+		/// 起始单词需要加入进去
+		++pathLen;
+		tmp.push_back(beginWord);
+		dfs(beginWord,endWord,  wordList,pathLen, tmp,res);
+		return res;
+
+	}
+};
+
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

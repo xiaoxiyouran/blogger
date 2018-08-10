@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180326_hashmap 的实现和reHash</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180326_hashmap-rehash">20180326_hashmap 的实现和reHash</h1>
+<p>1.HashMap的内部实现机制</p>
+<p>HashMap是对数据结构中哈希表(Hash Table)的实现，Hash表又叫散列表。Hash表是根据关键码Key来访问其对应的值Value的数据结构，它通过一个映射函数把关键码映射到表中一个位置来访问该位置的值，从而加快查找的速度。这个映射函数叫做Hash函数，存放记录的数组叫做Hash表。</p>
+<p>在Java中，HashMap的内部实现结合了链表和数组的优势，链接节点的数据结构是Entry<k,v>，每个Entry对象的内部又含有指向下一个Entry类型对象的引用，如以下代码所示：</p>
+<pre><code class="java">static class Entry&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; {  
+	  final K key;  
+	  V value;  
+	  Entry&lt;K,V&gt; next; //Entry类型内部有一个自己类型的引用，指向下一个Entry  
+	  final int hash;   
+	  ...
+}  
+</code></pre>
+
+<p>在HashMap的构造函数中可以看到，Entry表被申明为了数组，如以下代码所示：</p>
+<pre><code class="java"> public HashMap() {  
+		this.loadFactor = DEFAULT_LOAD_FACTOR;  
+		threshold = (int)(DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);  
+		table = new Entry[DEFAULT_INITIAL_CAPACITY];  
+		init();  
+	}  
+</code></pre>
+
+<p>在以上构造函数中，默认的DEFAULT_INITIAL_CAPACITY值为16，DEFAULT_LOAD_FACTOR的值为0.75。当put一个元素到HashMap中去时，其内部实现如下：</p>
+<pre><code class="java">public V put(K key, V value) {  
+		if (key == null)  
+			return putForNullKey(value);  
+		int hash = hash(key.hashCode());  
+		int i = indexFor(hash, table.length);  
+		...    
+}  
+</code></pre>
+
+<p>可以看到put函数中用一个hash函数来得到哈希值，需要指出的是，HashTable在实现时直接用了hashCode作为哈希值，因此采用HashMap代替HashTable有一定的优化。</p>
+<p>put函数中用到的两个函数hash和indexFor其实现分别如下：</p>
+<pre><code class="java">static int hash(int h) {  
+		// This function ensures that hashCodes that differ only by  
+		// constant multiples at each bit position have a bounded  
+		// number of collisions (approximately 8 at default load factor).  
+		h ^= (h &gt;&gt;&gt; 20) ^ (h &gt;&gt;&gt; 12);  
+		return h ^ (h &gt;&gt;&gt; 7) ^ (h &gt;&gt;&gt; 4);  
+	}  
+</code></pre>
+
+<pre><code class="java">    /** 
+	 * Returns index for hash code h. 
+	 */  
+	static int indexFor(int h, int length) {  
+		return h &amp; (length-1);  
+	}  
+</code></pre>
+
+<p>至于hash函数为什么这样设计，这涉及到具体哈希函数的设计问题了，需要考虑的是哈希算法的时间复杂度，同时尽量使得数组上每个位置都有值，求得时间和空间的最优。</p>
+<p>indexFor函数则用了一个很巧妙的与运算将index值限制在了length-1之内。</p>
+<p>当然，hash函数存在冲突的情况，同一个key对应的hash值可能相同，这时候hash值相同的元素就会用链接进行存储，HashMap的get方法在获取value的时候会对链表进行遍历，把key值相匹配的value取出来。</p>
+<p>2.Hash的实现</p>
+<p>主要是哈希算法和冲突的解决。</p>
+<p>3.什么时候ReHash</p>
+<p>在介绍HashMap的内部实现机制时提到了两个参数，DEFAULT_INITIAL_CAPACITY和DEFAULT_LOAD_FACTOR，DEFAULT_INITIAL_CAPACITY是table数组的容量，DEFAULT_LOAD_FACTOR则是为了最大程度避免哈希冲突，提高HashMap效率而设置的一个影响因子，将其乘以DEFAULT_INITIAL_CAPACITY就得到了一个阈值threshold，当<strong>HashMap的容量达到threshold</strong>时就需要进行扩容，这个时候就要进行ReHash操作了，可以看到下面addEntry函数的实现，当size达到threshold时会调用resize函数进行扩容。</p>
+<pre><code class="java">void addEntry(int hash, K key, V value, int bucketIndex) {  
+ntry&lt;K,V&gt; e = table[bucketIndex];  
+	  table[bucketIndex] = new Entry&lt;K,V&gt;(hash, key, value, e);  
+	  if (size++ &gt;= threshold)  
+		  resize(2 * table.length);  
+  }  
+</code></pre>
+
+<p>在扩容的过程中需要进行ReHash操作，而这是非常耗时的，在实际中应该尽量避免。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

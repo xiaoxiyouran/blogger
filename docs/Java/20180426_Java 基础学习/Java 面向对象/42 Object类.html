@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>42 Object类</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="42-object">42 Object类</h1>
+<p>默认情况下，<code>Object</code>类是java中所有类的父类。 换句话说，它是java的顶级类。</p>
+<p>如果想引用你不知道的类型的对象，使用<code>Object</code>类是没有错的。请注意，父类引用变量可以引用子类对象，称为上转换。</p>
+<p>下面举一个例子，有一个<code>getObject()</code>方法返回一个对象，但它可以是任何类型，如：<code>Employee</code>，<code>Student</code>等这样的类，我们可以使用<code>Object</code>类引用来引用该对象。 例如：</p>
+<pre><code class="Java">Object obj=getObject();//we don't know what object will be returned from this method
+</code></pre>
+
+<p><code>Object</code>类为所有对象提供了一些常见的行为，如对象可以进行比较，对象可以克隆，对象可以通知等。</p>
+<p><img alt="img" src="42_01.gif" /></p>
+<h2 id="object">Object类的方法</h2>
+<p><code>Object</code>类提供了许多方法。 它们如下：</p>
+<p>8 大类方法。</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>序号</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>方法</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public final Class getClass()</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>返回此对象的<code>Class</code>类对象。 <code>Class</code>类可以进一步用于获取此类的元数据。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public int hashCode()</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>返回此对象的哈希码值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public boolean equals(Object obj)</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>将给定对象与此对象进行比较。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>4</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>protected Object clone() throws CloneNotSupportedException</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>创建并返回此对象的精确副本(克隆)。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>5</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public String toString()</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>返回此对象的字符串表示形式。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>6</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public final void notify()</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>唤醒单线程，等待此对象的监视器。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public final void notifyAll()</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>唤醒所有线程，等待此对象的监视器。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>7</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public final void wait(long timeout)throws InterruptedException</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>导致当前线程等待指定的毫秒，直到另一个线程通知(调用<code>notify()</code>或<code>notifyAll()</code>方法)。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public final void wait(long timeout,int nanos)throws InterruptedException</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>导致当前线程等待指定的毫秒和纳秒，直到另一个线程通知(调用<code>notify()</code>或<code>notifyAll()</code>方法)。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>public final void wait()throws InterruptedException</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>导致当前线程等待，直到另一个线程通知(调用<code>notify()</code>或<code>notifyAll()</code>方法)。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>protected void finalize()throws Throwable</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>在对象被垃圾收集之前由垃圾收集器调用。</td>
+</tr>
+</tbody>
+</table>
+<p>我们将在下一章详细学习这些方法。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

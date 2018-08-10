@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180604 使用 Jupyter notebook</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180604-jupyter-notebook">20180604 使用 Jupyter notebook</h1>
+<hr />
+<p>原文链接： http://codingpy.com/article/getting-started-with-jupyter-notebook-part-1/</p>
+<p>jupyter notebook 是一款基于网页的交互式笔记本；</p>
+<blockquote>
+<p>本文作者为 <a href="https://www.packtpub.com/books/content/getting-started-jupyter-notebook-part-1">Marin Gilles</a>，他是来自法国的一位物理学博士生，用 Python 开发了自己的物理学模拟框架。本文分为两部分，是<a href="https://github.com/PythonTG/PythonTG"> <strong>Python 翻译组</strong></a>成立后的第一篇译文，译者 <a href="http://codingpy.com/">EarlGrey</a>。</p>
+</blockquote>
+<p>Jupyter Notebook（此前被称为 IPython notebook）是一个交互式笔记本，支持运行 40 多种编程语言。在本文中，我们将介绍 Jupyter notebook 的主要特性，以及为什么对于希望编写漂亮的交互式文档的人来说是一个强大工具。</p>
+<p>在开始使用 notebook 之前，我们先需要安装该库。你可以在<a href="https://jupyter.readthedocs.org/en/latest/install.html"> Jupyter 官网</a>上找到完整的步骤。</p>
+<blockquote>
+<p>译者注：其实只要<code>pip install jupyter</code>就可以了</p>
+</blockquote>
+<pre><code>jupyter notebook
+</code></pre>
+
+<p>运行上面的命令之后，你将看到类似下面这样的输出：</p>
+<pre><code class="shell">[22:39@cookie ~/Desktop/xiaoxiyouran/packages #7]$ jupyter notebook
+[I 22:54:27.351 NotebookApp] Serving notebooks from local directory: /Users/cookie/Desktop/xiaoxiyouran/packages
+[I 22:54:27.351 NotebookApp] 0 active kernels 
+[I 22:54:27.351 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/?token=ae7896a9ff55d7aaea20a1bfc141673cd896a4bb8fea2ced
+[I 22:54:27.351 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 22:54:27.352 NotebookApp] 
+
+	Copy/paste this URL into your browser when you connect for the first time,
+	to login with a token:
+		http://localhost:8888/?token=ae7896a9ff55d7aaea20a1bfc141673cd896a4bb8fea2ced
+[I 22:54:29.332 NotebookApp] Accepting one-time-token-authenticated connection from ::1
+[W 22:54:29.602 NotebookApp] 404 GET /apple-touch-icon-precomposed.png (::1) 11.73ms referer=None
+
+</code></pre>
+
+<p>同时，会在你开启 notebook 的文件夹中启动 Jupyter 主界面，如下所示：</p>
+<p><img alt="Jupyter 主界面" src="006faQNTgw1f63kcy3kzgj30id05g3yo.jpg" /></p>
+<p>如果想新建一个 notebook，只需要点击<code>New</code>，选择你希望启动的 notebook 类型即可。</p>
+<p><img alt="notebook 类型" src="006faQNTgw1f63kcysz5cj30id09t3yr.jpg" /></p>
+<p>这里，因为我只有一个 Python 内核【<mark>new 下面的python内</mark>核】，所以我们运行一个 Python notebook。在新打开的标签页中，我们会看到 notebook 界面，目前里面什么也没有。</p>
+<p><img alt=" notebook 界面" src="006faQNTgw1f63kcyznzzj30id04iweq.jpg" /></p>
+<p>notebook 界面由以下部分组成：</p>
+<ol>
+<li>notebook 的名称</li>
+<li>主工具栏，提供了保存、导出、重载 notebook，以及重启内核等选项</li>
+<li>快捷键</li>
+<li>notebook 主要区域，包含了 notebook 的内容编辑区</li>
+</ol>
+<p>慢慢熟悉这些菜单和选项。如果想要详细了解有关 notebook 或一些库的具体话题，可以使用菜单栏右侧的帮助菜单。</p>
+<p>下方的主要区域，由被称为单元格的部分组成。<strong><mark>每个 notebook 由多个单元格构成，而每个单元格又可以有不同的用途。</mark></strong></p>
+<p>下方截图中看到的是一个代码单元格（code cell），以<code>[ ]</code>开头。在这种类型的单元格中，可以<strong>输入任意代码并执行</strong>。例如，输入<code>1 + 2</code>并<mark>按下<code>Shift + Enter</code></mark>。之后，单元格中的代码就会被计算，光标也会被移动动一个新的单元格中。你会得到如下结果：</p>
+<p><img alt="代码单元格" src="http://ww4.sinaimg.cn/mw690/006faQNTgw1f63kcyxn32j30id05yq39.jpg" /></p>
+<p>根据绿色边框线，我们可以轻松地识别出当前工作的单元格。接下来，我们在第二个单元格中输入些其他代码，例如：</p>
+<pre><code class="python">for i in range(5):
+	print(i)
+</code></pre>
+
+<p>对上面的代码求值时，你会得到：</p>
+<p><img alt="jupyter 代码执行实例" src="006faQNTgw1f63kcz8s4tj30id09kdgd.jpg" /></p>
+<p>和前一个示例一样，代码被计算之后，马上就会显示结果。你应该注意到了，这次没有出现类似<code>Out[2]</code>这样的文字。这是<mark>因为我们将结果打印出来了，没有返回任何的值。</mark> 【有 <code>out[*]</code> 的表示有返回值】</p>
+<p>notebook 有一个非常有趣的特性，就是可<mark>以修改之前的单元格</mark>，对其重新计算，这样就可以更新整个文档了。试着把光标移回第一个单元格，并将<code>1 + 2</code>修改成<code>2 + 3</code>，然后按下<code>Shift + Enter</code>重新计算该单元格。你会发现结果马上就更新成了 5。如果你不想重新运行整个脚本，<mark>只想用不同的参数测试某个程式的话，这个特性显得尤其强大。</mark>不过，你也可以重新计算整个 notebook，只要点击<code>Cell</code> -&gt; <code>Run all</code>即可。</p>
+<p>现在我们已经知道了如何输入代码，为什么不尝试着让这个 notebook 更加漂亮、内容更丰富？为此，我们需要使用<mark>其他类型的单元格，即 Header单元格和 Markdown单元格。</mark></p>
+<p>首先，我们在顶部添加一个 notebook 的标题。选中第一个单元格，然后<mark>点击<code>Insert</code> -&gt; <code>Insert单元格above</code>（在上方插入单元格</mark>）。你会发现，文档的顶部马上就出现了一个新的单元格。点击在快捷键栏中的单元格类型，将其变成一个标题单元格（heading cell）：</p>
+<p><img alt="变成一个标题 cell" src="006faQNTgw1f63kczy7xuj30id00umx0.jpg" /></p>
+<p>选中下拉选项中的 Heading。然后会出现一个弹出消息，告诉你如何创建不同层级的标题，这样你就有了一个不同类型的 cell：</p>
+<p><img alt="一个不同类型的 cell" src="006faQNTgw1f63kd03mnqj30id035q2s.jpg" /></p>
+<p>这个单元格以<code>#</code>标记开头，意味着这是一个一级标题。如果需要子标题，可以使用以下标记表示（改变单元格类型时弹出消息中有解释）：</p>
+<pre><code># : 一级标题
+## : 二级标题
+### : 三级标题
+...
+</code></pre>
+
+<p>在<code>#</code>之后写下文档的标题，然后计算该单元格 [同样<mark>按 Shift + Enter 计算</mark>]。你会发现一个样式非常好看的标题。作为示例和练习，我还添加了其他几个标题单元格：</p>
+<p><img alt="添加了其他几个标题 cell" src="006faQNTgw1f63kd06rzgj30id0bnwex.jpg" /></p>
+<p>添加好标题之后，我们在编写一些解释，介绍每个代码单元格中的情况。为此，我们要在相应的地方插入单元格，然后将其类型变成 Markdown。然后，计算新的单元格。就这样，你的解释文本就漂亮地渲染出来了！</p>
+<p><img alt="解释文本就漂亮地渲染出来了" src="http://ww1.sinaimg.cn/mw690/006faQNTgw1f63kd0oq8gj30id0dtwf4.jpg" /></p>
+<p>最后，你可以<mark>重命名</mark>该 notebook，点击<code>Fiel</code> -&gt; <code>Rename</code>，然后输入新的名称。这样，新的名称将会出现在窗口的<mark>左上角</mark>，在 Jupyter 的标志旁边。</p>
+<p>在下一篇中，我们将更深入地了解 notebook 的能力，以及如何<mark>继承其他 Python 库</mark>。</p>
+<hr />
+<p><a href="https://www.packtpub.com/books/content/getting-started-jupyter-notebook-part-1">点此查看原文链接。</a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

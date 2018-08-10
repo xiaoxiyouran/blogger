@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180410 求满足给定素数的丑数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180410">20180410 求满足给定素数的丑数</h1>
+<p><img alt="" src="./20180410招行信用卡给定丑数_01.jpeg" /></p>
+<p><img alt="" src="./20180410招行信用卡给定丑数_02.jpeg" /></p>
+<p>可以参考下面这个：</p>
+<h3 id="2357n"><a href="http://dsqiu.iteye.com/blog/1576120">求质因数只能是2,3,5,7的第n大个数（丑数求解）</a></h3>
+<p>题目：求质因数只能是2,3,5,7的第n大个数。例如：1,2,3,4,5,6,7,8,910,12,14,15,16,18</p>
+<p>​   方法一：循环判断每一个数（自然数序列）是否符合丑数的定义，直至第n个数。还有一种思想就是分别求出2,3,5,7指数的范围，然后用多重循环产生每一个数，然后进行排序。</p>
+<p>​   方法二：使用优先队列的方法：每次出最小的一个数，并将这个数分别乘以2,3,5,7的四个数入队，直到出了n个数为止。</p>
+<p>​   方法三：使用四叉树，根节点是1，三个子节点是2,3,5,7，代表对应边的权值，每个子节点又有三个子节点2,3,5,7。如果用完全三叉树，会出现重复路径，比如1-&gt;3-&gt;2,和1-&gt;2-&gt;3,实际上是重复的，为了去除重复，对三叉树加上限制条件：2号节点后3个子节点（2,3,5）；3号节点有2个子节点（3,5）；5号节点有一个子节点（5）。这样就不会出先重复路径了。然后在用Dijkstra算法访问这棵四叉树，当访问完n个节点时就得到了最终结果。</p>
+<p>​   方法四：每一个数都是前面某些数乘以2,3,5,7中最小的一个，用数组存储n个数，然后在用四个指针（数组小标）分别记录当前乘以2,3,5,7数（某些数）的位置，起始的时候指针值都为1，根据当前数的大小修改四个指针的大小，如当前数是20，那么2的指针一定是指向12,3的指针指向7,5的指针指向5,7的指针指向3，然后在利用四个指针计算下一个数，取12<em>2,7</em>3,5<em>5,3</em>7中最小的一个，最后在根据当前的数的大小，修改相应的指针（每次只需要增加一个指针就行了）。</p>
+<p>这个题就是用优先队列来解决，首先放1， 然后1 * 2， 1<em> 3， 1</em>5 ，如果不在优先队列中（用unordered_map 来去重），就放进去，每次优先队列都会按照从大到小排序，弹出最小的，把最小的 <code>x2，x3，x5</code>  放进去就可以了。</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+using namespace std;
+
+int main() {
+	priority_queue&lt;long long int, vector&lt;long long int&gt;, greater&lt;long long int&gt;&gt; q;
+	unordered_map&lt;long long int, int&gt; ht;
+	int n;
+
+	cin &gt;&gt; n;
+
+	q.push(1);
+
+	long long int val = 0;
+	for (int i = 0; i &lt; n; ++i) {
+		val = q.top();
+		q.pop();
+		if (ht.count(val * 2) == 0) {
+			q.push(val * 2);
+			ht[val * 2] = 1;
+		}
+		if (ht.count(val * 3) == 0) {
+			q.push(val * 3);
+			ht[val * 3] = 1;
+		}
+		if (ht.count(val * 5) == 0) {
+			q.push(val * 5);
+			ht[val * 5] = 1;
+		}
+	}
+	cout &lt;&lt; val;
+	return 0;
+}
+</code></pre>
+
+<p>下面我写的这个，好像不太对。</p>
+<pre><code class="cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+
+int main(){
+	int n;
+	cin &gt;&gt; n;
+	priority_queue &lt;int&gt; pq;
+//    pq.push(1);
+//    pq.push(2);
+//    pq.push(3);
+//    pq.push(5);
+
+	unordered_set &lt;int&gt; ss;
+	ss.insert(1);
+	ss.insert(2);
+	ss.insert(3);
+	ss.insert(5);
+	for(int i=1; i&lt;= n; i++){
+		ss.insert(1 * i);
+		ss.insert(2 * i);
+		ss.insert(3 * i);
+		ss.insert(5 * i);
+	}
+
+	for(auto val: ss ){
+		pq.push(val);
+	}
+
+	int i =0;
+	while(!pq.empty()){
+		int val = pq.top(); pq.pop();
+		++i;
+		if( i ==n){
+			cout &lt;&lt; val &lt;&lt; endl;
+			break;
+		}
+	}
+	return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

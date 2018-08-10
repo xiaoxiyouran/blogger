@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180604 给JavaScript外部文件传递参数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180604-javascript">20180604 给JavaScript外部文件传递参数</h1>
+<hr />
+<p>原文：https://blog.csdn.net/risingsun001/article/details/9123453</p>
+<h4 id="_1">一、利用全局变量</h4>
+<p>在页面中引入全局变量</p>
+<pre><code class="javascript">&lt;script type=&quot;text/javascript&quot;&gt;  
+var  p = &quot;test&quot;;  
+&lt;/script&gt;  
+&lt;script type=&quot;text/javascript&quot; src=&quot;test.js&quot;&gt;&lt;/script&gt;  
+</code></pre>
+
+<p>在外部文件test.js中访问</p>
+<pre><code class="javascript">/*显示结果*/  
+alert(params); 
+</code></pre>
+
+<p>这个方法算是最简单的了吧。</p>
+<h4 id="scriptsrc">二、获取并解析script元素的src</h4>
+<p>和全部变量相比，我们直接能像下面这样传入参数：</p>
+<pre><code class="javascript">&lt;script type=&quot;text/javascript&quot; src=&quot;test.js?a=b&amp;c=d&quot;&gt;&lt;/script&gt;  
+</code></pre>
+
+<p>利用js的顺序执行机制：js文件的加载可以是同步或异步方式，但执行时，一定是按照在<mark>文档流中的顺序</mark>来执行的。怎么理解呢？</p>
+<p>因为JS是<mark>顺序解析</mark>的，当前JS脚本解析时<mark>后面的js都还没有解析到，当然就认为自己就是最后一个script了</mark>，也就是说当某个js文件执行时，一定是“已加载”的js文件中的最后一个。此外，这样获取还有一个好处：我们可以<mark>多次引用同一个文件且传入不同的参数</mark>，这样可以在js文件中根据参数不同做不同处理。</p>
+<pre><code class="javascript">var scripts = document.getelementsbytagname('script');  
+var currentscript = scripts[scripts.length - 1];  
+</code></pre>
+
+<p>得到这个就好办了，通过curJS.src即可获取到完整的路径内容（包括参数）。
+下面的就是解析参数内容了，解析的过程相当简单，相信很多人都容易完成这一步。
+但我们要对一个特殊情况进行处理：如果一个参数被传入了多次，则要将该参数值转换为数组存储每一个传入的值。</p>
+<p><strong>完整测试脚本如下（来自互联网）：</strong></p>
+<pre><code class="javascript"> var getArgs=(function(){  
+	var sc=document.getElementsByTagName('script');  
+	var paramsArr=sc[sc.length-1].src.split('?')[1].split('&amp;');  
+	var args={},argsStr=[],param,t,name,value;  
+	for(var i=0,len=paramsArr.length;i&lt;len;i++){  
+			param=paramsArr[i].split('=');  
+			name=param[0],value=param[1];  
+			if(typeof args[name]==&quot;undefined&quot;){ //参数尚不存在  
+				args[name]=value;  
+			}else if(typeof args[name]==&quot;string&quot;){ //参数已经存在则保存为数组  
+				args[name]=[args[name]]  
+				args[name].push(value);  
+			}else{  //已经是数组的  
+				args[name].push(value);  
+			}  
+	}  
+	/*在实际应用中下面的showArg和args.toString可以删掉，这里只是为了测试函数getArgs返回的内容*/  
+	var showArg=function(x){   //转换不同数据的显示方式  
+		if(typeof(x)==&quot;string&quot;&amp;&amp;!//d+/.test(x)) return &quot;'&quot;+x+&quot;'&quot;;   //字符串  
+		if(x instanceof Array) return &quot;[&quot;+x+&quot;]&quot; //数组  
+		return x;   //数字  
+	}  
+	//组装成json格式  
+	args.toString=function(){  
+		for(var i in args) argsStr.push(i+':'+showArg(args[i]));  
+		return '{'+argsStr.join(',')+'}';  
+	}  
+	return function(){return args;} //以json格式返回获取的所有参数  
+})();  
+
+alert(getArgs());  
+alert(&quot;username:&quot;+getArgs()[&quot;username&quot;]);  
+</code></pre>
+
+<p>测试html代码：</p>
+<pre><code class="javascript">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;  
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;  
+&lt;head&gt;  
+  &lt;title&gt; new document &lt;/title&gt;  
+  &lt;meta name=&quot;generator&quot; content=&quot;editplus&quot; /&gt;  
+  &lt;meta name=&quot;author&quot; content=&quot;&quot; /&gt;  
+  &lt;meta name=&quot;keywords&quot; content=&quot;&quot; /&gt;  
+  &lt;meta name=&quot;description&quot; content=&quot;&quot; /&gt;  
+  &lt;script type=&quot;text/javascript&quot; src=&quot;test.js?id=4&amp;username=yemoo&amp;id=1&amp;uid=110&quot;&gt;&lt;/script&gt;  
+  &lt;script type=&quot;text/javascript&quot; src=&quot;test.js?id=5&amp;username=ajaxbbs&amp;id=7&amp;uid=253&quot;&gt;&lt;/script&gt;  
+  &lt;script type=&quot;text/javascript&quot; src=&quot;test.js?id=6&amp;username=jack&amp;id=8&amp;uid=258&quot;&gt;&lt;/script&gt;  
+&lt;/head&gt;  
+&lt;body&gt;  
+&lt;/body&gt;  
+&lt;/html&gt;  
+</code></pre>
+
+<h4 id="id">三、使用id和自定义属性传参</h4>
+<p>使用方法：</p>
+<pre><code>&lt;script id=&quot;testscript&quot; type=&quot;text/javascript&quot; src=&quot;test.js&quot; data=&quot;a=b&amp;c=d&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+<p>test.js获取参数方法一：</p>
+<pre><code class="javascript">var getscript = document.getelementbyid('testscript')  
+</code></pre>
+
+<p>得到 getscript 的DOM对象，我们就可以利用上面的方法来得到值了。</p>
+<p>test.js获取参数方法二：</p>
+<pre><code class="javascript">var scriptargs = document.getElementbyid('testscript').getAttribute('data'); 
+</code></pre>
+
+<p>通过这个方法我们可以得到 data的字符串，然后使用“&amp;”分割，得到值。</p>
+<p>当然，最简单方法是我们可以有多个自定义属性，然后通过getAttribute 得到每个自定义属性的值，这样就很方便了。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

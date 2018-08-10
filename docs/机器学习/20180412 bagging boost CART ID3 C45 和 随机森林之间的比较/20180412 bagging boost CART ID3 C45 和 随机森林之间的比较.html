@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180412 bagging boost CART ID3 C45 和 随机森林之间的比较</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180412-bagging-boost-cart-id3-c45">20180412 bagging boost CART ID3 C45 和 随机森林之间的比较</h1>
+<blockquote>
+<p>总结几种比较，</p>
+<p>1- bagging(套袋法) 和 boost（提升法）</p>
+<p>​    bagging:  套袋法，每次是随机抽取 n 个训练样本，并进行k轮抽取， 有放回抽取。（有0.368 的数据无法采集到，可作为训练数据）</p>
+<p>​    这k个模型可以不相关，如 svm，knn 等。</p>
+<p>分类：用投票， 回归问题： 用k个模型预测结果的均值作为最后的预测结果</p>
+<hr />
+<ol>
+<li><strong>样本选择上：Bagging采用的是Bootstrap随机有放回抽样；而Boosting每一轮的训练集是不变的，改变的只是每一个样本的权重。</strong></li>
+<li><strong>样本权重：Bagging使用的是均匀取样，每个样本权重相等；Boosting根据错误率调整样本权重，错误率越大的样本权重越大。</strong></li>
+<li><strong>预测函数：Bagging所有的预测函数的权重相等；Boosting中误差越小的预测函数其权重越大。</strong></li>
+<li><strong>并行计算：Bagging各个预测函数可以并行生成；Boosting各个预测函数必须按顺序迭代生成。</strong></li>
+</ol>
+<p>下面是将决策树与这些算法框架进行结合所得到的新的算法：</p>
+<p><strong>1）Bagging + 决策树 = 随机森林</strong></p>
+<p><strong>2）AdaBoost + 决策树 = 提升树</strong></p>
+<p><strong>3）Gradient Boosting + 决策树 = GBDT</strong></p>
+<hr />
+<p>CART 和 ID3， C4.5</p>
+<ol>
+<li><strong>CART树是二叉树，而ID3和C4.5可以是多叉树</strong></li>
+<li>CART在生成子树时，是选<strong>择一个特征一个取值作为切分点</strong>，生成两个子树</li>
+<li>选择特征和切分点的依据是<strong>基尼指数，</strong>选择基尼指数最小的特征及切分点生成子树</li>
+</ol>
+<hr />
+<p>随机森林的优缺点</p>
+<ul>
+<li><strong>具有极高的准确率</strong></li>
+<li><strong>随机性的引入，使得随机森林不容易过拟合</strong></li>
+<li><strong>随机性的引入，使得随机森林有很好的抗噪声能力</strong></li>
+<li><strong>能处理很高维度的数据，并且不用做特征选择</strong></li>
+<li><strong>既能处理离散型数据，也能处理连续型数据，数据集无需规范化</strong></li>
+<li><strong>训练速度快，可以得到变量重要性排序</strong></li>
+<li><strong>容易实现并行化</strong></li>
+</ul>
+<p>随机森林的缺点：</p>
+<ul>
+<li><strong>当随机森林中的决策树个数很多时，训练时需要的空间和时间会较大</strong></li>
+<li><strong>随机森林模型还有许多不好解释的地方，有点算个黑盒模型</strong></li>
+</ul>
+</blockquote>
+<p>最近在做kaggle的时候，发现随机森林这个算法在分类问题上效果十分的好，大多数情况下效果远要比svm，log回归，knn等算法效果好。因此想琢磨琢磨这个算法的原理。</p>
+<p>要学随机森林，首先先简单介绍一下集成学习方法和决策树算法。下文仅对该两种方法做简单介绍（具体学习推荐看统计学习方法的第5章和第8章）。</p>
+<hr />
+<p>原文链接： https://blog.csdn.net/qq547276542/article/details/78304454</p>
+<h2 id="baggingboosting">Bagging和Boosting的概念与区别</h2>
+<p>该部分主要学习自：<a href="http://www.cnblogs.com/liuwu265/p/4690486.html">http://www.cnblogs.com/liuwu265/p/4690486.html</a></p>
+<p>随机森林属于集成学习（Ensemble Learning）中的bagging算法。在集成学习中，主要分为bagging算法和boosting算法。我们先看看这两种方法的特点和区别。</p>
+<h3 id="bagging">Bagging（套袋法）</h3>
+<p>bagging的算法过程如下：</p>
+<ol>
+<li>从原始样本集中使用Bootstraping方法<strong>随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）</strong></li>
+<li>对于k个训练集，我们<strong>训练k个模</strong>型（这k个模型可以根据具体问题而定，比如决策树，knn等）</li>
+<li>对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）</li>
+</ol>
+<h3 id="boosting">Boosting（提升法）</h3>
+<p>boosting的算法过程如下：</p>
+<ol>
+<li>对于训练集中的每个样本建立权值wi，表示对每个样本的关注度。当某个样本被误分类的概率很高时，需要加大对该样本的权值。</li>
+<li>进行迭代的过程中，<strong>每一步迭代都是一个弱分类器。我们需要用某种策略将其组合，作为最终模型</strong>。（例如AdaBoost给每个弱分类器一个权值，将其线性组合最为最终分类器。误差越小的弱分类器，权值越大）</li>
+</ol>
+<h3 id="baggingboosting_1">Bagging，Boosting的主要区别</h3>
+<ol>
+<li><strong>样本选择上：Bagging采用的是Bootstrap随机有放回抽样；而Boosting每一轮的训练集是不变的，改变的只是每一个样本的权重。</strong></li>
+<li><strong>样本权重：Bagging使用的是均匀取样，每个样本权重相等；Boosting根据错误率调整样本权重，错误率越大的样本权重越大。</strong></li>
+<li><strong>预测函数：Bagging所有的预测函数的权重相等；Boosting中误差越小的预测函数其权重越大。</strong></li>
+<li><strong>并行计算：Bagging各个预测函数可以并行生成；Boosting各个预测函数必须按顺序迭代生成。</strong></li>
+</ol>
+<p>下面是将决策树与这些算法框架进行结合所得到的新的算法：</p>
+<p><strong>1）Bagging + 决策树 = 随机森林</strong></p>
+<p><strong>2）AdaBoost + 决策树 = 提升树</strong></p>
+<p><strong>3）Gradient Boosting + 决策树 = GBDT</strong></p>
+<hr />
+<h2 id="_1">决策树</h2>
+<p>常用的决策树算法有ID3，C4.5，CART三种。3种算法的模型构建思想都十分类似，只是采用了不同的指标。决策树模型的构建过程大致如下：</p>
+<h3 id="id3c45">ID3，C4.5决策树的生成</h3>
+<p>输入：训练集D，特征集A，阈值eps 输出：决策树T</p>
+<ol>
+<li>若D中所有样本属于同一类Ck，则T为单节点树，将类Ck作为该结点的类标记，返回T</li>
+<li>若A为空集，即没有特征作为划分依据，则T为单节点树，并将D中实例数最大的类Ck作为该结点的类标记，返回T</li>
+<li>否则，计算A中各特征对D的信息增益(ID3)/信息增益比(C4.5)，选择<strong>信息增益最大的特征Ag</strong></li>
+<li>若Ag的信息增益（比）小于阈值eps，则置T为<strong>单节点树</strong>，并将D中<strong>实例数最大的类Ck作为该结点的类标记，返回T</strong></li>
+<li>否则，依照特征Ag将D划分为若干非空子集Di，将Di中实例数最大的类作为标记，构建子节点，由结点及其子节点构成树T，返回T</li>
+<li>对第i个子节点，以Di为训练集，以A-{Ag}为特征集，递归地调用1~5，得到子树Ti，返回Ti</li>
+</ol>
+<h3 id="cart">CART决策树的生成</h3>
+<p>这里只简单介绍下CART与ID3和C4.5的区别。</p>
+<ol>
+<li><strong>CART树是二叉树，而ID3和C4.5可以是多叉树</strong></li>
+<li>CART在生成子树时，是选<strong>择一个特征一个取值作为切分点</strong>，生成两个子树</li>
+<li>选择特征和切分点的依据是<strong>基尼指数，</strong>选择基尼指数最小的特征及切分点生成子树</li>
+</ol>
+<h3 id="_2">决策树的剪枝</h3>
+<p>决策树的剪枝主要是为了预防过拟合，过程就不详细介绍了。</p>
+<p>主要思路是从叶节点向上回溯，尝试对某个节点进行剪枝，比较剪枝前后的决策树的损失函数值。最后我们通过动态规划（树形dp，acmer应该懂）就可以得到全局最优的剪枝方案。</p>
+<hr />
+<h2 id="random-forests">随机森林（Random Forests）</h2>
+<p>随机森林是一种重要的<strong>基于Bagging的集成学习方法</strong>，可以用来做分类、回归等问题。</p>
+<p>随机森林有许多优点：</p>
+<ul>
+<li><strong>具有极高的准确率</strong></li>
+<li><strong>随机性的引入，使得随机森林不容易过拟合</strong></li>
+<li><strong>随机性的引入，使得随机森林有很好的抗噪声能力</strong></li>
+<li><strong>能处理很高维度的数据，并且不用做特征选择</strong></li>
+<li><strong>既能处理离散型数据，也能处理连续型数据，数据集无需规范化</strong></li>
+<li><strong>训练速度快，可以得到变量重要性排序</strong></li>
+<li><strong>容易实现并行化</strong></li>
+</ul>
+<p>随机森林的缺点：</p>
+<ul>
+<li><strong>当随机森林中的决策树个数很多时，训练时需要的空间和时间会较大</strong></li>
+<li><strong>随机森林模型还有许多不好解释的地方，有点算个黑盒模型</strong></li>
+</ul>
+<p>与上面介绍的Bagging过程相似，随机森林的构建过程大致如下：</p>
+<ol>
+<li>从原始训练集中使用<strong>Bootstraping方法随机有放回采样选出m个样本，共进行n_tree次采样，生成n_tree个训练集</strong></li>
+<li><strong>对于n_tree个训练集，我们分别训练n_tree个决策树模型</strong></li>
+<li><strong>对于单个决策树模型，假设训练样本特征的个数为n，那么每次分裂时根据信息增益/信息增益比/基尼指数选择最好的特征进行分裂</strong></li>
+<li><strong>每棵树都一直这样分裂下去，直到该节点的所有训练样例都属于同一类。在决策树的分裂过程中不需要剪枝</strong></li>
+<li>将生成的多<strong>棵决策树组成随机森林</strong>。对于分类问题，<strong>按多棵树分类器投票决定最终分类结果；对于回归问题，由多棵树预测值的均值决定最终预测结果</strong></li>
+</ol>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

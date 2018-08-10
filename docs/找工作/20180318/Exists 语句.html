@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>Exists 语句</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="exists">Exists 语句</h1>
+<h2 id="_1">准备数据</h2>
+<p>我们先介绍下使用的3个数据表：</p>
+<p>student数据表：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131009201837390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXN5emI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA<mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>course数据表：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131009201858468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXN5emI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>sc数据表：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131009201927171?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXN5emI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA<mark>/dissolve/70/gravity/SouthEast" /></p>
+<h2 id="exists_1">EXISTS</h2>
+<p>EXISTS代表存在量词∃。带有EXISTS谓词的子查询不返回任何数据，只产生逻辑真值“true”或者逻辑假值“false”。</p>
+<p>一个例子1.1：</p>
+<p>要求：查询选修了课程”操作系统“的同学</p>
+<p>SQL语句：</p>
+<pre><code class="mysql">SELECT Sname FROM student
+WHERE EXISTS
+(SELECT * FROM sc,course WHERE Sno=student.Sno AND sc.Cno=course.Cno AND course.Cname=&quot;操作系统&quot;)
+</code></pre>
+
+<p>使用存在量词EXISTS后，若内层查询结果为非空，则外层的WHERE子句返回值为真，否则返回值为假。</p>
+<p>在本例中，首先分析最内层的语句：</p>
+<pre><code class="mysql">SELECT * FROM sc,course WHERE Sno=student.Sno AND sc.Cno=course.Cno AND course.Cname=&quot;操作系统&quot;  
+</code></pre>
+
+<p>本例中的子查询的查询条件依赖于外层父查询的某个属性值（本例中的是Student的Sno值），这个相关子查询的处理过程是：</p>
+<p>首先取外层查询中（student）表的第一个元组，根据它与内层查询相关的属性值（Sno值）处理内层查询，若外层的WHERE返回为真，则取外层查询中该元组的Sname放入结果表；</p>
+<p>然后再取（student）表的下一组，重复这一过程，直至外层（Student）表全部检查完毕。</p>
+<p>查询结果表：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131009203613625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXN5emI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+<h2 id="not-exists">NOT EXISTS</h2>
+<p>与EXISTS谓词相对的是NOT EXISTS谓词。使用存在量词NOT EXISTS后，若对应查询结果为空，则外层的WHERE子语句返回值为真值，否则返回假值。</p>
+<p>例子2.1：
+要求：查询没有选修课程”操作系统“的同学</p>
+<p>SQL语句：</p>
+<pre><code class="mysql">SELECT Sname FROM student
+WHERE NOT EXISTS
+(SELECT * FROM sc,course WHERE Sno=student.Sno AND sc.Cno=course.Cno AND course.Cname=&quot;操作系统&quot;)
+</code></pre>
+
+<p>使用NOT EXISTS之后，若内层查询结果为非空，则对应的NOT EXISTS不成立，所以对应的WHERE语句也不成立。</p>
+<p>在例子1.1中李勇同学对应的记录符合内层的select语句的，所以返回该记录数据，但是对应的NOT EXISTS不成立，WHERE语句也不成立，表示这不是我们要查询的数据。</p>
+<p>查询结果表：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131009205823343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXN5emI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA<mark>/dissolve/70/gravity/SouthEast" /></p>
+<p>例子2.2（这是一个用NOT EXISTS表示全称量词的例子）：</p>
+<p>要求：查询选修了全部课程的学生姓名。</p>
+<p>SQL语句：</p>
+<pre><code class="mysql">SELECT Sname  
+FROM Student   
+WHERE NOT EXISTS  
+(SELECT * FROM Course WHERE NOT EXISTS  
+	 (SELECT * FROM SC WHERE Sno=Student.Sno AND Cno=Course.Cno)  
+);  
+</code></pre>
+
+<p>这个算是一个比较复杂的sql语句了，两个EXISTS和三个WHERE。</p>
+<p>这个sql语句可以分为3层，最外层语句，最内层语句，中间层语句。</p>
+<p>我们很关心最外层语句，因为结果表中的数据都是最外层的查询的表中的数据，我们更关心最内层的数据，因为最内层的数据包含了全部的判断语句，决定了student表中的那一条记录是我们查询的记录。</p>
+<p>我们由内而外进行分析：</p>
+<p>最外层的student表中的第一条记录是李勇同学对应的记录，然后中间层的course表的第一条记录是数据库对应的记录，然后对该数据进行判断（最内层的WHERE语句），结果返回真，则内层的NOT EXISTS为假，</p>
+<p>然后继续对course表中的下一条记录进行判断，返现NOT EXISTS的值也为假，直到遍历完course表中的所有的数据，内层的NOT EXISTS的值一直都是假，所以中间层的WHERE语句的值也一直都是假。</p>
+<p>对应student的李勇记录，course表中的所有的记录对应的中间层的返回值为假，所以最外层的NOT EXISTS对应的值为真，最外层的WHERE的值也为真，则李勇对应的记录符合查询条件，装入结果表中。</p>
+<p>然后继续对student表中的下一条记录进行判断，直达student表中的所有数据都遍历完毕。</p>
+<p>查询结果表：</p>
+<p><img alt="img" src="http://img.blog.csdn.net/20131009203613625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXN5emI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA</mark>/dissolve/70/gravity/SouthEast" /></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

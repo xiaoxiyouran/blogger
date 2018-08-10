@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180410 大数相乘</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180410">20180410 大数相乘</h1>
+<p><img alt="" src="./20180410华为大数相乘_01.jpeg" /></p>
+<p><img alt="" src="./20180410华为大数相乘_02.jpeg" /></p>
+<hr />
+<p>原理链接： https://itimetraveler.github.io/2017/08/22/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E5%A4%A7%E6%95%B0%E7%9B%B8%E4%B9%98%E9%97%AE%E9%A2%98%E5%8F%8A%E5%85%B6%E9%AB%98%E6%95%88%E7%AE%97%E6%B3%95/</p>
+<p>另一个python 代码的原文链接： https://pythonandr.com/2015/10/13/karatsuba-multiplication-algorithm-python-code/</p>
+<p>原文链接：http://lehoangvan.com/karatsuba-cpp/</p>
+<p>This is my implementation of <a href="https://en.wikipedia.org/wiki/Karatsuba_algorithm">Karatsuba recursive multiplication algorithm</a> for Stanford’s MOOC <a href="https://www.coursera.org/learn/algorithms-divide-conquer/home/welcome">course on algorithm design and analysis</a>. Since <code>C++</code> doesn’t support big integer arithmetics natively, I had to use <code>std::string</code>s to represent arbitrary-precision integers. The utility functions <code>add(string lhs, string rhs)</code> and <code>subtract(string lhs, string rhs)</code> implement the addition and subtraction, respectively, of large integers and the Karatsuba method is given by <code>multiply(string lhs, string rhs)</code>.</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+#define max(a,b) ((a) &gt; (b) ? (a) : (b))
+
+using namespace std;
+
+string add(string lhs, string rhs) {
+	int length = max(lhs.size(), rhs.size());
+	int carry = 0;
+	int sum_col;  
+	string result;
+
+	while (lhs.size() &lt; length) 
+	  lhs.insert(0,&quot;0&quot;);
+
+	while (rhs.size() &lt; length) 
+	  rhs.insert(0,&quot;0&quot;);
+
+	for (int i = length-1; i &gt;= 0; i--) {
+	  sum_col = (lhs[i]-'0') + (rhs[i]-'0') + carry;
+	  carry = sum_col/10;
+	  result.insert(0,to_string(sum_col % 10));
+	}
+
+	if (carry)
+	  result.insert(0,to_string(carry));
+
+	return result.erase(0, min(result.find_first_not_of('0'), result.size()-1));
+}
+
+string subtract(string lhs, string rhs) {
+	int length = max(lhs.size(), rhs.size());
+	int diff;
+	string result;
+
+	while (lhs.size() &lt; length) 
+	  lhs.insert(0,&quot;0&quot;);
+
+	while (rhs.size() &lt; length) 
+	  rhs.insert(0,&quot;0&quot;);
+
+	for (int i = length-1; i &gt;= 0; i--) {
+		diff = (lhs[i]-'0') - (rhs[i]-'0');
+		if (diff &gt;= 0)
+			result.insert(0, to_string(diff));
+		else {
+
+			int j = i - 1;
+			while (j &gt;= 0) {
+				lhs[j] = ((lhs[j]-'0') - 1) % 10 + '0';
+				if (lhs[j] != '9') 
+					break;
+				else 
+					j--;
+			}
+			result.insert(0, to_string(diff+10));
+		}
+
+	}
+
+	return result.erase(0, min(result.find_first_not_of('0'), result.size()-1));
+}
+
+string multiply(string lhs, string rhs) {
+	int length = max(lhs.size(), rhs.size());
+
+	while (lhs.size() &lt; length) 
+	  lhs.insert(0,&quot;0&quot;);
+
+	while (rhs.size() &lt; length) 
+	  rhs.insert(0,&quot;0&quot;);
+
+	if (length == 1)
+		return to_string((lhs[0]-'0')*(rhs[0]-'0'));
+
+	string lhs0 = lhs.substr(0,length/2);
+	string lhs1 = lhs.substr(length/2,length-length/2);
+	string rhs0 = rhs.substr(0,length/2);
+	string rhs1 = rhs.substr(length/2,length-length/2);
+
+	string p0 = multiply(lhs0,rhs0);
+	string p1 = multiply(lhs1,rhs1);
+	string p2 = multiply(add(lhs0,lhs1),add(rhs0,rhs1));
+	string p3 = subtract(p2,add(p0,p1));
+
+	for (int i = 0; i &lt; 2*(length-length/2); i++)
+		p0.append(&quot;0&quot;);
+	for (int i = 0; i &lt; length-length/2; i++)
+		p3.append(&quot;0&quot;);
+
+	string result = add(add(p0,p1),p3);
+
+	return result.erase(0, min(result.find_first_not_of('0'), result.size()-1));
+}
+
+int main() {
+	string s1, s2;
+	cin &gt;&gt; s1 &gt;&gt; s2;
+	cout &lt;&lt; multiply(s1,s2) &lt;&lt; endl;
+	return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

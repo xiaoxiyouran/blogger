@@ -1,0 +1,566 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>24 this 关键字</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="24-this">24 this 关键字</h1>
+<p>在java中，<code>this</code>关键字有很多种用法。 在java中，这是一个引用当前对象的引用变量。</p>
+<p>java <code>this</code>关键字的用法如下：</p>
+<ol>
+<li><code>this</code>关键字可用来引用当前类的实例变量。 【构造函数中作为区分同名变量</li>
+</ol>
+<p>】</p>
+<p><code>java
+   class A{
+	   public A(int Id,String name): this.Id(Id), this.name(name){}
+   };</code></p>
+<p>​</p>
+<ol>
+<li>
+<p><code>this</code>关键字可用于调用当前类方法(隐式)。</p>
+</li>
+<li>
+<p><code>this()</code>可以用来<strong>调用当前类的构造函数</strong>。</p>
+</li>
+<li>
+<p><code>this</code>关键字可作为调用方法中的参数传递。</p>
+</li>
+<li>
+<p><code>this</code>关键字可作为参数在构造函数调用中传递。</p>
+</li>
+<li>
+<p><code>this</code>关键字可用于<strong>从方法返回当前类的实例</strong>。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>建议：</strong>如果你是java初学者，只学习 <code>this</code> 关键字的前三个用法就可以了。</p>
+</blockquote>
+<p><img alt="img" src="24_01.jpg" /></p>
+<h2 id="1-this">1. this：引用当前类的实例变量</h2>
+<p><code>this</code>关键字可以用来引用当前类的实例变量。如果实例变量和参数之间存在歧义，则 <code>this</code> 关键字可用于明确地指定类变量以解决歧义问题。</p>
+<p><strong>了解没有 this 关键字的问题</strong></p>
+<p>下面先来理解一个不使用 <code>this</code> 关键字的示例：</p>
+<pre><code class="java">class Student {
+	int rollno;
+	String name;
+	float fee;
+
+	Student(int rollno, String name, float fee) {
+		rollno = rollno;
+		name = name;
+		fee = fee;
+	}
+
+	void display() {
+		System.out.println(rollno + &quot; &quot; + name + &quot; &quot; + fee);
+	}
+}
+
+class TestThis1 {
+	public static void main(String args[]) {
+		Student s1 = new Student(111, &quot;ankit&quot;, 5000f);
+		Student s2 = new Student(112, &quot;sumit&quot;, 6000f);
+		s1.display();
+		s2.display();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">0 null 0.0
+0 null 0.0
+</code></pre>
+
+<p>在上面的例子中，参数(形式参数)和实例变量(<code>rollno</code>和<code>name</code>)是相同的。 所以要使用<code>this</code>关键字来区分局部变量和实例变量。</p>
+<p><strong>使用 this 关键字解决了上面的问题</strong></p>
+<pre><code class="java">class Student {
+	int rollno;
+	String name;
+	float fee;
+
+	Student(int rollno, String name, float fee) {
+		this.rollno = rollno;  /// 构造函数中作为区分同名变量
+		this.name = name;
+		this.fee = fee;
+	}
+
+	void display() {
+		System.out.println(rollno + &quot; &quot; + name + &quot; &quot; + fee);
+	}
+}
+
+class TestThis2 {
+	public static void main(String args[]) {
+		Student s1 = new Student(111, &quot;ankit&quot;, 5000f);
+		Student s2 = new Student(112, &quot;sumit&quot;, 6000f);
+		s1.display();
+		s2.display();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">111 ankit 5000
+112 sumit 6000
+</code></pre>
+
+<p>如果局部变量(形式参数)和实例变量不同，则不需要像下面的程序一样使用<code>this</code>关键字：</p>
+<p><strong>不需要 this 关键字的程序示例</strong></p>
+<pre><code class="java">class Student {
+	int rollno;
+	String name;
+	float fee;
+
+	Student(int r, String n, float f) {
+		rollno = r;
+		name = n;
+		fee = f;
+	}
+
+	void display() {
+		System.out.println(rollno + &quot; &quot; + name + &quot; &quot; + fee);
+	}
+}
+
+class TestThis3 {
+	public static void main(String args[]) {
+		Student s1 = new Student(111, &quot;ankit&quot;, 5000f);
+		Student s2 = new Student(112, &quot;sumit&quot;, 6000f);
+		s1.display();
+		s2.display();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">111 ankit 5000
+112 sumit 6000
+</code></pre>
+
+<blockquote>
+<p>对变量使用有意义的名称是一种好的编程习惯。所以使用相同名称的实例变量和参数，并且总是使用<code>this</code>关键字。</p>
+</blockquote>
+<h2 id="2-this">2. this：调用当前类方法</h2>
+<p>可以使用<code>this</code>关键字调用当前类的方法。如果不使用<code>this</code>关键字，编译器会在调用方法时自动添加此 <code>this</code> 关键字。我们来看看这个例子。
+<img alt="img" src="24_02.jpg" /></p>
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">hello n
+hello m
+</code></pre>
+
+<h2 id="3-this">3. this()：调用当前类的构造函数</h2>
+<p><code>this()</code>构造函数调用可以用来<strong>调用当前类的构造函数。 它用于重用构造函数。 换句话说，它用于构造函数链接。</strong></p>
+<p><strong>从参数化构造函数调用默认构造函数：</strong></p>
+<pre><code class="java">class A {
+	A() {
+		System.out.println(&quot;hello a&quot;);
+	}
+
+	A(int x) {
+		this();
+		System.out.println(x);
+	}
+}
+
+class TestThis5 {
+	public static void main(String args[]) {
+		A a = new A(10);
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">hello a
+10
+</code></pre>
+
+<p><strong>从默认构造函数调用参数化构造函数：</strong></p>
+<pre><code class="Java">class A {
+	A() {
+		this(5);
+		System.out.println(&quot;hello a&quot;);
+	}
+
+	A(int x) {
+		System.out.println(x);
+	}
+}
+
+class TestThis6 {
+	public static void main(String args[]) {
+		A a = new A();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">5
+hello a
+</code></pre>
+
+<h3 id="this">使用this()构造函数调用</h3>
+<p><code>this()</code>构造函数调用用于从构造函数重用构造函数。 它维护构造函数之间的链，即它用于构造函数链接。看看下面给出的示例，显示<code>this</code>关键字的实际使用。</p>
+<pre><code class="java">class Student {
+	int rollno;
+	String name, course;
+	float fee;
+
+	Student(int rollno, String name, String course) {
+		this.rollno = rollno;
+		this.name = name;
+		this.course = course;
+	}
+
+	Student(int rollno, String name, String course, float fee) {
+		this(rollno, name, course);// reusing constructor
+		this.fee = fee;
+	}
+
+	void display() {
+		System.out.println(rollno + &quot; &quot; + name + &quot; &quot; + course + &quot; &quot; + fee);
+	}
+}
+
+class TestThis7 {
+	public static void main(String args[]) {
+		Student s1 = new Student(111, &quot;ankit&quot;, &quot;java&quot;);
+		Student s2 = new Student(112, &quot;sumit&quot;, &quot;java&quot;, 6000f);
+		s1.display();
+		s2.display();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">111 ankit java null
+112 sumit java 6000
+</code></pre>
+
+<blockquote>
+<p>注意：调用<code>this()</code>必须是构造函数中的第一个语句。</p>
+</blockquote>
+<p>下面示例为不把 <code>this()</code> 语句放在第一行，因此编译不通过。</p>
+<pre><code class="java">class Student {
+	int rollno;
+	String name, course;
+	float fee;
+
+	Student(int rollno, String name, String course) {
+		this.rollno = rollno;
+		this.name = name;
+		this.course = course;
+	}
+
+	Student(int rollno, String name, String course, float fee) {
+		this.fee = fee;
+		this(rollno, name, course);// C.T.Error
+	}
+
+	void display() {
+		System.out.println(rollno + &quot; &quot; + name + &quot; &quot; + course + &quot; &quot; + fee);
+	}
+}
+
+class TestThis8 {
+	public static void main(String args[]) {
+		Student s1 = new Student(111, &quot;ankit&quot;, &quot;java&quot;);
+		Student s2 = new Student(112, &quot;sumit&quot;, &quot;java&quot;, 6000f);
+		s1.display();
+		s2.display();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">Compile Time Error: Call to this must be first statement in constructor
+</code></pre>
+
+<h2 id="4-this">4. this：作为参数传递给方法</h2>
+<p><code>this</code>关键字也可以作为方法中的参数传递。 它主要用于事件处理。 看看下面的一个例子：</p>
+<pre><code class="java">class S2 {
+	void m(S2 obj) {
+		System.out.println(&quot;method is invoked&quot;);
+	}
+
+	void p() {
+		m(this);
+	}
+
+	public static void main(String args[]) {
+		S2 s1 = new S2();
+		s1.p();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">method is invoked
+</code></pre>
+
+<p><strong>这个应用程序可以作为参数传递：</strong></p>
+<p>在事件处理(或)的情况下，<strong>必须提供一个类的引用到另一个。 它用于在多个方法中重用一个对象</strong>。</p>
+<h2 id="5-this">5 this：在构造函数调用中作为参数传递</h2>
+<p>也可以在构造函数中传递<code>this</code>关键字。 如果必须在多个类中使用一个对象，可以使用这种方式。 看看下面的一个例子：</p>
+<pre><code class="java">class B {
+	A4 obj;
+
+	B(A4 obj) {
+		this.obj = obj;
+	}
+
+	void display() {
+		System.out.println(obj.data);// using data member of A4 class
+	}
+}
+
+class A4 {
+	int data = 10;
+
+	A4() {
+		B b = new B(this);  /// 把自己传递给另一个对象
+		b.display();
+	}
+
+	public static void main(String args[]) {
+		A4 a = new A4();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">10
+</code></pre>
+
+<h2 id="6-this">6. this关键字用来返回当前类的实例</h2>
+<p>可以从方法中 <code>this</code> 关键字作为语句返回。 在这种情况下，方法的返回类型必须是<strong>类类型(非原始)</strong>。 看看下面的一个例子：</p>
+<p><strong>作为语句返回的语法</strong></p>
+<pre><code class="java">return_type method_name(){  
+	return this;  
+}
+</code></pre>
+
+<p><strong>从方法中返回为语句的 this 关键字的示例</strong></p>
+<pre><code class="java">class A {
+	A getA() {
+		return this;
+	}
+
+	void msg() {
+		System.out.println(&quot;Hello java&quot;);
+	}
+}
+
+class Test1 {
+	public static void main(String args[]) {
+		new A().getA().msg();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">Hello java
+</code></pre>
+
+<p><strong>验证 this 关键字</strong></p>
+<p>现在来验证 <code>this</code> 关键字引用当前类的实例变量。 在这个程序中将打印参考变量，这两个变量的输出是相同的。</p>
+<pre><code class="java">class A5 {
+	void m() {
+		System.out.println(this);// prints same reference ID
+	}
+
+	public static void main(String args[]) {
+		A5 obj = new A5();
+		System.out.println(obj);// prints the reference ID
+		obj.m();
+	}
+}
+</code></pre>
+
+<p>执行上面代码输出结果如下 -</p>
+<pre><code class="java">A5@22b3ea59
+A5@22b3ea59
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

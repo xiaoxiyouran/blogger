@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>00 Csharp 用visual studio 调试</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="00-csharp-visual-studio">00 Csharp 用visual studio 调试</h1>
+<p>参考： https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/inside-a-program/hello-world-your-first-program</p>
+<h3 id="_1">创建并运行控制台应用程序</h3>
+<ol>
+<li>
+<p>启动 Visual Studio。</p>
+</li>
+<li>
+<p>在菜单栏上，依次选择“文件” 、“新建” 、“项目” 。</p>
+</li>
+</ol>
+<p><strong>“新建项目”</strong> 对话框随即打开。</p>
+<ol>
+<li>
+<p>依次展开“已安装”、“模板”、“Visual C#”，然后选择“控制台应用程序”。</p>
+</li>
+<li>
+<p>在“名称”框中，指定项目名称，然后选择“确定”按钮。</p>
+</li>
+</ol>
+<p>新项目将出现在“解决方案资源管理器”中。</p>
+<ol>
+<li>
+<p>如果 Program.cs 未在“代码编辑器”中打开，则在“解决方案资源管理器”中打开“Program.cs”的快捷菜单，然后选择“查看代码”。</p>
+</li>
+<li>
+<p>将 Program.cs 的内容替换为以下代码。</p>
+</li>
+</ol>
+<p>C#复制</p>
+<p>```
+   // A Hello World! program in C#.
+   using System;
+   namespace HelloWorld
+   {
+	   class Hello 
+	   {
+		   static void Main() 
+		   {
+			   Console.WriteLine("Hello World!");</p>
+<pre><code>           // Keep the console window open in debug mode.
+		   Console.WriteLine("Press any key to exit.");
+		   Console.ReadKey();
+	   }
+   }
+</code></pre>
+<p>}
+   ```</p>
+<ol>
+<li>选择 F5 键运行该项目。 将显示包含行 <code>Hello World!</code> 的命令提示符窗口</li>
+</ol>
+<p>接下来，将检查此程序的重要部分。</p>
+<h2 id="_2">注释</h2>
+<p>第一行包含一条注释。 字符 <code>//</code> 将该行的其余内容转换为一条注释。</p>
+<p>C#复制</p>
+<pre><code>// A Hello World! program in C#.
+</code></pre>
+
+<p>还可以通过将文本块置于 <code>/*</code> 和 <code>*/</code> 字符之间，禁止对其的注释。 这在下面的示例中显示。</p>
+<p>C#复制</p>
+<pre><code>/* A &quot;Hello World!&quot; program in C#.
+This program displays the string &quot;Hello World!&quot; on the screen. */
+</code></pre>
+
+<h2 id="main">Main 方法</h2>
+<p>C# 控制台应用程序必须包含 <code>Main</code> 方法，控件在其中开始和结束。 在 <code>Main</code> 方法中，可以创建对象并执行其他方法。</p>
+<p><code>Main</code> 方法是驻留在类或结构中的<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/static">静态</a>方法。 在上一个“Hello World!” 示例中，该方法驻留在名为 <code>Hello</code> 的类中。 可以通过以下方式之一来声明 <code>Main</code> 方法：</p>
+<ul>
+<li>它可返回 <code>void</code>。</li>
+</ul>
+<p>C#复制</p>
+<p><code>static void Main()
+  {
+	  //...
+  }</code></p>
+<ul>
+<li>还可以返回一个整数。</li>
+</ul>
+<p>C#复制</p>
+<p><code>static int Main()
+  {
+	  //...
+	  return 0;
+  }</code></p>
+<ul>
+<li>无论使用哪种返回类型，它都可以带有参数。</li>
+</ul>
+<p>C#复制</p>
+<p><code>static void Main(string[] args)
+  {
+	  //...
+  }</code></p>
+<p>或</p>
+<p>C#复制</p>
+<p><code>static int Main(string[] args)
+  {
+	  //...
+	  return 0;
+  }</code></p>
+<p><code>Main</code> 方法中定义的参数 <code>args</code> 是一个 <code>string</code> 类型的数组，该数组包含用于调用该程序的命令行自变量。 与 C++ 不同的是该数组不包括可执行 (exe) 文件的名称。</p>
+<p>若要深入了解如何使用命令行参数，请参阅 <a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/main-and-command-args/index">Main() 和命令行参数</a>与<a href="http://msdn.microsoft.com/library/70f65026-3687-4e9c-ab79-c18b97dd8be4">如何：使用命令行创建和使用程序集</a>中的示例。</p>
+<p>在调试模式下运行程序时，对 <code>Main</code> 方法末尾处 <a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.console.readkey">ReadKey</a> 的调用可以防止在有可能读取输出内容之前控制台窗口关闭，具体方法是按 F5 键。</p>
+<h2 id="_3">输入和输出</h2>
+<p>C# 程序通常使用由 .NET Framework 的运行时库提供的输入/输出服务。 语句 <code>System.Console.WriteLine("Hello World!");</code> 使用 <a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.console.writeline">WriteLine</a> 方法。 这是运行时库中 <a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.console">Console</a> 类的输出方法之一。 该方法将在标准输出流中显示其字符串参数，后接新行。 其他 <a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.console">Console</a> 方法可用于不同的输入和输出操作。如果程序开头包含 <code>using System;</code> 指令，则可以直接使用 <a href="https://docs.microsoft.com/zh-cn/dotnet/api/system">System</a> 类和方法，而不必进行完全限定。 例如，可以调用 <code>Console.WriteLine</code>，而非 <code>System.Console.WriteLine</code>：</p>
+<p>C#复制</p>
+<pre><code>using System;
+</code></pre>
+
+<p>C#复制</p>
+<pre><code>Console.WriteLine(&quot;Hello World!&quot;);
+</code></pre>
+
+<p>有关输入/输出方法的详细信息，请参阅 <a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.io">System.IO</a>。</p>
+<h2 id="_4">命令行编译和执行</h2>
+<p>通过使用命令行 而非 Visual Studio 集成开发环境 (IDE)，可以编译“Hello World!”程序。</p>
+<h4 id="_5">从命令提示符中编译并运行</h4>
+<ol>
+<li>
+<p>将上一过程的代码粘贴到任何文本编辑器中，然后将该文件保存为文本文件。 为 <code>Hello.cs</code> 文件命名。 C# 源代码文件使用 <code>.cs</code> 扩展。</p>
+</li>
+<li>
+<p>执行以下任一步骤以打开命令提示符窗口：</p>
+</li>
+<li>
+<p>在 Windows 10 的“开始”菜单上，搜索 <code>Developer Command Prompt</code>，然后点击或选择“VS 2017 开发人员命令提示”。</p>
+<p>将出现“开发人员命令提示”窗口。</p>
+</li>
+<li>
+<p>在 Windows 7 中，打开“启动”菜单，展开当前版本的 Visual Studio 的文件夹，打开“Visual Studio Tools”快捷菜单，然后选择“VS 2017 开发人员命令提示”。</p>
+<p>将出现“开发人员命令提示”窗口。</p>
+</li>
+<li>
+<p>从标准命令提示符窗口启用命令行生成。</p>
+<p>请参阅<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/compiler-options/how-to-set-environment-variables-for-the-visual-studio-command-line">如何：为 Visual Studio 命令行设置环境变量</a>。</p>
+</li>
+<li>
+<p>在命令提示窗口中，导航到包含 <code>Hello.cs</code> 文件的文件夹。</p>
+</li>
+<li>
+<p>输入以下命令以编译 <code>Hello.cs</code>。</p>
+</li>
+</ol>
+<p><code>csc Hello.cs</code></p>
+<p>如果程序不存在编译错误，系统将创建名为 <code>Hello.exe</code> 的可执行文件。</p>
+<ol>
+<li>在命令提示窗口中，输入以下命令以运行该程序：</li>
+</ol>
+<p><code>Hello</code></p>
+<p>有关 C# 编译器及其选项的详细信息，请参阅 <a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/compiler-options/index">C# 编译器选项</a>。</p>
+<h2 id="_6">请参阅</h2>
+<p><a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/index">C# 编程指南</a>
+<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/inside-a-program/index">在 C# 程序内部</a>
+<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/strings/index">字符串</a>
+<a href="http://msdn.microsoft.com/library/9a9d7aaa-51d3-4224-b564-95409b0f3e15">C# 示例应用程序</a>
+<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/index">C# 参考</a>
+<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/main-and-command-args/index">Main() 和命令行参数</a>
+<a href="https://docs.microsoft.com/zh-cn/visualstudio/ide/getting-started-with-visual-csharp-and-visual-basic">Visual C# 和 Visual Basic 入门</a></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>03 基本语法</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="03">03 基本语法</h1>
+<p>C# 是一种面向对象的编程语言。在面向对象的程序设计方法中，程序由各种相互交互的对象组成。相同种类的对象通常具有相同的类型，或者说，是在相同的 class 中。</p>
+<p>例如，以 Rectangle（矩形）对象为例。它具有 length 和 width 属性。根据设计，它可能需要接受这些属性值、计算面积和显示细节。</p>
+<p>让我们来看看一个 Rectangle（矩形）类的实现，并借此讨论 C# 的基本语法：</p>
+<p>```c#
+using System;
+namespace RectangleApplication
+{
+	class Rectangle
+	{
+		// 成员变量
+		double length;
+		double width;
+		public void Acceptdetails()
+		{
+			length = 4.5;  <br />
+			width = 3.5;
+		}
+		public double GetArea()
+		{
+			return length * width;
+		}
+		public void Display()
+		{
+			Console.WriteLine("Length: {0}", length);
+			Console.WriteLine("Width: {0}", width);
+			Console.WriteLine("Area: {0}", GetArea());
+		}
+	}</p>
+<pre><code>class ExecuteRectangle
+{
+	static void Main(string[] args)
+	{
+		Rectangle r = new Rectangle();
+		r.Acceptdetails();
+		r.Display();
+		Console.ReadLine();
+	}
+}
+</code></pre>
+<p>}</p>
+<pre><code>
+当上面的代码被编译和执行时，它会产生下列结果：
+
+</code></pre>
+
+<p>Length: 4.5
+Width: 3.5
+Area: 15.75</p>
+<pre><code>
+## *using* 关键字
+
+在任何 C# 程序中的第一条语句都是：
+
+</code></pre>
+
+<p>using System;</p>
+<pre><code>
+**using** 关键字用于在程序中包含命名空间。一个程序可以包含多个 using 语句。
+
+## *class* 关键字
+
+**class** 关键字用于声明一个类。
+
+## C# 中的注释
+
+注释是用于解释代码。编译器会忽略注释的条目。在 C# 程序中，多行注释以 /* 开始，并以字符 */ 终止，如下所示：
+
+</code></pre>
+
+<p>/<em> This program demonstrates
+The basic syntax of C# programming 
+Language </em>/</p>
+<pre><code>
+单行注释是用 '//' 符号表示。例如：
+
+</code></pre>
+
+<p>}//end class Rectangle  <br />
+```</p>
+<h2 id="_1">成员变量</h2>
+<p>变量是类的属性或数据成员，用于存储数据。在上面的程序中，<em>Rectangle</em> 类有两个成员变量，名为 <em>length</em> 和 <em>width</em>。</p>
+<h2 id="_2">成员函数</h2>
+<p>函数是一系列执行指定任务的语句。类的成员函数是在类内声明的。我们举例的类 Rectangle 包含了三个成员函数： <em>AcceptDetails</em>、<em>GetArea</em> 和 <em>Display</em>。</p>
+<h2 id="_3">实例化一个类</h2>
+<p>在上面的程序中，类 <em>ExecuteRectangle</em> 是一个包含 <em>Main()</em> 方法和实例化 <em>Rectangle</em> 类的类。</p>
+<h2 id="_4">标识符</h2>
+<p>标识符是用来识别类、变量、函数或任何其它用户定义的项目。在 C# 中，类的命名必须遵循如下基本规则：</p>
+<ul>
+<li>标识符必须以字母、下划线或 @ 开头，后面可以跟一系列的字母、数字（ 0 - 9 ）、下划线（ _ ）、@。</li>
+<li>标识符中的第一个字符不能是数字。</li>
+<li>标识符必须不包含任何嵌入的空格或符号，比如 ? - +! # % ^ &amp; * ( ) [ ] { } . ; : " ' / \。</li>
+<li>标识符不能是 C# 关键字。除非它们有一个 @ 前缀。 例如，@if 是有效的标识符，但 if 不是，因为 if 是关键字。</li>
+<li>标识符必须区分大小写。大写字母和小写字母被认为是不同的字母。</li>
+<li>不能与C#的类库名称相同。</li>
+</ul>
+<h2 id="c">C# 关键字</h2>
+<p>关键字是 C# 编译器预定义的保留字。这些关键字不能用作标识符，但是，如果您想使用这些关键字作为标识符，可以在关键字前面加上 @ 字符作为前缀。</p>
+<p>在 C# 中，有些关键字在代码的上下文中有特殊的意义，如 get 和 set，这些被称为上下文关键字（contextual keywords）。</p>
+<p>下表列出了 C# 中的保留关键字（Reserved Keywords）和上下文关键字（Contextual Keywords）：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>保留关键字</strong></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>abstract</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>as</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>base</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>bool</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>break</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>byte</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>case</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>catch</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>char</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>checked</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>class</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>const</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>continue</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>decimal</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>default</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>delegate</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>do</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>double</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>else</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>enum</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>event</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>explicit</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>extern</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>false</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>finally</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>fixed</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>float</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>for</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>foreach</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>goto</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>if</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>implicit</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>in</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>in (generic modifier)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>int</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>interface</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>internal</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>is</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>lock</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>long</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>namespace</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>new</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>null</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>object</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>operator</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>out</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>out (generic modifier)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>override</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>params</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>private</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>protected</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>public</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>readonly</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ref</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>return</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>sbyte</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>sealed</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>short</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>sizeof</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>stackalloc</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>static</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>string</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>struct</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>switch</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>this</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>throw</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>true</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>try</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>typeof</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>uint</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ulong</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>unchecked</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>unsafe</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ushort</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>using</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>virtual</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>void</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>volatile</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>while</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>上下文关键字</strong></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>add</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>alias</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ascending</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>descending</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>dynamic</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>from</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>get</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>global</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>group</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>into</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>join</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>let</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>orderby</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>partial (type)</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>partial (method)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>remove</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>select</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>set</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+</tr>
+</tbody>
+</table>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

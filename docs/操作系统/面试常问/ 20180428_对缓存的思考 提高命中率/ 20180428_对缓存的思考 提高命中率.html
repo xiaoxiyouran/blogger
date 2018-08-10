@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180428_对缓存的思考 提高命中率</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180428_">20180428_对缓存的思考 提高命中率</h1>
+<hr />
+<p>原文：http://www.cnblogs.com/yanlingyin/archive/2012/02/14/2348980.html</p>
+<p><strong>开篇</strong></p>
+<p>编写高效的程序并不只在于算法的精巧，还应该考虑到计算机内部的组织结构，cpu微指令的执行，缓存的组织和工作原理等。</p>
+<p>好的算法在实际中不见得有高效率，如果<strong>完全没有考虑缓存、微指令</strong>实现的话。</p>
+<p>前两篇博文</p>
+<p><a href="http://www.cnblogs.com/yanlingyin/archive/2012/02/11/2347116.html">局部性原理浅析</a> 介绍了程序的局部性原理，如何写出局部性良好代码。</p>
+<p><a href="http://www.cnblogs.com/yanlingyin/archive/2012/02/12/2347757.html">提高程序性能、何为缓存</a> 讨论了存储器层次结构，计算机内部的存储结构、缓存的概念，简单的介绍了缓存的工作机制。</p>
+<p>建议先阅读前两篇博文，虽然他们之间联系不大，在前面也有一些对本文的铺垫。而且，这是一个系列的文章。旨在优化程序性能。</p>
+<p>这篇博文主要介绍的是缓存的组织、工作原理。拨开迷雾，让你更加清晰的认识缓存。</p>
+<p><strong>通用缓存结构</strong></p>
+<p><strong>回顾</strong></p>
+<p>在<a href="http://www.cnblogs.com/yanlingyin/archive/2012/02/12/2347757.html">提高程序性能、何为缓存</a>中提到:早起的cpu存储层次只有三层，即<strong>cup的寄存器，DRAM主存和磁盘存储</strong>。因为寄存器和主存之间的访问时间开销差距很大，于是设计者在寄存器（一个时钟周期）和主存之间加入了L1缓存（2——4个时钟周期），后来由于L1缓存和主存之间的差距，又在主存和L1之间加入了L2缓存，当然后面还有L3缓存，，，等等。</p>
+<p>在这里为了简单起见，假设CPU寄存器和主存之间只有一个L1缓存。</p>
+<p>下图是高速缓存存储器的典型总线结构:</p>
+<p><img alt="img" src="20180428" title="对缓存的思考 提高命中率_01.jpg" /></p>
+<p><strong>缓存结构</strong></p>
+<p>下图清晰的说明了通用缓存的组织结构:</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_02.jpg" /></p>
+<p>可以看到，缓存内部是以组的形式组织的。图中的每一块代表一组，每组由一到多行组成（当然图中的是每组有多行）。</p>
+<p><strong>每一行包括</strong></p>
+<p>1 位标记位（valid bit）标明这行的信息是否有可用</p>
+<p>t 位的标记，标明它是属于这一组的哪一行</p>
+<p>剩下的空间是存储数据的数据的空间</p>
+<p>可以看出在下面的图中把数据地址分为了三部分，左边 t 位是标记行号的，中间的 s 位标明组号，最后的 b 位则是数据块在行内的偏移量。</p>
+<p>通常来说，缓存器可描述为(S; E; B; m)其中S为缓存中的组数，E为每组的行数，B为每行存储的字节数，m为缓存的地址位数。</p>
+<p>所以缓存的容量为C=S<em>E</em>B。</p>
+<p><strong>从缓存中取数据</strong></p>
+<p>（这个过程在上一篇博文中就有简单的介绍）当cpu需要从主存中取出地址为A的数据时，先把地址A发送给缓存，如果缓存中存有地址为A的数据，就从缓存中取出该数据传给cpu。</p>
+<p>那么，缓存是如何知道自己是否存有地址为A的数据呢？这就和缓存的组织有关系了，上文中缓存把地址组分为了三部分，t 、s 、b。</p>
+<p>所以，只要简单的检查地址中的数据位，就能判断该地址是否在缓存中，如果在的话，还能确定该数据的位置。</p>
+<p>参数 s 、b 、m 把m个地址位分为三个字段。如下图:</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_03.jpg" /></p>
+<p>下面的详细的寻址过程</p>
+<p>地址A中的中间S 位标记了该地址在缓存中属于哪一组，先通过s 确定这个地址在缓存中的哪一组。</p>
+<p>通过上面一步确定了属于的组后，地址A中的左边 t 位标记了该地址在该组的哪一行。</p>
+<p>最后由右边的 b 指出地址A中的元素在该行的偏移位。也就是确定在这行的哪一个位置。</p>
+<p><strong>CPU从主存中读数据的详细过程</strong></p>
+<p>和上文中说的一样，这里假设计算机的存储结构只有：cpu寄存器，L1缓存，主存。</p>
+<p>当cpu执行一条读存储器地址为A的指令，它向高速缓存请求该地址，如果缓存命中，缓存很快返回数据。如果缓存不命中，L1缓存向主存请求该数据，在这期间cpu必须等待。当被请求块从主存到达缓存L1时，L1缓存将数据放在他的一个高速缓存行里，然后将数据从行中提取返回给cpu。也就是说，如果缓存不命中，先要把数据存入缓存，再返回给cpu。</p>
+<p>概括的说，高速缓存确定一个请求是否命中有三个过程： </p>
+<p>1、组选择</p>
+<p>2、行匹配</p>
+<p>3、字抽取</p>
+<p>下面将会结合具体情况说明这一过程。</p>
+<p><strong>直接映射高速缓存</strong></p>
+<p>现在已经知道，我们用(S; E; B; m) 来描述缓存，这里就根据其中的E，也就是一组的行数， 把缓存分为不同的类别。</p>
+<p>当E=1 时，也就是说每组只有一行的缓存组织形式，我们称为直接映射高速缓存。因为容易理解，先对它进行介绍。</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_04.jpg" /></p>
+<p>（图片来源 《computer systems》）</p>
+<p>正如上图所示，直接映射高速缓存中每组只有一行。</p>
+<p><strong>直接映射高速缓存中取数据</strong></p>
+<p>下面将以直接映射高速缓存为例，一步步说明cup从高速缓存中取数据的过程。</p>
+<p><strong>1、组选择</strong></p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_05.jpg" /></p>
+<p>如上图所示，缓存从地址A中抽取出中间的s 位，这 s 为的数值就标记了该地址所在的组。这里可以把缓存当作是一维数组，其中每个元素是一个组，而地址中的 s 位则是这些组的索引。如图中的组标记为 0001 对应组 set1。这要把地址中间的 s 为提取，就能得到该地址在缓存中对应的组。</p>
+<p><strong>2、 行选择</strong></p>
+<p>选好组 i 之后，就是确定地址A在组 i 的哪一行。因为直接映射缓存的每一组只有一个行。所以只要看A地址中的行标记是否和缓存中的行标记位匹配。匹配则地址A中的数据在缓存中。</p>
+<p><strong>3、字抽取</strong></p>
+<p>既然已知道了地址A中的数据在缓存中的位置，最后一步只要更具地址A中表示偏移量的位，从缓存中取出数据即可。</p>
+<p>如下图所示：</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_06.jpg" /></p>
+<p><strong>直接映射高速缓存不命中</strong></p>
+<p>当缓存不命中的时候，就要从下一层存储中取出数据，放入缓存的某个位置中，放入的位置就由请求地址A中的组索引确定所在缓存的组，行所以确定应该放置的行。如果组中的行都是有效缓存行了，就必须要驱逐现有的一个行。对于直接映射高速缓存，每组包含一个行，替换策略就变的很简单，用新来的行替换当前行。</p>
+<p><strong>直接映射缓存寻址示例</strong></p>
+<p>通过上面的介绍，已经基本了解了缓存的组织形式以及如何从缓存中取出数据，但是上面都只是理论上的阐述。</p>
+<p>为了能更好的了解，这里会有一个具体的示例。诚然，学习一种只是最好的方式就是应用它。 如果你已经对上面的知识有所了解，那么请继续吧。下面的内容会让你更清楚的了解到缓存工作的机制。</p>
+<p>假设我们有一个直接映射的高速缓存，描述如下</p>
+<p>(S; E; B; m)=(4;1;2;4)</p>
+<p>也就是说:该缓存有4个组（s=4），每组有一行（E=1），每一块有两个字节（B=2）存储器的地址是4位的（m=4）</p>
+<p>该状态有图描述如下:</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_07.jpg" /></p>
+<p>其中最左边的一列是地址，中间的三列是地址的二进制表示形式。最右边的一列是虚拟存储器的块的标号。</p>
+<p>和上文中说的一样，缓存寻址时，把地址分为了三个部分。分别表示该地址在缓存中所在的组、行、以及偏移。和上图所对应是四位的地址，</p>
+<p><strong>行：</strong>其中最高的一位标记所在的行，因为是直接映射高速缓存，每组只有一行，所以一位就能表示。</p>
+<p><strong>组</strong>：中间的两位表示地址所在的组。从图中可以看出，拥有相同组的地址有四个，比如组号为00 的地址有四个，为0、2、8、9</p>
+<p><strong>偏移</strong>：偏移位由最右边的一位表示。每行中有两个数据块，所以偏移位用一位也就能表示。</p>
+<p>看这个表的时候有一点提示：中间的三列其实是第一列地址的二进制表示形式。</p>
+<p><strong>下面是对这个特定缓存的一点分析：</strong></p>
+<p>(S; E; B; m)=(4;1;2;4)</p>
+<p>该缓存有四个组，每组一行。有图中可知，要放入缓存的地址为16个。所以每组对应四个地址。在图中的表现就是：四个相同的地址有相同的组索引。</p>
+<p>每行有两个数据块，用地址最低位表示（0表示第一个，1为第二个）。</p>
+<p>看组索引为00的地址，为0 、1 和 8 、9。0和1有相同的行标记0，8和9有相同的行标记1.所以地址为0、1的数据要么都在组00中，要么多不在。地址为8、9的也一样。说明了0、1是一个整体，8、9也一样。如果在，都在；不在，都不在。这两个整体通过最高位（标记为）来标明。</p>
+<p><strong>下面是寻址实例</strong></p>
+<p>刚开始时，缓存是空的，也就是还没有预热，如下图所示</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_08.jpg" /></p>
+<p><strong>1）读地址0的字</strong></p>
+<p>地址0的为 0 00 0 对应缓存中第0组，行标记位为0的，偏移为0的位置。显然，现在缓存还是空的（标志位 valid 都为0）。缓存不命中，所以缓存先从下一级的存储中取出改行对应的所有地址的元素，放入缓存中。（也就是地址为0 和1 的元素）。然后再从缓存中取出数据m[0]，传递给cpu。</p>
+<p>进过对地址0的读操作后，缓存的组织情况如下所示</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_09.jpg" /></p>
+<p>这也验证了上文的说法，地址0 和1 是一体的，他们要么都在，要么都不在。因为他们有相同的组索引、行索引。</p>
+<p><strong>2）读取地址1的字</strong></p>
+<p>地址1为0 00 1 对应缓存中的第0组，行标记为0，偏移为1。这次缓存命中，从缓存返回m[1]</p>
+<p><strong>3)读地址13的字</strong></p>
+<p>地址13为1 10 1 对应缓存中的第2组 行标记为1 偏移为1。同1）一样，缓存不命中，从低一级存储中取出 组索引为10 行为1 的数据放入缓存，然后返回m[13]</p>
+<p>对地址13进行操作后的缓存情况为</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_10.jpg" /></p>
+<p><strong>4）读地址为8的字</strong></p>
+<p>地址8为 1 00 0 组索引为00 行标记为1 偏移为0 在看上图的缓存组织情况，可判读发生缓存不命中。于是从低一级存储中取出组索引为00 行标记为1 的数据，也就是m[8]、m[9]放入第一行中，然后返回m[8]</p>
+<p>操作后的缓存组织为</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_11.jpg" /></p>
+<p>通过上面的示例，应该对缓存的工作原理有一定了解了把。</p>
+<p>其实就是吧地址分为不同的部分，划分为表示组、行 和偏移。然后根据这些去判断所需地址是否在缓存中。如果在，则返回数据，不在则从低一级的存储中取出数据放入缓存中（放入的位置由地址确定）。然后返回地址。</p>
+<p><strong>组相联高速缓存</strong></p>
+<p>刚才讨论的直接映射高速缓存可以看作是缓存中的一个特例，因为每组只有一行。这里介绍一下更普遍的缓存结构：组相连高速缓存。</p>
+<p>其实就是每一组有多行。如下图是E =2 的缓存</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_12.jpg" /></p>
+<p>同样的，当要从缓存中取地址为A的数据时，</p>
+<p><strong>1）先确定地址A所在的组，</strong>如下图所示</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_13.jpg" /></p>
+<p>2）确定行</p>
+<p>3）抽取字（偏移）</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_14.jpg" /></p>
+<p><strong>全联高速缓存</strong></p>
+<p>全联高速缓存中的S =1 ，也就是说，全联高速缓存只有一个组。</p>
+<p><img alt="img" src="20180428_对缓存的思考" title="提高命中率_15.jpg" /></p>
+<p>全联高速缓存中对数据的操作和之前讨论过的两种情况大同小异，主要就是三部。这里就不说了。</p>
+<p><strong>小结</strong></p>
+<p>这篇博文先介绍了缓存内部的组织形式，并介绍了从缓存中读取数据的方式，主要包括1)组选择2）行匹配 3）字抽取</p>
+<p>缓存可以用形如(S; E; B; m)的形式表述。其中S代表缓存中的组数，E为每组的行数，B为每个缓存块的大小。</p>
+<p>更具E的不同可将缓存分类。</p>
+<p>这篇文章主要介绍的是缓存的工作机制。在以后的文章中会介绍如何写出缓存友好的代码</p>
+<p>全文完。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

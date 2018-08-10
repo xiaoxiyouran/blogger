@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180529C 语言试卷相关题目</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180529c">20180529C 语言试卷相关题目</h1>
+<h2 id="long">返回Long型数的最大数</h2>
+<p>1.      （10分）用C编写一个函数，该函数的参数为一个长整数，返回值亦为长整数。该函数要求的功能为：将输入参数的各个数位拆出，然后重新排列组合为一个更大的长整数并返回该长整数。例如输入参数2314，拆出2、3、1、4，然后重新组合为最大的4321返回。编写该函数时无需考虑是否超出长整数的表示范围；只需考虑十进制形式。 </p>
+<pre><code class="c">//#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;strings.h&gt;
+#include &lt;stdlib.h&gt;
+
+int a[100] = {-1};
+
+int cmp(const void *a,const void *b)
+{
+	return(*(int *)b-*(int *)a);  //实现的是降序排序
+}
+
+long moreBigger(long in){
+	int index = 0;
+	do{
+		a[index] = in %10;
+		index++;
+	}while(in /= 10);
+
+	qsort(a,100,sizeof(a[0]),cmp);  ///  &lt;stdlib.h&gt;
+	long res = 0;
+	for(int j =0; j &lt; index; j++){
+		res = res*10 + a[j];
+	}
+
+	return res;
+}
+
+int main() {
+
+	printf(&quot;%d&quot;,moreBigger(15374));
+	return 0;
+}
+</code></pre>
+
+<p><br></p>
+<h2 id="_1">区分回文</h2>
+<p>（10分）用C编写一个函数，用于进行回文(Palindrome，即从左往右和从右往左看是相同的句子)测试。该函数的输入为一条消息，输出是表示该消息是否为回文的标志。为简单起见，只考虑英文消息，而且忽略掉消息中所有不是字母的字符。运行时场景如下：</p>
+<p>Enter a message: He lived as a devil, eh?</p>
+<p>Palindrome</p>
+<p>Enter a message: Madam, I am Adam</p>
+<p>Not a palindrome</p>
+<p>​            没有考虑是否忽略大小写，答案是区分大小写的</p>
+<pre><code class="c">//#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;strings.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+
+bool Judge(){
+	char str[100];
+	printf(&quot;Enter a message:&quot;);
+//    gets(str);  ///  不能用 scanf
+	fgets(str, (sizeof str / sizeof str[0]), stdin);
+	char * p = strrchr(str, '\0');
+
+	printf(&quot;%d&quot;,p - str);
+	char newStr[100];
+	int p_newStr = 0;
+	for(int i=0; i &lt; p - str; i++){
+		if( (str[i] &gt;='a' &amp;&amp; str[i] &lt;= 'z' || str[i] &gt;= 'A' &amp;&amp; str[i] &lt;= 'Z' )){
+			   newStr[p_newStr] = str[i];
+			   p_newStr++;
+		}
+	}
+	newStr[p_newStr] = '\0';
+	printf(&quot;%s&quot;, newStr);
+
+	char * pp = strrchr(newStr, '\0');
+	char * end = pp-1;
+	char * begin = newStr;
+	bool  flag = true;
+	while (begin &lt; end){
+		if( *begin != *end ){
+			flag = false;
+			break;
+		}else{
+			begin++;
+			end--;
+		}
+
+	}
+	return  flag;
+
+}
+
+int main() {
+	printf(&quot;%d&quot;, Judge() );
+	return 0;
+}
+//He lived as a devil, eh?
+</code></pre>
+
+<p><br></p>
+<h2 id="_2">找一个数里面的所有素数</h2>
+<p><img alt="image-20180529161947619" src="20180529找素数.png" /></p>
+<pre><code class="c">//#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;strings.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+
+int main() {
+	int *array;
+	int N;
+	printf(&quot;请输入所要创建的一维动态数组的长度：&quot;);
+	scanf(&quot;%d&quot;,&amp;N);
+	array=(int*)calloc(N+1,sizeof(int));
+
+	for(int i=2; i &lt;=N; i++){
+		array[i] = 0;
+	}
+
+	for(int i=2; i&lt;=N; i++){
+		if(!array[i]){
+			for(int j = i; i*j &lt;=N; j++)
+				array[i*j] = 1;
+		}
+	}
+
+	int j=0;
+	for(int i=2;i&lt;=N;i++)
+	{
+		if(!array[i])
+		{
+			printf(&quot;%d &quot;,i);
+			j++;
+			if(j%10 == 0)
+				printf(&quot;\n&quot;);
+		}
+	}
+	printf(&quot;\n&quot;);
+	free(array);
+	return 0;
+}
+//He lived as a devil, eh?
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">计算级数</h2>
+<p><img alt="image-20180529161839242" src="20180529计算级数.png" /></p>
+<pre><code class="c">//#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;strings.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+	double precise;
+	scanf(&quot;%lf&quot;, &amp;precise);
+	double res = 0;
+	int index = 1;
+	long long prod = 1;
+	if(precise &gt; 0){
+		while(1){
+			prod = prod * index;
+			double current = 1.0 / prod;
+			if( current &lt; precise ){
+				break;
+			}
+			res = res + current;
+			index++;
+		}
+		res = res + 1;
+		printf(&quot;%lf&quot;, res);
+	}else{
+		printf(&quot;Precision must be positive float&quot;);
+	}
+
+	return 0;
+}
+
+</code></pre>
+
+<p><br></p>
+<h2 id="_4">用单链表实现栈</h2>
+<p><img alt="image-20180529162748213" src="20180529栈.png" /></p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct NODE
+{
+	int val;
+	struct NODE *next;
+}node;//define node
+
+node * head=NULL;//init head_node of stack
+int length_stack(node *link); /// 函数声明
+
+//create node
+node *create_node(int val)
+{
+	node *p=(node *)malloc(sizeof(node));
+	p-&gt;val=val;
+	p-&gt;next=NULL;
+	return p;
+}
+
+//push 头插法
+node *push(int val)
+{
+	node *p=create_node(val);
+	p-&gt;next=head;
+	head=p;
+	return head;
+}
+
+//peek
+int peek(node *link)
+{
+	if(length_stack(link)==0)
+	{
+		printf(&quot;此栈为空&quot;);
+		return 0;
+	}
+	return head-&gt;val;
+}
+
+//calculate length_length
+int length_stack(node *link)
+{
+	int count=0;
+	while(link)
+	{
+		count++;
+		link=link-&gt;next;
+	}
+	return count;
+}
+
+
+//pop
+int pop(node *link)
+{
+	node *p;
+	p=head;
+	head=head-&gt;next;
+	free(p);
+	return p-&gt;val;
+}
+//printf_stack
+void print_stack()
+{
+	while(head)
+	{
+		printf(&quot;%d   &quot;,head-&gt;val);
+		head=head-&gt;next;
+	}
+}
+
+
+int main()
+{
+	push(1);
+	push(2);
+	push(3);
+	push(4);
+	push(5);
+	peek(head);
+	int size=length_stack(head);
+	printf(&quot;栈长度为：%d\n&quot;,size);
+
+	print_stack();
+
+}
+</code></pre>
+
+<p>存储为字符串的实现</p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct NODE
+{
+	char* val;
+	struct NODE *next;
+}node;//define node
+
+node * head=NULL;//init head_node of stack
+int length_stack(node *link);
+
+//create node
+node *create_node(char* val)
+{
+	node *p=(node *)malloc(sizeof(node));
+	p-&gt;val=val;
+	p-&gt;next=NULL;
+	return p;
+}
+
+//push 头插法
+node *push(char* val)
+{
+	node *p=create_node(val);
+	p-&gt;next=head;
+	head=p;
+	return head;
+}
+
+//peek
+char* peek(node *link)
+{
+	if(length_stack(link)==0)
+	{
+		printf(&quot;此栈为空&quot;);
+		return 0;
+	}
+	return head-&gt;val;
+}
+
+//calculate length_length
+int length_stack(node *link)
+{
+	int count=0;
+	while(link)
+	{
+		count++;
+		link=link-&gt;next;
+	}
+	return count;
+}
+
+
+//pop
+char* pop(node *link)
+{
+	node *p;
+	p=head;
+	head=head-&gt;next;
+	free(p);
+	return p-&gt;val;
+}
+//printf_stack
+void print_stack()
+{
+	while(head)
+	{
+		printf(&quot;%s   &quot;,head-&gt;val);
+		head=head-&gt;next;
+	}
+}
+
+
+int main()
+{
+	push(&quot;Jim&quot;);
+	push(&quot;god&quot;);
+	push(&quot;hello&quot;);
+	push(&quot;world&quot;);
+	push(&quot;me&quot;);
+	peek(head);
+	int size=length_stack(head);
+	printf(&quot;栈长度为：%d\n&quot;,size);
+
+	print_stack();
+
+}
+</code></pre>
+
+<h2 id="_5">函数指针作为参数</h2>
+<p><img alt="image-20180529164115943" src="20180529函数指针作为参数.png" /></p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+// or
+//typedef void(*FunType)(int);
+
+void transform(double* source, double* dest, size_t n, double (*func)(double) ){
+	for( int i=0; i&lt; n; i++ ){
+		dest[i] = func(source[i]);
+	}
+}
+
+double sqrt(double x)
+{
+	return x*x;
+}
+int main(){
+	double source[2] = {1,2};
+	double dest[2];
+	transform(source,dest,2,sqrt);
+	for(int i=0; i &lt; 2; i++){
+		printf(&quot;%lf&quot;, dest[i]);
+	}
+	return 0;
+}
+</code></pre>
+
+<p><br></p>
+<h2 id="_6">二叉树的中序遍历</h2>
+<p><img alt="image-20180529165607116" src="20180529二叉树的中序遍历.png" /></p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+
+typedef int datatype;
+typedef struct node{
+	datatype id;
+	datatype grade;
+	node* lchild = nullptr;
+	node* rchild = nullptr;
+	node* parent = nullptr;
+	node(datatype id, datatype grade,node* lchild, node* rchild, node* parent):
+			id(id),grade(grade),lchild(lchild),rchild(rchild),parent(parent){}
+
+	node(datatype id, datatype grade): id(id),grade(grade){}
+}Node;
+
+
+void inorder(Node* in){
+	if(in == nullptr)
+		return;
+	inorder(in-&gt;lchild);
+	printf(&quot;id: %d \t grade: %d \n&quot;, in-&gt;id, in -&gt; grade);
+	inorder(in-&gt;rchild);
+}
+
+int main(){
+   Node* top =new Node(0,1);
+   Node* l = new Node(1,2);
+	Node* r = new Node(2,3);
+	top-&gt;lchild = l;
+	top-&gt;rchild = r;
+	inorder(top);
+
+	return 0;
+}
+</code></pre>
+
+<p><br></p>
+<h2 id="_7">虚函数和虚继承</h2>
+<p><img alt="image-20180529175317177" src="20180529虚函数和虚继承.png" /></p>
+<p><img alt="image-20180529175358276" src="20180529虚函数和虚继承02.png" /></p>
+<pre><code class="cpp">class BaseGate{
+public:
+	BaseGate(){}
+	BaseGate(double length, double width, double delay):length(length),width(width),delay(delay){}
+protected:
+	double length;
+	double width;
+	double delay;
+public:
+	virtual double getArea() =0;
+	virtual double getDelay() = 0;
+	virtual bool output() = 0;
+
+};
+
+class And: public BaseGate{
+private:
+	bool in1,in2;
+public:
+	Add(double length, double width, double delay, bool in1, bool in2):
+			BaseGate(length,width,delay), in1(in1), in2(in2){}
+
+	double  getArea(){
+		return length * width;
+	}
+
+	double getDelay(){
+		return delay;
+	}
+
+	bool output(){
+		return in1 &amp; in2;
+	}
+
+	/// 实现一个静态重载版本
+	static bool  output(bool in1, bool in2){
+		return in1 &amp; in2;
+	}
+};
+
+class Or: public BaseGate{
+private:
+	bool in1,in2;
+public:
+	Or(double length, double width, double delay, bool in1, bool in2):
+			BaseGate(length,width,delay), in1(in1), in2(in2){}
+
+	double  getArea(){
+		return length * width;
+	}
+
+	double getDelay(){
+		return delay;
+	}
+
+	bool output(){
+		return in1 | in2;
+	}
+
+	/// 实现一个静态重载版本
+	static bool  output(bool in1, bool in2){
+		return in1 | in2;
+	}
+};
+
+
+class Not: public BaseGate{
+private:
+	bool in1;
+public:
+	Not(double length, double width, double delay, bool in1, bool in2):
+			BaseGate(length,width,delay), in1(in1){}
+
+	double  getArea(){
+		return length * width;
+	}
+
+	double getDelay(){
+		return delay;
+	}
+
+	bool output(){
+		return ~in1;
+	}
+
+	/// 实现一个静态重载版本
+	static bool  output(bool in1){
+		return ~in1;
+	}
+};
+
+
+unsigned long simulate(BaseGate *gates[], unsigned int len){
+	unsigned  long  res = 0;
+	for(int i = 0; i &lt; len ; i ++){
+		gates[i] -&gt; output();
+		res += gates[i] -&gt; getArea();
+	}
+	return res;
+
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

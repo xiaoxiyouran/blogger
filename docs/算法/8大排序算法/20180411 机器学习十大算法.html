@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180411 机器学习十大算法</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180411">20180411 机器学习十大算法</h1>
+<hr />
+<p>原文：https://www.sogou.com/link?url=DSOYnZeCC_qCOEO6PuXsIumilujLYd5KvVsQ9ztWSMrpeQ3yDTgaD0FF-By3RS7TbR8EljyCgFyuLaNMGv04nw..</p>
+<p>机器学习算法分为三类：有监督学习、无监督学习、增强学习。**有监督学习需要标识数据（用于训练，即有正例又有负例），无监督学习不需要标识数据，增强学习介于两者之间（有部分标识数据）。下面我将向大家具体介绍机器学习中10大算法（只介绍有监督、无监督两类，暂不介绍增强学习）。</p>
+<h2 id="1-">1- 有监督学习</h2>
+<h3 id="_1">算法一：决策树，</h3>
+<p>决策树是一种树形结构，为人们提供决策依据，决策树可以用来回答yes和no问题，它通过树形结构将各种情况组合都表示出来，每个分支表示一次选择（选择yes还是no），直到所有选择都进行完毕，最终给出正确答案。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853ee2fd8f31.gif" /></p>
+<h3 id="_2">算法二：朴素贝叶斯分类器</h3>
+<p>朴素贝叶斯分类器基于贝叶斯理论及其假设（即特征之间是独立的，是不相互影响的）</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853ee8cc757b.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>P(A|B) 是后验概率， P(B|A) 是似然，P(A)为先验概率，P(B) 为我们要预测的值。</p>
+<p>具体应用有：<strong>垃圾邮件检测、文章分类、情感分类、人脸识别</strong>等。</p>
+<h3 id="_3">算法三：最小二乘法</h3>
+<p>如果你对统计学有所了解，那么你必定听说过线性回归。最小均方就是用来<strong>求线性回归</strong>的。如下图所示，平面内会有一系列点，然后我们求取一条线，使得这条线尽可能拟合这些点分布，这就是线性回归。这条线有多种找法，最小二乘法就是其中一种。最小二乘法其原理如下，找到一条线使得平面内的所有点到这条线的欧式距离和最小。这条线就是我们要求取得线。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853eea97ca7e.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>线性指的是用一条线对数据进行拟合，<strong>距离代表的是数据误差，最小二乘法可以看做是误差最小化</strong>。</p>
+<h3 id="_4">算法四：逻辑回归</h3>
+<p>逻辑回归模型是一个二分类模型，它<strong>选取不同的特征与权重</strong>来对样本进行概率分类，用一各log函数计算样本属于某一类的概率。即一个样本会<strong>有一定的概率属于一个类，会有一定的概率属于另一类</strong>，概率大的类即为样本所属类。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853eec0aa2b9.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>具体应用有：<strong>信用评级、营销活动成功概率、产品销售预测、某天是否将会地震发生</strong>。</p>
+<h3 id="svm">算法五：支持向量机（SVM）</h3>
+<p>支持向量机是一个二分类算法，它可以在N维空间找到一个(N-1)维的超平面，这个超平面可以将这些点分为两类。也就是说，平面内如果存在线性可分的两类点，SVM可以找到一条最优的直线将这些点分开。SVM应用范围很广。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853eee76c7f1.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>具体应用有：广告展示、性别检测、大规模图像识别等。</p>
+<h3 id="_5">算法六：集成学习</h3>
+<p>集成学习就是将很多分类器集成在一起，每<strong>个分类器有不同的权重，将这些分类器的分类结果合并</strong>在一起，作为最终的分类结果。最初集成方法为<strong>贝叶斯决策</strong>，现在多采用error-correcting output coding, bagging, and boosting等方法进行集成。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853ed2f66ea8.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>那么为什集成分类器要比单个分类器效果好呢？</p>
+<blockquote>
+<p>1.偏差均匀化：如果你将民主党与共和党的投票数算一下均值，可定会得到你原先没有发现的结果，集成学习与这个也类似，它可以学到其它任何一种方式都学不到的东西。</p>
+<p>2.减少方差：总体的结果要比单一模型的结果好，因为其从多个角度考虑问题。类似于股票市场，综合考虑多只股票可以要比只考虑一只股票好，这就是为什么多数据比少数据效果好原因，因为其考虑的因素更多。</p>
+<p>3.不容易过拟合。如果的一个模型不过拟合，那么综合考虑多种因素的多模型就更不容易过拟合了。</p>
+</blockquote>
+<h2 id="_6">二、无监督学习</h2>
+<h3 id="_7">算法七：聚类算法</h3>
+<p>聚类算法就是将一堆数据进行处理，根据它们的相似性对数据进行聚类。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853ed6be5455.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>聚类算法有很多种，具体如下：<strong>中心聚类、关联聚类、密度聚类、概率聚类、降维、神经网络/深度学习</strong>。</p>
+<p><strong>K近邻，K均值等</strong></p>
+<h3 id="pca">算法八：主成分分析（PCA）</h3>
+<p>主成分分析是利用<strong>正交变换将一些列可能相关数据</strong>转换为<strong>线性无关数据</strong>，从而<strong>找到主成分</strong>。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853ed7fd8ae4.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>PCA主要用于<strong>简单学习与可视化中数据压缩、简化</strong>。但是PCA<strong>有一定的局限性，它需要你拥有特定领域的相关知识。对噪音比较多的数据并不适用</strong>。</p>
+<h3 id="svd">算法九：SVD矩阵分解</h3>
+<p>SVD矩阵是一个复杂的实复负数矩阵，给定一个<strong>m 行、n列的矩阵M</strong>,那么M矩阵可以分解为M = UΣV。U和V是酉矩阵，Σ为对角阵。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853eda20a57f.png?imageMogr2/format/jpg/quality/90" /></p>
+<p>PCA实际上就是一个简化版本的SVD分解。在计算机视觉领域，<strong>第一个脸部识别算法就是基于PCA与SVD的</strong>，用特征对脸部进行特征表示，然后降维、最后进行面部匹配。尽管现在面部识别方法复杂，但是基本原理还是类似的。</p>
+<h3 id="ica">算法十：独立成分分析(ICA)</h3>
+<p>ICA是一门统计技术，用于<strong>发现存在于随机变量下的隐性因素</strong>。ICA为给观测数据定义了一个生成模型。在这个模型中，其认为<strong>数据变量是由隐性变量，经一个混合系统线性混合而成，</strong>这个混合系统未知。并且假设潜在因素属于非高斯分布、并且相互独立，称之为<strong>可观测数据的独立成分</strong>。</p>
+<p><img alt="机器学习十大算法都是何方神圣？看完你就懂了" src="https://static.leiphone.com/uploads/new/article/740_740/201612/5853edbf5d05a.png?imageMogr2/format/jpg/quality/90" /></p>
+<p><strong>ICA与PCA相关，但它在发现潜在因素方面效果良好</strong>。它可以应用在<strong>数字图像、档文数据库、经济指标、心里测量</strong>等。</p>
+<p>以上就是我对机器学习算法的一些简单介绍，现在你可以通过我的介绍与你自己的理解，好好思考机器学还可以在我们的日常生活中有哪些应用。</p>
+<p>雷锋网总结：实际上这些机器学习算法并不是全都像想象中一样复杂，有些还和高中数学紧密相关。不过如何学以致用举一反三，不仅是机器学习的核心，也同样是每个人学习的核心要义。</p>
+<p>via <a href="http://www.kdnuggets.com/2016/08/10-algorithms-machine-learning-engineers.html">The 10 Algorithms Machine Learning Engineers Need to Know</a></p>
+<hr />
+<h3 id="_8">其它算法补充</h3>
+<p>8.随机森林 (Random Forest) 
+9.降低维度算法（DimensionalityReduction Algorithms） 
+10.GradientBoost和Adaboost算法</p>
+<p>来源： https://blog.csdn.net/xiangzhihong8/article/details/53665942</p>
+<h2 id="_9">三 强化学习</h2>
+<p>这个算法可以训练程序做出某一决定。程序在某一情况下尝试所有的可能行动，记录不同行动的结果并试着找出最好的一次尝试来做决定。 属于这一类算法的有<strong>马尔可夫决策</strong>过程。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

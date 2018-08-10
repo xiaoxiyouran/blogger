@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180713unity中的pivot 和 Anchor 锚点</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180713unitypivot-anchor">20180713unity中的pivot 和 Anchor 锚点</h1>
+<p>参考： https://www.cnblogs.com/w-wfy/p/7800757.html</p>
+<p><img alt="img" src="84177-9b8aea9d3611b171.png" /> </p>
+<p>RectTransform属性一览</p>
+<h1 id="_1">前言</h1>
+<p>最近要做UI，有时候需要在代码中调整改变UI控件的属性，比如位置、大小等，然而在NGUI里面，控制UI控件的位置等属性的是RectTransform这个组件，这个组件继承自Transform组件，却增加许多自己的特性，在不了解这些特性的情况下鲁莽的去使用它，会导致出现很多匪夷所思的问题，而且使用起来也不够得心应手，于是决定研究一下RectTransform到底是如何工作的</p>
+<h1 id="_2">你将学得到什么？</h1>
+<ul>
+<li>什么是Pivot</li>
+<li>什么是Anchor</li>
+<li>如何结合使用Pivot和Anchor来调整UI</li>
+<li>了解RectTransform其他属性的作用</li>
+</ul>
+<h1 id="pivot">一、Pivot属性详解</h1>
+<p>首先为了让大家更好的理解内容，我在Unity中创建了两个UI控件，一个Plane控件，作为父对象，一个Image控件，最为子对象，如下图：</p>
+<p><img alt="img" src="84177-cfa2c68fae729df8.png" /> </p>
+<p>两个演示用的UI空间</p>
+<p>然后我们选中红框，来看看它的RectTransform组件的属性，如下图：</p>
+<p><img alt="img" src="84177-b828e6e27cb3e3dc.png" /> </p>
+<p>红框的RectTransform组件</p>
+<p>你会看到有一堆的数据，那么这些数据是如何最终决定UI在屏幕中的位置和大小的呢？我们首先来看第一个重要的属性Pivot，因为它理解RectTransform这套UI布局方案的第一个关键</p>
+<p><img alt="img" src="84177-bacb5a5d82197240.png" /> </p>
+<p>Pivot属性</p>
+<p>Pivot我们可以暂且称它为中心轴（这个翻译不太准确，但为了便于理解，先这么叫着），它是一个X,Y值范围是0到1的点，这个点的会在Anchor（锚点）计算位置的时候会使用到，下面用一张图来解释Pivot点的位置</p>
+<p><img alt="img" src="84177-b27df7bbe9d3c829.png" /> </p>
+<p>Pivot图解</p>
+<p>设置Pivot的坐标系如上图，(0,0)表示红框物体的左下角的点，(1,1)表示红框物体的右上角的点</p>
+<h1 id="anchor">二、Anchor属性详解</h1>
+<p>关于Anchor锚点可能接触过UI的朋友都了解一些，但是Unity中Anchor应该称它为锚框更为合理，因为它是由两个锚点(Min，Max)组成的一个矩形，当然也可以组成一个点（两个点重合）</p>
+<p><img alt="img" src="84177-59bdc29101e5c00b.png" /> </p>
+<p>锚框</p>
+<p>而Unity为了方便我们调整锚框，在编辑视图给出了锚框的标示，如下图：</p>
+<p><img alt="img" src="84177-bd01f67b31dcc98d.png" /> </p>
+<p>锚框标示(重合情况)</p>
+<p>当然上图是两个锚点重合的情况，所以看上去是一个点，下面我们利用两个锚点不重合的情况来说明一下：</p>
+<p><img alt="img" src="84177-f87b1d6124baa4cc.png" /> </p>
+<p>锚框标示</p>
+<h1 id="pivotanchor">三、Pivot和Anchor的结合</h1>
+<p>在了解了Pivot和Anchor分别是什么后，我们就来看看Unity是如何使用这个两个东西来控制UI的布局</p>
+<h2 id="1">第1种情况：两个锚点重合时</h2>
+<p>我们先来看看两个锚点重合时的情况，这种情况是我们最常用也是最容易理解的方式</p>
+<p><img alt="img" src="84177-3d70df7be262658c.png" /> </p>
+<p>第1种情况</p>
+<p>我们将Anchor锚点放在黑框的正中间，然后将Pivot中心轴放在红框的正中间，然后我们改变黑框的大小和位置，看看红框会有什么变化，如下图：</p>
+<p><img alt="img" src="84177-0dc7e3bd42ec5e84.gif" /> </p>
+<p>变化图示</p>
+<p>我们从上图可以看出，不管我们怎么拖动黑框，改变他大小和位置，红框的Pivot点到Anchor点的距离是始终不变的，也就是说红框物体会参照锚点来实时调整自己的位置，使自己的Pivot点到锚点的距离始终保持一致，而且值得一提的是，在这种情况下，红框物体的RectTransform组件中的属性是Width和Height，这个属性在后面的情况中会发生变化，大家需要注意下</p>
+<p><img alt="img" src="84177-7549316d60d3a880.png" /> </p>
+<p>Paste_Image.png</p>
+<p>总结下第1种情况的特点就是：子物体的大小不会随着父物体的大小变化而变化，但是位置会根据Pivot点到Anchor点的距离一致的原则发生对应的变化</p>
+<h2 id="2">第2种情况：两个锚点不重合时，即锚框的情况</h2>
+<p>当两个锚点（AnchorMin和AnchorMax）不重合时，两点就会确定一个矩形，这个矩形就是我们的锚框，如下图中的绿框就是我们的锚框区域</p>
+<p><img alt="img" src="84177-051144e96eaf0263.png" /> </p>
+<p>锚框区域</p>
+<p>此时我们再观察一下红框物体的RectTransform属性，发现属性分别变成了Left、Top、Right、Bottom</p>
+<p><img alt="img" src="84177-ff69cbb3e32aadee.png" /> </p>
+<p>Left、Top、Right、Bottom</p>
+<p>那么这4个属性分别表示什么呢？我们看看下面的这个图</p>
+<p><img alt="img" src="84177-9921cfbf0183bc9a.png" /> </p>
+<p>Left和Bottom图解</p>
+<p>从上图我们看出，Unity以锚框的左下角为坐标系的原地(0, 0)，然后红框的Left和Bottom两个数确定红框左下角的点在坐标系中的位置，原点和红框左下角的点确定一段距离（即上图的绿色箭头），不管黑框如何变化，这段距离都保持不变</p>
+<p><img alt="img" src="84177-3753b8f6c17205e1.png" /> </p>
+<p>Right和Top图解</p>
+<p>同理，如上图所示，Unity以锚框的右上角为原点(0,0)，然后红框的Right和Top两个数确定红框的右上角的在坐标系中的位置，原地和红框的右上角的点确定一段距离（即上图的绿色箭头），不管黑框如何边框，这段距离都保持不变</p>
+<p>在黑框大小和位置变化的时候，Unity会保证红框的左下角到锚框的左下角距离不变，同时红框的右上角到锚框的右上角距离不变，来确定红框的相对位置和大小，看下图来感受一下变化：</p>
+<p><img alt="img" src="84177-920f57d425ee4257.gif" /> </p>
+<p>变化图示</p>
+<p>注意上图中红框左下角到黑框左下角的距离，以及红框右上角到黑框右上角的距离，他们都是不变的</p>
+<h1 id="anchoredposition">三、anchoredPosition属性详解</h1>
+<p>anchoredPosition根据名字的含义，我们大概可以猜出他是根据anchor锚点得出来个一个位置属性，他本身是一个点，如果在AnchorMin和AnchorMax是重合的情况下，anchoredPosition就是表示锚点到Pivot的位置，如下图所示：</p>
+<p><img alt="img" src="84177-ef0d5ae1d309d681.png" /> </p>
+<p>anchoredPosition图解一</p>
+<p>但是如果AnchorMin和AnchorMax不重合的时候，anchoredPosition就比较复杂了，在这种情况下，Unity会根据Pivot、AnchorMin和AnchorMax计算出一个锚点，然后在通过Pivot和锚点来得出anchoredPosition的位置，关于如何计算规则，有兴趣的朋友可以自己逆推一下</p>
+<h1 id="offsetminoffsetmax">四、offsetMin和offsetMax详解</h1>
+<p>offsetMin和offsetMax这两个属性比较好理解，其中offsetMin表示物体（本文中的红框）左下角相对AnchorMin的偏移，offsetMax表示物体右上角相对AnchorMax的偏移</p>
+<p><img alt="img" src="84177-3bd3ac83352a431b.png" /> </p>
+<p>anchor(0, 0)</p>
+<p><img alt="img" src="84177-6feb68ae67ceaae8.png" /> </p>
+<p>anchorMin(0,0) anchorMax(1,1)</p>
+<h1 id="sizedelta">五、sizeDelta详解</h1>
+<p>sizeDelta就是offsetMax - offsetMin的值，即物体左下角到右上角的变量，如下图所示：</p>
+<p><img alt="img" src="84177-d3b70ac4ab07d1bd.png" /> </p>
+<p>sizeDelta图解</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

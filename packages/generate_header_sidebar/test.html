@@ -1,0 +1,71 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+ <HEAD>
+  <TITLE> ZTREE ToC DEMO </TITLE>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="../css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  text-align: center;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:0; padding:0;
+    color:#333; font-size:12px;
+    font-family:dotum, Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+  }
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+<script type="text/javascript" src="../js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../src/ztree_toc.js"></script>
+  <SCRIPT type="text/javascript" >
+  <!--
+  $(document).ready(function(){
+    $('#tree').ztree_toc({
+      is_auto_number : true,
+      use_head_anchor: true
+    });
+  });
+  //-->
+  </SCRIPT>
+
+ </HEAD>
+
+<BODY>
+
+
+
+<h1 id="toc_0">test</h1>
+
+<h2 id="toc_1">test 01</h2>
+
+<p>haha   </p>
+
+<h2 id="toc_2">test 02</h2>
+
+<p>12344</p>
+
+<h3 id="toc_3">test 03</h3>
+
+
+
+</BODY>
+</HTML>
+

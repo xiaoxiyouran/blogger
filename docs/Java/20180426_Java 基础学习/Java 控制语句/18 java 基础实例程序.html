@@ -1,0 +1,566 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>18 java 基础实例程序</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="18-java">18 java 基础实例程序</h1>
+<p>Java基础实例程序在面试中经常提到。这些程序可以从控制语句，数组，字符串，面向对象等等。让我们来看看下面java实例程序的列表。</p>
+<h3 id="1">1. 斐波纳契数列</h3>
+<p>编写一个java程序打印斐波纳契(fibonacci)数列不使用递归和使用递归。示例链接：<a href="http://www.yiibai.com/java/fibonacci-series-in-java.html">斐波纳契数列代码实现</a></p>
+<p><strong>输入</strong>: <code>10</code></p>
+<p><strong>输出</strong>: <code>0 1 1 2 3 5 8 13 21 34</code></p>
+<p>非递归：</p>
+<pre><code class="java">class FibonacciExample1 {
+	public static void main(String args[]) {
+		int n1 = 0, n2 = 1, n3, i, count = 10;
+		System.out.print(n1 + &quot; &quot; + n2);// printing 0 and 1
+
+		for (i = 2; i &lt; count; ++i)// loop starts from 2 because 0 and 1 are
+									// already printed
+		{
+			n3 = n1 + n2;
+			System.out.print(&quot; &quot; + n3);
+			n1 = n2;
+			n2 = n3;
+		}
+
+	}
+}
+.......
+执行上面代码，得到如下结果 -
+
+0 1 1 2 3 5 8 13 21 34
+</code></pre>
+
+<p>递归实现： </p>
+<pre><code class="java">class FibonacciExample2 {
+	static int n1 = 0, n2 = 1, n3 = 0;
+
+	static void printFibonacci(int count) {
+		if (count &gt; 0) {
+			n3 = n1 + n2;
+			n1 = n2;
+			n2 = n3;
+			System.out.print(&quot; &quot; + n3);
+			printFibonacci(count - 1);
+		}
+	}
+
+	public static void main(String args[]) {
+		int count = 10;
+		System.out.print(n1 + &quot; &quot; + n2);// printing 0 and 1
+		printFibonacci(count - 2);// n-2 because 2 numbers are already printed
+	}
+}
+Java
+执行上面代码，得到如下结果 -
+
+0 1 1 2 3 5 8 13 21 34
+</code></pre>
+
+<h3 id="2">2. 素数实例</h3>
+<p>编写一个java程序来判定给定的一个数字是否为素数。示例链接：<a href="http://www.yiibai.com/java/prime-number-program-in-java.html">素数实例代码</a></p>
+<p><strong>输入</strong>: 44</p>
+<p><strong>输出</strong>: <code>not prime number</code></p>
+<p><strong>输入</strong>: 7</p>
+<p><strong>输出</strong>: <code>prime number</code></p>
+<p>质数(prime number)又称素数，有无限个。质数定义是：在大于<code>1</code>的自然数中，除了<code>1</code>和它本身以外不再有其他因数的数称为质数。例如，<code>2</code>，<code>3</code>，<code>5</code>，<code>7</code>，<code>11</code>，<code>13</code>，<code>17</code> ….是素数。</p>
+<blockquote>
+<p>注意：<code>0</code>和<code>1</code>不是素数。 <code>2</code>是唯一的偶数素数，因为所有其他偶数可以除以<code>2</code>。</p>
+</blockquote>
+<p>下面来看看java中的素数程序。 在这个java程序中，我们将读取一个数字变量，并判断这个数字是否为素数。</p>
+<pre><code class="Java">class PrimeExample {
+	public static void main(String args[]) {
+		int i, m = 0, flag = 0;
+		int n = 17;// it is the number to be checked
+		m = n / 2; // Math.sqrt(n)
+		for (i = 2; i &lt;= m; i++) {
+			if (n % i == 0) {
+				System.out.println(&quot;Number is not prime&quot;);
+				flag = 1;
+				break;
+			}
+		}
+		if (flag == 0)
+			System.out.println(n + &quot; is prime&quot;);
+	}
+}
+</code></pre>
+
+<p>执行上面代码，得到以下结果 -</p>
+<pre><code class="java">17 is prime
+</code></pre>
+
+<h3 id="3">3. 回文数</h3>
+<p>编写一个java程序断定给定的字符串是否为一个回文数。示例链接：<a href="http://www.yiibai.com/java/palindrome-program-in-java.html">回文数示例</a></p>
+<p><strong>输入：</strong> <code>123</code></p>
+<p><strong>输出：</strong> <code>not palindrome number</code></p>
+<p><strong>输入：</strong> <code>12321</code></p>
+<p><strong>输出：</strong> <code>palindrome number</code></p>
+<p>Java中的回文数定义：回文数是反向后与原数字也是相同的数字(即：从左边读和从右边读过来都是同一个数字)。 例如，<code>545</code>,<code>151</code>,<code>3454</code>,<code>343</code>,<code>171</code>,<code>4884</code>都是回文数。</p>
+<p><strong>实现回文数算法</strong></p>
+<ul>
+<li>获取要检查回文的数字</li>
+<li>将数字保存在临时变量中</li>
+<li>反转数字</li>
+<li>将临时数字与反转数字进行比较</li>
+<li>如果两个数字相同，则打印“回文数”</li>
+<li>否则打印“不回文数”</li>
+</ul>
+<p>下面来看看java的回文程序。 在这个java程序中，首先得到一个数字变量，并检查数是否是回文。</p>
+<pre><code class="java">class PalindromeExample {
+	public static void main(String args[]) {
+		int r, sum = 0, temp;
+		int n = 454;// It is the number variable to be checked for palindrome
+
+		temp = n;
+		while (n &gt; 0) {
+			r = n % 10; // getting remainder
+			sum = (sum * 10) + r;
+			n = n / 10;
+		}
+		if (temp == sum)
+			System.out.println(&quot;palindrome number &quot;);
+		else
+			System.out.println(&quot;not palindrome&quot;);
+	}
+}
+</code></pre>
+
+<p>这种复杂度有点高</p>
+<p>找规律</p>
+<pre><code>4884
+4884/1000 ?= 4884 % 10
+(4884 - 1000*(4884/1000)) /100 ? = (4884/10) % 10
+</code></pre>
+
+<p>这样比较麻烦，转成字符串就好弄了。</p>
+<p>改进后的方案如下：</p>
+<pre><code class="java">public class Main {
+
+	public static void main(String... args) {
+	   int data = 4884;
+	   String d = String.valueOf(data);
+	   System.out.println(d.length());
+	   boolean flag = true;
+	   for( int i =0; i &lt; d.length()/2; i++ ){
+			if( d.charAt(i) != d.charAt(d.length()-1 -i) ){
+				System.out.println(&quot;not huiwen&quot;);
+				flag = false;
+				break;
+			}
+		}
+
+		if( flag )
+			System.out.println(&quot;is huiwen&quot;);
+	}
+
+};
+
+</code></pre>
+
+<h3 id="4">4. 阶乘</h3>
+<p>编写一个java程序来打印数字的阶乘。示例链接：<a href="http://www.yiibai.com/java/factorial-program-in-java.html">阶乘实现代码</a></p>
+<p><strong>输入：</strong> <code>5</code></p>
+<p><strong>输出：</strong> <code>120</code></p>
+<p><strong>输入：</strong> <code>6</code></p>
+<p><strong>输出：</strong> <code>720</code></p>
+<pre><code class="java">public class Main {
+
+	public static void main(String... args) {
+		int a = 5;
+		int res = 1;
+		for( int i =1; i&lt;=a; i++)
+			res *= i;       /// 神奇的错误， * = 中间空一格居然有错误
+
+		System.out.println(res);
+	}
+
+};
+</code></pre>
+
+<h3 id="5">5. 阿姆斯壮数</h3>
+<p>编写一个java程序来断定一个数值是否为阿姆斯壮(Armstrong)数。示例链接：<a href="http://www.yiibai.com/java/armstrong-number-in-java.html">阿姆斯壮数实例</a></p>
+<p><strong>输入：</strong> <code>153</code></p>
+<p><strong>输出：</strong> <code>Armstrong number</code></p>
+<p><strong>输入：</strong> <code>22</code></p>
+<p><strong>输出：</strong> <code>not Armstrong number</code></p>
+<p>Java中的阿姆斯壮数(armstrongnumber) 定义：阿姆斯壮数(armstrongnumber) 是等于其数字的立方数之和的数字，例如：<code>0</code>，<code>1</code>，<code>153</code>，<code>370</code>，<code>371</code>，<code>407</code>等。</p>
+<p>现在试着理解为什么<code>153</code>是一个阿姆斯壮数字， <code>153 = (1*1*1)+(5*5*5)+(3*3*3)</code>。</p>
+<p>也就是:</p>
+<pre><code>153 = (1*1*1)+(5*5*5)+(3*3*3) 
+(1*1*1)=1  
+(5*5*5)=125  
+(3*3*3)=27  
+So:  
+1+125+27=153
+
+
+Java
+</code></pre>
+
+<p>再来试着理解为什么<code>371</code>也是一个阿姆斯壮数字。</p>
+<pre><code>371 = (3*3*3)+(7*7*7)+(1*1*1)  
+where:  
+(3*3*3)=27  
+(7*7*7)=343  
+(1*1*1)=1  
+So:  
+27+343+1=371
+
+
+Java
+</code></pre>
+
+<p>下面来看看如何使用Java来实现检查阿姆斯壮(Armstrong)数字。</p>
+<pre><code class="java">class ArmstrongExample {
+	public static void main(String[] args) {
+		int c = 0, a, temp;
+		int n = 153;// It is the number to check armstrong
+		temp = n;
+		while (n &gt; 0) {
+			a = n % 10; /// 每次取最低数，这种方法还是可取的
+			n = n / 10;
+			c = c + (a * a * a);
+		}
+		if (temp == c)
+			System.out.println(&quot;armstrong number&quot;);
+		else
+			System.out.println(&quot;Not armstrong number&quot;);
+	}
+}
+</code></pre>
+
+<p>结果如下：</p>
+<pre><code class="java">armstrong number
+</code></pre>
+
+<h3 id="6">6. 气泡排序</h3>
+<p>编写一个java程序，使用冒泡排序算法对数组元素进行排序。示例链接：<a href="http://www.yiibai.com/java/bubble-sort-in-java.html">气泡排序实例</a></p>
+<p><strong>输入：</strong> 18 9 33 4 84 32</p>
+<p><strong>输出：</strong> 4 9 18 32 33 84</p>
+<p>在教程中，将创建一个java程序，使用冒泡排序对数组元素排序。 气泡排序算法也被称为最简单的排序算法。</p>
+<p>在冒泡排序算法中，数组从第一个元素遍历到最后一个元素。 这里，将当前元素与下一个元素进行比较。如果当前元素大于下一个元素，则交换它们的位置。</p>
+<pre><code class="java">public class BubbleSortExample {
+	static void bubbleSort(int[] arr) {
+		int n = arr.length;
+		int temp = 0;
+		for (int i = 0; i &lt; n; i++) {
+			/// 这里，应该是 n - i, 呈阶梯状上升
+			for (int j = 1; j &lt; (n - i); j++) {
+				if (arr[j - 1] &gt; arr[j]) {
+					// swap elements
+					temp = arr[j - 1];
+					arr[j - 1] = arr[j];
+					arr[j] = temp;
+				}
+
+			}
+		}
+
+	}
+
+	public static void main(String[] args) {
+		int arr[] = { 3, 60, 35, 2, 45, 320, 5 };
+
+		System.out.println(&quot;Array Before Bubble Sort&quot;);
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.print(arr[i] + &quot; &quot;);
+		}
+		System.out.println();
+
+		bubbleSort(arr);// sorting array elements using bubble sort
+
+		System.out.println(&quot;Array After Bubble Sort&quot;);
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.print(arr[i] + &quot; &quot;);
+		}
+
+	}
+}
+</code></pre>
+
+<p>执行上面的代码，得到以下结果 -</p>
+<pre><code class="java">Array Before Bubble Sort
+3 60 35 2 45 320 5 
+Array After Bubble Sort
+2 3 5 35 45 60 320
+</code></pre>
+
+<h3 id="7">7. 选择排序</h3>
+<p>编写一个java程序，使用选择排序算法对数组元素进行排序。示例链接：<a href="http://www.yiibai.com/java/selection-sort-in-java.html">选择排序实例</a></p>
+<p><strong>输入：</strong> 18 9 33 4 84 32</p>
+<p><strong>输出：</strong> 4 9 18 32 33 84</p>
+<p>在这个示例中，我们创建一个java程序，实现使用选择排序对数组元素进行排序。 在选择排序算法中，搜索最低的元素并将其排列到适当的位置。用下一个最小的数字交换当前元素。</p>
+<p><img alt="img" src="18_01.jpg" /></p>
+<p>选择排序的Java实现代码示例如下 -</p>
+<pre><code class="java">public class SelectionSortExample {
+	public static void selectionSort(int[] arr) {
+		for (int i = 0; i &lt; arr.length - 1; i++) {
+			int index = i;
+			for (int j = i + 1; j &lt; arr.length; j++) {
+				if (arr[j] &lt; arr[index]) {
+					index = j;// searching for lowest index
+				}
+			}
+			/// swap current and index 
+			int smallerNumber = arr[index];
+			arr[index] = arr[i];
+			arr[i] = smallerNumber;
+		}
+	}
+
+	public static void main(String a[]) {
+		int[] arr1 = { 9, 14, 3, 2, 43, 11, 58, 22 };
+		System.out.println(&quot;Before Selection Sort&quot;);
+		for (int i : arr1) {
+			System.out.print(i + &quot; &quot;);
+		}
+		System.out.println();
+
+		selectionSort(arr1);// sorting array using selection sort
+
+		System.out.println(&quot;After Selection Sort&quot;);
+		for (int i : arr1) {
+			System.out.print(i + &quot; &quot;);
+		}
+	}
+}
+</code></pre>
+
+<p>执行上面代码后，得到以下结果 -</p>
+<pre><code class="java">Before Selection Sort
+9 14 3 2 43 11 58 22 
+After Selection Sort
+2 3 9 11 14 22 43 58
+</code></pre>
+
+<h3 id="8">8. 插入排序</h3>
+<p>编写一个java程序，使用插入排序算法对数组元素进行排序。示例链接：<a href="http://www.yiibai.com/java/insertion-sort-in-java.html">插入排序实例</a></p>
+<p>下面我们创建一个java程序，实现使用插入排序对数组元素进行排序。 插入排序对于小元素是有好处的，因为排序大量元素它需要更多的时间。</p>
+<p><img alt="img" src="18_02.png" /></p>
+<p>让我们来看看一个简单的java程序，使用插入排序算法对数组进行排序。</p>
+<pre><code class="java">public class InsertionSortExample {
+	public static void insertionSort(int array[]) {
+		int n = array.length;
+		/// 从前到后
+		for (int j = 1; j &lt; n; j++) {
+			int key = array[j];
+			int i = j - 1;
+			while ((i &gt; -1) &amp;&amp; (array[i] &gt; key)) {
+				array[i + 1] = array[i];
+				i--;
+			}
+			///  知道 key 前面的数值都比 key 小
+			array[i + 1] = key;
+		}
+	}
+
+	public static void main(String a[]) {
+		int[] arr1 = { 9, 14, 3, 2, 43, 11, 58, 22 };
+		System.out.println(&quot;Before Insertion Sort&quot;);
+		for (int i : arr1) {
+			System.out.print(i + &quot; &quot;);
+		}
+		System.out.println();
+
+		insertionSort(arr1);// sorting array using insertion sort
+
+		System.out.println(&quot;After Insertion Sort&quot;);
+		for (int i : arr1) {
+			System.out.print(i + &quot; &quot;);
+		}
+	}
+}
+</code></pre>
+
+<p>执行上面代码，输出结果如下：</p>
+<pre><code class="java">Before Insertion Sort
+9 14 3 2 43 11 58 22 
+After Insertion Sort
+2 3 9 11 14 22 43 58
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

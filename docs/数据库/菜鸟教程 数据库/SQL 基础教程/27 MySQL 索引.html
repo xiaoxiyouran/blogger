@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>27 MySQL 索引</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="27-mysql">27 MySQL 索引</h1>
+<p>1- 索引，一定是加速查询速度的。</p>
+<p>2- 索引 一定是用在 条件语句， where 等地方</p>
+<hr />
+<p>原文： http://www.runoob.com/mysql/mysql-index.html</p>
+<p>MySQL索引的建立对于MySQL的高效运行是很重要的，<strong>索引可以大大提高MySQL的检索速度</strong>。</p>
+<p>打个比方，如果合理的设计且使用索引的MySQL是一辆兰博基尼的话，那么没有设计和使用索引的MySQL就是一个人力三轮车。</p>
+<p>索引分<strong>单列索引和组合索引</strong>。单列索引，即<strong>一个索引只包含单个列，一个表可以有多个单列索引，但这不是组合索引。组合索引，即一个索引包含多个列。</strong></p>
+<p>创建索引时，你需要确保<strong>该索引是应用在    SQL 查询语句的条件</strong>(一般作为 WHERE 子句的条件)。</p>
+<p>实际上，<strong>索引也是一张表，该表保存了主键与索引字段，并指向实体表的记录。</strong></p>
+<p>上面都在说使用索引的好处，但过多的使用索引将会造成滥用。因此索引也会有它的缺点：虽然索引大大提高了查询速度，同时<strong>却会降低更新表的速度，如对表进行INSERT、UPDATE和DELETE。因为更新表时，MySQL不仅要保存数据，还要保存一下索引文件。</strong></p>
+<p>建立<strong>索引会占用磁盘空间的索引文件</strong>。</p>
+<hr />
+<h2 id="_1">普通索引</h2>
+<h3 id="_2">创建索引</h3>
+<p>这是最基本的索引，它没有任何限制。它有以下几种创建方式：</p>
+<pre><code class="mysql">CREATE INDEX indexName ON mytable(username(length)); 
+</code></pre>
+
+<p>如果是CHAR，VARCHAR类型，length可以小于字段实际长度；如果是BLOB和TEXT类型，必须指定 length。</p>
+<h3 id="_3">修改表结构(添加索引)</h3>
+<pre><code class="Mysql">ALTER table tableName ADD INDEX indexName(columnName)
+</code></pre>
+
+<h3 id="_4">创建表的时候直接指定</h3>
+<pre><code class="Mysql">CREATE TABLE mytable(   
+ID INT NOT NULL,    
+username VARCHAR(16) NOT NULL,   
+INDEX [indexName] (username(length))   
+);  
+</code></pre>
+
+<h3 id="_5">删除索引的语法</h3>
+<pre><code class="Mysql">DROP INDEX [indexName] ON mytable; 
+</code></pre>
+
+<h2 id="_6">唯一索引</h2>
+<p>它与前面的普通索引类似，不同的就是：<strong>索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。</strong>它有以下几种创建方式：</p>
+<h3 id="_7">创建索引</h3>
+<pre><code class="Mysql">CREATE UNIQUE INDEX indexName ON mytable(username(length)) 
+</code></pre>
+
+<h3 id="_8">修改表结构</h3>
+<pre><code class="Mysql">ALTER table mytable ADD UNIQUE [indexName] (username(length))
+</code></pre>
+
+<h3 id="_9">创建表的时候直接指定</h3>
+<pre><code class="Mysql">CREATE TABLE mytable(  
+ID INT NOT NULL,    
+username VARCHAR(16) NOT NULL,   
+UNIQUE [indexName] (username(length))   
+);  
+</code></pre>
+
+<hr />
+<h2 id="alter">使用ALTER 命令添加和删除索引</h2>
+<p>有四种方式来添加数据表的索引：</p>
+<ul>
+<li>ALTER TABLE tbl_name ADD PRIMARY KEY (column_list): </li>
+</ul>
+<p>该语句添加一个主键，这意味着索引值<strong>必须是唯一的</strong>，且不能为NULL。</p>
+<ul>
+<li>
+<p><strong>ALTER TABLE tbl_name ADD UNIQUE index_name (column_list):</strong> 这条语句创建索引的值<strong>必须是唯一的</strong>（除了NULL外，NULL可能会出现多次）。</p>
+</li>
+<li>
+<p><strong>ALTER TABLE tbl_name ADD INDEX index_name (column_list):</strong> 添加<u>普通索引，索引值可出现多次</u>。</p>
+</li>
+<li>
+<p><strong>ALTER TABLE tbl_name ADD FULLTEXT index_name (column_list):</strong>该语句指定了索引为 <strong>FULLTEXT ，用于全文索引。</strong></p>
+</li>
+</ul>
+<p>以下实例为在表中添加索引。</p>
+<pre><code class="Mysql">mysql&gt; ALTER TABLE alter_tbl RENAME TO testalter_tbl; #  先把表明改过来
+mysql&gt; SHOW COLUMNS FROM testalter_tbl;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| c     | char(10) | YES  |     | NULL    |       |
+| i     | int(11)  | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql&gt; ALTER TABLE testalter_tbl ADD INDEX (c);
+mysql&gt; SHOW COLUMNS FROM testalter_tbl;     # Key 列有点不同
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| c     | char(10) | YES  | MUL | NULL    |       |
+| i     | int(11)  | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<p>你还可以在 ALTER 命令中使用 DROP 子句来删除索引。尝试以下实例删除索引:</p>
+<pre><code class="Mysql">mysql&gt; ALTER TABLE testalter_tbl DROP INDEX c;
+</code></pre>
+
+<hr />
+<h2 id="alter_1">使用 ALTER 命令添加和删除主键</h2>
+<p>主键只能作用于一个列上，添加主键索引时，你需要确保该主键默认不为空（NOT NULL）。实例如下：</p>
+<pre><code class="Mysql">mysql&gt; ALTER TABLE testalter_tbl MODIFY i INT NOT NULL;
+mysql&gt; ALTER TABLE testalter_tbl ADD PRIMARY KEY (i);
+</code></pre>
+
+<p>你也可以使用 ALTER 命令删除主键：</p>
+<pre><code class="Mysql">mysql&gt; ALTER TABLE testalter_tbl DROP PRIMARY KEY;
+</code></pre>
+
+<p><strong>删除主键时只需指定PRIMARY KEY</strong>，但在删除索引时，你必须知道索引名。【主键只有一个，但是索引可能有很多个】</p>
+<hr />
+<h2 id="_10">显示索引信息</h2>
+<p>你可以使用 SHOW INDEX 命令来列出表中的相关的索引信息。可以通过添加 \G 来格式化输出信息。</p>
+<p>尝试以下实例:</p>
+<pre><code class="mysql">mysql&gt; SHOW INDEX FROM testalter_tbl; \G
+Empty set (0.00 sec)
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

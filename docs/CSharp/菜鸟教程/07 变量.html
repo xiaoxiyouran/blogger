@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>07 变量</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="07">07 变量</h1>
+<p>一个变量只不过是一个供程序操作的存储区的名字。在 C# 中，每个变量都有一个特定的类型，类型决定了变量的<mark>内存大小和布局</mark>。范围内的值可以存储在内存中，可以对变量进行一系列操作。</p>
+<p>我们已经讨论了各种数据类型。C# 中提供的基本的值类型大致可以分为以下几类：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>类型</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>整数类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>sbyte、byte、short、ushort、int、uint、long、ulong 和 char</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>浮点型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>float 和 double</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>十进制类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>decimal</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>布尔类型</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>true 或 false 值，指定的值</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><mark>空类型</mark></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>可为空值的数据类型</td>
+</tr>
+</tbody>
+</table>
+<p>C# 允许定义其他<mark>值类型的变量，比如 <strong>enum</strong></mark>，也允许定义<mark>引用类型变量，比如 <strong>class</strong></mark>。这些我们将在以后的章节中进行讨论。在本章节中，我们只研究基本变量类型。</p>
+<h2 id="c">C# 中的变量定义</h2>
+<p>C# 中变量定义的语法：</p>
+<pre><code class="csharp">&lt;data_type&gt; &lt;variable_list&gt;;
+</code></pre>
+
+<p>在这里，data_type 必须是一个有效的 C# 数据类型，可以是 char、int、float、double 或其他用户自定义的数据类型。variable_list 可以由一个或多个用逗号分隔的标识符名称组成。</p>
+<p>一些有效的变量定义如下所示：</p>
+<pre><code class="csharp">int i, j, k;
+char c, ch;
+float f, salary;
+double d;
+</code></pre>
+
+<p>您可以在变量定义时进行初始化：</p>
+<pre><code class="csharp">int i = 100;
+</code></pre>
+
+<p><br></p>
+<h2 id="c_1">C# 中的变量初始化</h2>
+<p>变量通过在等号后跟一个常量表达式进行初始化（赋值）。初始化的一般形式为：</p>
+<pre><code class="csharp">variable_name = value;
+</code></pre>
+
+<p>变量可以在声明时被初始化（指定一个初始值）。初始化由一个等号后跟一个常量表达式组成，如下所示：</p>
+<pre><code class="csharp">&lt;data_type&gt; &lt;variable_name&gt; = value;
+</code></pre>
+
+<p>一些实例：</p>
+<pre><code class="csharp">int d = 3, f = 5;    /* 初始化 d 和 f. */
+byte z = 22;         /* 初始化 z. */
+double pi = 3.14159; /* 声明 pi 的近似值 */
+char x = 'x';        /* 变量 x 的值为 'x' */
+</code></pre>
+
+<p>正确地初始化变量是一个良好的编程习惯，否则有时程序会产生意想不到的结果。</p>
+<p>请看下面的实例，使用了各种类型的变量：</p>
+<pre><code class="csharp">namespace VariableDefinition
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			short a;
+			int b ;
+			double c;
+
+			/* 实际初始化 */
+			a = 10;
+			b = 20;
+			c = a + b;
+			Console.WriteLine(&quot;a = {0}, b = {1}, c = {2}&quot;, a, b, c);
+			Console.ReadLine();
+		}
+	}
+}
+
+// a = 10, b = 20, c = 30
+</code></pre>
+
+<p><br></p>
+<h2 id="_1">接受来自用户的值</h2>
+<p>System  命名空间中的 Console  类提供了一个函数 ReadLine() ，用于<mark>接收来自用户的输入，并把它存储到一个变量中</mark>。</p>
+<p>例如：</p>
+<pre><code class="csharp">int num;
+num = Convert.ToInt32(Console.ReadLine());      // 转换函数
+</code></pre>
+
+<p>函数 <strong>Convert.ToInt32()</strong> 把用户输入的数据转换为 int 数据类型，因为 <strong>Console.ReadLine()</strong> 只接受字符串格式的数据。</p>
+<h2 id="c-lvalues-rvalues">C# 中的 Lvalues 和 Rvalues</h2>
+<p>C# 中的两种表达式：</p>
+<ol>
+<li><strong>lvalue</strong>：lvalue 表达式可以出现在赋值语句的左边或右边。</li>
+<li><strong>rvalue</strong>：rvalue 表达式可以出现在赋值语句的右边，不能出现在赋值语句的左边。</li>
+</ol>
+<p>变量是 lvalue 的，所以可以出现在赋值语句的左边。<mark>数值是 rvalue 的，因此不能被赋值</mark>，不能出现在赋值语句的左边。下面是一个有效的语句：</p>
+<pre><code class="csharp">int g = 20;
+</code></pre>
+
+<p>下面是一个无效的语句，会产生编译时错误：</p>
+<pre><code class="csharp">10 = 20;
+</code></pre>
+
+<p><br></p>
+<h2 id="_2">不同类型变量进行计算的问题</h2>
+<p>举例如下，将 <mark>double 窄化成int，在c# 中是不允许的</mark>。</p>
+<pre><code class="csharp">double a = 42.29;
+int b = 4229;
+// int c = a + b;                   // double cann't convert to int
+Console.WriteLine(&quot;c = {0}&quot;,c);
+Console.ReadKey();                  // 读取一个 key
+</code></pre>
+
+<p>上面这种编程方法是错误的，会出现错误提示：</p>
+<pre><code class="shell">&quot;无法将类型'double'隐式转换为'int'。&quot;
+</code></pre>
+
+<p>举例说明，当一个精度高的数据类型与一个精度低的数据类型进行运算时，定义运算结果的变量类型必须与精度最高的变量类型相同。这是为了防止在运算过程中造成数据丢失。</p>
+<p>下面是正确代码：</p>
+<pre><code class="csharp">double a = 42.29;
+int b = 4229;
+double c = a + b;                   // int can be improved to double
+Console.WriteLine(&quot;c = {0}&quot;,c);
+Console.ReadKey();
+
+// c = 4271.29
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
