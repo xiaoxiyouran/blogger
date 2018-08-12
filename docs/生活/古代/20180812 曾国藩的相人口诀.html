@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180812 曾国藩的相人口诀</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180812">20180812 曾国藩的相人口诀</h1>
+<h2 id="_1">背景</h2>
+<p>曾国藩平时留心观察人，并提出著名的“五到”。其中，</p>
+<p>“眼到”： 特别强调“着意看人”</p>
+<p>“手到”：提出“于人之优劣，事之轻重，随手笔记，以备遗忘”。</p>
+<p><br></p>
+<p>识人口诀，并称有《 冰鉴 》之类。</p>
+<p>中国从唐代时，选拔人才以“<strong>身、言、书、判</strong>”为标准。</p>
+<p>“身”，就是人要长得标致，身方端正是最好面相。我们通常说，这个人是国字脸，就能成大器。比如两肩不平，一高一低，就不能担艰巨。他的日记是这样记载的：</p>
+<p>“</p>
+<p><strong>邪正看眼鼻，真假看嘴唇。</strong></p>
+<p><strong>功名看气概，富贵看精神。</strong></p>
+<p><strong>主意看指爪，风波看脚筋。</strong></p>
+<p><strong>若要看条理，全在语言中。</strong></p>
+<p>“”</p>
+<h2 id="_2">解析</h2>
+<p>1- <strong>邪正看眼鼻</strong>： 眼鼻 正与否 辩忠奸；</p>
+<p>《 人伦大统赋 》说，“欲察神奇，先睹目睛”。眼睛掌贤愚、贵贱、巧拙、勇怯、邪正之宫。孟子说：“胸中正则眸子眊矣。”<strong>眼睛以长、深为贵</strong>，其次是尾部稍微翘起，再次是藏神。因此有“两眼藏神，富贵高名，鱼尾插额，位至相国”。而三角眼通常为人狡诈。再如，瞳仁要如点漆，黑白分明。象眼属于思考理智型，黄眼仁属于长寿型，突目属于性格暴躁，浑浊属于早逝型等。从眼睛观察人的类型，曾国藩记载的例证最多，如“<strong>平视无顾”为最佳</strong>，“游目为贼眼”，于他人不利，而“痴视伤己”。鼻子居五岳之中岳，相书上讲鼻子是审判官，位居中央，高高耸立，号称天柱山，上接天庭，下接水沟（ 人中 ）。“鼻以准头为主”，两边为“金甲”。</p>
+<p><br></p>
+<p>2- 第二句话是“<strong>真假看嘴唇</strong>”。口为出纳官，不嫌大。口德、口贼是完全截然不同的两极。口以<strong>方、广、厚</strong>为贵。又有“开欲大而合欲小”。嘴唇：两唇相副好文章，如果上<strong>唇盖不住下唇，男必多诈，女必克夫</strong>。口<strong>像鸟嘴最难交</strong>，范蠡辅佐越王勾践成功后决计和他分手，就是看出他长颈鸟嘴，不可共享安乐。史书上记载，汉代老妇人许负，就是凭周亚夫的口，相出他必将饿死的：相法说，有<strong>横纹深入口内</strong>，必然饿死。</p>
+<p><br></p>
+<p>3- 第三句是“<strong>功名看气概</strong>”。一个人有没有功名，曾国藩说要看人的气概。有的人就是<strong>一出场把所有的人都带动起来</strong>，像谈恋爱的时候也有一见钟情，被对方的一种<strong>气质所慑服</strong>，有一种追随的感觉。咸丰四年初，贵州黎平知府胡林翼因湖广总督吴文镕奏调，率三百人进入通城途次，得悉吴已战死黄州。曾国藩当时尚不知吴已死，写信称其来，“为甄师（ 吴文镕 ）喜，为两湖喜。又接庐州失陷，岷樵（ 江忠源 ）殉难之信，为天下忧，为吾党忧”。随即向清廷上密疏，称赞“胡某才胜臣十倍，可大用”。胡遂成为曾的部下。但后来胡最早得到封疆之任，“谨事文正，交欢文恭（ 官文 ），推美让功”，“中兴之烈基于此乎！”胡去世后，曾国藩私下与心腹幕僚赵烈文谈话时还说：胡林翼是英雄一类人物。而咸丰十年五月胡林翼给曾国藩写信说，少荃如论骨法必大阔，才力又宏远，择福将而使之，亦大勋之助也。曾、胡两个人给李相面，都说李鸿章是属大富大贵之相，是一个福将。</p>
+<p><br></p>
+<p>4- 第四句是“<strong>富贵看精神</strong>”。这里的“精神”是精气神的意思。一个人能不能长享富贵，曾国藩说有的人才即便你着意培养，但因为他不能长享富贵，可能到头来，还是竹篮打水一场空。他在私下跟赵烈文谈话时非常惋惜地说，胡林翼是湘军第一苦命人。薛福成也相出胡林翼是苦瓜脸，虽有非凡的英雄气概，却是一种苦相，即精气神不足，所以不能够长久。我们通常讲人活一口气，寿命长的气长，寿命短的气短。这个气就是 <strong>精气神。而精是有形的东西，气和神是属于无形的东西，但气和神这种无形的东西都要靠精来支撑，不管是男人还是女人，都是如此</strong>。精又由肾而出，所以一个人肾衰竭了，人的精没有了，气和神随之而散。康熙晚年有一句名言，他说自己为大清帝国殚精竭虑，“心为天下耗其血，神为天下散其形”，是最好的一种表述。所以曾国藩说富贵看精神。</p>
+<p><br></p>
+<p>5- 第五句话叫“<strong>主意看指爪</strong>”。人有没有主意，他说主要看指爪。实际是相手。古书有四肢象四时，五体象五行的说法。手以<strong>厚、软为贵。手指纤长，其人聪颖</strong>，有主意，短而粗者愚鲁。曾国藩说，“手心、手<strong>掌心当中纹络清晰而浅者，心定</strong>”。这个心定就是主意定，临事不慌乱。“手掌纹络浅而乱者，人心乱、心浮”。</p>
+<p><br></p>
+<p>6- 第六句是“<strong>风波看脚筋</strong>”。足是千里马，我们讲千里之行始于足下。相书讲，足者，上载一身，下运百体。足代表良马，代表地。足以<strong>平、厚、正、长</strong>为贵。清朝时每有大的战争发生，要选好马匹，大多会从蒙古、西北这两个地方选。鉴别马匹好和坏的一个标准就是在一个特定时间中，先到达这个地方的就是好马，而没有到达的这些就被淘汰。人衰老的时候也是从足开始，所以他说“风波看脚筋”。有的人就是无风无浪、无灾无难到三公，位置升得很高；而有的人则是一生坎坎坷坷，才最终有成就。这就属于有风波的那种人。</p>
+<p><br></p>
+<p>7- 最后两句是“<strong>若要看条理，全在语言中</strong>”。这两句不是相人，而是<strong>观察人</strong>。曾国藩特别重视有条理，并把它作为用人最重要的四个方面之一。他说有无条理，通过语言能够看出来。而语言主要包括两个方面：一是<strong>书面语</strong>言，包括各种<strong>汇报、报告</strong>等。在每个人的一生中，可能最离不开的就是我们的文字。文字有很多是属于报告之类，报告有没有条理就显得非常重要。曾国藩这里的语言主要是指口头语言，他经常讲，古人说的听言非常适用，即两个人谈话，能不能<strong>切中要害，条理清晰</strong>，把对方抓住，就能显示出有没有条理。</p>
+<p><br></p>
+<p>参考：http://book.people.com.cn/n/2013/0807/c69360-22469865-3.html</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
