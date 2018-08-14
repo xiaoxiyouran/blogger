@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180814 12星座</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180814-12">20180814 12星座</h1>
+<h2 id="_1">白羊座</h2>
+<p>时间如下，最后一天可能略有出入。老式的有十三星座：射手座之前有<strong>蛇夫座</strong>。</p>
+<p><img alt="image-20180814231015041" src="image-20180814231015041.png" /></p>
+<p>性格特征如下：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>星座</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>图片</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>时间</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>性格特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>白羊座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>热情，精力充沛， 在天生的乐观下藏着对渴望成功而产生的不安<br>目标明确，有冒险精神和独立自主需求<br>但也会喜怒无常，<mark>冲动而自私</mark><br>它们难以忍受无聊，因此是很棒的领导者<br></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>金牛座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>最为<mark>忠厚</mark>的人<br>有耐心，有毅力，慷慨大方<br>甚至有浪漫的一面<br>但有时变得极其<mark>固执，贪图享乐和懒惰的倾向</mark><br>撇开这些，金牛座的人可以交到很棒的朋友，而且绝对会保护他们所爱<br></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>双子座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>双子座指双胞胎<br>有很高的智商也很机灵， 他们言辞诙谐，迷人，而且天生<mark>善于调戏别人</mark><br>他们很弹性，很随意， 但也很肤浅， 同时也可以很浮夸<br>情绪疏离， <mark>不诚实</mark>， 还有一点两面三刀<br>他们的黑白脸来自想要取悦所有人的心 <br>除了这些，双子座都是那些充满热情，无论跟他们去哪都能玩耍的愉快的小伙伴<br></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>巨蟹座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>巨蟹即螃蟹<br>巨蟹座的人非常<mark>敏感</mark>, 忠诚、可靠、富有同情心<br>因为尤其保护朋友和家庭，所以它们可能会很<mark>粘人</mark><br>倾向于多愁善感，自怜和专注自我的倾向， 巨蟹是<mark>最难以理解</mark>的星座之一<br>更一般的， 他们是十二星座中最和蔼可亲的</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>狮子座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>狮子座即狮子<br>勇敢、雄心勃勃且令人鼓舞<br>他们知道自己要什么和要的时机<br>慷慨、自信， 有时会有点过于<mark>自信</mark>， 可能导致<mark>虚荣</mark>， 自命不凡和戏精<br>虽然他们很独立， 但他们更喜欢有一个观众去赞美他们， 因此自带外向和社会性的个性， 能让他们交到振奋人心的朋友</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>处女座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>处女座意为处女<br>处女座很勤奋，善于分析和观察<br>尽管处女座对待工作一丝不苟且十分靠谱， 但有时也<mark>很挑剔且墨守成规</mark><br>作为十二星座中<mark>最缄默的星座</mark>， 处女座很冷淡，而且相当多疑<br>不过一旦你和他们亲热起来，他们是你可以信任并且去寻求信任的朋友</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>天秤座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>天秤座代表平衡，<br> 很平和，有点懒， 他们表现得温暖而友好<br>他们<mark>擅长撩人，理想主义</mark>，而且能够考虑争论的各个方面<br>但是不能阻止他们成为最 <mark>犹豫不决</mark> 的星座<br>天秤座也可能变得肤浅，虚荣和不可靠，让别人为他收拾乱摊子<br>通常，他们是最能让周围放松的星座</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>天蝎座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>天蝎座即蝎子<br>非常独立，充满雄心壮志， 热情和策略<br>虽然大部分天蝎座都有坚定的品质， 但他们实际上非常情绪化<br>天蝎座需要<mark>掌控力</mark>，这导致他们经常处于<mark>占有和嫉妒</mark><br>他们也可能很情绪化，<mark>爱指使人</mark><br>但是到了晚上，天蝎座很忠实，指的信赖<br>所以别怕给他们倾诉秘密<br></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>射手座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>射手座即弓箭手<br>作为<mark>最爱冒险的星座</mark>， 总是带着他们个人的乐观和能量，享受着美好时光。<br>他们非常独立，而且热爱学习新的东西<br>射手座<mark>处处留情</mark>，且相当不易动感情<br>他们<mark>相对于感情，更看重逻辑</mark>，即使他们也可能变得鲁莽<br>射手座能带着无私和亲切，交到很有意思的朋友。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>魔蝎座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>魔蝎座即山羊<br>非常有责任感，他们独立，<mark>乐于助人</mark>而又迷人<br>但他们可能因为<mark>务实</mark>的性格而缺乏想象力<br>他们可能也会有点<mark>严厉</mark>， 有时会变得忧郁<br>然而，这也会使得他们变得<mark>有组织</mark>，而且善于时间管理<br>总得来说，魔蝎座富有同情心，体贴而且有幽默感</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>水瓶座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>水瓶座即挑水的人<br>是有远见的思考者，充满变化和想法，很诙谐，<mark>爱吐槽</mark>，总爱给你讲个笑话<br>但他们也可能很<mark>叛逆</mark>，<mark>固执</mark>，情绪性的<mark>孤僻和冷漠</mark>，因为他们总是尝试变得不同， 然而水瓶座是理智驱使的，所以如果你需要帮助或者想和别人谋划什么，可以叫上他们。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>双鱼座</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>双鱼座就是鱼<br>可能非常<mark>粘人</mark>，总需要有人让他们保持理智<br>双鱼座会变得格外<mark>敏感</mark>，那只是意味着他们会全身心的帮助朋友摆脱困难。<br>他们听从直觉，富有想象力和适应性<br>热爱冒险，友谊很充实</td>
+</tr>
+</tbody>
+</table>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>004 两个排序数组的中位数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="004">004 两个排序数组的中位数</h1>
+<h2 id="_1">链接和考点</h2>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>LeetCode</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>https://leetcode-cn.com/problems/median-of-two-sorted-arrays/description/</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>数组</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Hard</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="_2">题意</h2>
+<p>给定两个大小为 m 和 n 的有序数组 <strong>nums1</strong> 和 <strong>nums2</strong> 。</p>
+<p>请找出这两个有序数组的中位数。要求算法的时间复杂度为 O(log (m+n)) 。</p>
+<p>你可以假设 <strong>nums1</strong> 和 <strong>nums2</strong> 均不为空。 </p>
+<p><strong>示例 1:</strong></p>
+<pre><code>nums1 = [1, 3]
+nums2 = [2]
+
+中位数是 2.0
+</code></pre>
+
+<p><strong>示例 2:</strong></p>
+<pre><code>nums1 = [1, 2]
+nums2 = [3, 4]
+
+中位数是 (2 + 3)/2 = 2.5
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">分析</h2>
+<h3 id="1">方法1</h3>
+<p>参考: https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2481/Share-my-O(log(min(mn))-solution-with-explanation</p>
+<p>中位数的定义： 将数组分成两半： 长度相等， 且一边大于另一边；</p>
+<p>1- 对大小为m的数组A 按i进行随机划分：</p>
+<pre><code>      left_A             |        right_A
+A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[m-1]
+</code></pre>
+
+<p>i = 0 时，左边为空; i=m, 右边为空；</p>
+<p><br></p>
+<p>2- 用同样的方法，对大小为n的数组B 按随机位置j进行划分：</p>
+<pre><code>      left_B             |        right_B
+B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[n-1]
+</code></pre>
+
+<p><br></p>
+<p>3- 将数组A的左半部分和B的左半部分组合， A的右半部分与B的右半部分组合：</p>
+<pre><code>      left_part          |        right_part
+A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[m-1]
+B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[n-1]
+</code></pre>
+
+<p>对于中位数，我们保证这两个条件：</p>
+<pre><code>1) len(left_part) == len(right_part)
+2) max(left_part) &lt;= min(right_part)
+</code></pre>
+
+<p>那么中位值是：<code>median = (max(left_part) + min(right_part))/2</code> ;</p>
+<p>这两个条件可以转化为：</p>
+<pre><code>(1) i + j == m - i + n - j (or: m - i + n - j + 1)
+	if n &gt;= m, we just need to set: i = 0 ~ m, j = (m + n + 1)/2 - i
+(2) B[j-1] &lt;= A[i] and A[i-1] &lt;= B[j]
+</code></pre>
+
+<p>条件1： 假设 <code>A[i-1],B[j-1],A[i],B[j]</code> 总是有效的，暂时不考虑 <code>i=0, i=m, j=0, j=n</code> 这些边界条件；</p>
+<p>条件2： <code>n &gt;= m</code>. 因为要保证j是非负的， 由 $0 \le i \le m$ 和 $j = \frac{m+n+1}{2} - i$ , 如果 <code>n &lt; m</code> , j 将会为负值，这将导致错误的结果；</p>
+<p><br></p>
+<p>4- 我们需要做的是： 在<code>[0,m]</code> 中找一个 i  满足如下条件：</p>
+<pre><code> B[j-1] &lt;= A[i] and A[i-1] &lt;= B[j], ( where j = (m + n + 1)/2 - i )
+</code></pre>
+
+<p><br></p>
+<p>5- 二分搜索的步骤如下：</p>
+<ul>
+<li>1） 设置 <code>imin = 0, imax = m</code>, 那么 i 的搜索范围为 <code>[imin, imax]</code>;</li>
+<li>2)    设置 <code>i = (imin + imax)/2, j = (m + n + 1)/2 - i</code></li>
+<li>3)    当我们有了 <code>len(left_part)<mark>len(right_part)</code> 条件后， 剩下三种情况：</li>
+</ul>
+<p>ii-1) 如果 <code>B[j-1] &lt;= A[i] and A[i-1] &lt;= B[j]</code> , 说明找到了划分数组的i;</p>
+<p>ii-2)  如果 <code>B[j-1] &gt; A[i]</code> ,  说明 <code>A[i]</code> 太小了，可以通过调整 i 使得 <code>B[j-1]&lt;A[i]</code> ：</p>
+<p>方法一：增大 i</p>
+<p>​       当i增加时， j 减小， <code>A[i]</code> 是增加的， <code>B[j-1]</code> 是减小的， 总有某个时刻满足  <code>B[j-1]&lt;A[i]</code></p>
+<p>方法二： 减小i</p>
+<p>​   当 i 减小的时候， j 增加， <code>A[i]</code> 是减小的， <code>B[j-1]</code> 是增加的， 小的更小，大的更大， <code>B[j-1]&lt;A[i]</code> 永远也无法满足；</p>
+<p>所以， 增加i， 将i的范围调整为 <code>[i+1, imax]</code>, 设置 <code>imin = i+1</code>, 跳转第2步；</p>
+<p>ii-3)  如果 <code>A[i-1] &gt; B[j]</code> ,  说明 <code>A[i-1]</code> 太大了， 这时候就减小 i， 直到 <code>A[i-1] &lt;= B[j]</code>;</p>
+<p>所以， 减小i， 将i的范围调整为 <code>[imin, i-1]</code>, 设置 <code>imax = i-1</code>, 跳转第2步；</p>
+<ul>
+<li>4) 当划分的 i 找到之后， 中位数为：</li>
+</ul>
+<pre><code>max(A[i-1], B[j-1]) (when m + n is odd)
+or 
+(max(A[i-1], B[j-1]) + min(A[i], B[j]))/2 (when m + n is even)
+</code></pre>
+
+<p><br></p>
+<p>6- 考虑边界情况，<code>i=0,i=m,j=0,j=n</code> 的时候，<code>A[i-1],B[j-1],A[i],B[j]</code> 可能会不存在；</p>
+<p>我们只需要保证 <code>max(left_part) &lt;= min(right_part)</code> . 因此对于非边界值（<code>A[i-1],B[j-1],A[i],B[j]</code> 都存在），我们需要同时检查 <code>B[j-1] &lt;= A[i]</code> 和 <code>A[i-1] &lt;= B[j]</code> . </p>
+<p>但是对于 <code>A[i-1],B[j-1],A[i],B[j]</code> 其中的某些不存在时， 我们不需要检查者一个抑或两个条件， 例如， </p>
+<p>如果 <code>i=0</code>, 那么 <code>A[i-1]</code> 就不存在， 我们不需要检查  <code>A[i-1] &lt;= B[j]</code> . </p>
+<p>因此，我们需要做的是：</p>
+<p>意思是三个条件选一，</p>
+<pre><code>Searching i in [0, m], to find an object `i` that:
+	(j == 0 or i == m or B[j-1] &lt;= A[i]) and
+	(i == 0 or j == n or A[i-1] &lt;= B[j])
+	where j = (m + n + 1)/2 - i
+</code></pre>
+
+<p>在搜索循环的内部，我们只需要考虑三种情况：</p>
+<pre><code>&lt;a&gt; (j == 0 or i == m or B[j-1] &lt;= A[i]) and
+	(i == 0 or j = n or A[i-1] &lt;= B[j])
+	Means i is perfect, we can stop searching.
+
+&lt;b&gt; j &gt; 0 and i &lt; m and B[j - 1] &gt; A[i]
+	Means i is too small, we must increase it.
+
+&lt;c&gt; i &gt; 0 and j &lt; n and A[i - 1] &gt; B[j]
+	Means i is too big, we must decrease it.
+</code></pre>
+
+<p>Thank @Quentin.chen , him pointed out that: <code>i &lt; m </mark>&gt; j &gt; 0</code> and <code>i &gt; 0 ==&gt; j &lt; n</code> . Because:</p>
+<pre><code>m &lt;= n, i &lt; m ==&gt; j = (m+n+1)/2 - i &gt; (m+n+1)/2 - m &gt;= (2*m+1)/2 - m &gt;= 0    
+m &lt;= n, i &gt; 0 ==&gt; j = (m+n+1)/2 - i &lt; (m+n+1)/2 &lt;= (2*n+1)/2 &lt;= n
+</code></pre>
+
+<p>因此在 <code>&lt;b&gt;</code> 和 <code>&lt;c&gt;</code> 时，我们不需要检查 <code>j &gt; 0</code> 和 <code>j &lt; n</code></p>
+<p><br></p>
+<h3 id="2">方法2</h3>
+<p>直接法，将两个数组合并成一个数组,  分三种情况：</p>
+<ul>
+<li>1) 数组2为空；</li>
+<li>2) 数组1为空；</li>
+<li>3) 数组1 和数组2都不为空， 将两个数组合并成一个； 用 vector的两个迭代器，分别迭代即可。</li>
+</ul>
+<p><br></p>
+<h2 id="_4">参考答案</h2>
+<h3 id="1_1">参考1</h3>
+<p>时间复杂度： O(n)， n 是长数组的长度；</p>
+<p>空间复杂度：O(1)</p>
+<p>因此Python代码如下：</p>
+<pre><code class="python">def median(A, B):
+	m, n = len(A), len(B)
+	if m &gt; n:
+		A, B, m, n = B, A, n, m
+	if n == 0:
+		raise ValueError
+
+	imin, imax, half_len = 0, m, (m + n + 1) / 2
+	while imin &lt;= imax:
+		i = (imin + imax) / 2
+		j = half_len - i
+		if i &lt; m and B[j-1] &gt; A[i]:
+			# i is too small, must increase it
+			imin = i + 1
+		elif i &gt; 0 and A[i-1] &gt; B[j]:
+			# i is too big, must decrease it
+			imax = i - 1
+		else:
+			# i is perfect
+
+			if i == 0: max_of_left = B[j-1]
+			elif j == 0: max_of_left = A[i-1]
+			else: max_of_left = max(A[i-1], B[j-1])
+
+			if (m + n) % 2 == 1:
+				return max_of_left
+
+			if i == m: min_of_right = B[j]
+			elif j == n: min_of_right = A[i]
+			else: min_of_right = min(A[i], B[j])
+
+			return (max_of_left + min_of_right) / 2.0
+</code></pre>
+
+<p><br></p>
+<h3 id="2_1">参考2</h3>
+<p>时间复杂度： O((n+m+1)/2)</p>
+<p>空间复杂度：O((n+m+1)/2)</p>
+<pre><code class="cpp">class Solution {
+public:
+	double findMedianSortedArrays(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+		  if (nums1.empty() &amp;&amp; nums2.empty())
+		{
+			return 0;
+		}
+		else if (!nums1.empty() &amp;&amp; nums2.empty())
+		{
+			int size = nums1.size();
+			if (size % 2 == 0)
+				return (nums1[size / 2] + nums1[size / 2 - 1]) / 2.0;
+			else
+				return nums1[size / 2];
+		}
+		else if (nums1.empty() &amp;&amp; !nums2.empty())
+		{
+			int size = nums2.size();
+			if (size % 2 == 0)
+				return (nums2[size / 2] + nums2[size / 2 - 1]) / 2.0;
+			else
+				return nums2[size / 2];
+		}
+
+		bool isEven = (nums1.size() + nums2.size()) % 2 == 0;
+		int count = (nums1.size() + nums2.size()) / 2 + 1;
+
+		vector&lt;int&gt; union_nums;
+		vector&lt;int&gt;::iterator it1 = nums1.begin();
+		vector&lt;int&gt;::iterator it2 = nums2.begin();
+		vector&lt;int&gt;::iterator it1_end = nums1.end();
+		vector&lt;int&gt;::iterator it2_end = nums2.end();
+		for(int i = 0; i != count; ++i)
+		{
+			if(it1 != it1_end &amp;&amp; it2 != it2_end)
+			{
+				if(*it1 &lt; * it2)
+				{
+					union_nums.push_back(*it1);
+					it1++;
+				}
+				else
+				{
+					union_nums.push_back(*it2);
+					it2++;
+				}
+			}
+			else if (it1 == it1_end)
+			{
+				union_nums.push_back(*it2);
+				it2++;
+			}
+			else
+			{
+				union_nums.push_back(*it1);
+				it1++;
+			}
+		}
+
+		if(isEven) return (union_nums[count-1]+union_nums[count-2])/2.0;
+		else return union_nums[count-1];
+
+
+
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

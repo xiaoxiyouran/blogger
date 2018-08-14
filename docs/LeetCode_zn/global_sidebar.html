@@ -1,0 +1,107 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_001_Easy_两数之和1 = tree.createNode('001_Easy_两数之和',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_数组和hash_html2 = _001_Easy_两数之和1.createChildNode("<a href = './001_Easy_两数之和/数组和hash.html' target = 'right'>数组和hash.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_002_Medi_两数相加1 = tree.createNode('002_Medi_两数相加',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_链表_html2 = _002_Medi_两数相加1.createChildNode("<a href = './002_Medi_两数相加/链表.html' target = 'right'>链表.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_003_Medi_无重复字符的最长子串1 = tree.createNode('003_Medi_无重复字符的最长子串',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_字符串_html2 = _003_Medi_无重复字符的最长子串1.createChildNode("<a href = './003_Medi_无重复字符的最长子串/字符串.html' target = 'right'>字符串.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_004_Hard_两个排序数组的中位数1 = tree.createNode('004_Hard_两个排序数组的中位数',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_数组_html2 = _004_Hard_两个排序数组的中位数1.createChildNode("<a href = './004_Hard_两个排序数组的中位数/数组.html' target = 'right'>数组.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_005_Medi_最长回文子串1 = tree.createNode('005_Medi_最长回文子串',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_string_html2 = _005_Medi_最长回文子串1.createChildNode("<a href = './005_Medi_最长回文子串/string.html' target = 'right'>string.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_006_Medi_Z字形变换1 = tree.createNode('006_Medi_Z字形变换',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_string_html2 = _006_Medi_Z字形变换1.createChildNode("<a href = './006_Medi_Z字形变换/string.html' target = 'right'>string.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

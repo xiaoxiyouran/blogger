@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>001 查找苹果是哪一堆</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="001">001 查找苹果是哪一堆</h1>
+<h2 id="_1">链接和考点</h2>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>网易秋招笔试题2</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>数组，排序，查找</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Medium</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="_2">题意</h2>
+<p>有很多苹果划分成堆，从左到右依次按堆排列。假设有n堆苹果， 每堆的个数依次是$a_0, a_1, ..., a_n$, 假如给定一个从左到右第k个苹果，想知道k在哪一堆中？</p>
+<p><strong>示例：</strong></p>
+<pre><code>5           # 苹果有5堆
+2 7 3 4 9   # 每堆苹果的个数
+3           # 需要查询三个数
+1 25 11     # 分别查第1个苹果， 第25个苹果 和 第11个苹果分别在哪个堆中？
+</code></pre>
+
+<p>输出：</p>
+<pre><code>1
+5
+3
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">分析</h2>
+<p>法一：刚开始想要二分查找的，每查找一次就是 O(lgn), 如果要查m个数，复杂度就是 $m*lgn$. 这样只通过了 30%；</p>
+<p>法二： 对要查找的数组先排个序，按值排序。 然后定义两个指针，判断第1堆中有哪些是待查找的，然后判断第二堆...</p>
+<p>由于排序后顺序已经被打乱，最后再用排序法针对索引进行排序，输出结果；</p>
+<p>时间复杂度 O(n) 多一点；</p>
+<p><br></p>
+<h2 id="_4">参考答案</h2>
+<p>时间复杂度： O(n)</p>
+<p>空间复杂度：O(n)</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+struct qu{
+	int index;
+	int val;
+	int dui;
+	qu(int index, int val)
+	{
+		this-&gt;index = index;
+		this-&gt; val = val;
+	}
+};
+
+
+bool compare(const qu st1, const qu st2){
+	return st1.val &lt; st2.val;       // 从小到大排序
+}
+
+bool compare2(const qu st1, const qu st2){
+	return st1.index &lt; st2.index;   // 从小到大排序
+}
+
+
+int search(vector&lt;int&gt; &amp; vec, int target){
+/*
+二分查找目标值， 要求前面的比它小，后面的比它大
+vec: 数组
+target: 查找的目标值
+*/
+	int left = 0;
+	int right = vec.size() -1;
+	while (left &lt;= right){
+		int mid = (left + right)/2;
+		if( vec[mid] &gt;= target ){
+			if( (mid -1 &gt;=0 &amp;&amp; vec[mid-1] &lt;= target) || mid ==0 ){
+				return mid;
+			}
+		}
+
+		if (target&gt;= vec[mid])
+			left = mid + 1;
+		else
+			right = mid -1;
+	}
+	return  -1;
+}
+
+int main() {
+	int n;
+	cin &gt;&gt; n;
+	vector&lt;int&gt; dui_apple;
+	for( int i=0; i&lt;n; i++ ){
+		int k;
+		cin &gt;&gt; k;
+
+		dui_apple.push_back(k);
+
+	}
+
+	int query;
+	cin &gt;&gt; query;
+	vector&lt;int&gt; query_arr;
+	vector&lt;qu&gt; querr;
+	for( int i=0; i&lt;query; i++ ){
+		int k;
+		cin &gt;&gt; k;
+		qu tmp(i, k);
+		query_arr.push_back(k);
+		querr.push_back(tmp);
+	}
+
+	sort(querr.begin(), querr.end(), compare);
+	vector&lt;int&gt; sum_arr(dui_apple.size(),0);
+	for( int i=0; i &lt; dui_apple.size(); i++ ){
+		if(i == 0)
+			sum_arr[i] = dui_apple[i];
+		else
+			sum_arr[i] = sum_arr[i-1] + dui_apple[i];
+	}
+
+	int p2 = 0;
+	for(int i = 0; i&lt;sum_arr.size() &amp;&amp; p2 &lt; querr.size() ; i++){
+			while( sum_arr[i] &gt;= querr[p2].val &amp;&amp; p2 &lt; querr.size()){
+				if( (i -1 &gt;=0 &amp;&amp; sum_arr[i-1] &lt;= querr[p2].val) || i ==0 ){
+					querr[p2].dui = i+1;
+					p2++;
+			}
+		}
+	}
+
+	sort(querr.begin(), querr.end(), compare2);
+	for(int i =0; i&lt; querr.size(); i++){
+		cout &lt;&lt; querr[i].dui &lt;&lt; std::endl;
+	}
+	return 0;
+}
+/*input:
+5
+2 7 3 4 9
+3
+1 25 11
+
+*/
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

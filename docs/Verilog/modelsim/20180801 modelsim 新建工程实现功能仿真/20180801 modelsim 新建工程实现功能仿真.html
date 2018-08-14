@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180801 modelsim 新建工程实现功能仿真</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180801-modelsim">20180801 modelsim 新建工程实现功能仿真</h1>
+<h2 id="_1">操作过程</h2>
+<p>下文通过单独在modelsim中新建工程的方式来进行功能仿真。 
+打开altera-modelsim软件，界面如下图所示。红框里是各种仿真用到的库，这里由于用的是altera-modelsim，所以altera的器件库等已经<strong>自动关联</strong>了，如果没有的库则需要手动去添加。同时，注意现在下面library里是没有work 库的。 </p>
+<p><img alt="" src="01.png" /></p>
+<p>(1)点击菜单栏的 File-&gt;New-&gt;Project进入新建工程界面（新建完工程后在library里出现空的work库） 
+<img alt="" src="02.png" /></p>
+<p>Project Name : 工程名字 add 
+Project Location :指要把工程放到哪个位置。默认 
+Default Library Name:Work (默认，不用修改) 
+设置好后的界面如下图所示，点击OK 按钮： 
+<img alt="" src="03.png" />
+(2)进入添加文件界面 
+<img alt="" src="04.png" />
+这里可以通过Creating New File新建文件，也可以通过Add Existing File添加之前编辑好的文件。这里由于我已经将工程文件和仿真文件编辑好，所以通过Add Existing File将这两个文件添加进来。 
+(3)点击Add Existing File按钮，出现Add file to Project 窗口，即下图的红框 
+<img alt="" src="05.png" />
+(4)点击Browse 按钮，选择你文件的存放路径，添加文件add.v ，其它设置默认如下图所示，点击OK按钮 
+<img alt="" src="06.png" /></p>
+<p>(5)添加仿真文件，继续点击Add Existing File添加仿真文件。添加完后，在Project栏应该有两个刚才添加的文件。Status 列是？ 状态，如下图所示。 
+<img alt="" src="07.png" />
+(6)编译,把添加进去的两个文件，选中任意一个文件，右键 Compile-&gt;左键Compile All。进行编译。 
+<img alt="" src="08.png" />
+编译后，Status 列 状态为 √ 表示编译通过。如果报错，需根据对应报错修改代码，直到编译通过。 
+<img alt="" src="09.png" />
+同时在Work目录下有这两个文件。 
+<img alt="" src="10.png" /></p>
+<p>(7)仿真， 右键仿真文件add_vlg_tst-&gt;左键simulate 
+<img alt="" src="11.png" /></p>
+<p>新增simulate窗口 
+<img alt="这里写图片描述" src="12.png" />
+(8)添加仿真信号到波形窗口 
+右键add_vlg_tst-&gt;Add to-&gt;Wave-&gt;左键All items in region 
+<img alt="这里写图片描述" src="13.png" />
+(9)运行仿真 
+按(8)操作后，出现Wave 波形窗口，左键下图红框里的Run All 按钮，开始运行仿真 
+<img alt="这里写图片描述" src="14.png" />
+(10)停止仿真 
+仿真的波形图如上图所示，如果要停止仿真，左键红框里的Stop 按钮，即可停止仿真。 
+<img alt="这里写图片描述" src="15.png" /></p>
+<h2 id="_2">参考</h2>
+<p>[1]https://blog.csdn.net/huan09900990/article/details/78340856</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
