@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>03_03函数参数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="03_03">03_03函数参数</h1>
+<p>定义函数的时候，我们把参数的名字和位置确定下来，函数的接口定义就完成了。对于函数的调用者来说，只需要知道如何传递正确的参数，以及函数将返回什么样的值就够了，函数内部的复杂逻辑被封装起来，调用者无需了解。</p>
+<p>Python的函数定义非常简单，但灵活度却非常大。除了正常定义的必选参数外，还可以使用默认参数、可变参数和关键字参数，使得函数定义出来的接口，不但能处理复杂的参数，还可以简化调用者的代码。</p>
+<p><br></p>
+<h2 id="_1">位置参数</h2>
+<p>我们先写一个计算x2的函数：</p>
+<pre><code class="python">def power(x):   
+	return x * x
+</code></pre>
+
+<p>对于<code>power(x)</code>函数，参数<code>x</code>就是一个位置参数。</p>
+<p>当我们调用<code>power</code>函数时，必须传入有且仅有的一个参数<code>x</code>：</p>
+<pre><code class="python">&gt;&gt;&gt; power(5)
+25
+&gt;&gt;&gt; power(15)
+225
+</code></pre>
+
+<p>现在，如果我们要计算$x^3$怎么办？可以再定义一个<code>power3</code>函数，但是如果要计算$x^4$、$x^5$,……怎么办？我们不可能定义无限多个函数。</p>
+<p>你也许想到了，可以把<code>power(x)</code>修改为<code>power(x, n)</code>，用来计算$x^{n}$，说干就干：</p>
+<pre><code class="python">def power(x, n):
+	s = 1
+	while n &gt; 0:
+		n = n - 1
+		s = s * x
+	return s
+</code></pre>
+
+<p>对于这个修改后的<code>power(x, n)</code>函数，可以计算任意n次方：</p>
+<pre><code class="python">&gt;&gt;&gt; power(5, 2)
+25
+&gt;&gt;&gt; power(5, 3)
+125
+</code></pre>
+
+<p>修改后的<code>power(x, n)</code>函数有两个参数：<code>x</code>和<code>n</code>，这两个参数都是位置参数，调用函数时，传入的两个值按照位置顺序依次赋给参数<code>x</code>和<code>n</code>。</p>
+<p><br></p>
+<h2 id="_2">默认参数</h2>
+<p>新的<code>power(x, n)</code>函数定义没有问题，但是，旧的调用代码失败了，原因是我们增加了一个参数，导致<mark>旧的代码因为缺少一个参数而无法正常调用</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; power(5)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: power() missing 1 required positional argument: 'n'
+</code></pre>
+
+<p>Python的错误信息很明确：<mark>调用函数<code>power()</code>缺少了一个位置参数<code>n</mark></code>。</p>
+<p>这个时候，<mark>默认参数就排上用场了</mark>。由于我们经常计算x2，所以，完全可以把第二个参数n的默认值设定为2：</p>
+<pre><code class="python">def power(x, n=2):
+	s = 1
+	while n &gt; 0:
+		n = n - 1
+		s = s * x
+	return s
+</code></pre>
+
+<p>这样，当我们调用<code>power(5)</code>时，相当于调用<code>power(5, 2)</code>：</p>
+<pre><code class="python">&gt;&gt;&gt; power(5)
+25
+&gt;&gt;&gt; power(5, 2)
+25
+</code></pre>
+
+<p>而对于<code>n &gt; 2</code>的其他情况，就必须明确地传入n，比如<code>power(5, 3)</code>。</p>
+<p>从上面的例子可以看出，默认参数可以简化函数的调用。设置默认参数时，有几点要注意：</p>
+<ul>
+<li>
+<p>一是<mark>必选参数在前</mark>，默认参数在后，否则Python的解释器会报错（思考一下为什么默认参数不能放在必选参数前面）；</p>
+</li>
+<li>
+<p>二是如何设置默认参数: </p>
+</li>
+</ul>
+<p>当函数有多个参数时，把<mark>变化大的参数放前面，变化小的参数放后面</mark>。<mark>变化小的参数就可以作为默认参数</mark>。</p>
+<p>使用默认参数有什么好处？最大的好处是能<mark>降低调用函数的难度</mark>。</p>
+<p>举个例子，我们写个一年级小学生注册的函数，需要传入<code>name</code>和<code>gender</code>两个参数：</p>
+<pre><code>def enroll(name, gender):
+	print('name:', name)
+	print('gender:', gender)
+</code></pre>
+
+<p>这样，调用<code>enroll()</code>函数只需要传入两个参数：</p>
+<pre><code>&gt;&gt;&gt; enroll('Sarah', 'F')
+name: Sarah
+gender: F
+</code></pre>
+
+<p>如果要继续传入年龄、城市等信息怎么办？这样会使得调用函数的复杂度大大增加。</p>
+<p>我们可以把年龄和城市设为默认参数：python</p>
+<pre><code class="python">def enroll(name, gender, age=6, city='Beijing'):
+	print('name:', name)
+	print('gender:', gender)
+	print('age:', age)
+	print('city:', city)
+</code></pre>
+
+<p>这样，大多数学生注册时不需要提供年龄和城市，<mark>只提供必须的两个参数</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; enroll('Sarah', 'F')
+name: Sarah
+gender: F
+age: 6
+city: Beijing
+</code></pre>
+
+<p>只有与默认参数不符的学生才需要提供额外的信息：</p>
+<pre><code class="python">enroll('Bob', 'M', 7)
+enroll('Adam', 'M', city='Tianjin')
+</code></pre>
+
+<p>可见，默认参数降低了函数调用的难度，而一旦需要更复杂的调用时，又可以传递更多的参数来实现。无论是简单调用还是复杂调用，函数只需要定义一个。</p>
+<p>有多个默认参数时，调用的时候，既<mark>可以按顺序</mark>提供默认参数，比如调用<code>enroll('Bob', 'M', 7)</code>，意思是，除了<code>name</code>，<code>gender</code>这两个参数外，最后1个参数应用在参数<code>age</code>上，<code>city</code>参数由于没有提供，仍然使用默认值。</p>
+<p><mark>也可以不按顺序</mark>提供部分默认参数。当不按顺序提供部分默认参数时，需要把参数名写上。比如调用<code>enroll('Adam', 'M', city='Tianjin')</code>，意思是，<code>city</code>参数用传进去的值，其他默认参数继续使用默认值。</p>
+<p>默认参数很有用，但使用不当，也会掉坑里。默认参数<mark>有个最大的坑</mark>，演示如下：</p>
+<p>先定义一个函数，传入一个list，添加一个<code>END</code>再返回：</p>
+<pre><code class="python">def add_end(L=[]):
+	L.append('END')
+	return L
+</code></pre>
+
+<p>当你正常调用时，结果似乎不错：</p>
+<pre><code class="python">&gt;&gt;&gt; add_end([1, 2, 3])
+[1, 2, 3, 'END']
+&gt;&gt;&gt; add_end(['x', 'y', 'z'])
+['x', 'y', 'z', 'END']
+</code></pre>
+
+<p>当你使用默认参数调用时，一开始结果也是对的：</p>
+<pre><code class="python">&gt;&gt;&gt; add_end()
+['END']
+</code></pre>
+
+<p>但是，再次调用<code>add_end()</code>时，结果就不对了：</p>
+<pre><code class="python">&gt;&gt;&gt; add_end()
+['END', 'END']
+&gt;&gt;&gt; add_end()
+['END', 'END', 'END']
+</code></pre>
+
+<p>很多初学者很疑惑，默认参数是<code>[]</code>，但是<mark>函数似乎每次都“记住了”上次添加了<code>'END'</code>后的list</mark>。</p>
+<p>原因解释如下：</p>
+<p>Python函数在定义的时候，默认参数<code>L</code>的值就被计算出来了，即<code>[]</code>，因为默认参数<code>L</code>也是一个变量，它指向对象<code>[]</code>，<mark>每次调用该函数，如果改变了<code>L</code>的内容，则下次调用时，默认参数的内容就变了</mark>，不再是函数定义时的<code>[]</code>了。</p>
+<p>定义默认参数要牢记一点：<mark>默认参数必须指向不变对象</mark>！</p>
+<p>要修改上面的例子，我们可以<mark>用<code>None</code>这个不变对象来实现</mark>：</p>
+<pre><code class="python">def add_end(L=None):
+	if L is None:
+		L = []
+	L.append('END')
+	return L
+</code></pre>
+
+<p>现在，无论调用多少次，都不会有问题：</p>
+<pre><code class="python">&gt;&gt;&gt; add_end()
+['END']
+&gt;&gt;&gt; add_end()
+['END']
+</code></pre>
+
+<p>为什么要设计<code>str</code>、<code>None</code>这样的不变对象呢？因为<mark>不变对象一旦创建，对象内部的数据就不能修改，这样就减少了由于修改数据导致的错误</mark>。此外，由于对象不变，<mark>多任务环境下同时读取对象不需要加锁</mark>，同时读一点问题都没有。我们在编写程序时，如果可以设计一个不变对象，那就尽量设计成不变对象。</p>
+<p><br></p>
+<h2 id="_3">命名关键字参数</h2>
+<p>对于关键字参数，函数的调用者可以<mark>传入任意不受限制的关键字</mark>参数。至于到底传入了哪些，就需要在函数内部通过<code>kw</code>检查。</p>
+<p>仍以<code>person()</code>函数为例，我们希望检查是否有<code>city</code>和<code>job</code>参数：</p>
+<pre><code class="python">def person(name, age, **kw):
+	if 'city' in kw:
+		# 有city参数
+		pass
+	if 'job' in kw:
+		# 有job参数
+		pass
+	print('name:', name, 'age:', age, 'other:', kw)
+</code></pre>
+
+<p>但是调用者仍可以传入<mark>不受限制的关键字参数</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; person('Jack', 24, city='Beijing', addr='Chaoyang', zipcode=123456)
+</code></pre>
+
+<p>如果<mark>要限制关键字参数的名字，就可以用命名关键字参数</mark>，例如，只接收<code>city</code>和<code>job</code>作为关键字参数。这种方式定义的函数如下：</p>
+<pre><code class="python">def person(name, age, *, city, job):
+	print(name, age, city, job)
+</code></pre>
+
+<p>和关键字参数<code>**kw</code>不同，命名关键字参数需要一个特殊分隔符<code>*</code>，<code>*</code>后面的参数被视为命名关键字参数。</p>
+<p>调用方式如下：</p>
+<pre><code class="python">&gt;&gt;&gt; person('Jack', 24, city='Beijing', job='Engineer')
+Jack 24 Beijing Engineer
+</code></pre>
+
+<p>如果函数定义中<mark>已经有了一个可变参数，后面跟着的命名关键字参数就不再需要一个特殊分隔符<code>*</code>了</mark>：</p>
+<pre><code>def person(name, age, *args, city, job):
+	print(name, age, args, city, job)
+</code></pre>
+
+<p>命名关键字参数<mark>必须传入参数名</mark>，这和位置参数不同。如果没有传入参数名，调用将报错：</p>
+<pre><code class="python">&gt;&gt;&gt; person('Jack', 24, 'Beijing', 'Engineer')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: person() takes 2 positional arguments but 4 were given
+</code></pre>
+
+<p>由于调用时<mark>缺少参数名<code>city</code>和<code>job</code>，Python解释器把这4个参数均视为位置参数，但<code>person()</code>函数仅接受2个位置参数。</mark></p>
+<p>命名关键字参数可以有缺省值，从而简化调用：</p>
+<pre><code class="python">def person(name, age, *, city='Beijing', job):
+	print(name, age, city, job)
+</code></pre>
+
+<p>由于命名关键字参数<mark><code>city</code>具有默认值，调用时，可不传入<code>city</code>参数</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; person('Jack', 24, job='Engineer')
+Jack 24 Beijing Engineer
+</code></pre>
+
+<p>使用命名关键字参数时，要特别注意，<mark>如果没有可变参数，就必须加一个<code>*</code>作为特殊分隔符</mark>。如果缺少<code>*</code>，Python解释器将无法识别位置参数和命名关键字参数：</p>
+<pre><code class="python">def person(name, age, city, job):
+	# 缺少 *，city和job被视为位置参数
+	pass
+</code></pre>
+
+<p><br></p>
+<h2 id="_4">可变参数</h2>
+<p>在Python函数中，还可以定义可变参数。顾名思义，可变参数就是传入的参数个数是可变的，可以是1个、2个到任意个，还可以是0个。</p>
+<p>我们以数学题为例子，给定一组数字a，b，c……，请计算$a^{2} + b^{2} + c^{2} + ……$。</p>
+<p>要定义出这个函数，我们必须确定输入的参数。由于参数个数不确定，我们首先想到可以<mark>把a，b，c……作为一个list或tuple传进来</mark>，这样，函数可以定义如下：</p>
+<pre><code class="python">def calc(numbers):
+	sum = 0
+	for n in numbers:
+		sum = sum + n * n
+	return sum
+</code></pre>
+
+<p>但是调用的时候，<mark>需要先组装出一个list或tuple</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; calc([1, 2, 3])
+14
+&gt;&gt;&gt; calc((1, 3, 5, 7))
+84
+</code></pre>
+
+<p>如果利用可变参数，调用函数的方式可以简化成这样：</p>
+<pre><code class="python">&gt;&gt;&gt; calc(1, 2, 3)
+14
+&gt;&gt;&gt; calc(1, 3, 5, 7)
+84
+</code></pre>
+
+<p>所以，我们把函数的参数改为可变参数：</p>
+<pre><code class="python">def calc(*numbers):
+	sum = 0
+	for n in numbers:
+		sum = sum + n * n
+	return sum
+</code></pre>
+
+<p>定义可变参数和定义一个list或tuple参数相比，仅<mark>仅在参数前面加了一个<code>*</code>号</mark>。在函数内部，参数<code>numbers</code>接<mark>收到的是一个tuple</mark>，因此，函数代码完全不变。但是，调用该函数时，可以传入任意个参数，包括<mark>0个参数</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; calc(1, 2)
+5
+&gt;&gt;&gt; calc()
+0
+</code></pre>
+
+<p>如果<mark>已经有一个list或者tuple</mark>，要调用一个可变参数怎么办？可以这样做：</p>
+<pre><code class="python">&gt;&gt;&gt; nums = [1, 2, 3]
+&gt;&gt;&gt; calc(nums[0], nums[1], nums[2])
+14
+</code></pre>
+
+<p>这种写法当然是可行的，问题是太繁琐，所以Python允许你<mark>在list或tuple前面加一个<code>*</code>号，把list或tuple的元素变成可变参数</mark>传进去：</p>
+<pre><code class="python">&gt;&gt;&gt; nums = [1, 2, 3]
+&gt;&gt;&gt; calc(*nums)
+14
+</code></pre>
+
+<p><code>*nums</code>表示把<code>nums</code>这个list的所有元素作为可变参数传进去。这种写法相当有用，而且很常见。</p>
+<p><br></p>
+<h2 id="_5">关键字参数</h2>
+<p>可变参数允许你<mark>传入0个或任意个参数</mark>，这些可变参数在函数调用时<mark>自动组装</mark>为一个tuple。而关键字参数允许你传<mark>入0个或任意个含参数名的参数</mark>，这些关键字参数在函数内部<mark>自动组装为一个dict</mark>。请看示例：</p>
+<pre><code class="python">def person(name, age, **kw):
+	print('name:', name, 'age:', age, 'other:', kw)
+</code></pre>
+
+<p>函数<code>person</code>除了必选参数<code>name</code>和<code>age</code>外，还接受关键字参数<code>kw</code>。在调用该函数时，可以只传入必选参数：</p>
+<pre><code class="python">&gt;&gt;&gt; person('Michael', 30)
+name: Michael age: 30 other: {}
+</code></pre>
+
+<p>也可以传入任意个数的关键字参数：</p>
+<pre><code class="python">&gt;&gt;&gt; person('Bob', 35, city='Beijing')
+name: Bob age: 35 other: {'city': 'Beijing'}
+&gt;&gt;&gt; person('Adam', 45, gender='M', job='Engineer')
+name: Adam age: 45 other: {'gender': 'M', 'job': 'Engineer'}
+</code></pre>
+
+<p>关键字参数有什么用？它可以扩展函数的功能。比如，在<code>person</code>函数里，我们<mark>保证能接收到<code>name</code>和<code>age</code>这两个</mark>参数，但是，<mark>如果调用者愿意提供更多的参数，我们也能收到</mark>。试想你正在做一个用户注册的功能，除了用户名和年龄是必填项外，其他都是<mark>可选项</mark>，利用关键字参数来定义这个函数就能满足注册的需求。</p>
+<p>和可变参数类似，也可以先组装出一个dict，然后，把该dict转换为关键字参数传进去：</p>
+<pre><code class="python">&gt;&gt;&gt; extra = {'city': 'Beijing', 'job': 'Engineer'}
+&gt;&gt;&gt; person('Jack', 24, city=extra['city'], job=extra['job'])
+name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}
+</code></pre>
+
+<p>当然，上面复杂的调用可以用简化的写法：</p>
+<pre><code class="python">&gt;&gt;&gt; extra = {'city': 'Beijing', 'job': 'Engineer'}
+&gt;&gt;&gt; person('Jack', 24, **extra)
+name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}
+</code></pre>
+
+<p><mark><code>**extra</code>表示把<code>extra</code>这个dict的所有key-value用关键字参数传入到函数的<code>**kw</code>参数</mark>，<code>kw</code>将获得一个dict，注意<code>kw</code>获得的dict是<code>extra</code>的一份<mark>拷贝</mark>，对<code>kw</code>的改动不会影响到函数外的<code>extra</code>。</p>
+<p><br></p>
+<h2 id="_6">参数组合</h2>
+<p>在Python中定义函数，可以用必选参数、默认参数、可变参数、关键字参数和命名关键字参数，这5种参数都可以组合使用。但是请注意，参数定义的<mark>顺序必须是：必选参数、默认参数、可变参数、命名关键字参数和关键字参数。</mark></p>
+<p>比如定义一个函数，包含上述若干种参数：</p>
+<pre><code class="python">def f1(a, b, c=0, *args, **kw):
+	print('a =', a, 'b =', b, 'c =', c, 'args =', args, 'kw =', kw)
+
+def f2(a, b, c=0, *, d, **kw):
+	print('a =', a, 'b =', b, 'c =', c, 'd =', d, 'kw =', kw)
+</code></pre>
+
+<p>在函数调用的时候，Python解释器<mark>自动按照参数位置和参数名</mark>把对应的参数传进去。</p>
+<pre><code class="python">&gt;&gt;&gt; f1(1, 2)
+a = 1 b = 2 c = 0 args = () kw = {}
+&gt;&gt;&gt; f1(1, 2, c=3)
+a = 1 b = 2 c = 3 args = () kw = {}
+&gt;&gt;&gt; f1(1, 2, 3, 'a', 'b')
+a = 1 b = 2 c = 3 args = ('a', 'b') kw = {}
+&gt;&gt;&gt; f1(1, 2, 3, 'a', 'b', x=99)
+a = 1 b = 2 c = 3 args = ('a', 'b') kw = {'x': 99}
+
+# 测试 f2()
+&gt;&gt;&gt; f2(1, 2, d=99, ext=None)
+a = 1 b = 2 c = 0 d = 99 kw = {'ext': None}
+</code></pre>
+
+<p>最神奇的是通过一个tuple和dict，你也可以调用上述函数：</p>
+<pre><code class="python">&gt;&gt;&gt; args = (1, 2, 3, 4)
+&gt;&gt;&gt; kw = {'d': 99, 'x': '#'}
+
+&gt;&gt;&gt; f1(*args, **kw)
+a = 1 b = 2 c = 3 args = (4,) kw = {'d': 99, 'x': '#'}
+&gt;&gt;&gt; args = (1, 2, 3)
+&gt;&gt;&gt; kw = {'d': 88, 'x': '#'}
+
+&gt;&gt;&gt; f2(*args, **kw)
+a = 1 b = 2 c = 3 d = 88 kw = {'x': '#'}
+</code></pre>
+
+<p>所以，对于任意函数，<mark>都可以通过类似<code>func(*args, **kw)</code>的形式调用它，无论它的参数是如何定义</mark>的。</p>
+<p><br></p>
+<h2 id="_7">练习</h2>
+<p>以下函数允许计算两个数的乘积，请稍加改造，变成可接收一个或多个数并计算乘积：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch03/03.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+def product(*args):
+	'''
+	计算数的乘积
+	:param args:
+	:return:
+	'''
+	if not args:                                            # 如果列表为空，args 就返回 false
+		raise TypeError(&quot;Error: 必须至少含有一个参数!!!&quot;)
+
+	# or
+	# if len(args) &lt;= 0:
+	#     raise TypeError(&quot;Error: 必须至少含有一个参数!!!&quot;)
+
+	res = 1
+	for x in args:
+		if not isinstance(x, (int, float)):                 #加一个参数类型检查
+			raise TypeError('Numbers only')
+		res = res * x
+	return res
+
+
+# 测试
+print('product(5) =', product(5))
+print('product(5, 6) =', product(5, 6))
+print('product(5, 6, 7) =', product(5, 6, 7))
+print('product(5, 6, 7, 9) =', product(5, 6, 7, 9))
+if product(5) != 5:
+	print('测试失败!')
+elif product(5, 6) != 30:
+	print('测试失败!')
+elif product(5, 6, 7) != 210:
+	print('测试失败!')
+elif product(5, 6, 7, 9) != 1890:
+	print('测试失败!')
+else:
+	try:
+		product()
+		print('测试失败!')
+	except TypeError:
+		print('测试成功!')
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

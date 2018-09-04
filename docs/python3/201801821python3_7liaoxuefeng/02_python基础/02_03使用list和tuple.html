@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>02_03使用list和tuple</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="02_03listtuple">02_03使用list和tuple</h1>
+<h2 id="list">list</h2>
+<p>Python内置的一种数据类型是列表：list。list是一种<mark>有序的集合</mark>，可以随时添加和删除其中的元素。</p>
+<p>比如，列出班里所有同学的名字，就可以用一个list表示：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates = ['Michael', 'Bob', 'Tracy']
+&gt;&gt;&gt; classmates
+['Michael', 'Bob', 'Tracy']
+</code></pre>
+
+<p><br></p>
+<h3 id="len">len()</h3>
+<p>变量<code>classmates</code>就是一个list。用<code>len()</code>函数可以获得list元素的个数：</p>
+<pre><code class="python">&gt;&gt;&gt; len(classmates)
+3
+</code></pre>
+
+<p><br></p>
+<h3 id="_1">通过索引访问</h3>
+<p>用<mark>索引</mark>来访问list中每一个位置的元素，记得<mark>索引是从<code>0</code>开始</mark>的：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates[0]
+'Michael'
+&gt;&gt;&gt; classmates[1]
+'Bob'
+&gt;&gt;&gt; classmates[2]
+'Tracy'
+&gt;&gt;&gt; classmates[3]
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+IndexError: list index out of range
+</code></pre>
+
+<p>当索引超出了范围时，Python会报一个<code>IndexError</code>错误，所以，要<mark>确保索引不要越界</mark>，记得最后一个元素的索引是<code>len(classmates) - 1</code>。</p>
+<p>如果要取<mark>最后一个元素</mark>，除了计算索引位置外，还可以<mark>用<code>-1</code>做索引</mark>，直接获取最后一个元素：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates[-1]
+'Tracy'
+</code></pre>
+
+<p>以此类推，可以获取倒数第2个、倒数第3个：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates[-2]
+'Bob'
+&gt;&gt;&gt; classmates[-3]
+'Michael'
+&gt;&gt;&gt; classmates[-4]
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+IndexError: list index out of range
+</code></pre>
+
+<p>当然，倒数第4个就越界了。</p>
+<p><br></p>
+<h3 id="append">append()</h3>
+<p>list是一个可变的有序表，所以，可以往list中追加元素到末尾：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates.append('Adam')
+&gt;&gt;&gt; classmates
+['Michael', 'Bob', 'Tracy', 'Adam']
+</code></pre>
+
+<p><br></p>
+<h3 id="insert">insert()</h3>
+<p>也可以把元素插入到指定的位置(<mark>原先位置的及以后 依次后移</mark>)，比如索引号为<code>1</code>的位置：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates.insert(1, 'Jack')
+&gt;&gt;&gt; classmates
+['Michael', 'Jack', 'Bob', 'Tracy', 'Adam']
+</code></pre>
+
+<p><br></p>
+<h3 id="pop">pop()</h3>
+<p>要删除list末尾的元素，用<code>pop()</code>方法：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates.pop()
+'Adam'
+&gt;&gt;&gt; classmates
+['Michael', 'Jack', 'Bob', 'Tracy']
+</code></pre>
+
+<p>要删除指定位置的元素，用<code>pop(i)</code>方法，其中<code>i</code>是索引位置：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates.pop(1)
+'Jack'
+&gt;&gt;&gt; classmates
+['Michael', 'Bob', 'Tracy']
+</code></pre>
+
+<p><br></p>
+<h3 id="_2">替换</h3>
+<p>要把某个元素替换成别的元素，可以直接赋值给对应的索引位置：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates[1] = 'Sarah'
+&gt;&gt;&gt; classmates
+['Michael', 'Sarah', 'Tracy']
+</code></pre>
+
+<p><br></p>
+<h3 id="_3">数据类型</h3>
+<p>list里面的元素的数据类型也可以不同，比如：</p>
+<pre><code class="python">&gt;&gt;&gt; L = ['Apple', 123, True]
+</code></pre>
+
+<p><br></p>
+<h3 id="list_1">list 的嵌套和二维数组</h3>
+<p>list元素也可以是另一个list，比如：</p>
+<pre><code class="python">&gt;&gt;&gt; s = ['python', 'java', ['asp', 'php'], 'scheme']
+&gt;&gt;&gt; len(s)
+4
+</code></pre>
+
+<p>要注意<code>s</code>只有4个元素，其中<code>s[2]</code>又是一个list，如果拆开写就更容易理解了：</p>
+<pre><code class="python">&gt;&gt;&gt; p = ['asp', 'php']
+&gt;&gt;&gt; s = ['python', 'java', p, 'scheme']
+</code></pre>
+
+<p>要拿到<code>'php'</code>可以写<code>p[1]</code>或者<code>s[2][1]</code>，因此<code>s</code>可以看成是一个二维数组，类似的还有三维、四维……数组，不过很少用到。</p>
+<p><br></p>
+<h3 id="list_2">空list</h3>
+<p>如果一个list中一个元素也没有，就是一个空的list，它的长度为0：</p>
+<pre><code class="python">&gt;&gt;&gt; L = []
+&gt;&gt;&gt; len(L)
+0
+</code></pre>
+
+<p><br></p>
+<h2 id="tuple">tuple</h2>
+<p>另一种<mark>有序列表</mark>叫元组：tuple。tuple和list非常类似，但是tuple<mark>一旦初始化就不能修改</mark>，比如同样是列出同学的名字：</p>
+<pre><code class="python">&gt;&gt;&gt; classmates = ('Michael', 'Bob', 'Tracy')
+</code></pre>
+
+<p>现在，classmates这个tuple不能变了，它也<mark>没有append()，insert()这样的方法</mark>。其他获取元素的方法和list是一样的，你可以正常地使用<code>classmates[0]</code>，<code>classmates[-1]</code>，但不能赋值成另外的元素。</p>
+<p>不可变的tuple有什么意义？因为<mark>tuple不可变，所以代码更安全</mark>。如果可能，能用tuple代替list就尽量用tuple。</p>
+<p>tuple的陷阱：当你定义一个tuple时，在<mark>定义的时候，tuple的元素就必须被确定</mark>下来，比如：</p>
+<pre><code class="python">&gt;&gt;&gt; t = (1, 2)
+&gt;&gt;&gt; t
+(1, 2)
+</code></pre>
+
+<p><br></p>
+<h3 id="tuple_1">空的tuple</h3>
+<p>空tuple好像并无实际意义。</p>
+<p>如果要定义一个空的tuple，可以写成<code>()</code>：</p>
+<pre><code class="python">&gt;&gt;&gt; t = ()
+&gt;&gt;&gt; t
+()
+</code></pre>
+
+<p><br></p>
+<h3 id="tuple_2">一个元素的tuple</h3>
+<p>但是，要定义一个只有1个元素的tuple，如果你这么定义：</p>
+<pre><code class="python">&gt;&gt;&gt; t = (1)
+&gt;&gt;&gt; t
+1
+</code></pre>
+
+<p>定义的不是tuple，是<code>1</code>这个数！这是因为括号<code>()</code>既可以表示tuple，又可以表示数学公式中的小括号，这就产生了歧义，因此，Python规定，这种情况下，按小括号进行计算，计算结果自然是<code>1</code>。</p>
+<p>所以，<mark>只有1个元素</mark>的tuple定义时必须加一个逗号<code>,</code>，来消除歧义：</p>
+<pre><code class="python">&gt;&gt;&gt; t = (1,)
+&gt;&gt;&gt; t
+(1,)
+</code></pre>
+
+<p>Python在显示只有1个元素的tuple时，也会加一个逗号<code>,</code>，以免你误解成数学计算意义上的括号。</p>
+<p><br></p>
+<h3 id="tuple_3">可变的tuple</h3>
+<p>最后来看一个“可变的”tuple：</p>
+<pre><code class="python">&gt;&gt;&gt; t = ('a', 'b', ['A', 'B'])
+&gt;&gt;&gt; t[2][0] = 'X'
+&gt;&gt;&gt; t[2][1] = 'Y'
+&gt;&gt;&gt; t
+('a', 'b', ['X', 'Y'])
+</code></pre>
+
+<p>这个tuple定义的时候有3个元素，分别是<code>'a'</code>，<code>'b'</code>和一个list。不是说tuple一旦定义后就不可变了吗？怎么后来又变了？</p>
+<p>别急，我们先看看定义的时候tuple包含的3个元素：</p>
+<p><img alt="" src="02_03_01.png" /></p>
+<p>当我们把list的元素<code>'A'</code>和<code>'B'</code>修改为<code>'X'</code>和<code>'Y'</code>后，tuple变为：</p>
+<p><img alt="" src="02_03_02.png" /></p>
+<p>表面上看，tuple的元素确实变了，但其实<mark>变的不是tuple的元素，而是list的元素</mark>。tuple一开始指向的list并没有改成别的list，所以，tuple所谓的“不变”是说，tuple的每个元素，<mark>指向永远不变</mark>。即指向<code>'a'</code>，就不能改成指向<code>'b'</code>，<mark>指向一个list，就不能改成指向其他对象，但指向的这个list本身是可变的</mark>！</p>
+<p>理解了“指向不变”后，要创建一个内容也不变的tuple怎么做？那就必须保证tuple的<mark>每一个元素本身也不能</mark>变。</p>
+<p><br></p>
+<h2 id="_4">练习</h2>
+<p>请用索引取出下面list的指定元素： </p>
+<pre><code class="python">L = [
+	['Apple', 'Google', 'Microsoft'],
+	['Java', 'Python', 'Ruby', 'PHP'],
+	['Adam', 'Bart', 'Lisa']
+]
+# 打印Apple:
+print(?)
+# 打印Python:
+print(?)
+# 打印Lisa:
+print(?)
+</code></pre>
+
+<p>参考答案：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch02/03.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+
+L = [
+	['Apple', 'Google', 'Microsoft'],
+	['Java', 'Python', 'Ruby', 'PHP'],
+	['Adam', 'Bart', 'Lisa']
+]
+# 打印Apple:
+print(L[0][0])
+# 打印Python:
+print(L[1][1])
+# 打印Lisa:
+print(L[2][2])
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

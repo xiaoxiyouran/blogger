@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>02_04条件判断</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="02_04">02_04条件判断</h1>
+<h2 id="_1">条件判断</h2>
+<p>计算机之所以能做很多自动化的任务，因为它可以自己做条件判断。</p>
+<p><br></p>
+<h3 id="if">if</h3>
+<p>比如，输入用户年龄，根据年龄打印不同的内容，在Python程序中，用<code>if</code>语句实现：</p>
+<pre><code class="python">age = 20
+if age &gt;= 18:
+	print('your age is', age)
+	print('adult')
+</code></pre>
+
+<p>根据Python的缩进规则，如果<code>if</code>语句判断是<code>True</code>，就把缩进的两行print语句执行了，否则，什么也不做。</p>
+<p><br></p>
+<h3 id="if-else">if else</h3>
+<p>也可以给<code>if</code>添加一个<code>else</code>语句，意思是，如果<code>if</code>判断是<code>False</code>，不要执行<code>if</code>的内容，去把<code>else</code>执行了：</p>
+<pre><code class="python">age = 3
+if age &gt;= 18:
+	print('your age is', age)
+	print('adult')
+else:
+	print('your age is', age)
+	print('teenager')
+</code></pre>
+
+<p>注意<mark>不要少写了冒号<code>:</code></mark>。</p>
+<p><br></p>
+<h3 id="if-elif-else">if elif else</h3>
+<p>当然上面的判断是很粗略的，完全可以<mark>用<code>elif</code></mark>做更细致的判断：</p>
+<pre><code class="python">age = 3
+if age &gt;= 18:
+	print('adult')
+elif age &gt;= 6:
+	print('teenager')
+else:
+	print('kid')
+</code></pre>
+
+<p><code>elif</code>是<code>else if</code>的缩写，完全可以有多个<code>elif</code>，所以<code>if</code>语句的完整形式就是：</p>
+<pre><code class="python">if &lt;条件判断1&gt;:
+	&lt;执行1&gt;
+elif &lt;条件判断2&gt;:
+	&lt;执行2&gt;
+elif &lt;条件判断3&gt;:
+	&lt;执行3&gt;
+else:
+	&lt;执行4&gt;
+</code></pre>
+
+<p><code>if</code>语句执行有个特点，它是从上往下判断，如果在某个判断上是<code>True</code>，把该判断对应的语句执行后，就忽略掉剩下的<code>elif</code>和<code>else</code>，所以，请测试并解释为什么下面的程序打印的是<code>teenager</code>：</p>
+<pre><code class="python">age = 20
+if age &gt;= 6:
+	print('teenager')
+elif age &gt;= 18:
+	print('adult')
+else:
+	print('kid')
+</code></pre>
+
+<p><br></p>
+<h3 id="if_1">if 的简写</h3>
+<p><code>if</code>判断条件还可以简写，比如写：</p>
+<p>```python 
+if x:
+	print('True')</p>
+<pre><code>
+只要`x`是==非零数值、非空字符串、非空list==等，就判断为`True`，否则为`False`。
+
+&lt;br&gt;
+
+## 再议 input
+
+最后看一个有问题的条件判断。很多同学会用`input()`读取用户的输入，这样可以自己输入，程序运行得更有意思：
+
+```python
+birth = input('birth: ')
+if birth &lt; 2000:
+	print('00前')
+else:
+	print('00后')
+</code></pre>
+
+<p>输入<code>1982</code>，结果报错：</p>
+<pre><code class="python">Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: unorderable types: str() &gt; int()
+</code></pre>
+
+<p>这是因为<code>input()</code>返回的数据类型是<code>str</code>，<code>str</code>不能直接和整数比较，必须先把<code>str</code>转换成整数。Python提供了<mark><code>int()</code>函数</mark>来完成这件事情：</p>
+<pre><code class="python">s = input('birth: ')
+birth = int(s)
+if birth &lt; 2000:
+	print('00前')
+else:
+	print('00后')
+</code></pre>
+
+<p>再次运行，就可以得到正确地结果。但是，如果输入<code>abc</code>呢？又会得到一个错误信息：</p>
+<pre><code class="python">Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+ValueError: invalid literal for int() with base 10: 'abc'
+</code></pre>
+
+<p>原来<code>int()</code>函数发现<mark>一个字符串并不是合法的数字</mark>时就会报错，程序就退出了。</p>
+<p>如何<mark>检查并捕获程序运行期的错误</mark>呢？后面的错误和调试会讲到。</p>
+<p><br></p>
+<h2 id="_2">练习</h2>
+<p>小明身高1.75，体重80.5kg。请根据BMI公式（体重除以身高的平方）帮小明计算他的BMI指数，并根据BMI指数：</p>
+<ul>
+<li>低于18.5：过轻</li>
+<li>18.5-25：正常</li>
+<li>25-28：过重</li>
+<li>28-32：肥胖</li>
+<li>高于32：严重肥胖</li>
+</ul>
+<p>用<code>if-elif</code>判断并打印结果：</p>
+<p>参考答案如下：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch02/04.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+#
+# height = 1.75
+# weight = 80.5
+
+hei = float(input('please enter your height(m):'))
+wei = float(input('please enter your weight(kg):'))
+bmi = wei/hei/hei
+if bmi &gt; 32:
+	print('您的bmi指数是%.1f，属于严重肥胖' % bmi)
+elif bmi &gt;= 28:
+	print('您的bmi指数是%.1f，属于肥胖' % bmi)
+elif bmi &gt;= 25:
+	print('您的bmi指数是%.1f，属于超重' % bmi)
+elif bmi &gt;= 18.5:
+	print('您的bmi指数是%.1f，属于正常' % bmi)
+else:
+	print('您的bmi指数是%.1f，属于过轻' % bmi)
+
+# please enter your height(m):1.75
+# please enter your weight(kg):80.5
+# 您的bmi指数是26.3，属于超重
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

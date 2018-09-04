@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>推荐系统_潜在因子算法_20180827</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="__20180827">推荐系统_潜在因子算法_20180827</h1>
+<p>作者：nick lee</p>
+<p>链接：https://www.zhihu.com/question/26743347/answer/34714804</p>
+<p>来源：知乎</p>
+<p>潜在因子（Latent Factor）算法。这种算法是在<mark>NetFlix</mark>（没错，就是用大数据捧火《纸牌屋》的那家公司）的推荐算法竞赛中获奖的算法，最早被应用于电影推荐中。这种算法在实际应用中比现在排名第一的 <a href="http://www.zhihu.com/people/296727f65ac7121dce72e2424edbd552">@邰原朗</a>  所介绍的<mark>算法误差（RMSE）</mark>会小不少，效率更高。我下面仅利用<mark>基础的矩阵知识</mark>来介绍下这种算法。</p>
+<p>这种算法的思想是这样：每个用户（<strong>user</strong>）都有自己的偏好，比如A喜欢带有<strong>小清新的</strong>、<strong>吉他伴奏的</strong>、<strong>王菲</strong>等元素（<strong>latent factor</strong>），如果<mark>一首歌（<strong>item</strong>）带有这些元素</mark>，那么就将这首歌<mark>推荐</mark>给该用户，也就是<mark>用元素去连接用户和音乐</mark>。<mark>每个人对不同的元素偏好不同，而每首歌包含的元素也不一样</mark>。我们希望能找到这样<mark>两个矩阵</mark>：</p>
+<p>一，<strong>用户-潜在因子矩阵Q</strong>，表示不同的用户对于不用元素的<mark>偏好程度</mark>，1代表很喜欢，0代表不喜欢。比如下面这样：</p>
+<p><img alt="" src="01.jpg" /></p>
+<p>二，<strong>潜在因子-音乐矩阵P</strong>，表示<mark>每种音乐含有各种元素的成分(权重)</mark>，比如下表中，音乐A是一个偏小清新的音乐，含有小清新这个Latent Factor的成分是0.9，重口味的成分是0.1，优雅的成分是0.2……</p>
+<p><img alt="" src="02.jpg" /></p>
+<p>利用这两个矩阵，我们能得出张三对音乐A的喜欢程度是：张三对<strong>小清新</strong>的偏好<em>音乐A含有<strong>小清新</strong>的成分+对<strong>重口味</strong>的偏好</em>音乐A含有<strong>重口味</strong>的成分+对<strong>优雅</strong>的偏好*音乐A含有<strong>优雅</strong>的成分+……</p>
+<p><img alt="" src="03.jpg" /></p>
+<p><img alt="" src="04.jpg" /></p>
+<p>即：<code>0.6*0.9+0.8*0.1+0.1*0.2+0.1*0.4+0.7*0=0.69</code></p>
+<p>每个用户对每首歌都这样计算可以得到不同用户对不同歌曲的评分矩阵 <img alt="image-20180827094718740" src="image-20180827094718740.png" />。（注，这里的破浪线表示的是<mark>估计的</mark>评分，接下来我们还会用到不带波浪线的R表示实际的评分）：</p>
+<p><img src="06.jpg" width = “300" height = “600" alt = “" aligh = “center" /></p>
+<p>因此我们队张三推荐四首歌中得分最高的B，对李四推荐得分最高的C，王五推荐B。</p>
+<p>如果用矩阵表示即为：</p>
+<p><img src="image-20180827094812251.png" width = “20" height = “10" alt = “" aligh = “center" /></p>
+<p>下面问题来了，<strong>这个潜在因子（latent factor）</strong>是怎么得到的呢？</p>
+<p>由于面对海量的让用户自己给音乐分类并告诉我们自己的偏好系数显然是不现实的，事实上我们能获得的数据只有<mark>用户行为数据</mark>。我们沿用 <a href="http://www.zhihu.com/people/296727f65ac7121dce72e2424edbd552">@邰原朗</a></p>
+<p>的量化标准：<mark>单曲循环=5, 分享=4, 收藏=3, 主动播放=2 , 听完=1, 跳过=-2 , 拉黑=-5</mark>，在分析时能获得的实际评分矩阵$R$，也就是输入矩阵大概是这个样子：</p>
+<p><img alt="" src="07.jpg" /></p>
+<p>事实上这是个非常<mark>非常稀疏的矩阵</mark>，因为大部分用户只听过全部音乐中很少一部分。如何利用这个矩阵去找潜在因子呢？这里主要应用到的是<mark>矩阵的UV分解</mark>。也就是将上面的评分矩阵<mark>分解为两个低维度的</mark>矩阵，用Q和P两个矩阵的<mark>乘积</mark>去估计实际的评分矩阵，而且我们希望估计的评分矩阵<img alt="image-20180827094718740" src="image-20180827094718740.png" /></p>
+<p><img alt="" src="08.jpg" /></p>
+<p>和实际的评分矩阵不要相差太多，也就是求解下面的目标函数：</p>
+<p>$min_{P,Q}\sum{r_{ui} - q_{i}p^{T}_{u}}^2$</p>
+<p>这里涉及到<mark>最优化理论</mark>，在实际应用中，往往<mark>还要在后面加上2范数的罚项</mark>，然后<mark>利用梯度下降法</mark>就可以求得这</p>
+<p>$P,Q$ 两个矩阵的估计值。这里我们就不展开说了。例如我们上面给出的那个例子可以分解成为这样两个矩阵：</p>
+<p><img alt="" src="09.jpg" /></p>
+<p>这<mark>两个矩阵相乘</mark>就可以得到估计的得分矩阵：</p>
+<p><img alt="" src="10.jpg" /></p>
+<p><mark>将用户已经听过的音乐剔除后(得分为：5，-5， 1)，选择分数最高</mark>音乐的推荐给用户即可（红体字）。</p>
+<p>在这个例子里面用户7和用户8有强的相似性：</p>
+<p><img alt="" src="11.jpg" /></p>
+<p>从推荐的结果来看，正好推荐的是对方评分较高的音乐：</p>
+<p><img alt="" src="12.jpg" /></p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

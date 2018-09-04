@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>03_04递归函数</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="03_04">03_04递归函数</h1>
+<h2 id="_1">递归</h2>
+<p>在函数内部，可以调用其他函数。如果一个函数在内部调用自身本身，这个函数就是递归函数。</p>
+<p>举个例子，我们来计算阶乘<code>n! = 1 x 2 x 3 x ... x n</code>，用函数<code>fact(n)</code>表示，可以看出：</p>
+<p>fact(n) = n! = 1 x 2 x 3 x ... x (n-1) x n = (n-1)! x n = fact(n-1) x n</p>
+<p>所以，<code>fact(n)</code>可以表示为<code>n x fact(n-1)</code>，只有n=1时需要特殊处理。</p>
+<p>于是，<code>fact(n)</code>用递归的方式写出来就是：</p>
+<pre><code class="python">def fact(n):
+	if n==1:
+		return 1
+	return n * fact(n - 1)
+</code></pre>
+
+<p>上面就是一个递归函数。可以试试：</p>
+<pre><code class="python">&gt;&gt;&gt; fact(1)
+1
+&gt;&gt;&gt; fact(5)
+120
+&gt;&gt;&gt; fact(100)
+93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000
+</code></pre>
+
+<p>如果我们计算<code>fact(5)</code>，可以根据函数定义看到计算过程如下：</p>
+<pre><code class="shell">===&gt; fact(5)
+===&gt; 5 * fact(4)
+===&gt; 5 * (4 * fact(3))
+===&gt; 5 * (4 * (3 * fact(2)))
+===&gt; 5 * (4 * (3 * (2 * fact(1))))
+===&gt; 5 * (4 * (3 * (2 * 1)))
+===&gt; 5 * (4 * (3 * 2))
+===&gt; 5 * (4 * 6)
+===&gt; 5 * 24
+===&gt; 120
+</code></pre>
+
+<p>递归函数的优点是定义简单，逻辑清晰。理论上，所有的递归函数都可以写成循环的方式，但循环的逻辑不如递归清晰。</p>
+<p><br></p>
+<h2 id="_2">尾递归</h2>
+<p>使用递归函数需要注意防止栈溢出。在计算机中，函数调用是通过<mark>栈（stack）这种数据结构</mark>实现的，每当进入一个函数调用，栈就会加一层栈帧，每当函数返回，栈就会减一层栈帧。由于栈的大小不是无限的，所以，递归调用的次数过多，会导致栈溢出。可以试试<code>fact(1000)</code>：</p>
+<pre><code class="python">&gt;&gt;&gt; fact(1000)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;&lt;stdin&gt;&quot;, line 4, in fact
+  ...
+  File &quot;&lt;stdin&gt;&quot;, line 4, in fact
+RuntimeError: maximum recursion depth exceeded in comparison
+</code></pre>
+
+<p>解决递归调用栈溢出的方法是<mark>通过<strong>尾递归</strong>优化</mark>，事实上尾递归和循环的效果是一样的，所以，把<mark>循环看成是一种特殊的尾递归函数</mark>也是可以的。</p>
+<p>尾递归是指，在函数返回的时候，调用自身本身，并且，<mark>return语句不能包含表达式</mark>。这样，编译器或者解释器就可以把尾递归做优化，使递归本身无论调用多少次，都<mark>只占用一个栈帧，不会出现栈溢出</mark>的情况。</p>
+<p>上面的<code>fact(n)</code>函数由于<code>return n * fact(n - 1)</code>引入了乘法表达式，所以就不是尾递归了。要改成尾递归方式，需要多一点代码，主要是要<mark>把每一步的乘积传入到递归函数</mark>中：</p>
+<pre><code>def fact(n):
+	return fact_iter(n, 1)
+
+def fact_iter(num, product):
+	if num == 1:
+		return product
+	return fact_iter(num - 1, num * product)
+</code></pre>
+
+<p>可以看到，<mark><code>return fact_iter(num - 1, num * product)</code>仅返回递归函数本身，<code>num - 1</code>和<code>num * product</code>在函数调用前就会被计算，不影响函数调用</mark>。</p>
+<p><code>fact(5)</code>对应的<code>fact_iter(5, 1)</code>的调用如下：</p>
+<pre><code class="python">===&gt; fact_iter(5, 1)
+===&gt; fact_iter(4, 5)
+===&gt; fact_iter(3, 20)
+===&gt; fact_iter(2, 60)
+===&gt; fact_iter(1, 120)
+===&gt; 120
+</code></pre>
+
+<p>尾递归调用时，如果做了优化，栈不会增长，因此，无论多少次调用也不会导致栈溢出。</p>
+<p>遗憾的是，<mark>大多数编程语言没有针对尾递归做优化，Python解释器也没有做优化</mark>，所以，即使把上面的<code>fact(n)</code>函数改成尾递归方式，<mark>也会</mark>导致栈溢出。</p>
+<p><br></p>
+<h2 id="_3">练习</h2>
+<p><a href="http://baike.baidu.com/view/191666.htm">汉诺塔</a>的移动可以用递归函数非常简单地实现。</p>
+<p>请编写<code>move(n, a, b, c)</code>函数，它接收参数<code>n</code>，表示3个柱子A、B、C中第1个柱子A的盘子数量，然后打印出把所有盘子从A借助B移动到C的方法，例如：</p>
+<p>把三个柱子分别认为是起始区，缓冲区，目标区
+1，把<mark>n-1的盘子放到缓冲区</mark>，
+2，把<mark>最底下的盘子放到目标区</mark>
+3,   把<mark>缓存区的盘子放到目标区</mark>。
+这有点像把大象放到冰箱里面，不关心具体实现，只把任务分解到最小。
+最小的状态就是一个盘子，从起始到目标，递进就是把最大盘放到目标，其他盘放缓冲就可以了。</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch03/04.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+def move(n, a, b, c):
+	if n == 1:
+		print(a, '--&gt;' , c)
+	else:
+		move(n-1, a, c, b)          # 把上面的n-1个盘子移到b后
+		# print(a, '--&gt;', c)          # 将剩下一个盘子移到c
+		# or
+		move(1, a, b, c)
+		move(n-1, b, a, c)          # 剩下的n-1个盘子子B上（相当于刚开始的a）, 需要移到c上
+
+move(3, 'A', 'B', 'C')
+
+# A --&gt; C
+# A --&gt; B
+# C --&gt; B
+# A --&gt; C
+# B --&gt; A
+# B --&gt; C
+# A --&gt; C
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

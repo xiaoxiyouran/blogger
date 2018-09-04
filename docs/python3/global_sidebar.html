@@ -1,0 +1,118 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+_201801821python3_7liaoxuefeng1 = tree.createNode('201801821python3_7liaoxuefeng',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_01_第一个python程序2 = _201801821python3_7liaoxuefeng1.createChildNode('01_第一个python程序',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_01_python的运行_html3 = _01_第一个python程序2.createChildNode("<a href = './201801821python3_7liaoxuefeng/01_第一个python程序/01_python的运行.html' target = 'right'>01_python的运行.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02_python基础2 = _201801821python3_7liaoxuefeng1.createChildNode('02_python基础',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_02_01数值类型和变量_html3 = _02_python基础2.createChildNode("<a href = './201801821python3_7liaoxuefeng/02_python基础/02_01数值类型和变量.html' target = 'right'>02_01数值类型和变量.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02_02字符串和编码_html3 = _02_python基础2.createChildNode("<a href = './201801821python3_7liaoxuefeng/02_python基础/02_02字符串和编码.html' target = 'right'>02_02字符串和编码.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02_03使用list和tuple_html3 = _02_python基础2.createChildNode("<a href = './201801821python3_7liaoxuefeng/02_python基础/02_03使用list和tuple.html' target = 'right'>02_03使用list和tuple.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02_04条件判断_html3 = _02_python基础2.createChildNode("<a href = './201801821python3_7liaoxuefeng/02_python基础/02_04条件判断.html' target = 'right'>02_04条件判断.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_02_05循环_html3 = _02_python基础2.createChildNode("<a href = './201801821python3_7liaoxuefeng/02_python基础/02_05循环.html' target = 'right'>02_05循环.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_使用dict和set_html3 = _02_python基础2.createChildNode("<a href = './201801821python3_7liaoxuefeng/02_python基础/使用dict和set.html' target = 'right'>使用dict和set.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_03_函数2 = _201801821python3_7liaoxuefeng1.createChildNode('03_函数',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_03_01调用函数_html3 = _03_函数2.createChildNode("<a href = './201801821python3_7liaoxuefeng/03_函数/03_01调用函数.html' target = 'right'>03_01调用函数.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_03_02定义函数_html3 = _03_函数2.createChildNode("<a href = './201801821python3_7liaoxuefeng/03_函数/03_02定义函数.html' target = 'right'>03_02定义函数.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_03_03函数参数_html3 = _03_函数2.createChildNode("<a href = './201801821python3_7liaoxuefeng/03_函数/03_03函数参数.html' target = 'right'>03_03函数参数.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_03_04递归函数_html3 = _03_函数2.createChildNode("<a href = './201801821python3_7liaoxuefeng/03_函数/03_04递归函数.html' target = 'right'>03_04递归函数.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04_高级特性2 = _201801821python3_7liaoxuefeng1.createChildNode('04_高级特性',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,'context1');
+_04_00高级特性_html3 = _04_高级特性2.createChildNode("<a href = './201801821python3_7liaoxuefeng/04_高级特性/04_00高级特性.html' target = 'right'>04_00高级特性.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04_01切片_html3 = _04_高级特性2.createChildNode("<a href = './201801821python3_7liaoxuefeng/04_高级特性/04_01切片.html' target = 'right'>04_01切片.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04_02迭代_html3 = _04_高级特性2.createChildNode("<a href = './201801821python3_7liaoxuefeng/04_高级特性/04_02迭代.html' target = 'right'>04_02迭代.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_04_03列表生成式_html3 = _04_高级特性2.createChildNode("<a href = './201801821python3_7liaoxuefeng/04_高级特性/04_03 列表生成式.html' target = 'right'>04_03 列表生成式.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_README_html2 = _201801821python3_7liaoxuefeng1.createChildNode("<a href = './201801821python3_7liaoxuefeng/README.html' target = 'right'>README.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+_20180824conda创建python版本1 = tree.createNode('20180824 conda 创建python版本',false,'../../packages/doc_tree/jquery-tree/images/folder.png',null,null,'context1');
+_20180824conda创建python版本_html2 = _20180824conda创建python版本1.createChildNode("<a href = './20180824 conda 创建python版本/20180824 conda 创建python版本.html' target = 'right'>20180824 conda 创建python版本.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

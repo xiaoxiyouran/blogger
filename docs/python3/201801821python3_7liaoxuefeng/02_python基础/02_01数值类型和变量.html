@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>数值类型和变量</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">数值类型和变量</h1>
+<h2 id="_2">数据类型</h2>
+<h3 id="_3">整数</h3>
+<p>1- 用整数， 十六进制用 <code>0x</code> 开头。</p>
+<p><br></p>
+<h3 id="_4">浮点数</h3>
+<p>1- 科学计数法：<code>1.23x10^9</code>就是<code>1.23e9</code>，或者<code>12.3e8</code>，0.000012可以写成<code>1.2e-5</code>，等等。</p>
+<p>2- 整数和浮点数在计算机内部存储的方式是不同的，<mark>整数运算永远是精确的</mark>（除法难道也是精确的？是的！），而浮点数运算则可能会有四舍五入的误差。</p>
+<p><br></p>
+<h3 id="_5">字符串</h3>
+<p>1- 以单引号<code>'</code>或双引号<code>"</code>括起来的任意文本；</p>
+<p>2- 如果字符串内部既包含<code>'</code>又包含<code>"</code>怎么办？可以用转义字符<code>\</code>来标识，比如：</p>
+<pre><code>'I\'m \&quot;OK\&quot;!'
+</code></pre>
+
+<p>表示的字符串内容是：</p>
+<pre><code>I'm &quot;OK&quot;!
+</code></pre>
+
+<p><br></p>
+<h4 id="_6">转义字符</h4>
+<p>1- 转义字符<code>\</code>可以转义很多字符，比如<code>\n</code>表示换行，<code>\t</code>表示制表符，字符<code>\</code>本身也要转义，所以<code>\\</code>表示的字符就是<code>\</code>，可以在Python的交互式命令行用<code>print()</code>打印字符串看看：</p>
+<pre><code class="python">&gt;&gt;&gt; print('I\'m ok.')
+I'm ok.
+&gt;&gt;&gt; print('I\'m learning\nPython.')
+I'm learning
+Python.
+&gt;&gt;&gt; print('\\\n\\')
+\
+\
+</code></pre>
+
+<p>2- 如果字符串里面有很多字符都需要转义，就需要加很多<code>\</code>，为了简化，Python还允许用<code>r''</code>表示<code>''</code>内部的字符串默认不转义，可以自己试试：</p>
+<pre><code class="python">&gt;&gt;&gt; print('\\\t\\')
+\       \
+&gt;&gt;&gt; print(r'\\\t\\')
+\\\t\\
+</code></pre>
+
+<p>3- 如果字符串内部有很多换行，用<code>\n</code>写在一行里不好阅读，为了简化，Python允许用<code>'''...'''</code>的格式表示多行内容，可以自己试试：</p>
+<pre><code class="python"># 命令行格式， ... 是回车后自动加的
+&gt;&gt;&gt; print('''line1
+... line2
+... line3''')
+line1
+line2
+line3
+</code></pre>
+
+<p>上面是在交互式命令行内输入，注意在输入多行内容时，提示符由<code>&gt;&gt;&gt;</code>变为<code>...</code>，提示你可以接着上一行输入，注意<code>...</code>是提示符，不是代码的一部分：</p>
+<p>4- 如果是 <code>.py</code> 文件，直接加即可。</p>
+<pre><code class="python">print('''line1
+line2
+line3''')
+</code></pre>
+
+<p><br></p>
+<h3 id="_7">布尔值</h3>
+<p>1- 在Python中，可以直接用<code>True</code>、<code>False</code>表示布尔值（请<mark>注意大小写</mark>）</p>
+<pre><code class="python">&gt;&gt;&gt; True
+True
+&gt;&gt;&gt; False
+False
+&gt;&gt;&gt; 3 &gt; 2
+True
+&gt;&gt;&gt; 3 &gt; 5
+False
+</code></pre>
+
+<p>2- 布尔值可以用<code>and</code>、<code>or</code>和<code>not</code>运算。</p>
+<p>and 的运算如下:</p>
+<pre><code class="python">&gt;&gt;&gt; True and True
+True
+&gt;&gt;&gt; True and False
+False
+&gt;&gt;&gt; False and False
+False
+&gt;&gt;&gt; 5 &gt; 3 and 3 &gt; 1
+True
+</code></pre>
+
+<p>or 的运算如下：</p>
+<pre><code class="python">&gt;&gt;&gt; True or True
+True
+&gt;&gt;&gt; True or False
+True
+&gt;&gt;&gt; False or False
+False
+&gt;&gt;&gt; 5 &gt; 3 or 1 &gt; 3
+True
+</code></pre>
+
+<p>not 是非运算：</p>
+<pre><code class="python">&gt;&gt;&gt; not True
+False
+&gt;&gt;&gt; not False
+True
+&gt;&gt;&gt; not 1 &gt; 2
+True
+</code></pre>
+
+<p>布尔值经常用在条件判断中，比如：</p>
+<pre><code class="python">if age &gt;= 18:
+	print('adult')
+else:
+	print('teenager')
+</code></pre>
+
+<p><br></p>
+<h3 id="_8">空值</h3>
+<p>1- 空值是Python里一个特殊的值，用<code>None</code>表示。<mark><code>None</code>不能理解为<code>0</code></mark>，因为<code>0</code>是有意义的，而<code>None</code>是一个特殊的空值。</p>
+<p><br></p>
+<h3 id="_9">其它</h3>
+<p>此外，Python还提供了列表、字典等多种数据类型，还允许创建自定义数据类型，我们后面会继续讲到。</p>
+<p><br></p>
+<h2 id="_10">变量</h2>
+<p>1- 变量的赋值和内存分配可通过如下程序简单理解：</p>
+<pre><code class="python">a = 'ABC'
+b = a
+a = 'XYZ'
+print(b)
+</code></pre>
+
+<p>赋值过程如下：</p>
+<p><img alt="" src="02_01_01.png" /></p>
+<p><img alt="" src="02_01_02.png" /></p>
+<p><img alt="" src="02_01_03.png" /></p>
+<p><br></p>
+<h2 id="_11">常量</h2>
+<p>1- 常量全用大写表示：</p>
+<pre><code class="python">PI = 3.14159265359
+</code></pre>
+
+<p><br></p>
+<h2 id="_12">除法</h2>
+<p>1- 一般除, 结果是浮点数</p>
+<pre><code class="python">&gt;&gt;&gt; 10 / 3
+3.3333333333333335
+
+&gt;&gt;&gt; 9 / 3
+3.0
+</code></pre>
+
+<p>2- 还有一种除法是<code>//</code>，称为地板除，两个整数的除法仍然是整数：</p>
+<pre><code class="python">&gt;&gt;&gt; 10 // 3
+3
+</code></pre>
+
+<p>3- 取余：</p>
+<pre><code class="python">&gt;&gt;&gt; 10 % 3
+1
+</code></pre>
+
+<p><br></p>
+<h2 id="_13">数值越界</h2>
+<p>注意：Python的整数没有大小限制，而某些语言的整数根据其存储长度是有大小限制的，例如Java对32位整数的范围限制在<code>-2147483648</code>-<code>2147483647</code>。</p>
+<p>Python的浮点数也没有大小限制，但是超出一定范围就直接表示为<code>inf</code>（无限大）。</p>
+<p><br></p>
+<h2 id="_14">练习</h2>
+<p>请打印出以下变量的值：</p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+n = 123
+f = 456.789
+s1 = 'Hello, world'
+s2 = 'Hello, \'Adam\''
+s3 = r'Hello, &quot;Bart&quot;'
+s4 = r'''Hello,
+Lisa!'''
+</code></pre>
+
+<p>参考如下：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch01/01.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+n = 123
+f = 456.789
+s1 = 'Hello, world'
+s2 = 'Hello, \'Adam\''
+s3 = r'Hello, &quot;Bart&quot;'
+s4 = r'''Hello,
+Lisa!'''
+
+print('n = ', n)
+print('f = ', f)
+print('s1 = ', s1)
+print('s2 = ', s2)
+print('s3 = ', s3)
+print('s4 = ', s4)
+
+# n =  123
+# f =  456.789
+# s1 =  Hello, world
+# s2 =  Hello, 'Adam'
+# s3 =  Hello, &quot;Bart&quot;
+# s4 =  Hello,
+# Lisa!
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

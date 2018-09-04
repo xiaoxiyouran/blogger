@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>04_01切片</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="04_01">04_01切片</h1>
+<h2 id="list">取list的部分元素</h2>
+<h3 id="_1">笨方法</h3>
+<p>取一个list或tuple的部分元素是非常常见的操作。比如，一个list如下：</p>
+<pre><code class="python">&gt;&gt;&gt; L = ['Michael', 'Sarah', 'Tracy', 'Bob', 'Jack']
+</code></pre>
+
+<p>取前3个元素，应该怎么做？</p>
+<p>笨办法：</p>
+<pre><code class="python">&gt;&gt;&gt; [L[0], L[1], L[2]]
+['Michael', 'Sarah', 'Tracy']
+</code></pre>
+
+<p>之所以是笨办法是因为扩展一下，取前N个元素就没辙了。</p>
+<p>取前N个元素，也就是索引为0-(N-1)的元素，可以用循环：</p>
+<pre><code class="python">&gt;&gt;&gt; r = []
+&gt;&gt;&gt; n = 3
+&gt;&gt;&gt; for i in range(n):
+...     r.append(L[i])
+... 
+&gt;&gt;&gt; r
+['Michael', 'Sarah', 'Tracy']
+</code></pre>
+
+<p><br></p>
+<h3 id="_2">切片</h3>
+<p>对这种经常取指定索引范围的操作，用循环十分繁琐，因此，Python提供了<mark>切片（Slice）操作符</mark>，能大大简化这种操作。</p>
+<p>对应上面的问题，取前3个元素，用一行代码就可以完成切片：</p>
+<pre><code class="python">&gt;&gt;&gt; L[0:3]
+['Michael', 'Sarah', 'Tracy']
+</code></pre>
+
+<p><code>L[0:3]</code>表示，从索引<code>0</code>开始取，直到索引<code>3</code>为止，但不包括索引<code>3</code>。即索引<code>0</code>，<code>1</code>，<code>2</code>，正好是3个元素。</p>
+<p><br></p>
+<h3 id="_3">从开头取</h3>
+<p>如果第一个索引是<code>0</code>，还可以省略：</p>
+<pre><code class="python">&gt;&gt;&gt; L[:3]
+['Michael', 'Sarah', 'Tracy']
+</code></pre>
+
+<p>也可以从索引1开始，取出2个元素出来：</p>
+<pre><code>&gt;&gt;&gt; L[1:3]
+['Sarah', 'Tracy']
+</code></pre>
+
+<p><br></p>
+<h3 id="_4">取倒数</h3>
+<p>类似的，既然Python支持<code>L[-1]</code>取倒数第一个元素，那么它同样支持倒数切片，试试：</p>
+<pre><code class="python">&gt;&gt;&gt; L[-2:]
+['Bob', 'Jack']
+&gt;&gt;&gt; L[-2:-1]
+['Bob']
+</code></pre>
+
+<p>记住倒数第一个元素的索引是<code>-1</code>。</p>
+<p><br></p>
+<h3 id="_5">示例</h3>
+<p>切片操作十分有用。我们先创建一个0-99的数列：</p>
+<pre><code class="python">&gt;&gt;&gt; L = list(range(100))
+&gt;&gt;&gt; L
+[0, 1, 2, 3, ..., 99]
+</code></pre>
+
+<p>可以通过切片轻松取出某一段数列。比如前10个数：</p>
+<pre><code class="python">&gt;&gt;&gt; L[:10]
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre>
+
+<p>后10个数：</p>
+<pre><code class="python">&gt;&gt;&gt; L[-10:]
+[90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+</code></pre>
+
+<p>前11-20个数：</p>
+<pre><code class="python">&gt;&gt;&gt; L[10:20]
+[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+</code></pre>
+
+<p>前10个数，每两个取一个：</p>
+<pre><code class="python">&gt;&gt;&gt; L[:10:2]
+[0, 2, 4, 6, 8]
+</code></pre>
+
+<p>所有数，每5个取一个：</p>
+<pre><code class="python">&gt;&gt;&gt; L[::5]
+[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
+</code></pre>
+
+<p>甚至什么都不写，只写<code>[:]</code>就可以<mark>原样复制</mark>一个list：</p>
+<pre><code class="python">&gt;&gt;&gt; L[:]
+[0, 1, 2, 3, ..., 99]
+</code></pre>
+
+<p><br></p>
+<h2 id="tuple">tuple 切片</h2>
+<p><mark>tuple也是一种list</mark>，唯一区别是tuple不可变。因此，tuple也可以用切片操作，只是<mark>操作的结果仍是tuple</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; (0, 1, 2, 3, 4, 5)[:3]
+(0, 1, 2)
+</code></pre>
+
+<p><br></p>
+<h2 id="_6">字符串切片</h2>
+<p>字符串<code>'xxx'</code>也可以看成是一种list，每个元素就是一个字符。因此，字符串也可以用切片操作，只是操作结果仍是字符串：</p>
+<pre><code class="python">&gt;&gt;&gt; 'ABCDEFG'[:3]
+'ABC'
+&gt;&gt;&gt; 'ABCDEFG'[::2]
+'ACEG'
+</code></pre>
+
+<p>在很多编程语言中，针对字符串提供了很多各种<mark>截取函数（例如，substring）</mark>，其实目的就是对字符串切片。Python没有针对字符串的截取函数，只需要切片一个操作就可以完成，非常简单。</p>
+<h2 id="_7">练习</h2>
+<p>利用切片操作，实现一个<mark>trim()函数，去除字符串首尾的空格</mark>，注意不要调用str的<code>strip()</code>方法：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch04/01.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+def trim(s):
+	while s[:1]==' ':
+	  s = s[1:]
+
+	while s[-1:]==' ':
+	  s = s[:-1]
+	return s
+
+# 测试:
+if trim('hello  ') != 'hello':
+	print('测试失败!')
+elif trim('  hello') != 'hello':
+	print('测试失败!')
+elif trim('  hello  ') != 'hello':
+	print('测试失败!')
+elif trim('  hello  world  ') != 'hello  world':
+	print('测试失败!')
+elif trim('') != '':
+	print('测试失败!')
+elif trim('    ') != '':
+	print('测试失败!')
+else:
+	print('测试成功!')
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

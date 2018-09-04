@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>02_02字符串和编码</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="02_02">02_02字符串和编码</h1>
+<h2 id="_1">字符编码</h2>
+<p>计算机<mark>只能处理数字</mark>，如果要处理文本，就必须先把文本转换为数字才能处理。最早的计算机在设计时<mark>采用8个比特（bit）作为一个字节（byte）</mark>，所以，一个字节能表示的最大的整数就是255（二进制11111111=十进制255），如果要表示更大的整数，就必须用更多的字节。比如两个字节可以表示的最大整数是<code>65535</code>，4个字节可以表示的最大整数是<code>4294967295</code>。</p>
+<p>由于计算机是美国人发明的，因此，最早只有127个字符被编码到计算机里，也就是大小写英文字母、数字和一些符号，这个编码表被称为 <mark><code>ASCII</code>编码</mark>，比如大写字母<code>A</code>的编码是<code>65</code>，小写字母<code>z</code>的编码是<code>122</code>。</p>
+<p>但是要处理中文显然一个字节是不够的，至少需要两个字节，而且还不能和ASCII编码冲突，所以，<mark>中国制定了<code>GB2312</code>编码</mark>，用来把中文编进去。</p>
+<p>你可以想得到的是，全世界有上百种语言，日本把<mark>日文编到<code>Shift_JIS</code></mark>里，韩国把韩文编到<code>Euc-kr</code>里，各国有各国的标准，就会不可避免地出现冲突，结果就是，在多语言混合的文本中，显示出来会有乱码。</p>
+<p>因此，Unicode应运而生。<mark>Unicode把所有语言都统一到一套编码</mark>里，这样就不会再有乱码问题了。</p>
+<p>Unicode标准也在不断发展，但最常用的是用两个字节表示一个字符（如果要用到非常偏僻的字符，就需要4个字节）。现代操作系统和大多数编程语言都直接支持Unicode。</p>
+<p>现在，捋一捋ASCII编码和Unicode编码的区别：ASCII编码是1个字节，而<mark>Unicode编码通常是2个字节</mark>。</p>
+<p>字母<code>A</code>用ASCII编码是十进制的<code>65</code>，二进制的<code>01000001</code>；</p>
+<p>字符<code>0</code>用ASCII编码是十进制的<code>48</code>，二进制的<code>00110000</code>，注意字符<code>'0'</code>和整数<code>0</code>是不同的；</p>
+<p>汉字<code>中</code>已经超出了ASCII编码的范围，用Unicode编码是十进制的<code>20013</code>，二进制的<code>01001110 00101101</code>。</p>
+<p>你可以猜测，如果把ASCII编码的<code>A</code>用Unicode编码，只需要<mark>在前面补0(ASCII 转 Unicode)</mark>就可以，因此，<code>A</code>的Unicode编码是<code>00000000 01000001</code>。</p>
+<p>新的问题又出现了：如果统一成Unicode编码，乱码问题从此消失了。但是，如果你写的文本基本上全部是英文的话，用Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上就十分不划算。</p>
+<p>所以，本着节约的精神，又出现了把Unicode编码转化为<mark>“可变长编码”的<code>UTF-8</code>编码</mark>。UTF-8编码把一个Unicode字符根据不同的数字大小<mark>编码成1-6个字节</mark>，常用的<mark>英文字母被编码成1个字节，汉字通常是3个字节</mark>，只有<mark>很生僻的字符才会被编码成4-6个字节</mark>。如果你要传输的文本包含<mark>大量英文字符，用UTF-8编码就能节省空间</mark>：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>字符</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ASCII</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Unicode</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>UTF-8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>A</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>01000001</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>00000000 01000001</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>01000001</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>中</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>x</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>01001110 00101101</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>11100100 10111000 10101101</td>
+</tr>
+</tbody>
+</table>
+<p>从上面的表格还可以发现，UTF-8编码有一个额外的好处，就是<mark>ASCII编码实际上可以被看成是UTF-8编码的一部分</mark>，所以，大量只支持ASCII编码的历史遗留软件可以在UTF-8编码下继续工作。</p>
+<p>搞清楚了ASCII、Unicode和UTF-8的关系，我们就可以总结一下现在计算机系统通用的字符编码工作方式：</p>
+<p>在计算机<mark>内存中，统一使用Unicode编码</mark>，当需要保存到<mark>硬盘</mark>或者需要传输的时候，就转换为<mark>UTF-8编</mark>码。</p>
+<p>用记事本编辑的时候，从文件<mark>读取的UTF-8字符被转换为Unicode字符</mark>到内存里，编辑完成后，保存的时候再把Unicode转换为UTF-8保存到文件：</p>
+<p><img alt="" src="02_02_01.png" /></p>
+<p>浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器： </p>
+<p><img alt="" src="02_02_02.png" /></p>
+<p>所以你看到很多网页的源码上会有类似<code>&lt;meta charset="UTF-8" /&gt;</code>的信息，表示该网页正是用<mark>的UTF-8编码。</mark></p>
+<p><br></p>
+<h2 id="python">python 的字符串</h2>
+<p>在最新的Python 3版本中，<mark>字符串是以Unicode编码的</mark>，也就是说，Python的字符串支持多语言，例如：</p>
+<pre><code class="python">&gt;&gt;&gt; print('包含中文的str')
+包含中文的str
+</code></pre>
+
+<p>对于单个字符的编码，Python提供了<mark><code>ord()</code>函数获取字符的整数表示</mark>，<mark><code>chr()</code>函数把编码转换为对应的字符</mark>：</p>
+<pre><code>&gt;&gt;&gt; ord('A')
+65
+&gt;&gt;&gt; ord('中')
+20013
+&gt;&gt;&gt; chr(66)
+'B'
+&gt;&gt;&gt; chr(25991)
+'文'
+</code></pre>
+
+<p>如果知道字符的整数编码，还可以<mark>用十六进制这么写<code>str</code></mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; '\u4e2d\u6587'
+'中文'
+</code></pre>
+
+<p>两种写法完全是等价的。</p>
+<p><br></p>
+<h3 id="str-bytes">Str 和 bytes 互转</h3>
+<p>由于Python的字符串类型是<code>str</code>，在内存中以Unicode表示，一个字符对应若干个字节。如果要在网络上传输，或者保存到<mark>磁盘上，就需要把<code>str</code>变为以字节为单位的<code>bytes</mark></code>。</p>
+<p>Python对<mark><code>bytes</code>类型的数据用带  <code>b</code>前缀</mark> 的单引号或双引号表示：</p>
+<pre><code class="python">x = b'ABC'
+</code></pre>
+
+<p>要注意区分<code>'ABC'</code>和<code>b'ABC'</code>，<mark>前者是<code>str</code></mark>，后者虽然内容显示得和前者一样，<mark>但<code>bytes</code>的每个字符都只占用一个字节。</mark></p>
+<p>以Unicode表示的<code>str</code>通过<mark><code>encode()</code>方法可以编码为指定的<code>bytes</mark></code>，例如：</p>
+<pre><code class="python">&gt;&gt;&gt; 'ABC'.encode('ascii')
+b'ABC'
+&gt;&gt;&gt; '中文'.encode('utf-8')
+b'\xe4\xb8\xad\xe6\x96\x87'
+&gt;&gt;&gt; '中文'.encode('ascii')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-1: ordinal not in range(128)
+</code></pre>
+
+<p>纯英文的<code>str</code>可以用<code>ASCII</code>编码为<code>bytes</code>，内容是一样的，含<mark>有中文的<code>str</code>可以用<code>UTF-8</code>编码为<code>bytes</mark></code>。含有中文的<code>str<mark></code>无法用<code>ASCII</code>编码，因为中文编码的范围超过了<code>ASCII</code>编码的范围</mark>，Python会报错。</p>
+<p>在<code>bytes</code>中，<mark>无法显示为ASCII字符的字节，用<code>\x##</code>显示</mark>。</p>
+<p>反过来，如果我们从网络或磁盘上读取了字节流，那么读到的数据就是<code>bytes</code>。要<mark>把<code>bytes</code>变为<code>str</code>，就需要用<code>decode()</code>方法</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; b'ABC'.decode('ascii')
+'ABC'
+&gt;&gt;&gt; b'\xe4\xb8\xad\xe6\x96\x87'.decode('utf-8')
+'中文'
+</code></pre>
+
+<p>如果<code>bytes</code>中包含无法解码的字节，<code>decode()</code>方法会报错：</p>
+<pre><code class="python">&gt;&gt;&gt; b'\xe4\xb8\xad\xff'.decode('utf-8')
+Traceback (most recent call last):
+  ...
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 3: invalid start byte
+</code></pre>
+
+<p>如果<code>bytes</code>中只有一小部分无效的字节，可以<mark>传入<code>errors='ignore'</code>忽略错误的字节</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; b'\xe4\xb8\xad\xff'.decode('utf-8', errors='ignore')
+'中'
+</code></pre>
+
+<p><br></p>
+<h3 id="len">len() 函数</h3>
+<p>要计算<code>str</code>包含多少个字符，可以用<mark><code>len()</code>函数</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; len('ABC')
+3
+&gt;&gt;&gt; len('中文')
+2       
+</code></pre>
+
+<p><code>len()</code>函数计算的是<code>str</code>的字符数，如果<mark>换成<code>bytes</code>，<code>len()</code>函数就计算字节数</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; len(b'ABC')
+3
+&gt;&gt;&gt; len(b'\xe4\xb8\xad\xe6\x96\x87')
+6
+&gt;&gt;&gt; len('中文'.encode('utf-8'))
+6
+</code></pre>
+
+<p>可见，<mark>1个中文字符经过UTF-8编码后通常会占用3个字节</mark>，而1个英文字符只占用1个字节。</p>
+<p>在操作字符串时，我们经常遇到<code>str</code>和<code>bytes</code>的互相转换。为了<mark>避免乱码问题，应当始终坚持使用UTF-8编码对<code>str</code>和<code>bytes</code>进行转换</mark>。</p>
+<p><br></p>
+<h3 id="python_1">python 文件的保存</h3>
+<p>由于Python源代码也是一个文本文件，所以，当你的源代码中包含中文的时候，在保存源代码时，就需要务必指定保存为UTF-8编码。当Python解释器读取源代码时，为了让它按UTF-8编码读取，我们通常在文件开头写上这两行：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+</code></pre>
+
+<p>第一行注释是为了告诉Linux/OS X系统，这是一个Python可执行程序，Windows系统会忽略这个注释；</p>
+<p>第二行注释是为了告诉Python解释器，<mark>按照UTF-8编码读取源代码(只是声明，实际保存得看编辑器)</mark>，否则，你在源代码中写的中文输出可能会有乱码。</p>
+<p>申明了UTF-8编码并不意味着你的<code>.py</code>文件就是UTF-8编码的，必须并且要<mark>确保文本编辑器</mark>正在使用UTF-8 without BOM编码：</p>
+<p><img alt="" src="02_02_03.png" /></p>
+<p>如果<code>.py</code>文件<mark>本身使用UTF-8编码，并且也申明了</mark><code># -*- coding: utf-8 -*-</code>，打开命令提示符测试就可以正常显示中文： </p>
+<p><img alt="" src="02_02_04.png" /></p>
+<p><br></p>
+<h2 id="_2">格式化</h2>
+<p>在Python中，采用的格式化方式和C语言是一致的，用<code>%</code>实现，举例如下：</p>
+<pre><code class="python">&gt;&gt;&gt; 'Hello, %s' % 'world'
+'Hello, world'
+&gt;&gt;&gt; 'Hi, %s, you have $%d.' % ('Michael', 1000000)
+'Hi, Michael, you have $1000000.'
+</code></pre>
+
+<p>你可能猜到了，<code>%</code>运算符就是用来格式化字符串的。在字符串内部，<code>%s</code>表示用字符串替换，<code>%d</code>表示用整数替换，有几个<code>%?</code>占位符，后面就跟几个变量或者值，顺序要对应好。如果只有一个<code>%?</code>，括号可以省略。</p>
+<p>常见的<mark>占位符</mark>有：</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>占位符</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>替换内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>%d</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>整数</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>%f</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>浮点数</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>%s</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>字符串</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>%x</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>十六进制整数</td>
+</tr>
+</tbody>
+</table>
+<p>其中，格式化整数和浮点数还可以指定<mark>是否补0</mark>和<mark>整数与小数的位数</mark>： </p>
+<pre><code class="python">print('%2d-%02d' % (3, 1))  # 各占两位，默认右对齐
+print('%.2f' % 3.1415926)
+#  3-01
+# 3.14
+</code></pre>
+
+<p>如果你不太确定应该用什么，<mark><code>%s</code>永远起作用</mark>，它会把任何数据类型转换为字符串：</p>
+<pre><code class="python">&gt;&gt;&gt; 'Age: %s. Gender: %s' % (25, True)
+'Age: 25. Gender: True' 
+</code></pre>
+
+<p>有些时候，字符串里面的<code>%</code>是一个普通字符怎么办？这个时候就需要转义，用<code>%%</code>来表示一个<code>%</code>：</p>
+<pre><code class="python">&gt;&gt;&gt; 'growth rate: %d %%' % 7
+'growth rate: 7 %'
+</code></pre>
+
+<p><br></p>
+<h2 id="formart">formart()</h2>
+<p>另一种格式化字符串的方法是使用字符串的<code>format()</code>方法，它会用传入的参数依次替换字符串内的占位符<code>{0}</code>、<code>{1}</code>……，不过这种方式写起来比%要麻烦得多：</p>
+<pre><code class="python">&gt;&gt;&gt; 'Hello, {0}, 成绩提升了 {1:.1f}%'.format('小明', 17.125)
+'Hello, 小明, 成绩提升了 17.1%'
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">练习</h2>
+<p>小明的成绩从去年的72分提升到了今年的85分，请计算小明成绩提升的百分点，并用字符串格式化显示出<code>'xx.x%'</code>，只保留小数点后1位：</p>
+<p>下面三种方法都可以。</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch02/02.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+s1 = 72
+s2 = 85
+r = (s2 - s1)/s1 * 100
+print('%.1f%%' % r)         # 小数点后1位小数
+print('{:.1f}%'.format(r))
+print('{0:.1f}%'.format(r))
+
+# 18.1%
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

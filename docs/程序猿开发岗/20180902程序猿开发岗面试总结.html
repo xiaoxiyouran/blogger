@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>20180902 程序猿开发岗常见面试问题总结</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="20180902">20180902 程序猿开发岗常见面试问题总结</h1>
+<h2 id="_1">基础篇：操作系统、计算机网络、设计模式【山科大牛陈磊整理】</h2>
+<p><a href="https://blog.csdn.net/liuqiyao_01/article/details/12205549">来源</a> </p>
+<h3 id="_2">一：操作系统</h3>
+<p>\1. 进程的有哪几种状态，状态转换图，及导致转换的事件。</p>
+<p>\2. 进程与线程的区别。</p>
+<p>\3. 进程通信的几种方式。</p>
+<p>\4. 线程同步几种方式。(一定要会写生产者、消费者问题，完全消化理解)</p>
+<p>\5. 线程的实现方式. (也就是用户线程与内核线程的区别)</p>
+<p>\6. 用户态和核心态的区别。</p>
+<p>\7. 用户栈和内核栈的区别。</p>
+<p>\8. 内存池、进程池、线程池。(c++程序员必须掌握)</p>
+<p>\9. 死锁的概念，导致死锁的原因.</p>
+<p>\10. 导致死锁的四个必要条件。</p>
+<p>\11. 处理死锁的四个方式。</p>
+<p>\12. 预防死锁的方法、避免死锁的方法。</p>
+<p>\13. 进程调度算法。</p>
+<p>\14. Windows内存管理的方式(块式、页式、段式、段页式).</p>
+<p>\15. 内存连续分配方式采用的几种算法及各自优劣。</p>
+<p>\16. 动态链接及静态链接.</p>
+<p>\17. 基本分页、请求分页储存管理方式。</p>
+<p>\18. 基本分段、请求分段储存管理方式。</p>
+<p>\19. 分段分页方式的比较各自优缺点。</p>
+<p>\20. 几种页面置换算法，会算所需换页数。(LRU用程序如何实现？)</p>
+<p>\21. 虚拟内存的定义及实现方式。</p>
+<p>\22. 操作系统的四个特性。</p>
+<p>\23. DMA。</p>
+<p>\24. Spooling。</p>
+<p>\25. 外存分配的几种方式，及各种优劣。</p>
+<h2 id="_3">二：计算机网络</h2>
+<p>\1. 电路交换与分组交换的区别？ 优劣对比。</p>
+<p>\2. OSI有哪几层，会画出来，知道主要几层的各自作用。</p>
+<p>\3. TCP/IP有哪几层，会画出来，知道所有层数的作用，会列举各层主要的协议名称。</p>
+<p>\4. 硬件(MAC)地址的概念及作用。</p>
+<p>\5. ARP协议的用途 及算法、在哪一层上会使用arp ？</p>
+<p>\6. CRC冗余校验算法，反码和检验算法。</p>
+<p>\7. 如何实现透明传输。</p>
+<p>\8. 知道各个层使用的是哪个数据交换设备。（交换机、路由器、网关）</p>
+<p>\9. 路由表的内容。</p>
+<p>\10. 分组转发算法。</p>
+<p>\11. IP报文的格式，格式的各个字段的含义要理解。</p>
+<p>\12. MTU的概念，啥叫路径MTU？ MTU发现机制，TraceRoute(了解)。</p>
+<p>\13. RIP协议的概念 及算法。</p>
+<p>\14. ICMP协议的主要功能。</p>
+<p>\15. 组播和多播的概念，IGMP的用途。</p>
+<p>\16. Ping协议的实现原理，ping 命令格式。</p>
+<p>\17. 子网划分的概念，子网掩码。</p>
+<p>\18. IP地址的分类，如何划分的，及会计算各类地址支持的主机数。</p>
+<p>\19. DNS的概念，用途，DNS查询的实现算法。</p>
+<p>\20. TCP与UDP的概念，相互的区别及优劣。</p>
+<p>\21. UDP报文的格式，字段的意义。</p>
+<p>\22. TCP 报文的格式，字段的意义。</p>
+<p>\23. TCP通过哪些措施，保证传输可靠？</p>
+<p>\24. 三次握手，四次断开过程。</p>
+<p>\25. TIME_WAIT状态的概念及意义。</p>
+<p>\26. 滑动窗口协议 与 停止等待协议的区别。</p>
+<p>\27. TCP的流量控制和拥塞控制实现原理(会画拥塞控制的典型图)。</p>
+<p>\28. TCP的快速重传与快速恢复算法。</p>
+<p>\29. TFTP 与 FTP的区别。</p>
+<p>\30. 阻塞方式和非阻塞方式，阻塞connect与非阻塞connect。(比较难，有兴趣可以了解)</p>
+<p>\31. HTTP基本格式。（java程序员必须掌握）</p>
+<h2 id="_4">三：设计模式</h2>
+<p>\1. 各种常用模式的用途，使用方法。</p>
+<p>\2. 单例模式的双重检查实现。</p>
+<p>\3. MVC模式</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
