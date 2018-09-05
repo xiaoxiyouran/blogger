@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<title>001 系统中依赖最长的一条路径</title>
+	<title>006 障碍物棋盘游戏</title>
 	<meta name="keywords" content="xiaoxiyouran" />
 	<meta name="description" content="xiaoxiyouran's Docs" />
 	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
@@ -145,19 +145,19 @@
 <div class="container">
 <span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
  
-<h1 id="001">001 系统中依赖最长的一条路径</h1>
+<h1 id="006">006 障碍物棋盘游戏</h1>
 <h2 id="_1">链接和考点</h2>
 <table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
 <thead>
 <tr>
-<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>阿里编程测试</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>拼多多编程测试</th>
 <th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
-<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>多叉树，路径数，遍历</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>矩阵，字符串，map</td>
 </tr>
 <tr>
 <td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
@@ -167,145 +167,142 @@
 </table>
 <p><br></p>
 <h2 id="_2">题意</h2>
-<p>已知一些系统， 每个系统有各自的运行时间， 各个系统之间可能存在依赖关系。 求系统间的路径数，和最长的一条路径是多少。</p>
-<p><strong>示例：</strong></p>
-<pre><code>5 4 // 输入5 个系统， 4 个依赖边
-2   // 系统 1 的运行时间
-5   // 系统 2 的运行时间
-4   // 系统 3 的运行时间
-6   // 系统 4 的运行时间
-6   // 系统 5 的运行时间
-1 2 // 1-&gt;2 有一条边
-1 3 // 1-&gt;3 有一条边
-2 5 // 2-&gt;5 有一条边
-4 5 // 4-&gt;5 有一条边
+<p>有一个矩形棋盘，有N行M列。 矩形棋盘上每个格点可能是空（“.”）, 障碍物(“x”) 或者箱子（“o”）。 当把棋盘竖起来的时候，如果当前列没有障碍物，那么箱子将会画出棋盘。 如果有障碍物，那么将落在障碍物上堆叠起来。</p>
+<p><strong>输入描述</strong></p>
+<blockquote>
+<p>输入N行M列（0 &lt; N, M &lt; 10）， 然后输入棋盘：</p>
+<p>如：</p>
+<p>xoxo
+o.x.
+xx.o</p>
+</blockquote>
+<p><br></p>
+<p><strong>输出描述：</strong></p>
+<blockquote>
+<p>x.x.
+oox.
+xx..</p>
+</blockquote>
+<p><br></p>
+<p>示例1：</p>
+<pre><code class="shell">3 4
+xoxo
+o.x.
+xx.o
 </code></pre>
 
-<p>输出：</p>
-<pre><code>13 3 // 最长的一条边是13， 路径数是3
+<p>输出结果：</p>
+<pre><code class="shell">x.x.
+oox.
+xx..
 </code></pre>
 
-<p>有三条路径: <code>1-&gt;2-&gt;5</code> , 值是13； 第二条路径是 <code>1-&gt;3</code>, 值是6； 第三条路径是 <code>4-&gt;5</code>, 值是12；</p>
 <p><br></p>
 <h2 id="_3">分析</h2>
-<p>这是一个多叉数的问题：</p>
-<p><img alt="image-20180816232225625" src="image-20180816232225625.png" /></p>
-<p>建立好多叉树以后， 找到根节点（在添加依赖的时候，如果该节点被添加到另一个节点的分支上时，那么该节点肯定不是根节点）。</p>
-<p>找到根节点后， 开始向下遍历。记录路径数和最长的路径。</p>
-<p>注意回溯法的使用。</p>
+<p>当输入棋盘的时候（按行输入）， 可以用一个map 来统计没列上障碍物所在行号；</p>
+<p>然后分别对每一列进行处理， 如果当前列有障碍物， 那么需要判断出障碍物的位置， 然后统计当前障碍物上面有多少个箱子， 只要保证障碍物上的箱子最后都堆叠在障碍物上即可；其它位置都置为’空 ‘.’’。</p>
+<p>没有障碍物的列，都置为空“.“ 。</p>
+<p>用map是有序的，这样可以从前往后，一列列的有序处理。</p>
 <p><br></p>
 <h2 id="_4">测试</h2>
-<p>很奇怪，这个只A了67%</p>
+<p>这个A了100%</p>
 <p><br></p>
 <h2 id="_5">参考答案</h2>
-<p>时间复杂度： O(n)</p>
-<p>空间复杂度：O(n)</p>
-<pre><code class="cpp">#include &quot;GlobalHead.h&quot;
+<p><br></p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
 #include &lt;map&gt;
 using namespace std;
 
-struct  TreeNode{
-	int val;
-	int time;
-	vector&lt;TreeNode *&gt; next;
-	TreeNode(int val, int time ): val(val), time(time){}
-};
-
-
-void traverse(TreeNode *root, int&amp; res, int&amp; curLen, int&amp; paths ){
-	if(root -&gt; next.size() == 0){
-		paths++;
-		res  = (res &lt; curLen) ? curLen:res;
-		return;
+// 处理带障碍物 x 的列
+void process( vector&lt;vector&lt;char&gt;&gt; &amp; mat, int col, int start, int end){
+	int circle = 0;
+	for( int i = start; i &lt; end; i ++){
+		if( mat[i][col] == 'o' )
+			circle++;
 	}
 
-	for(int i=0; i &lt; root -&gt; next.size(); i++){
-		curLen += root-&gt;next[i] -&gt; time;
-		traverse(root-&gt;next[i],  res, curLen, paths );
-		curLen -= root-&gt;next[i] -&gt; time;
+	for( int i = start; i &lt; end; i ++){
+		if(i &lt; end-circle)
+			mat[i][col] = '.';
+		else
+			mat[i][col] = 'o';
+	}
+
+}
+
+// 处理没有障碍物的列
+void processNoX( vector&lt;vector&lt;char&gt;&gt; &amp; mat, int col, int start, int end){
+	for( int i = start; i &lt; end; i ++){
+		mat[i][col] = '.';
 	}
 }
 
 int main() {
-	int systems, yilai;
-	cin &gt;&gt; systems;
-	cin &gt;&gt; yilai;
+	int row, col;
+	cin &gt;&gt; row;
+	cin &gt;&gt; col;
+	map&lt;int, vector&lt;int&gt;&gt; zhangai;
+	vector&lt;vector&lt;char&gt;&gt; mat(row, vector&lt;char&gt;(col));//这里，两个“&gt;”间的空格是不可少的;
 
-	vector&lt;TreeNode&gt; time;
-	for(int i = 0; i&lt; systems; i ++){
-		int ti;
-		cin &gt;&gt; ti;
-		TreeNode nn(i, ti);
-		time.push_back(nn);
+	for( int i = 0; i &lt; row; i ++ )
+		for( int j=0; j &lt; col; j++ ){
+			char tmp;
+			cin &gt;&gt; tmp;
+			mat[i][j] = tmp;
+			if( tmp == 'x' ){
+				if( zhangai.find(j) == zhangai.end() ){
+					vector&lt;int&gt; tmp;
+					tmp.push_back(i);
+					zhangai[j] = tmp;
+				}
+				else{
+					zhangai[j].push_back(i);
+				}
+			}
+		}
+
+	int startCol = 0;
+	int curCol = 0;
+	for(auto it = zhangai.begin(); it!=zhangai.end(); it++){
+		vector&lt;int&gt;&amp; currColx = it-&gt;second;
+		curCol = it -&gt; first;
+
+		// 处理刚开始非障碍物的列
+		for(int i=startCol; i &lt; curCol; i ++){
+			processNoX( mat, i, 0, row);
+		}
+		startCol = curCol+1;        // 更新下一次开始的列
+
+		// 处理带障碍物的列，假设该列有多个障碍物 x
+		int start = 0;
+		for( int t = 0; t &lt; currColx.size(); t++ ){
+			process(mat, curCol, start, currColx[t]);
+			start = currColx[t] + 1;
+		}
+
+		// 处理该列剩下可能不带障碍物的
+		if( currColx[currColx.size()-1] != (row-1)){
+			processNoX( mat, curCol, start, row);
+		}
 	}
 
-
-	for(int i=0; i&lt; yilai; i++){
-		int one, two;
-		cin &gt;&gt; one;
-		cin &gt;&gt; two;
-		time[one-1].next.push_back(&amp;time[two-1]);
+	// 处理障碍物后面可能还有不带障碍物的列
+	for(int i=startCol; i &lt; col; i ++){
+		processNoX( mat, i, 0, row);
 	}
 
-	vector&lt;bool&gt; vec(systems, false);
-	for(int i=0; i &lt; systems; i++){
-		  for(int j=0; j &lt; time[i].next.size(); j++){
-			  vec[time[i].next[j]-&gt;val] = true;
-		  }
+	// 输出结果
+	for(int i=0; i &lt; row; i++){
+		for(int j=0; j&lt; col; j++)
+			cout &lt;&lt; mat[i][j];
+		cout&lt;&lt;endl;
 	}
 
-	vector&lt;int&gt; only;
-	for( int i=0; i&lt; vec.size(); i++ ){
-		if (vec[i] == false)
-			only.push_back(i);
-	}
-
-	int res = 0;
-	int paths = 0;
-	for (int i = 0; i &lt; only.size(); i++){
-
-		TreeNode&amp; head = time[only[i]];
-		int curLen = head.time;
-		traverse(&amp;head, res, curLen, paths );
-	}
-
-	cout &lt;&lt; res &lt;&lt; &quot;\t&quot; &lt;&lt; paths &lt;&lt; endl;
 
 	return 0;
 }
-
-
-
-/* input
-5 4
-2
-5
-4
-6
-6
-1 2
-1 3
-2 5
-4 5
- */
-
-/* output
-5 4
-2
-5
-4
-6
-6
-1 2
-1 3
-2 5
-4 5
-13  3
-
-*/
 </code></pre>
-
-<p>更新版通过率只有66% 我就郁闷了。。。</p>
 
 
 <hr/>

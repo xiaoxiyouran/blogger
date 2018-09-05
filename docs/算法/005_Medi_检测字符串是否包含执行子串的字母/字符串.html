@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<title>001 系统中依赖最长的一条路径</title>
+	<title>005 检测一个字符串是否包含另一个字符串中的所有字符</title>
 	<meta name="keywords" content="xiaoxiyouran" />
 	<meta name="description" content="xiaoxiyouran's Docs" />
 	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
@@ -145,19 +145,19 @@
 <div class="container">
 <span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
  
-<h1 id="001">001 系统中依赖最长的一条路径</h1>
+<h1 id="005">005 检测一个字符串是否包含另一个字符串中的所有字符</h1>
 <h2 id="_1">链接和考点</h2>
 <table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
 <thead>
 <tr>
-<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>阿里编程测试</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>华为编程测试</th>
 <th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
-<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>多叉树，路径数，遍历</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>字符串，hash</td>
 </tr>
 <tr>
 <td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
@@ -167,145 +167,97 @@
 </table>
 <p><br></p>
 <h2 id="_2">题意</h2>
-<p>已知一些系统， 每个系统有各自的运行时间， 各个系统之间可能存在依赖关系。 求系统间的路径数，和最长的一条路径是多少。</p>
-<p><strong>示例：</strong></p>
-<pre><code>5 4 // 输入5 个系统， 4 个依赖边
-2   // 系统 1 的运行时间
-5   // 系统 2 的运行时间
-4   // 系统 3 的运行时间
-6   // 系统 4 的运行时间
-6   // 系统 5 的运行时间
-1 2 // 1-&gt;2 有一条边
-1 3 // 1-&gt;3 有一条边
-2 5 // 2-&gt;5 有一条边
-4 5 // 4-&gt;5 有一条边
+<p>两个字符串input1， 和字符串input2， 字符串中元素的值域是26个大写字母，判断input2中的所有字符是否都包含在字符串input1中。</p>
+<p>如果包含，返回：true;</p>
+<p>否则返回： false</p>
+<p><strong>输入描述</strong></p>
+<blockquote>
+<p>两个字符串：input1 和input2， 其中input1的长度大于input2. 要求两个输入字符串 input1 和 input2的长度不小于5.</p>
+<p>如：</p>
+<p>A字符串： BBDDCFFE</p>
+<p>B字符串：LCEFB</p>
+</blockquote>
+<p><br></p>
+<p><strong>输出描述：</strong></p>
+<blockquote>
+<p>true  或false</p>
+</blockquote>
+<p><br></p>
+<p>示例1：</p>
+<pre><code class="shell">BBDDCFFEL
+
+LCEFB
 </code></pre>
 
-<p>输出：</p>
-<pre><code>13 3 // 最长的一条边是13， 路径数是3
+<p>输出结果：</p>
+<pre><code class="shell">true
 </code></pre>
 
-<p>有三条路径: <code>1-&gt;2-&gt;5</code> , 值是13； 第二条路径是 <code>1-&gt;3</code>, 值是6； 第三条路径是 <code>4-&gt;5</code>, 值是12；</p>
 <p><br></p>
 <h2 id="_3">分析</h2>
-<p>这是一个多叉数的问题：</p>
-<p><img alt="image-20180816232225625" src="image-20180816232225625.png" /></p>
-<p>建立好多叉树以后， 找到根节点（在添加依赖的时候，如果该节点被添加到另一个节点的分支上时，那么该节点肯定不是根节点）。</p>
-<p>找到根节点后， 开始向下遍历。记录路径数和最长的路径。</p>
-<p>注意回溯法的使用。</p>
+<p>这个题相对来说比较简单，不同于最长子序列（字母前后顺序已定） 和 最长子串（连续的子串）。 由于字母只可能是26个字母， 只要两次遍历：</p>
+<ul>
+<li>第一次遍历， 统计input1 中的字符；</li>
+<li>第二次遍历， 查询input2 中的字符是否都在input1 中；</li>
+</ul>
+<p>剩下的只要动态更新hashmap 就能达到要求。</p>
 <p><br></p>
 <h2 id="_4">测试</h2>
-<p>很奇怪，这个只A了67%</p>
+<p>这个A了100%</p>
 <p><br></p>
 <h2 id="_5">参考答案</h2>
-<p>时间复杂度： O(n)</p>
-<p>空间复杂度：O(n)</p>
-<pre><code class="cpp">#include &quot;GlobalHead.h&quot;
-#include &lt;map&gt;
+<p><br></p>
+<pre><code class="cpp">#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;set&gt;
 using namespace std;
 
-struct  TreeNode{
-	int val;
-	int time;
-	vector&lt;TreeNode *&gt; next;
-	TreeNode(int val, int time ): val(val), time(time){}
-};
-
-
-void traverse(TreeNode *root, int&amp; res, int&amp; curLen, int&amp; paths ){
-	if(root -&gt; next.size() == 0){
-		paths++;
-		res  = (res &lt; curLen) ? curLen:res;
-		return;
+bool process(string&amp; in1, string&amp; in2){
+	if(in1.size() &lt; 5 || in2.size() &lt; 5 || in1.size() &lt;= in2.size())
+		return false;
+	unordered_map&lt;char, int&gt; mymap;
+	for(int i=0; i &lt; in1.size(); i++){
+		if( mymap.find(in1[i]) != mymap.end() )
+			mymap[in1[i]] ++;
+		else
+			mymap[in1[i]] = 1;      // first insert
 	}
+//    general::print_Hashmap(mymap);
+	bool flag = true;
+	for( int i=0; i &lt; in2.size(); i++ ){
+		if( mymap.find(in2[i]) != mymap.end() ){
+			if( mymap[in2[i]] &gt; 0 ){        // 不只一个
+				mymap[in2[i]]--;
+				continue;
+			}else{      // 重复检查的元素不够
+				flag = false;
+				break;
+			}
 
-	for(int i=0; i &lt; root -&gt; next.size(); i++){
-		curLen += root-&gt;next[i] -&gt; time;
-		traverse(root-&gt;next[i],  res, curLen, paths );
-		curLen -= root-&gt;next[i] -&gt; time;
+		}else{
+			flag = false;       // 发现了一个不存在的字符
+			break;
+		}
 	}
+//    general::print_Hashmap(mymap);
+	return flag;
 }
 
 int main() {
-	int systems, yilai;
-	cin &gt;&gt; systems;
-	cin &gt;&gt; yilai;
 
-	vector&lt;TreeNode&gt; time;
-	for(int i = 0; i&lt; systems; i ++){
-		int ti;
-		cin &gt;&gt; ti;
-		TreeNode nn(i, ti);
-		time.push_back(nn);
-	}
+	string input1;
+	string input2;
+	cin &gt;&gt; input1;
+	cin &gt;&gt; input2;
 
-
-	for(int i=0; i&lt; yilai; i++){
-		int one, two;
-		cin &gt;&gt; one;
-		cin &gt;&gt; two;
-		time[one-1].next.push_back(&amp;time[two-1]);
-	}
-
-	vector&lt;bool&gt; vec(systems, false);
-	for(int i=0; i &lt; systems; i++){
-		  for(int j=0; j &lt; time[i].next.size(); j++){
-			  vec[time[i].next[j]-&gt;val] = true;
-		  }
-	}
-
-	vector&lt;int&gt; only;
-	for( int i=0; i&lt; vec.size(); i++ ){
-		if (vec[i] == false)
-			only.push_back(i);
-	}
-
-	int res = 0;
-	int paths = 0;
-	for (int i = 0; i &lt; only.size(); i++){
-
-		TreeNode&amp; head = time[only[i]];
-		int curLen = head.time;
-		traverse(&amp;head, res, curLen, paths );
-	}
-
-	cout &lt;&lt; res &lt;&lt; &quot;\t&quot; &lt;&lt; paths &lt;&lt; endl;
+	// check
+	cout &lt;&lt;boolalpha&lt;&lt; process(input1, input2) &lt;&lt; endl;
 
 	return 0;
 }
-
-
-
-/* input
-5 4
-2
-5
-4
-6
-6
-1 2
-1 3
-2 5
-4 5
- */
-
-/* output
-5 4
-2
-5
-4
-6
-6
-1 2
-1 3
-2 5
-4 5
-13  3
-
-*/
 </code></pre>
-
-<p>更新版通过率只有66% 我就郁闷了。。。</p>
 
 
 <hr/>
