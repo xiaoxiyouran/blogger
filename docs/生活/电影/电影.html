@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>电影</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">电影</h1>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>影名</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>上映时间</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>影院</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>观影时间</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>豆瓣评分</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>演员</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>自评</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>碟中谍6-全面瓦解3D</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.09.09</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>时代影城</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.09.08</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8.3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><img alt="img" src="eac4b74543a98226e4b3d46d8082b9014a90eb0e.jpg" />汤姆·克鲁斯<br><img alt="img" src="64380cd7912397dd44962e3c5a82b2b7d0a2871f-20180909231944370.jpg" />丽贝卡·弗格森</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>为大爱舍小爱</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>我不是药神</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.07.05</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.07.12</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>9.0</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>徐峥</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>活着，为了良心，铤而走险，未尝不可。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>邪不压正</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.07.13</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>深圳中影德金影城南山店</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.07.13</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>7.2</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>姜文，彭于晏，周韵</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>魔幻的现实主义，只不过大家被荒诞惯了，再也不相信真现实了</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>侏罗纪世界2</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.06.15</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>时代影城</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.06.12</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>6.8</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1017967/">克里斯·帕拉特</a> / <a href="https://movie.douban.com/celebrity/1027772/">布莱丝·达拉斯·霍华德</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>暴虐恐龙追杀小女孩那一场戏真是充满了古典之美。 冠以好莱坞之名。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>复仇者联盟-无限战争3D</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.05.11</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>时代影城</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.05.18</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8.1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1016681/">小罗伯特·唐尼</a> / <a href="https://movie.douban.com/celebrity/1021959/">克里斯·海姆斯沃</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>灭霸：后来我什么都有了，但是没有了我们</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>头号玩家3D</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.03.30</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>木槿校园</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.03.30</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8.7</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1328390/">泰伊·谢里丹</a> / <a href="https://movie.douban.com/celebrity/1327806/">奥利维亚·库克</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>好莱坞把圈钱手段做到了极致，情怀，英雄，动漫，怀旧，复古只要能圈钱，什么都行. 后退也是另一个方向的前进， 游戏人生， 回归本心， 不过离世匆匆一瞥。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>芳华2D</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.12.15</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>时代影城</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.12.31</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>7.7</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1276105/">黄轩</a> / <a href="https://movie.douban.com/celebrity/1366978/">苗苗</a> / <a href="https://movie.douban.com/celebrity/1357009/">钟楚曦</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>那场独舞，关于信仰、对集体主义的控诉、青春之殇，一场戏都在里面了。冯小刚确实在做以前第五代导演才会做的事，他驾着他积累的20多年的名声，扭过头，凿一座碑.</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>寻梦环游记3D</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.11.24</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>木槿校园</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.12.09</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>9.0</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1370411/">安东尼·冈萨雷斯</a> / <a href="https://movie.douban.com/celebrity/1041009/">盖尔·加西亚·贝纳尔</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>电影是绝佳的造梦机器。那些回不去的家乡 没能守护的家人也只有在梦里相见。<br>我们是人类的一分子，而人类是充满激情的。医学、法律、商业、科技，这些都是崇高的追求，足以支撑人的一生。但音乐、诗歌、梦想、情感，这些才是我们活着的意义。</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>天才枪手</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.10.13</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>木槿校园</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.10.14</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>8.1</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1378772/">茱蒂蒙·琼查容苏因</a> / <a href="https://movie.douban.com/celebrity/1366471/">查侬·散顶腾古</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>青春不只是堕胎与恋爱，作弊才是学生时代的主题啊！</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>异形契约</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.06.16</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>时代影城</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2017.06.17</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>7.3</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1000010/">迈克尔·法斯宾德</a> / <a href="https://movie.douban.com/celebrity/1316589/">凯瑟琳·沃特斯顿</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>我真的不能原谅那个说里面有法斯宾德自己帮自己吹箫的同学</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>我不是潘金莲</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2016.11.18</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>上海嘉定区大地影院（罗宾森广场店）</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2016.11.19</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>6.7</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://movie.douban.com/celebrity/1050059/">范冰冰</a> / <a href="https://movie.douban.com/celebrity/1274274/">郭涛</a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>除了蹭范爷，木有亮点，不予评价。</td>
+</tr>
+</tbody>
+</table>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

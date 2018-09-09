@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>015 判断很多小矩阵能否相乘</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="015">015 判断很多小矩阵能否相乘</h1>
+<h2 id="_1">链接和考点</h2>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>栏目</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>网易互娱编程测试</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.09.08</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>vector2D, dfs</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Easy</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="_2">题意</h2>
+<p><img alt="image-20180909171248435" src="image-20180909171248435.png" /></p>
+<p><img alt="image-20180909171254263" src="image-20180909171254263.png" /></p>
+<p><img alt="image-20180909171259468" src="image-20180909171259468.png" /></p>
+<p><br></p>
+<h2 id="_3">分析</h2>
+<p>1-  这个题我说一下我朋友的思路（陈星辰）， </p>
+<p>用两个multimap, 分别按照 row-col 和 col-row （最后一个没有存它的转置矩阵）来存， 然后，以multimap 是否为空进行while 循环， 从 row-col 中取出最后一个矩阵， 在col-row multimap  中找，看能否有与之相乘的矩阵， <strong>找到第一个就擦除它</strong>， 并在row-col 将最后一个矩阵擦除， 直到最后，如果全能找到配对的， 那么row-col 就为空，否则， 无法相乘。</p>
+<p>提出两个问题：</p>
+<ul>
+<li>1） 在两个multimap 中， 他在row-col 中存了矩阵A， 那么在col-row 中同时也存了矩阵 $A^T$, 除了最后一个，这里好像缺少数学证明他的可行性； 因为在找能与之相乘的矩阵时，$AA^T$  自己乘自己总是可行的。</li>
+<li>2）在 “<strong>找到第一个就擦除它</strong>”， 这个好像忽略了顺序的差别， 如下 <code>[4 3] [3 4] [3 3 ]</code>, 这样就不能相乘。</li>
+</ul>
+<pre><code class="cpp">4X3
+
+3X3
+3X4
+</code></pre>
+
+<p><br></p>
+<p>2- 首先， 将每个矩阵的信息按照 row-col 存到一个multimap 里面， </p>
+<p>我发现了一个规律， 即，能够影响结果的是第一个和最后一个矩阵， 而中间的矩阵，都应该按照一定条件抵消。</p>
+<p><img alt="image-20180909174658536" src="image-20180909174658536.png" /></p>
+<p>所以我们应该选 $A^2_2$ 选两组， 他们是有序的，即 一种是一个在前（另一个在后），一种是另一个在前（它在后）， 因为这样省略掉两个不配对的数（你可以认为，首尾两端的数和任意数配对）</p>
+<p><br></p>
+<h2 id="_4">测试</h2>
+<p>A了x</p>
+<p><br></p>
+<h2 id="_5">参考答案</h2>
+<p>同学写了一个排序算法，没什么道理：</p>
+<pre><code class="cpp">//哈希函数 H(k)=3*k MOD length
+#pragma warning(disable:4996)   // 关闭vs的一些警告
+#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;iostream&gt;
+#include&lt;functional&gt;
+#include&lt;queue&gt;
+#include&lt;set&gt;
+#include&lt;string&gt;
+#include&lt;unordered_map&gt;
+#include&lt;map&gt;
+#include&lt;array&gt;
+#include&lt;algorithm&gt;
+#include&lt;stack&gt;
+using namespace std;
+typedef struct node{
+	int x, y;
+}node;
+
+int cmp(node a,node b)
+{
+	if (a.x == b.x)  return a.y &lt; b.y;
+	return a.x &lt; b.x;
+}
+
+vector&lt;string&gt;ans;
+node dt[10000];
+int main()
+{
+	int t, n;
+	cin &gt;&gt; t;
+	while (t--)
+	{
+		cin &gt;&gt; n;
+		for (int i = 0; i &lt; n; ++i)
+		{
+			cin &gt;&gt; dt[i].x &gt;&gt; dt[i].y;
+		}
+
+		sort(dt, dt + n, cmp);
+		int beginIndex = dt[0].y;
+		bool yes = true;
+		for (int i = 1; i &lt; n; ++i)
+		{
+			if (dt[i].x == dt[i - 1].x &amp;&amp; dt[i].y == dt[i - 1].y &amp;&amp; dt[i].x == dt[i].y)
+			{
+				continue;
+			}
+			else
+			{
+				if (beginIndex == dt[i].x)
+				{
+					beginIndex = dt[i].y;
+				}
+				else
+				{
+					yes = false;
+					break;
+				}
+			}
+		}
+		if (yes) ans.push_back(&quot;yes&quot;);
+		else  ans.push_back(&quot;no&quot;);
+	}
+	for(int i = 0; i &lt; ans.size(); ++i)
+	{
+		cout &lt;&lt; ans[i] &lt;&lt; endl;
+	}
+}
+</code></pre>
+
+<p>我的解答，还没弄完， 需要debug， 有点问题还：</p>
+<pre><code class="cpp">//哈希函数 H(k)=3*k MOD length
+#pragma warning(disable:4996)   // 关闭vs的一些警告
+#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;iostream&gt;
+#include&lt;functional&gt;
+#include&lt;queue&gt;
+#include&lt;set&gt;
+#include&lt;string&gt;
+#include&lt;unordered_map&gt;
+#include&lt;map&gt;
+#include&lt;array&gt;
+#include&lt;algorithm&gt;
+#include&lt;stack&gt;
+using namespace std;
+
+
+using namespace std;
+
+
+void process( multimap&lt;int, int&gt;&amp; row_col, unordered_map&lt;int, int&gt;&amp; row_sta,  unordered_map&lt;int, int&gt;&amp; col_sta){ // 开始统计行和列上数字的频次
+
+	for( auto it = row_col.begin(); it != row_col.end(); it++ ){
+		if( row_sta.find(it-&gt;first) == row_sta.end() ){ // first dis
+			row_sta[it-&gt;first] = 1;
+		}else
+			row_sta[it-&gt;first]++;
+
+		if( col_sta.find(it-&gt;second) == col_sta.end() ){ // first dis
+			col_sta[it-&gt;second] = 1;
+		}else
+			col_sta[it-&gt;second]++;
+	}
+
+}
+
+
+int main() {
+	int T;
+	cin &gt;&gt; T;
+
+	while (T--){
+		int M;
+		cin &gt;&gt; M;
+		multimap&lt;int, int&gt; row_col;
+		multimap&lt;int, int&gt; col_row;
+		for( int i=0; i &lt; M; i++ ){
+			int row, col;
+			cin &gt;&gt; row &gt;&gt; col;
+			row_col.insert(make_pair(row, col));
+			col_row.insert(make_pair(row, col));
+		}
+
+		unordered_map&lt;int, int&gt; row_sta, col_sta;
+		process( row_col,  row_sta,  col_sta);
+
+		if( M == 1)
+			cout &lt;&lt; &quot;yes&quot; &lt;&lt; endl;
+		else if( M &gt; 2 ){
+			bool isDiffOne = true;                  // 最多个数相差一个
+			for( auto it = row_col.begin(); it !=row_col.end(); it++ ){
+				if( col_sta.find(it-&gt;first) != col_sta.end() ){
+					if(it -&gt; second == col_sta[it-&gt;first]){
+						it -&gt; second = 0;
+						col_sta[it-&gt;first] = 0; // 相互抵消
+					} else if( abs(it -&gt; second - col_sta[it-&gt;first])  == 1  ){
+						if( it -&gt; second &gt; col_sta[it-&gt;first] ){
+							it -&gt; second = 1;
+							col_sta[it-&gt;first] = 0;
+						}else{
+							it -&gt; second = 0;
+							col_sta[it-&gt;first] = 1;
+						}
+					}
+					else if( abs(it -&gt; second - col_sta[it-&gt;first])  &gt; 1  ){
+						isDiffOne = false;
+						break;
+					}
+
+
+				}else{ // 不能找到
+					if( it -&gt; second &gt; 1 ){ // 1 特有的比个数1还大， 肯定不对
+						isDiffOne = false;
+						break;
+					}
+				}
+
+
+
+			}
+
+			if( ! isDiffOne ){      // 相差个数大于1的， 肯定不是
+				cout &lt;&lt; &quot;no&quot; &lt;&lt; endl;
+			}else{
+				// 统计第一个map， 最多只有1个1存在，否则错误
+				bool flag_fir = true;
+				int cnt_fir  = 0;
+				for( auto it = row_col.begin(); it !=row_col.end(); it++ ){
+					if( it -&gt; second != 0 ){
+						if( cnt_fir == 0 )
+							cnt_fir++;
+						else                    // 第二次碰到 相差个数不为1的
+							flag_fir = false;
+					}
+				}
+
+				bool flag_sec = true;
+				int cnt_sec  = 0;
+				for( auto it = col_row.begin(); it !=col_row.end(); it++ ){
+					if( it -&gt; second != 0 ){
+						if( it -&gt; second &gt; 1 ){
+							flag_sec = false;       // 不同的那个键有多个值， 肯定是不对的， 直接终止循环
+							break;
+						}
+
+						if( cnt_sec == 0 )
+							cnt_sec++;
+						else                    // 第二次碰到 相差个数不为1的
+							flag_sec = false;
+					}
+				}
+
+				if( flag_fir &amp;&amp; flag_sec )
+					cout &lt;&lt; &quot;yes&quot; &lt;&lt; endl;
+				else
+					cout &lt;&lt; &quot;no&quot; &lt;&lt; endl;
+			}
+		}else
+			cout &lt;&lt; &quot;no&quot; &lt;&lt; endl;
+	}
+
+	return 0;
+}
+/*output:
+1
+3
+4 3
+3 3
+3 4
+no
+
+*/
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

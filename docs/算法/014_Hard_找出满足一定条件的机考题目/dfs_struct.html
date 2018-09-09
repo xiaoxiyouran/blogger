@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>014 找出满足一定条件的机考题目</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="014">014 找出满足一定条件的机考题目</h1>
+<h2 id="_1">链接和考点</h2>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>栏目</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>网易互娱编程测试</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.09.08</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>dfs, struct</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Hard</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="_2">题意</h2>
+<p><img alt="image-20180909170947212" src="image-20180909170947212.png" /></p>
+<p><img alt="image-20180909170956298" src="image-20180909170956298.png" /></p>
+<p><img alt="image-20180909171004089" src="image-20180909171004089.png" /></p>
+<p><br></p>
+<h2 id="_3">分析</h2>
+<p>1- 会让选M道题目，那就先选，然后按照条件剪枝， 和阿里的那道题目很像。</p>
+<p><br></p>
+<h2 id="_4">测试</h2>
+<p>A了100%。</p>
+<p><br></p>
+<h2 id="_5">参考答案</h2>
+<p><br></p>
+<pre><code class="cpp">//#include &quot;GlobalHead.h&quot;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;stack&gt;
+#include &lt;algorithm&gt;
+#include &lt;unordered_map&gt;
+
+#include &lt;sstream&gt;
+
+using namespace std;
+struct Node{
+	int nandu;
+	int tags_num;
+	unordered_map&lt;string, string&gt; tags;
+};
+
+bool Cmp(const Node &amp;a, const Node &amp;b)            //const必须加，不然会错，目前不懂为啥。当return的是ture时，a先输出，所以示例中是升序
+{
+	return a.nandu &lt; b.nandu;
+}
+
+bool check_tags_andNandu(vector&lt;Node&gt; path, int L){
+	bool flag = true;
+	bool flag_nandusum = true;
+	unordered_map&lt;string, string&gt; tmp;
+	int cnt = 0;
+
+	int sum_nandu = 0;
+	for( int i=0; i&lt; path.size(); i++ ){
+		Node&amp; me = path[i];
+		sum_nandu += me.nandu;
+		if( sum_nandu &gt;L ){
+			flag_nandusum = false;
+			return false;
+		}
+
+		for( auto it = me.tags.begin(); it != me.tags.end(); it++ ){
+			tmp[it-&gt;first] = it-&gt;second;    // 将所有标签添加进来
+			cnt++;
+		}
+	}
+
+	if( cnt != tmp.size() )
+		flag = false;
+
+	return  flag;
+}
+
+
+bool check_abs(vector&lt;Node&gt; path, int S){
+	sort(path.begin(), path.end(), Cmp);
+	if( path.size() == 0 )
+		return  true;
+	int tt =  abs(path[0].nandu-path[path.size()-1].nandu);
+	return tt&gt;= S;
+
+}
+
+void process(vector&lt;Node&gt;&amp; timu, int start, vector&lt;Node&gt;&amp; path, int&amp; count, int  M, int L, int S){
+
+
+	if( path.size() == M ){
+		if(! check_tags_andNandu(path, L))
+			return;
+
+		if(! check_abs(path, S))
+			return;
+		count++;        // 种类数
+		return;
+	}
+
+
+	for( int i = start; i &lt; timu.size(); i++){
+		path.push_back(timu[i]);
+		process(timu, i+1, path,  count,  M,  L,  S);
+		path.pop_back();
+	}
+}
+
+int main() {
+	int test;
+	cin &gt;&gt; test;
+	vector&lt;int&gt; res;
+
+	//
+	for( int kk=0; kk &lt; test; kk++ ){
+		int N, M, L, S;
+		cin &gt;&gt; N;
+		cin &gt;&gt; M;
+		cin &gt;&gt; L;
+		cin &gt;&gt; S;
+
+		vector&lt;Node&gt; timu;
+		for( int i=0; i&lt; N; i++ ){
+			Node tmp;
+			cin &gt;&gt; tmp.nandu;
+			cin &gt;&gt; tmp.tags_num;
+			for( int j=0; j&lt; tmp.tags_num; j++ ){
+				string tt;
+				cin &gt;&gt; tt;
+				tmp.tags[tt] = tt;
+			}
+			timu.push_back(tmp);
+		}
+
+		vector&lt;Node&gt; path;
+		int count = 0;
+		int start = 0;
+		process(timu,  start, path, count,   M,  L,  S);
+//        res.push_back(count);
+		cout &lt;&lt; count &lt;&lt; endl;
+	}
+
+
+	 return 0;
+}
+</code></pre>
+
+<p>吴登鹏写的python答案，据说通过了样例，未测试：</p>
+<pre><code class="python">import sys
+def dfs(h, m, l, s, d, res, out, pos, zong_nandu, max_nandu, min_nandu):
+	if len(out) == m and zong_nandu &lt;= l and max_nandu - min_nandu &gt;= s:
+		res[0] += 1
+		return
+	for i in range(pos, len(h)):
+		if len(out) &lt; m and zong_nandu &lt; l:
+			for tag in h[i][1]:
+				if tag in d:
+					return
+				else:
+					d.add(tag)
+			out.append(h[i])
+			max_nandu = max(max_nandu, h[i][0])
+			min_nandu = min(min_nandu, h[i][0])
+			dfs(h, m, l, s, d, res, out, pos + 1, zong_nandu, max_nandu, min_nandu)
+			for k in out[-1][-1]:
+				d.remove(k)
+			out.pop()
+		else:
+			return
+
+if __name__ == '__main__':
+	t = int(sys.stdin.readline().strip())
+	for i in range(t):
+		n,m,l,s = map(int, sys.stdin.readline().strip().split())
+		h = []
+		for j in range(n):
+			tmp = sys.stdin.readline().strip().split()
+			h.append((int(tmp[0]), tmp[2:]))
+		d = set()
+		res = [0]
+		out = []
+		dfs(h, m, l, s, d, res, out, 0, 0, 0, 6)
+		print res[0]
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
