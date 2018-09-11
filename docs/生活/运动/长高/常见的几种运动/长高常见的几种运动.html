@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<title>长高常见的几种运动</title>
+	<meta name="keywords" content="xiaoxiyouran" />
+	<meta name="description" content="xiaoxiyouran's Docs" />
+	<link href="../../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/style.css" rel="stylesheet" />
+	<link href="../../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+	
+	<!-- 右上角的侧边导航栏 -->
+	<link rel="stylesheet" href="../../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+	<script src="../../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+	
+	<!--
+	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+	-->
+	
+	<!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+  
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;   
+  //}
+  
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+ <!-- <scrpt src="../../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+			var mermaid_config = {
+					startOnLoad:true
+			}
+			mermaid.ganttConfig = {
+					titleTopMargin:25,
+					barHeight:20,
+					barGap:4,
+					topPadding:50,
+					leftPadding:75,
+					gridLineStartPadding:35,
+					fontSize:11,
+					numberSectionStyles:3,
+					axisFormatter: [
+							// Within a day
+							["%I:%M", function (d) {
+									return d.getHours();
+							}],
+							// Monday a week
+							["w. %U", function (d) {
+									return d.getDay() == 1;
+							}],
+							// Day within a week (not monday)
+							["%a %d", function (d) {
+									return d.getDay() && d.getDate() != 1;
+							}],
+							// within a month
+							["%b %d", function (d) {
+									return d.getDate() != 1;
+							}],
+							// Month
+							["%m-%y", function (d) {
+									return d.getMonth();
+							}]
+					]
+			};
+	</script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>  
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+        
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+ 
+<h1 id="_1">长高常见的几种运动</h1>
+<p>细则：</p>
+<ul>
+<li>
+<p><strong>多运动，多喝水</strong></p>
+</li>
+<li>
+<p><strong>坚持</strong>是能否长高的前提</p>
+</li>
+<li>
+<p>午睡不要超过30分钟</p>
+</li>
+<li>营养：每天要喝牛奶</li>
+</ul>
+<p>最后一句忠言： <strong>贵有恒，何必三更起五更眠； 最无益， 只怕一日曝十日寒；</strong></p>
+<p><br></p>
+<h2 id="_2">注意事项</h2>
+<ul>
+<li>1） 保证充足是睡眠， 每天晚上8小时；</li>
+<li>2） 最好是好的牛奶， 还要足够的日照，获取维生素D。 可以喝国外的全脂奶粉， 在新西兰或者欧洲，澳洲奶源；</li>
+<li>3） 运动，打球和摸高；</li>
+</ul>
+<p><br></p>
+<h2 id="_3">悬垂、悬挂：拉伸骨骼</h2>
+<p>悬挂：拉伸骨骼</p>
+<p>小区健身器材和学校运动场都会有双杠。练习的时候，<mark>双手紧握单杠，使身体自然悬空下垂</mark>，然后做<mark>引体向上动作</mark>。<mark>男孩每天可做10次左右</mark>。女孩每天可做5次左右。</p>
+<p>需要注意的是，引体<mark>向上时记得呼气，慢慢下降时吸气</mark>。练习<mark>做完后，要多走动走动，手臂多甩动甩动</mark>，让肌肉得到放松。儿童做此项运动时，最好在父母的帮助下进行。</p>
+<p>全身放松，<mark>双手正握杠，脚离地面，双腿自然下垂，吊悬20~30秒后，休息30秒再做，如此坚持20分钟。</mark></p>
+<p><strong>忌：举重、举哑铃等压迫性的运动</strong>，不但达不到长高效果，反而会伤害你。</p>
+<p><br></p>
+<h2 id="_4">跳跃运动：牵伸韧带、刺激骨骺软骨</h2>
+<p>跳跃：拉伸四肢</p>
+<p>跳跃是最有利于长高的方法，其中<mark>原地跳跃、摸高（摸高：可以在家练习，最好是在墙上的高处画定一个标准，让自己尽量跳起的时候，手尽量达到最高点，这样来回做10次，期间可以休息几分钟。）、打篮球（扣篮、扣球、上下跳的动作）、排球、羽毛球</mark>等动作都是相通的。做好跳跃运动，注意适度的量以及科学的方法很关键。</p>
+<p>这些运动都是有助于拉伸脊柱，使人体脊柱骨的生长、能够牵伸肌肉、韧带，有刺激骨骺软骨生长的作用。</p>
+<p><img alt="image-20180911104307397" src="image-20180911104307397.png" /></p>
+<p>方法：双脚跳跃摸篮球架、天花板等时。要<mark>尽量让身体处于最大程度的拉伸伸展状态</mark>，如果参加篮球、排球和游泳运动，一定要<mark>奋力跳跃</mark>，让身体做到充分的舒展。</p>
+<p><br></p>
+<h2 id="_5">牵引法：物理拉伸四肢骨骼</h2>
+<p>提到牵引，很多人都比较害怕，这种方法比较的残酷，很多人都不能坚持下来。生活中，最常见的牵引法就是脊柱牵引。</p>
+<p>方法1：平躺在床上，固定好身体，让<mark>双腿在床边自由下垂，同时在双脚上绑上一斤的物体</mark>，静躺在床上，<mark>坚持20分钟</mark>，这样的物理牵引<mark>可以拉骨骼</mark>，同时能缓解腰、颈肌肉的疲劳。</p>
+<p>方法2：就是借助<mark>牵引器材，固定好头部、身体、四肢，来矫正脊柱，同时拉伸四肢</mark>，达到使骨骼最大限度的生长。但是这种方法比较痛苦，很多人无法坚持。</p>
+<p><br></p>
+<h2 id="_6">躺着拉伸</h2>
+<p>拉伸运动从物理角度来说，就是使人体脊柱、四肢骨骼都得到充分的舒展，目的是让骨骼间隙和骨间组织能最大限度的得到发挥。通过后天坚持练习拉伸运动后，骨间组织厚度变宽，骨骼间有更多的空隙，身高自然也就长高2-5厘米。</p>
+<p><img alt="image-20180911104110668" src="image-20180911104110668.png" /></p>
+<p>拉伸运动有很多，比如：<mark>瑜伽、拉伸操</mark>等，其中最方便的拉伸运动就<mark>拉伸四肢</mark>，例如<mark>摸脚趾</mark><strong>(躺下，让双手最大限度的去摸脚)，</strong>这样的运动，每天早晚在家就可以做，如果你的柔软性不是很好，前期最好不要用力过猛，做到最大限度就好，循序渐进，以免拉伸自己。</p>
+<p><br></p>
+<h2 id="_7">游泳</h2>
+<p>游泳：也是一种比较有效的拉伸运动，游泳可以拉伸全身，关键是可以拉伸四肢和后背，尤其是<mark>蛙泳（充分地伸手、蹬腿）和自由泳</mark>。如果动作标准的话，长期坚持可以达到理想的效果。夏天到了，游泳不仅可以帮助长高，还能消暑。</p>
+<p><br></p>
+<h2 id="_8">立定或助跑跳远</h2>
+<p>起跳前，做好准备工作，尽量先放松四肢，跳时<mark>踏跳要有力，在空中两臂上伸</mark>，充分展体，落下时前脚撑先着地，屈膝缓冲，一定要在地面软的地方训练，以免着陆后山伤到自己。</p>
+<p><br></p>
+<h2 id="5">5 个简单方法</h2>
+<h3 id="_9">静坐拉伸之拉腰背</h3>
+<p><img alt="image-20180911104919308" src="image-20180911104919308.png" /></p>
+<p>在拉伸前，建议最好先做2分钟的热身运动，避免在拉伸的过程中伤害到韧带。此方法是：静坐床或垫子上，双腿打直，身体前倾包住双脚，用手去抓脚后跟，头看前方。如果韧带不好的，最好先慢慢做，不要用力过猛。拉伸过程中渐渐加大力度，<mark>一旦觉得到拉力，就停顿10至15秒</mark>，不要超越20至30秒或者更长时间。</p>
+<p><br></p>
+<h3 id="_10">拉伸腿部</h3>
+<p><img alt="image-20180911105003149" src="image-20180911105003149.png" /></p>
+<p>此方法需要躺在垫子上，抬起一条腿，手尽量去握住脚趾，同时抬起的<mark>腿务必打直</mark>，另一条腿也要<mark>与地面平行</mark>，此动作<mark>坚持20秒，然后换另一条腿，如此进行10次为一组</mark>。此方法主要是通过拉伸腿部的肌肉及韧带来帮助塑形，拉伸下肢骨骼，如果正处于青春期发育阶段的朋友，还能<mark>帮助增长2-4厘米</mark>。</p>
+<p><br></p>
+<h3 id="_11">摆臂伸展</h3>
+<p><img alt="image-20180911105110921" src="image-20180911105110921.png" /></p>
+<p>此项运动跟我们平时做的摆臂运动有相似之处，其主要的目的是<mark>运动上肢，让上肢及脊柱</mark>得到很好的舒展，增加柔韧性。方法是：<mark>两脚分开，两腿伸直</mark>，然后<mark>右手触左脚，左手触右脚</mark>的形式交替摆臂转体，操作的时候需要注意的是<mark>腿、手务必到位，不能弯曲</mark>。</p>
+<p><br></p>
+<h3 id="_12">后伸踢腿</h3>
+<p><img alt="image-20180911105212353" src="image-20180911105212353.png" /></p>
+<p>后踢腿的动作，主要是借助踢腿的锻炼让腿部的肌肉跟骨骼得到刺激，方法是：两手撑地，一个脚跪撑，保持90度的姿势，再用另一只脚向后方做伸腿动作，<mark>踢的过程中务必是要用力，且速度要快</mark>，然后左、右脚进行交换后踢完成动作，<mark>每边做5次，坚持10分钟</mark>。</p>
+<p><br></p>
+<h3 id="_13">卧床伸腰：伸直四肢</h3>
+<p><img alt="image-20180911105317835" src="image-20180911105317835.png" /></p>
+<p>此项运动在<mark>睡前</mark>或<mark>早上醒来</mark>时，在床上就可以进行，主要是将四肢最大限度的伸展，已达到拉伸骨骼的目的，也就是我们常说的<mark>伸懒腰</mark>。操作过程中，要<mark>使手和脚尽量向最远的地方引伸</mark>，最大限度的达到拉伸效果。</p>
+<p>长高的方法有很多，同时也不是所有的运动都能帮助长高，因此选择好的运动方法是长高的第一步，同时运动务必要有持之以恒的心态，这样才能保证运动的效果。</p>
+<p><br></p>
+<h2 id="8">8大推荐</h2>
+<p>1.晨起慢跑5～7分钟后，做柔韧性和放松练习20分钟，包括做<mark>劈腿、前后弯腰、摇动抖动身体</mark>等动作。</p>
+<p>2.在单杠上悬垂(每次20～30秒)。可做无负荷悬垂，再做有负荷悬垂;做<mark>正向手握悬垂</mark>，也做倒挂悬垂(双脚用绷带固定)。</p>
+<p>3.跳起摸高。<mark>双脚跳起、单脚跳起</mark>轮流做。每次练习应当尽力去做，争取<mark>每次跳得尽可能更高些</mark>。</p>
+<p>4.登<mark>20～30米高小坡或楼梯，上时放松，下时加足速度下，重复2～4次</mark>。</p>
+<p>5.请两人协助，一人握住双手，另一人抓住双脚，同时<mark>向相反方向轻轻牵拉身体</mark>，每次20秒。</p>
+<p>6.游泳。父母扶着孩子，在水中运动。</p>
+<p>7.打篮球，打排球。</p>
+<p>8.跳跃。<mark>每天跳跃，自我练习，由少到多，可早晚均做，每天跳跃200次以上</mark>。</p>
+
+
+<hr/>
+<div class="footer">
+	Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
