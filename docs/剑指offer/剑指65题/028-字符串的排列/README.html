@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<blockquote>
+<p>参考</p>
+<p><a href="http://blog.csdn.net/zhaojinjia/article/details/9320475">字符串全排列问题</a></p>
+<p><a href="http://blog.csdn.net/hackbuteer1/article/details/7462447">字符串的全排列和组合算法</a></p>
+</blockquote>
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/fe6b651b66ae47d7acce78ffdd9a96c7?tpId=13&amp;tqId=11180&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">字符串的排列</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1369</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/028-字符串的排列">028-字符串的排列</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51251158">剑指Offer--028-字符串的排列</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="center">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/fe6b651b66ae47d7acce78ffdd9a96c7?tpId=13&amp;tqId=11180&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">字符串的排列</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1369">1369-字符串的排列</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51251158">剑指Offer--028-字符串的排列</a></td>
+<td align="center"><a href="https://github.com/gatieme/CodingInterviews/tree/master/028-字符串的排列">028-字符串的排列</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入一个字符串,按字典序打印出该字符串中字符的所有排列</p>
+<p>例如输入字符串abc,</p>
+<p>则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。</p>
+<p>结果请按字母顺序输出。</p>
+<p><strong>注意</strong>
+输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母</p>
+</blockquote>
+<p><strong>样例输入</strong></p>
+<blockquote>
+<p>abc</p>
+<p>BCA</p>
+</blockquote>
+<p><strong>样例输出</strong></p>
+<blockquote>
+<p>abc
+acb
+bac
+bca
+cab
+cba
+ABC
+ACB
+BAC
+BCA
+CAB
+CBA</p>
+</blockquote>
+<h1 id="_3">基于前缀码的全排列（递归）</h1>
+<hr />
+<p>依次从字符串中取出一个字符作为最终排列的第一个字符，对剩余字符组成的字符串生成全排列，最终结果为取出的字符和剩余子串全排列的组合。</p>
+<pre><code class="cpp">class Solution
+{
+protected:
+	vector&lt;string&gt; m_res;
+
+public:
+	void Permutation(string prefix, string str)
+	{
+
+		if(str.length() == 0)
+		{
+			//cout &lt;&lt; prefix &lt;&lt; endl;
+			m_res.push_back(prefix);
+		}
+		else
+		{
+			for(int i = 0; i &lt; str.length(); i++)
+			{
+				Permutation(prefix+str[i], str.substr(0,i)+str.substr(i+1,str.length()));
+			}
+		}
+	}
+
+	vector&lt;string&gt; Permutation(string s)
+	{
+		m_res.clear( );
+		if(s.empty( ) == true)
+		{
+			return m_res;
+		}
+		Permutation(&quot;&quot;,s);
+
+		return m_res;
+	}
+};
+</code></pre>
+
+<p>优点：该方法易于理解，</p>
+<p>缺点：但无法移除重复的排列，如：s="ABA"，会生成两个“AAB”。</p>
+<h1 id="_4">基于交换的全排列（递归）</h1>
+<hr />
+<p><img alt="全排列" src="./abc.jpg" /></p>
+<p>由于全排列就是从第一个数字起，每个数分别与它后面的数字交换，我们先尝试加个这样的判断——如果一个数与后面的数字相同那么这两个数就不交换 了。例如abb，第一个数与后面两个数交换得bab，bba。然后abb中第二个数和第三个数相同，就不用交换了。但是对bab，第二个数和第三个数不 同，则需要交换，得到bba。由于这里的bba和开始第一个数与第三个数交换的结果相同了，因此这个方法不行。</p>
+<p>换种思维，对abb，第一个数a与第二个数b交换得到bab，然后考虑第一个数与第三个数交换，此时由于第三个数等于第二个数，所以第一个数就不再用与第三个数交换了。再考虑bab，它的第二个数与第三个数交换可以解决bba。此时全排列生成完毕！</p>
+<p>很明显，递归的出口，就是只剩一个字符的时候，递归的循环过程，就是从每个子串的第二个字符开始依次与第一个字符交换，然后继续处理子串。</p>
+<p>还有一个问题要注意，就是如果字符串中有重复的字符串</p>
+<p>这样，我们得到在全排列中去掉重复的规则：
+去重的全排列就是从第一个数字起，每个数分别与它后面非重复出现的数字交换。</p>
+<ul>
+<li>
+<p>字符串切片成两个部分，一部分是第一个字符，另一部分是第一个字符以后的所有字符</p>
+</li>
+<li>
+<p>接下来我们递归的求后一部分所有字符的全排序</p>
+</li>
+</ul>
+<p>例如对于abc，用递归方法，把列表不断切断如‘abc’,第一次切成‘a’和‘bc’，第二次切成‘ab’和‘c’.
+然后把后面的字符串中每一个都与前面的字符串最后一个作交换。
+例如（'ab' 与‘c’交换就是，‘ac’和‘b’）最后再排序一下就好。</p>
+<ol>
+<li>
+<p>首先，求所有可能出现在第一个位置的字符，</p>
+</li>
+<li>
+<p>其次，把第一个字符和其后面的字符一一交换。如下图所示，分别把第一个字符a和后面的b、c等字符交换的情形。</p>
+</li>
+<li>
+<p>接着，固定第一个字符，求后面所有字符的排列。这个时候我们仍把后面的所有字符分成两部分：后面字符的第一个字符，以及这个字符之后的所有字符。然后把第一个字符逐一和它后面的字符交换</p>
+</li>
+</ol>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+protected:
+	vector&lt;string&gt; m_res;
+
+public:
+
+	vector&lt;string&gt; Permutation(string str)
+	{
+		m_res.clear( );
+
+		if(str.empty( ) == true)
+		{
+			return m_res;
+		}
+		PermutationRecursion(str, 0);
+
+		sort(m_res.begin( ), m_res.end( ));
+		return m_res;
+	}
+
+
+	void PermutationRecursion(string str, int begin)
+	{
+		if(str[begin] == '\0')
+		{
+			debug &lt;&lt;str &lt;&lt;endl;
+			m_res.push_back(str);
+		}
+		else
+		{
+			for(int i = begin;
+				str[i] != '\0';
+				i++)
+			{
+				//debug &lt;&lt;str[i] &lt;&lt;str[begin] &lt;&lt;endl;
+				if(!HasDuplicate(str, begin, i))
+				{
+					swap(str[i], str[begin]);
+					debug &lt;&lt;&quot;swap &quot; &lt;&lt;str[i] &lt;&lt;&quot;(&quot; &lt;&lt;i &lt;&lt;&quot;)&quot; &lt;&lt;&quot; and &quot; &lt;&lt;str[begin] &lt;&lt;&quot;(&quot; &lt;&lt;begin &lt;&lt;&quot;)&quot; &lt;&lt;endl;
+					PermutationRecursion(str, begin + 1);
+					//copy(str.begin( ), str.degin( ) + i, ostream_iterator&lt;char&gt;(cout,&quot; &quot;));
+					swap(str[i], str[begin]);
+				}
+			}
+		}
+	}
+
+private:
+	//find duplicate of str[i] in str[k,i)
+	bool HasDuplicate(string&amp; str, int k, int i) const {
+		for (int p = k; p &lt; i; p++)
+			if (str[p] == str[i]) return true;
+
+		return false;
+	}
+};
+
+int __tmain( )
+{
+	Solution solu;
+	solu.Permutation(&quot;abc&quot;);
+
+	return 0;
+}
+</code></pre>
+
+<h1 id="stlnext_permutation">STL的next_permutation求全排列</h1>
+<hr />
+<p>用STL的next_permutation可以很方便的求一个容器的全排列</p>
+<pre><code>class Solution
+{
+public:
+	vector&lt;string&gt; Permutation(string str)
+	{
+		vector&lt;string&gt; res;
+
+		if(str.empty( ) == true)
+		{
+			return res;
+		}
+		sort(str.begin( ), str.end( ));
+
+		do
+		{
+			res.push_back(str);
+			debug &lt;&lt;str &lt;&lt;endl;
+		}
+		while(next_permutation(str.begin( ), str.end( )));
+
+
+		return res;
+
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

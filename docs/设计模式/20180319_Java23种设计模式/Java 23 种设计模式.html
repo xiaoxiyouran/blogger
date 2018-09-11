@@ -2,24 +2,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<title>Java 23 种设计模式</title>
-	<meta name="keywords" content="xiaoxiyouran" />
-	<meta name="description" content="xiaoxiyouran's Docs" />
-	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="../../../packages/css/style.css" rel="stylesheet" />
-	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
-	
-	<!-- 右上角的侧边导航栏 -->
-	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
-	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
-	
-	<!--
-	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
-	-->
-	
-	<!-- To generate the side tree of the document itself. -->
+        <title>Java 23 种设计模式</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
   <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
   <style>
   body {
@@ -34,15 +34,15 @@
     color:#333; font-size:12px;
    Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
   }
-  
+
  // table{
  //   border-collapse:collapse;
  // }
 
   //table, td, th{
-  //  border:1px solid black;   
+  //  border:1px solid black;
   //}
-  
+
   .ztree li a.curSelectedNode {
     padding-top: 0px;
     background-color: #FFE6B0;
@@ -79,47 +79,47 @@
 <!-- mermaid 画图 -->
  <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
- <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
  <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
  <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
  <script>
-	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
-			var mermaid_config = {
-					startOnLoad:true
-			}
-			mermaid.ganttConfig = {
-					titleTopMargin:25,
-					barHeight:20,
-					barGap:4,
-					topPadding:50,
-					leftPadding:75,
-					gridLineStartPadding:35,
-					fontSize:11,
-					numberSectionStyles:3,
-					axisFormatter: [
-							// Within a day
-							["%I:%M", function (d) {
-									return d.getHours();
-							}],
-							// Monday a week
-							["w. %U", function (d) {
-									return d.getDay() == 1;
-							}],
-							// Day within a week (not monday)
-							["%a %d", function (d) {
-									return d.getDay() && d.getDate() != 1;
-							}],
-							// within a month
-							["%b %d", function (d) {
-									return d.getDate() != 1;
-							}],
-							// Month
-							["%m-%y", function (d) {
-									return d.getMonth();
-							}]
-					]
-			};
-	</script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
 
 </head>
 <body>
@@ -129,14 +129,14 @@
    <a href="#"> 目录 </a>
    <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
     您的浏览器不支持iframe，请升级
-   </iframe>  
+   </iframe>
 </div>
 
 <TABLE border=0 height=600px align=left>
   <TR>
     <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
       <ul id="tree" class="ztree">
-        
+
       </ul>
     </TD>
     <TD width=770px align=left valign=top>
@@ -144,7 +144,7 @@
 <!---------------------------------------------------------------------------------------------------------------------------->
 <div class="container">
 <span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
- 
+
 <h1 id="java-23">Java 23 种设计模式</h1>
 <p>设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大厦的一块块砖石一样。项目中合理的运用设计模式可以完美的解决很多问题，每种模式在现在中都有相应的原理来与之对应，每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的核心解决方案，这也是它能被广泛应用的原因。本章系<strong>Java之美[从菜鸟到高手演变]系列</strong>之设计模式，我们会以理论与实践相结合的方式来进行本章的学习，希望广大程序爱好者，学好设计模式，做一个优秀的软件工程师！</p>
 <h2 id="_1"><strong>一、设计模式的分类</strong></h2>
@@ -2014,7 +2014,7 @@ user2 exe!</p>
 
 <hr/>
 <div class="footer">
-	Copyright &copy; xiaoxiyouran. All rights reserved.
+        Copyright &copy; xiaoxiyouran. All rights reserved.
 
 </div>
 

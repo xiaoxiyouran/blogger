@@ -80,7 +80,7 @@ def default_template(output_base_url_copy, markdown):
     #
     # output =  markdown['output_file']
     related_to_sidebar =  markdown['output_file'].count(os.path.sep) -\
-                          output_base_url_copy.count(os.path.sep) - 1
+            output_base_url_copy.count(os.path.sep) - 1
 
     related_to_sidebar_str = ' '
     for i in range(related_to_sidebar):
@@ -92,24 +92,24 @@ def default_template(output_base_url_copy, markdown):
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<title>$title$</title>
-	<meta name="keywords" content="xiaoxiyouran" />
-	<meta name="description" content="xiaoxiyouran's Docs" />
-	<link href="$base_url$/packages/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="$base_url$/packages/css/style.css" rel="stylesheet" />
-	<link href="$base_url$/packages/css/monokai_sublime.min.css" rel="stylesheet">
-	
-	<!-- 右上角的侧边导航栏 -->
-	<link rel="stylesheet" href="$base_url$/packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
-	<script src="$base_url$/packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
-	
-	<!--
-	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
-	-->
-	
-	<!-- To generate the side tree of the document itself. -->
+        <title>$title$</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="$base_url$/packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="$base_url$/packages/css/style.css" rel="stylesheet" />
+        <link href="$base_url$/packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="$base_url$/packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="$base_url$/packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
   <link rel="stylesheet" href="$base_url$/packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
   <style>
   body {
@@ -124,15 +124,15 @@ def default_template(output_base_url_copy, markdown):
     color:#333; font-size:12px;
    Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
   }
-  
+
  // table{
  //   border-collapse:collapse;
  // }
 
   //table, td, th{
-  //  border:1px solid black;   
+  //  border:1px solid black;
   //}
-  
+
   .ztree li a.curSelectedNode {
     padding-top: 0px;
     background-color: #FFE6B0;
@@ -169,47 +169,47 @@ def default_template(output_base_url_copy, markdown):
 <!-- mermaid 画图 -->
  <link rel="stylesheet" href="$base_url$/packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
  <script src="$base_url$/packages/mermaid-7.0.0/dist/mermaid.js"></script>
- <script src="$base_url$/packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+<!--  <script src="$base_url$/packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
  <!-- <scrpt src="$base_url$/packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
  <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
  <script>
-	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
-			var mermaid_config = {
-					startOnLoad:true
-			}
-			mermaid.ganttConfig = {
-					titleTopMargin:25,
-					barHeight:20,
-					barGap:4,
-					topPadding:50,
-					leftPadding:75,
-					gridLineStartPadding:35,
-					fontSize:11,
-					numberSectionStyles:3,
-					axisFormatter: [
-							// Within a day
-							["%I:%M", function (d) {
-									return d.getHours();
-							}],
-							// Monday a week
-							["w. %U", function (d) {
-									return d.getDay() == 1;
-							}],
-							// Day within a week (not monday)
-							["%a %d", function (d) {
-									return d.getDay() && d.getDate() != 1;
-							}],
-							// within a month
-							["%b %d", function (d) {
-									return d.getDate() != 1;
-							}],
-							// Month
-							["%m-%y", function (d) {
-									return d.getMonth();
-							}]
-					]
-			};
-	</script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
 
 </head>
 <body>
@@ -219,14 +219,14 @@ def default_template(output_base_url_copy, markdown):
    <a href="#"> 目录 </a>
    <iframe id="ha" src="$related_to_side_bar$global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
     您的浏览器不支持iframe，请升级
-   </iframe>  
+   </iframe>
 </div>
 
 <TABLE border=0 height=600px align=left>
   <TR>
     <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
       <ul id="tree" class="ztree">
-        
+
       </ul>
     </TD>
     <TD width=770px align=left valign=top>
@@ -234,14 +234,14 @@ def default_template(output_base_url_copy, markdown):
 <!---------------------------------------------------------------------------------------------------------------------------->
 <div class="container">
 <span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
- 
+
 '''
     html_tail = '''
 
 
 <hr/>
 <div class="footer">
-	Copyright &copy; xiaoxiyouran. All rights reserved.
+        Copyright &copy; xiaoxiyouran. All rights reserved.
 
 </div>
 
@@ -312,13 +312,13 @@ def gen_doc(output_base_url_copy, file,output_dir, template=None, base_url=''):
     base_name = os.path.basename(file)    # src/aa/ab.md => ab.md
     name = os.path.splitext(base_name)[0] # aa.md ==> ab
     markdown={
-        'name' : name,
-        'input_file' : file,
-        'output_file' : output_dir + os.path.sep + name + '.html',
-        'title': '',
-        'html' : '',
-        'base_url': base_url
-    };
+            'name' : name,
+            'input_file' : file,
+            'output_file' : output_dir + os.path.sep + name + '.html',
+            'title': '',
+            'html' : '',
+            'base_url': base_url
+            };
 
 
     if os.path.isfile(markdown['output_file']) and (time.ctime(os.stat(file).st_mtime) < time.ctime(os.stat(markdown['output_file']).st_ctime)):
@@ -365,10 +365,10 @@ def gen_doc(output_base_url_copy, file,output_dir, template=None, base_url=''):
         process_mermaid(markdown)  ;
     except UnicodeDecodeError:
         print 'UnicodeDecodeError==============================================================================================================>' \
-              + file
+                + file
     except:
         print 'OtherError======================================================================================================================>' \
-              + file
+                + file
 
     html = ''
     if template:
@@ -434,12 +434,12 @@ def parse_file(base_url, file, full_path, output_base_url_copy, output_dir, temp
     elif not ('php' in ext):
         # 1. 原文件没有修改跳过  2. 自己复制给自己，跳过
         if (os.path.isfile(output_dir + os.path.sep + file) and (time.ctime(os.stat(full_path).st_mtime) < time.ctime(
-                os.stat(output_dir + os.path.sep + file).st_ctime))) or \
-                (full_path == (output_dir + os.path.sep + file)):
-            print "[skipcopy] " + full_path + " => " + (output_dir + os.path.sep + file)
+            os.stat(output_dir + os.path.sep + file).st_ctime))) or \
+                    (full_path == (output_dir + os.path.sep + file)):
+                        print "[skipcopy] " + full_path + " => " + (output_dir + os.path.sep + file)
 
         # 1. 如果输出文件存在，原文件不存在，输出文件删除 2. 输出文件存在，原文件也存在，更新
-        elif os.path.isfile(output_dir + os.path.sep + file):
+    elif os.path.isfile(output_dir + os.path.sep + file):
             unModified = unModified and False
             delete = False;
             if os.path.isfile(output_dir + os.path.sep + file):
@@ -455,9 +455,9 @@ def parse_file(base_url, file, full_path, output_base_url_copy, output_dir, temp
                 print "[updatecopy] " + full_path + " => " + (output_dir + os.path.sep + file)
 
         # 输出文件不存在，从原文件那里创建
-        else:  # 从原文件创建也要保证源文件存在
-            if os.path.isfile(full_path):
-                shutil.copy(full_path, output_dir + os.path.sep + file);  # copy file or directory
+    else:  # 从原文件创建也要保证源文件存在
+        if os.path.isfile(full_path):
+            shutil.copy(full_path, output_dir + os.path.sep + file);  # copy file or directory
             print "[createcopy] " + full_path + " => " + (output_dir + os.path.sep + file)
             unModified = unModified and False
     return unModified
@@ -490,10 +490,10 @@ def parser(input_dir, output_dir,  isDectionaryDefault, base_url, ignoreDirFile 
     output_dir_copy = output_dir
 
     unModified_tmp = parse_dir(output_base_url_copy, input_dir, output_dir, ignoreDirFile, isDectionaryDefault,
-                               base_url);
+            base_url);
 
     return unModified_tmp
-    # return unModified_tmp
+# return unModified_tmp
 
 
 def appendix(unModified_tmp, output_dir_copy):
@@ -584,7 +584,7 @@ if __name__=='__main__':
                 template = find_template(input_dir)
                 unModified_tmp = True
                 unModified_tmp = parse_file(base_url, file, new_input_dir, output_dir_copy, new_output_dir, template,
-                                            unModified_tmp)
+                        unModified_tmp)
                 global_unModified = global_unModified and unModified_tmp  # 当前文件夹下有改动，全局肯定也改动了，如 ../src/aa.md
 
         # 处理完每个子文件夹后，然后生成全局索引
@@ -616,7 +616,7 @@ if __name__=='__main__':
             [base_url, sep_count] = anaylyze_input_dir(new_input_dir)
 
             unModified_tmp = parser(new_input_dir, new_output_dir, isDectionaryDefault,
-                                    base_url)  # 已经是上层目录了，../docs 下， base_url = ..
+                    base_url)  # 已经是上层目录了，../docs 下， base_url = ..
             global_unModified = global_unModified and unModified_tmp  # 当前文件夹下有改动，全局肯定也改动了，如 ../src/aa.md
 
         # 子文件夹都更新了，全局索引是需要更新的

@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/a861533d45854474ac791d90e447bafd?tpId=13&amp;tqId=11176&amp;rp=2&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">二叉搜索树的后序遍历序列</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1367</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/024-二叉搜索树的后序遍历序列">024-二叉搜索树的后序遍历序列</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51213665">剑指Offer--024-二叉搜索树的后序遍历序列</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="center">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/a861533d45854474ac791d90e447bafd?tpId=13&amp;tqId=11176&amp;rp=2&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">二叉搜索树的后序遍历序列</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1367">1523-二叉搜索树的后序遍历序列</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51213665">剑指Offer--024-二叉搜索树的后序遍历序列</a></td>
+<td align="center"><a href="https://github.com/gatieme/CodingInterviews/tree/master/024-二叉搜索树的后序遍历序列">024-二叉搜索树的后序遍历序列</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
+</blockquote>
+<h1 id="_3">分析</h1>
+<hr />
+<p>二叉排序树或者是一棵空树，或者是具有下列性质的二叉树：</p>
+<ol>
+<li>
+<p>若左子树不空，则左子树上所有结点的值均小于它的根结点的值；</p>
+</li>
+<li>
+<p>若右子树不空，则右子树上所有结点的值均大于或等于它的根结点的值；</p>
+</li>
+<li>
+<p>左、右子树也分别为二叉排序树；</p>
+</li>
+<li>
+<p>没有键值相等的节点。</p>
+</li>
+</ol>
+<p>注意：左子树上所有结点的值均小于它的根结点的值</p>
+<p><strong>对一棵二叉搜索树进行中序遍历（左根右）可得到一个关键字递增有序序列</strong></p>
+<p>那么二叉搜索树的后序序列（左右根）右什么特征呢？</p>
+<p><img alt="二叉排序树" src="./tree.jpg" /></p>
+<p>比如我们的这个二叉排序树</p>
+<blockquote>
+<p>中序序列 2, 5, 9, 12, 15, 16, 17, 18, 19</p>
+<p>后序序列 2, 9, 5, 16, 17, 15, 19, 18, 12</p>
+</blockquote>
+<p>如果按照后序遍历，先左后右最后自己的顺序来遍历树，数组的最后一个元素肯定是自己（父节点），然后剩余的部分分成两个部分，第一部分都比自己小（左子树部分），第二部分都比自己大（右子树部分），因此套用这个关系就可以循环检验出是否是二叉搜索树的后序遍历了</p>
+<h1 id="_4">根（最后一个节点）前面被划分为小于它（左子树）和大于它（右子树）的两部分</h1>
+<hr />
+<p><font color=#00ff22>BST的后序序列的合法序列是</p>
+<ul>
+<li>对于一个序列S，最后一个元素是x （也就是根）</li>
+</ul>
+<p>如果去掉最后一个元素的序列为T，那么T满足：</p>
+<ul>
+<li>
+<p>T可以分成两段，前一段（左子树）小于x，后一段（右子树）大于x，</p>
+</li>
+<li>
+<p>且这两段（子树）都是合法的后序序列。</p>
+</li>
+</ul>
+<p>完美的递归定义</font></p>
+<h2 id="_5">暴力实现</h2>
+<hr />
+<p>最坏的方式就是我们从后往前，把每个元素都当作一个根节点，循环判断其是否满足二叉排序树后序的规则</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	//下面这种迭代的方法时间复杂度为O(n^2)
+	bool VerifySquenceOfBST_Iteratively(const vector&lt;int&gt;&amp; sequence) {
+		int left = 0, right = sequence.size() - 1;
+		while (left &lt; right &amp;&amp; right != 0) {
+			//循环结束时，left是第一个大于根的元素的位置，即右子树首元素下标
+			while (sequence[left] &lt; sequence[right])
+				left++;
+			//循环结束时，left越过右子树末节点，到达根节点
+			while (sequence[left] &gt; sequence[right])
+				left++;
+
+			//如果没有到达根节点，说明不满足左子树所有节点小于根节点，右子树所有节点大于根节点的条件
+			if (left &lt; right)
+				return false;
+			left = 0;
+
+			right--;
+		}
+
+		//如果循环一直到right == 0才终止, 说明以所有节点为根节点，左侧序列均满足后序遍历序列的条件
+		return (right == 0) ? true : false;
+	}
+};
+</code></pre>
+
+<p>该算法的把每个节点都当作根节点判断一趟，共进行N趟
+没趟需要判断当前节点之前的所有节点，因此复杂度= $N*(N-1)/2=O(n)$</p>
+<h2 id="_6">递归实现</h2>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+class Solution
+{
+public:
+	bool VerifySquenceOfBST(vector&lt;int&gt; sequence)
+	{
+		if(sequence.size( ) == 0)
+		{
+			return false;
+		}
+
+		return judge(sequence, 0, sequence.size( ) - 1);
+	}
+
+	/// 2, 9, 5, 16, 17, 15, 19, 18, 12
+	bool judge(vector&lt;int&gt;  &amp;sequence, int left, int right)
+	{
+		if(left &gt;= right)
+		{
+			return true;
+		}
+
+		/// 后一半的元素都比根元素大
+		int mid = right - 1;
+		while (sequence[mid] &gt; sequence[right])
+		{
+			mid--;
+		}
+		/// 那么前面的元素都应该比根小
+		int i = left;
+		while (i &lt; mid &amp;&amp; sequence[i] &lt; sequence[right])
+		{
+			i++;
+		}
+		if (i &lt; mid)
+		{
+			return false;
+		}
+#ifdef __tmain
+		printf(&quot;left : &quot;);
+		for(int i = left; i &lt;= mid; i++)
+		{
+			cout &lt;&lt;sequence[i] &lt;&lt;&quot; &quot;;
+		}
+		cout &lt;&lt;endl;
+		printf(&quot;right : &quot;);
+		for(int i = mid + 1; i &lt; right; i++)
+		{
+			cout &lt;&lt;sequence[i] &lt;&lt;&quot; &quot;;
+		}
+		cout &lt;&lt;endl;
+		cout &lt;&lt;&quot;root : &quot; &lt;&lt;sequence[right] &lt;&lt;endl;
+#endif // __tmain
+
+		///  这样我们就划分出区间
+		///  [left, mid] 是左子树
+		///  [mid + 1, right - 1] 是右子树
+		///  right 是根节点
+		return judge(sequence, left, mid) &amp;&amp; judge(sequence, mid + 1, right - 1);
+	}
+};
+
+
+int __tmain( )
+{
+
+	int a[] = { 2, 9, 5, 16, 17, 15, 19, 18, 12, };
+
+	vector&lt;int&gt; vec(a, a + 9);
+
+	Solution solu;
+	cout &lt;&lt;solu.VerifySquenceOfBST(vec) &lt;&lt;endl;
+	return 0;
+}
+</code></pre>
+
+<h1 id="_7">维护最大值</h1>
+<hr />
+<pre><code class="cpp">
+class Solution {
+public:
+	///  后序是 左右根
+	///  那么我们的节点
+	bool VerifySquenceOfBST(vector&lt;int&gt; sequence)
+	{
+		if(sequence.size( ) == 0)
+		{
+			return false;
+		}
+		int max = 0;
+		stack&lt;int&gt; s;
+		int it = sequence.size( ) - 1;
+		do
+		{
+			s.push(sequence[it]);
+			it--;
+		}while(it &gt;= 0 &amp;&amp; sequence[it] &gt; sequence[it + 1]);
+
+		max = s.top( );
+
+		for(;it &gt;= 0; it--)
+		{
+			debug &lt;&lt;&quot;curr = &quot; &lt;&lt;sequence[it] &lt;&lt;&quot;, max = &quot; &lt;&lt;max &lt;&lt;endl;
+
+			if(max &lt; sequence[it])  //  前面有元素比最大值还大，肯定不满足要求
+			{
+				return false;
+			}
+
+
+			while(s.empty( ) != true &amp;&amp; s.top( ) &gt; sequence[it])
+			{
+
+				max = s.top();
+				cout &lt;&lt;&quot;max = &quot; &lt;&lt;max &lt;&lt;endl;
+				s.pop();
+			}
+			s.push(sequence[it]);
+		}
+		return true;
+	}
+};
+
+
+int __tmain( )
+{
+//     10
+//   6    14
+//  8   12  16
+//4
+
+
+
+	int a[] = { 2, 9, 5, 16, 17, 15, 19, 18, 12, };
+
+	vector&lt;int&gt; vec(a, a + 9);
+
+	Solution solu;
+	cout &lt;&lt;solu.VerifySquenceOfBST(vec) &lt;&lt;endl;
+	return 0;
+}
+</code></pre>
+
+<h1 id="_8">判断左右子树</h1>
+<hr />
+<pre><code class="cpp">class Solution {
+public:
+	/*
+	step1：最后一个为根节点；
+	step2：从根节点的左边开始往前遍历，找到第一个比它大的节点作为右子树，记为right
+	step3：从右子树的左边开始往前遍历，找到第一个比它小的节点作为左子树，记为left
+	step4：判断( left, right )中的值是否都比根节点大，如果有比根节点小的则返回false
+	step5: 判断( 0, left )中的值是否都比根节点小，如果有比根节点大的则返回false
+	step6: 返回true
+
+	时间复杂度：O(n), 空间复杂度: O(1)
+	没有证明过，但是代码通过了，求反例，心里没底
+	*/
+	bool VerifySquenceOfBST(vector&lt;int&gt; sequence) {
+		if (sequence.empty()) return true;
+		int len = sequence.size();
+
+		int left = -1, right = -1;
+		for (int i = len - 2; i &gt;= 0; --i)
+		{
+			if (right == -1 &amp;&amp; sequence[i] &gt; sequence[len - 1])
+				right = i;
+			if (left == -1 &amp;&amp; sequence[i] &lt; sequence[len - 1])
+				left = i;
+		}
+		cout &lt;&lt;&quot;left = &quot; &lt;&lt;left &lt;&lt;&quot;, right = &quot; &lt;&lt;right &lt;&lt;endl;
+		for (int i = right - 1; i &gt; left; --i)
+		{
+			if (sequence[i] &lt; sequence[len - 1])
+			{
+				return false;
+			}
+		}
+		for (int i = left - 1; i &gt; 0; --i)
+		{
+			if (sequence[i] &gt; sequence[len - 1])
+			{
+
+				return false;
+			}
+
+		}
+		return true;
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

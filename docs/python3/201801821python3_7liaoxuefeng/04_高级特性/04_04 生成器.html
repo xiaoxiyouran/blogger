@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>04_04 生成器</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="04_04">04_04 生成器</h1>
+<h2 id="_1">简介</h2>
+<p>通过列表生成式，我们可以直接创建一个列表。但是，<strong>受到内存限制</strong>，列表容量肯定是有限的。而且，创建一个包含100万个元素的列表，不仅占用很大的存储空间，如果我们仅仅需要访问前面几个元素，那后面绝大多数元素占用的空间都白白浪费了。</p>
+<p>所以，如果列表元素可以按照某种算法推算出来，那我们是否可以<mark><strong>在循环的过程中不断推算出后续的元素</strong></mark>呢？这样就不必创建完整的list，从而节省大量的空间。在Python中，这种一边循环一边计算的机制，称为<strong>生成器</strong>：generator。</p>
+<p><br></p>
+<h2 id="_2">创建生成器</h2>
+<p>要创建一个generator，有很多种方法。第一种方法很简单，只要把一个<mark>列表生成式的<code>[]</code>改成<code>()</mark></code>，就创建了一个generator：</p>
+<pre><code class="python">&gt;&gt;&gt; L = [x * x for x in range(10)]
+&gt;&gt;&gt; L
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+&gt;&gt;&gt; g = (x * x for x in range(10))
+&gt;&gt;&gt; g
+&lt;generator object &lt;genexpr&gt; at 0x1022ef630&gt;
+</code></pre>
+
+<p>创建<code>L</code>和<code>g</code>的区别仅在于最外层的<code>[]</code>和<code>()</code>，<code>L</code>是一个list，而<code>g</code>是一个generator。</p>
+<p><br></p>
+<h2 id="next">next()</h2>
+<p>我们可以直接打印出list的每一个元素，但我们怎么打印出generator的每一个元素呢？</p>
+<p>如果要一个一个打印出来，可以通过<mark><code>next()</code>函数获得generator的下一个返回值</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; next(g)
+0
+&gt;&gt;&gt; next(g)
+1
+&gt;&gt;&gt; next(g)
+4
+&gt;&gt;&gt; next(g)
+9
+&gt;&gt;&gt; next(g)
+16
+&gt;&gt;&gt; next(g)
+25
+&gt;&gt;&gt; next(g)
+36
+&gt;&gt;&gt; next(g)
+49
+&gt;&gt;&gt; next(g)
+64
+&gt;&gt;&gt; next(g)
+81
+&gt;&gt;&gt; next(g)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+StopIteration
+</code></pre>
+
+<p>我们讲过，generator保存的是算法，每次调用<code>next(g)</code>，就计算出<code>g</code>的下一个元素的值，直到计算到最后一个元素，<mark>没有更多的元素时，抛出<code>StopIteration</code>的错误</mark>。</p>
+<p><br></p>
+<h2 id="_3">遍历</h2>
+<p>当然，上面这种不断调用<code>next(g)</code>实在是太变态了，正确的方法是<mark>使用<code>for</code>循环</mark>，因为generator也是<mark>可迭代对象</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; g = (x * x for x in range(10))
+&gt;&gt;&gt; for n in g:
+...     print(n)
+... 
+0
+1
+4
+9
+16
+25
+36
+49
+64
+81
+</code></pre>
+
+<p>所以，我们创建了一个generator后，基本上<mark>永远不会调用<code>next()</code>，而是通过<code>for</code>循环来迭代</mark>它，并且不需要关心<code>StopIteration</code>的错误。</p>
+<p><br></p>
+<h2 id="_4">函数创建复杂的生成器</h2>
+<p>generator非常强大。如果推算的算法比较复杂，用类似列表生成式的<code>for</code>循环无法实现的时候，还可以<mark>用函数来实现</mark>。</p>
+<p>比如，著名的斐波拉契数列（Fibonacci），除第一个和第二个数外，任意一个数都可由前两个数相加得到：</p>
+<p><code>1, 1, 2, 3, 5, 8, 13, 21, 34, …</code></p>
+<p>斐波拉契数列用列表生成式写不出来，但是，用函数把它打印出来却很容易：</p>
+<pre><code class="python">def fib(max):
+	n, a, b = 0, 0, 1
+	while n &lt; max:
+		print(b)
+		a, b = b, a + b
+		n = n + 1
+	return 'done'
+</code></pre>
+
+<p><strong><em>注意</em></strong>，赋值语句：</p>
+<pre><code class="python">a, b = b, a + b
+</code></pre>
+
+<p>相当于：</p>
+<pre><code class="python">t = (b, a + b) # t是一个tuple
+a = t[0]
+b = t[1]
+</code></pre>
+
+<p>但不必显式写出临时变量t就可以赋值。</p>
+<p>上面的函数可以输出斐波那契数列的前N个数：</p>
+<pre><code class="python">&gt;&gt;&gt; fib(6)
+1
+1
+2
+3
+5
+8
+'done'
+</code></pre>
+
+<p>仔细观察，可以看出，<code>fib</code>函数实际上是<mark>定义了斐波拉契数列的推算规则</mark>，可以从第一个元素开始，推算出后续任意的元素，这种逻辑其实非常类似generator。</p>
+<p>也就是说，上面的函数和generator仅一步之遥。要把<code>fib</code>函数变成generator，只需要<mark>把<code>print(b)</code>改为<code>yield b</code></mark>就可以了：</p>
+<pre><code class="python">def fib(max):
+	n, a, b = 0, 0, 1
+	while n &lt; max:
+		yield b
+		a, b = b, a + b
+		n = n + 1
+	return 'done'
+</code></pre>
+
+<p>这就是定义generator的另一种方法。如果一个函数定义中包含<code>yield</code>关键字，那么这个函数就不再是一个普通函数，而是一个<mark>generator</mark>：</p>
+<pre><code>&gt;&gt;&gt; f = fib(6)
+&gt;&gt;&gt; f
+&lt;generator object fib at 0x104feaaa0&gt;
+</code></pre>
+
+<p>这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到<code>return</code>语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用<code>next()</code>的时候执行，<mark>遇到<code>yield</code>语句返回，再次执行时从上次返回的<code>yield</code>语句处继续执行。</mark></p>
+<p>举个简单的例子，定义一个generator，依次返回数字1，3，5：</p>
+<pre><code class="python">def odd():
+	print('step 1')
+	yield 1
+	print('step 2')
+	yield(3)
+	print('step 3')
+	yield(5)
+</code></pre>
+
+<p>调用该generator时，首先要生成一个generator对象，然后用<code>next()</code>函数不断获得下一个返回值：</p>
+<pre><code class="python">&gt;&gt;&gt; o = odd()
+&gt;&gt;&gt; next(o)
+step 1
+1
+&gt;&gt;&gt; next(o)
+step 2
+3
+&gt;&gt;&gt; next(o)
+step 3
+5
+&gt;&gt;&gt; next(o)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+StopIteration
+</code></pre>
+
+<p>可以看到，<code>odd</code>不是普通函数，而是generator，在执行过程中，<mark>遇到<code>yield</code>就中断</mark>，下次又继续执行。执行3次<code>yield</code>后，已经没有<code>yield</code>可以执行了，所以，第4次调用<code>next(o)</code>就报错。</p>
+<p>回到<code>fib</code>的例子，我们在循环过程中不断调用<code>yield</code>，就会不断中断。当然要给循环设置一个条件来退出循环，不然就会产生一个无限数列出来。</p>
+<p>同样的，把函数改成generator后，我们基本上从来不会用<code>next()</code>来获取下一个返回值，而是<mark>直接使用<code>for</code>循环来迭代</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; for n in fib(6):
+...     print(n)
+...
+1
+1
+2
+3
+5
+8
+</code></pre>
+
+<p>但是用<code>for</code>循环调用generator时，发现<mark>拿不到generator的<code>return</code>语句的返回值</mark>。如果想要<mark>拿到返回值，必须捕获<code>StopIteration</code>错误，返回值包含在<code>StopIteration</code>的<code>value</code>中</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; g = fib(6)
+&gt;&gt;&gt; while True:
+...     try:
+...         x = next(g)
+...         print('g:', x)
+...     except StopIteration as e:
+...         print('Generator return value:', e.value)
+...         break
+...
+g: 1
+g: 1
+g: 2
+g: 3
+g: 5
+g: 8
+Generator return value: done
+</code></pre>
+
+<p>关于如何捕获错误，后面的错误处理还会详细讲解。</p>
+<p><br></p>
+<h2 id="_5">练习</h2>
+<p><a href="http://baike.baidu.com/view/7804.htm">杨辉三角</a>定义如下：</p>
+<pre><code class="ascii">          1
+		 / \
+		1   1
+	   / \ / \
+	  1   2   1
+	 / \ / \ / \
+	1   3   3   1
+   / \ / \ / \ / \
+  1   4   6   4   1
+ / \ / \ / \ / \ / \
+1   5   10  10  5   1
+</code></pre>
+
+<p>把每一行看做一个list，试写一个generator，不断输出下一行的list：</p>
+<p>参考答案如下：</p>
+<p>需要注意的是，<mark>列表默认是引用，要避免修改前面的列表，需要用 <code>L=L[:]</code> 进行复制</mark>，</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch04/04.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+def triangles():
+	L = [1]
+	while True:
+		yield L
+		L = L[:]                                        # 在上面的基础上一直补了一个0， 需要避免修改上一个L， 避免引用原来的列表
+		L.append(0)
+		L = [L[x - 1] + L[x] for x in range(len(L))]    # 指向一个新列表返回
+
+
+# 期待输出:
+# [1]
+# [1, 1]
+# [1, 2, 1]
+# [1, 3, 3, 1]
+# [1, 4, 6, 4, 1]
+# [1, 5, 10, 10, 5, 1]
+# [1, 6, 15, 20, 15, 6, 1]
+# [1, 7, 21, 35, 35, 21, 7, 1]
+# [1, 8, 28, 56, 70, 56, 28, 8, 1]
+# [1, 9, 36, 84, 126, 126, 84, 36, 9, 1]
+n = 0
+results = []
+for t in triangles():
+	print(t)
+	results.append(t)
+	n = n + 1
+	if n == 10:
+		break
+if results == [
+	[1],
+	[1, 1],
+	[1, 2, 1],
+	[1, 3, 3, 1],
+	[1, 4, 6, 4, 1],
+	[1, 5, 10, 10, 5, 1],
+	[1, 6, 15, 20, 15, 6, 1],
+	[1, 7, 21, 35, 35, 21, 7, 1],
+	[1, 8, 28, 56, 70, 56, 28, 8, 1],
+	[1, 9, 36, 84, 126, 126, 84, 36, 9, 1]
+]:
+	print('测试通过!')
+else:
+	print('测试失败!')
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

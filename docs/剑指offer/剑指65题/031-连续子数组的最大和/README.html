@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&amp;tqId=11183&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">连续子数组的最大和</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1372</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/031-连续子数组的最大和">031-连续子数组的最大和</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51287801">剑指Offer--031-连续子数组的最大和</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="center">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&amp;tqId=11183&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">031-连续子数组的最大和</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1372">1372-连续子数组的最大和</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51287801">剑指Offer--031-连续子数组的最大和</a></td>
+<td align="center"><a href="https://github.com/gatieme/CodingInterviews/tree/master/031-连续子数组的最大和">031-连续子数组的最大和</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>HZ偶尔会拿些专业问题来忽悠那些非计算机专业的同学。</p>
+<p>今天测试组开完会后,他又发话了:</p>
+<p>在古老的一维模式识别中,常常需要计算连续子向量的最大和,当向量全为正数的时候,问题很好解决。</p>
+<p>但是,如果向量中包含负数,是否应该包含某个负数,并期望旁边的正数会弥补它呢？</p>
+</blockquote>
+<p>例如:{6,-3,-2,7,-15,1,2,2},
+连续子向量的最大和为8(从第0个开始,到第3个为止)。
+你会不会被他忽悠住？</p>
+<h1 id="_3">暴力方法</h1>
+<hr />
+<p>最直接的方法就是<strong>找出所有的子数组，然后求其和，取最大</strong></p>
+<p>如果每个子数组都遍历求和，该方法的复杂度为O(N^3)，仔细考虑，在遍历过程中，这些子数组的和是有重复计算的：下标i与j之间的区间和Sum[i,j]=Sum[i,j-1]+arr[j]。</p>
+<p>于是子数组和的求法不必每次都遍历，算法复杂度可以降为$O(N^2)$</p>
+<p>代码如下：</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+public:
+	int FindGreatestSumOfSubArray(vector&lt;int&gt; array)
+	{
+		if(array.size( ) == 0)
+		{
+			return 0;
+		}
+
+		int sum, maxSum = INT_MIN;
+		for(unsigned int i = 0; i &lt; array.size( ); i++)
+		{
+			sum = 0;
+			for(unsigned int j = i; j &lt; array.size( ); j++)
+			{
+				sum += array[j];
+				if(sum &gt; maxSum)
+				{
+					maxSum = sum;
+				}
+			}
+		}
+		return maxSum;
+	}
+};
+
+int __tmain( )
+{
+
+
+	Solution solu;
+
+	int arr1[] = { 6, -3, -2, 7, -15, 1, 2, 2};
+	vector&lt;int&gt; vec1(arr1, arr1 + sizeof(arr1)/sizeof(arr1[0]));
+	cout &lt;&lt;&quot;maxSum = &quot; &lt;&lt;solu.FindGreatestSumOfSubArray(vec1) &lt;&lt;endl;
+
+	int arr2[] = { -2, -8, -1, -5, -9 };
+	vector&lt;int&gt; vec2(arr2, arr2 + sizeof(arr2)/sizeof(arr2[0]));
+	cout &lt;&lt;&quot;maxSum = &quot; &lt;&lt;solu.FindGreatestSumOfSubArray(vec2) &lt;&lt;endl;
+
+	return 0;
+}
+</code></pre>
+
+<h1 id="_4">动态规划</h1>
+<hr />
+<p>解体思路：</p>
+<p>如果用函数f(i)表示以第i个数字结尾的子数组的最大和，那么我们需要求出max(f[0...n])。我们可以给出如下递归公式求f(i)</p>
+<p><img alt="dp思想" src="./dp.png" /></p>
+<p>这个公式的意义：</p>
+<ol>
+<li>
+<p>当以第(i-1)个数字为结尾的子数组中所有数字的和f(i-1)小于0时，如果把这个负数和第i个数相加，得到的结果反而不第i个数本身还要小，所以这种情况下最大子数组和是第i个数本身。</p>
+</li>
+<li>
+<p>如果以第(i-1)个数字为结尾的子数组中所有数字的和f(i-1)大于0，与第i个数累加就得到了以第i个数结尾的子数组中所有数字的和</p>
+</li>
+</ol>
+<pre><code class="cpp">class Solution
+
+{
+
+	int dp[1000];
+
+public:
+
+	int FindGreatestSumOfSubArray(vector&lt;int&gt; array)
+	{
+
+		if(array.size( ) == 0)
+		{
+			return 0;
+		}
+
+
+
+#ifdef __tmain
+
+		int temp, start, end;
+
+#endif  // __tmain
+
+		int maxSum = INT_MIN;
+		dp[0] = array[0];
+
+		for(unsigned int i = 1; i &lt; array.size( ); i++)
+		{
+
+			if(dp[i - 1] &lt;= 0)
+			{
+				dp[i] = array[i];
+
+#ifdef __tmain
+
+				temp = i;
+
+#endif  // __tmain
+
+			}
+			else
+			{
+				dp[i] = array[i] + dp[i - 1];
+			}
+
+
+			if(dp[i] &gt; maxSum)
+			{
+				maxSum = dp[i];
+
+#ifdef __tmain
+
+				start = temp;
+				end = i;
+
+#endif  // __tmain
+			}
+
+		}
+
+		debug &lt;&lt;&quot;[&quot; &lt;&lt;start &lt;&lt;&quot;, &quot; &lt;&lt;end &lt;&lt;&quot;] = &quot; &lt;&lt;maxSum &lt;&lt;endl;
+
+		return maxSum;
+
+
+
+	}
+
+};
+
+</code></pre>
+
+<h1 id="_5">贪心思想</h1>
+<hr />
+<blockquote>
+<p>如果希望达到O(n)时间复杂度，我们就应该能够想到我们只能对整个数组进行一次扫描，在扫描过程中求出最大连续子序列和以及子序列的起点和终点位置。</p>
+</blockquote>
+<p>假如输入数组为{1,-2,3,10,-4,7,2,-5}，我们尝试从头到尾累加其中的正数，</p>
+<p>初始化和为0，第一步加上1，此时和为1，第二步加上-2，此时和为-1，第三步加上3，此时我们发现-1+3=2，最大和2反而比3一个单独的整数小，这是因为3加上了一个负数，发现这个规律以后我们就重新作出累加条件</p>
+<p>这个方法其实就是动态规划算法的改进</p>
+<ul>
+<li>
+<p>如果当前和为负数，那么就放弃前面的累加和，从数组中的下一个数再开始计数</p>
+</li>
+<li>
+<p>否则我们就继续累计，并且保存当前的累计和</p>
+</li>
+</ul>
+<p>思路如下</p>
+<pre><code class="cpp">
+class Solution
+
+{
+
+public:
+
+	int FindGreatestSumOfSubArray(vector&lt;int&gt; array)
+	{
+
+		if(array.size( ) == 0)
+		{
+			return 0;
+		}
+
+		int sum = 0, maxSum = INT_MIN;
+
+		for(int i = 0; i &lt; array.size( ); i++)
+		{
+			sum += array[i];
+			debug &lt;&lt;sum &lt;&lt;endl;
+
+			if(sum &lt; 0)     ///  如果当前和小于0, 就舍弃它, 重新开始累加
+			{
+				sum = 0;
+			}
+			else if(sum &gt; maxSum)   ///  否则的话累计当前和
+			{
+				maxSum = sum;
+			}
+
+		}
+
+		return maxSum;
+
+	}
+
+};
+
+</code></pre>
+
+<p>但是这个由一个问题，如果整个数组的数据全是负数，那么我们的maxSum无法进行累计，最后仍为0。</p>
+<p>这个问题怎么解决呢?</p>
+<p>整个数组全是负数，那么最大值也是负数，而这个最大值正好是数组连续子数组的最大和，因此我们维护一个最大值maxNum，即可</p>
+<ul>
+<li>
+<p>如果maxNum&lt;0，我们就直接返回maxNum</p>
+</li>
+<li>
+<p>如果maxNum&gt;0，那么我们就返回累计的maxSum</p>
+</li>
+</ul>
+<pre><code class="cpp">
+return (maxNum &gt; 0) ? maxSum : maxNum;
+
+
+</code></pre>
+
+<p>完整代码如下</p>
+<pre><code class="cpp">
+class Solution
+
+{
+
+public:
+
+	int FindGreatestSumOfSubArray(vector&lt;int&gt; array)
+	{
+
+		if(array.size( ) == 0)
+		{
+			return 0;
+		}
+
+		int maxNum = INT_MIN;
+
+		int sum = 0, maxSum = INT_MIN;
+
+		for(int i = 0; i &lt; array.size( ); i++)
+		{
+			sum += array[i];
+			debug &lt;&lt;sum &lt;&lt;endl;
+
+			if(sum &lt; 0)     ///  如果当前和小于0, 就舍弃它, 重新开始累加
+			{
+				sum = 0;
+			}
+			else if(sum &gt; maxSum)   ///  否则的话累计当前和
+			{
+				maxSum = sum;
+			}
+
+			///  保存数据中的最大值
+			///  这种情况下是为了排除整个数组全为负数的特殊情况
+			if(array[i] &gt; maxNum)
+			{
+				maxNum = array[i];
+			}
+		}
+
+
+
+		///  如果数组最大值大于0, 那么我们就直接返回累计的最大和
+		///  如果数组最大值为负数, 说明整个数组都是负数, 那么就返回数组最大值
+		return (maxNum &gt; 0) ? maxSum : maxNum;
+
+	}
+
+};
+
+</code></pre>
+
+<p>但是其实有更好的办法，每次弄完后我们无需系那个sum置为0，而是需要从新的位置（下一个位置）开始，因此此时其实sum=array[i + 1];</p>
+<p>那么我们直接用下面的代码即可</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	int FindGreatestSumOfSubArray(vector&lt;int&gt; array)
+	{
+		if(array.size( ) == 0)
+		{
+			return 0;
+		}
+
+		int maxNum = INT_MIN;
+		int sum = 0, maxSum = INT_MIN;
+		for(unsigned int i = 0; i &lt; array.size( ); i++)
+		{
+			if(sum &lt;= 0)
+			{
+				sum = array[i];
+			}
+			else
+			{
+				sum += array[i];
+			}
+
+			debug &lt;&lt;&quot;num = &quot; &lt;&lt;array[i] &lt;&lt;&quot;, sum = &quot; &lt;&lt;sum &lt;&lt;endl;
+
+			if(sum &gt; maxSum)
+			{
+				maxSum = sum;
+			}
+		}
+
+		return maxSum;
+	}
+};
+</code></pre>
+
+<h1 id="_6">参考</h1>
+<hr />
+<p><a href="http://www.ahathinking.com/archives/120.html">最大子数组和（最大子序列和 | 连续子数组最大和）</a></p>
+<p><a href="http://www.cnblogs.com/waytofall/archive/2012/04/10/2439820.html">求连续子数组的最大和</a></p>
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6444021">程序员编程艺术：第七章、求连续子数组的最大和</a></p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

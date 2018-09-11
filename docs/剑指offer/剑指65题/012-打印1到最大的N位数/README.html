@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：未收录</p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1515</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/012-%E6%89%93%E5%8D%B01%E5%88%B0%E6%9C%80%E5%A4%A7%E7%9A%84N%E4%BD%8D%E6%95%B0">012-打印1到最大的N位数</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51132108">剑指Offer--012-打印1到最大的N位数</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>未收录</td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1515">1515-打印1到最大的N位数</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51132108">剑指Offer--012-打印1到最大的N位数</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>给定一个数字N，打印从1到最大的N位数。</p>
+</blockquote>
+<p><strong>输入</strong></p>
+<blockquote>
+<p>每个输入文件仅包含一组测试样例。</p>
+<p>对于每个测试案例，输入一个数字N(1&lt;=N&lt;=5)。
+<strong>输出</strong>
+对应每个测试案例，依次打印从1到最大的N位数。</p>
+</blockquote>
+<p><strong>样例输入</strong></p>
+<blockquote>
+<p>1</p>
+</blockquote>
+<p><strong>样例输出</strong></p>
+<blockquote>
+<p>1
+2
+3
+4
+5
+6
+7
+8
+9</p>
+</blockquote>
+<h1 id="-">最简单的解法--跳进面试官的陷阱</h1>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+
+class Solutin
+{
+public :
+	void Print(int n)
+	{
+		int max = pow(10, n);
+		for(int i = 1; i &lt; max; i++)
+		{
+			cout &lt;&lt;i &lt;&lt;endl;
+		}
+	}
+
+};
+
+
+int __tmain( )
+{
+	Solutin solu;
+
+	int n;
+	while(cin &gt;&gt; n)
+	{
+
+		solu.Print(n);
+	}
+	return 0;
+}
+
+</code></pre>
+
+<p>好像没有什么问题，但是仔细分析你就会发现，<strong>N的范围并不确定</strong>，我们没法保证这些数是不是超出了INT_MAX的表示范围。</p>
+<p>当n过大的时候，就会溢出，这时候我们的程序输出的值是不确定或者说是被截断的</p>
+<h1 id="_3">字符串是大数问题最值得信赖的方案</h1>
+<hr />
+<p>我们的思路是：
+*    初始就开辟一个N+1大小的串，用来存储数字</p>
+<ul>
+<li>
+<p>用字符串模拟数字的自增，进位，输出</p>
+</li>
+<li>
+<p>当串长度超过N+1时，或者第0位产生进位时就溢出</p>
+</li>
+</ul>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+//  调试开关
+//#define DEBUG
+#define __tmain main
+
+#ifdef DEBUG
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // DEBUG
+
+
+
+class Solutin
+{
+public :
+	Solutin(int n)
+	{
+		this-&gt;m_N = n;
+		this-&gt;m_isOverFlow = false;
+
+		this-&gt;m_number = new char[n + 1];
+		memset(m_number, '\0', n + 1);
+		this-&gt;m_number[n - 1] = '1';
+		this-&gt;m_length = 1;
+
+		//  m_N 总是 &gt;= m_length
+		//  真正的信息串存储在m_number[m_N - length, m_N);
+	}
+
+	void Print( )
+	{
+		if(m_N &lt;= 0)
+		{
+			return;
+		}
+		while(this-&gt;m_isOverFlow != true)
+		{
+			PrintNumber( );
+			Increment( );
+
+		}
+
+
+
+
+	}
+
+	void PrintNumber( )
+	{
+		//  m_N 总是 &gt;= m_length
+		//  真正的信息串存储在m_number[m_N - length, m_N);
+		debug &lt;&lt;&quot;number is stroge in [&quot; &lt;&lt;m_N - m_length &lt;&lt;&quot;, &quot; &lt;&lt;m_N &lt;&lt;&quot;)&quot; &lt;&lt;endl;
+		for(int i = m_N - m_length; i &lt; m_N; i++)
+		{
+			cout&lt;&lt;m_number[i];
+		}
+		cout &lt;&lt;endl;
+	}
+
+
+	bool Increment( )
+	{
+		int nSum = 0;               //  当前位
+		int takeOver = 0;           //  进位
+		for(int i = m_N - 1; i &gt;= m_N - m_length; i--)
+		{
+			if(m_number[i] != '\0')
+			{
+				nSum = m_number[i] - '0' + takeOver;
+			}
+			else
+			{
+				nSum = 0;
+			}
+			nSum++;
+			debug &lt;&lt;&quot;nSum = &quot; &lt;&lt;nSum &lt;&lt;endl;
+
+			if(nSum &gt;= 10)      //  需要进位
+			{
+				if(i == 0)      //  溢出了, 则循环终止
+				{
+					m_isOverFlow = true;
+					debug &lt;&lt;&quot;Over Flow now&quot; &lt;&lt;endl;
+					delete m_number;
+				}
+				else
+				{
+					nSum -= 10;
+					m_number[i] = '0' + nSum;
+
+					takeOver = 1;                   //  需要进位, 继续循环
+					if(i == m_N - m_length)           //  此时说明进位在最高位, 长度会增加1
+					{
+						m_length++;
+						debug &lt;&lt;&quot;take over now ( length = &quot; &lt;&lt;m_length &lt;&lt;&quot; )&quot;;
+					}
+				}
+			}
+			else                //  没有进位, 则当前位增加1以后循环立即结束
+			{
+				if(takeOver == 1)
+				{
+					debug &lt;&lt;&quot;it's a take over&quot; &lt;&lt;endl;
+				}
+				m_number[i] = '0' + nSum;
+				break;
+			}
+		}
+	}
+private :
+	int             m_N;                    //  N位数
+	char            *m_number;              //  存储数据的字符串
+	bool            m_isOverFlow;           //  是否溢出, 溢出时说明无需继续输出
+	volatile int    m_length;               //  当前数字的位数
+
+};
+
+
+int __tmain( )
+{
+
+
+	int n;
+	while(cin &gt;&gt; n)
+	{
+		Solutin solu(n);
+		solu.Print( );
+	}
+	return 0;
+}
+
+</code></pre>
+
+<h1 id="-_1">递归--转换为数字排列的解法</h1>
+<hr />
+<p>上面的算法已经很不错了，但是代码复杂，要在短时间内完成这样思路清晰而缜密的代码有点困难，因此我们需要更加简洁的方法</p>
+<blockquote>
+<p>如果我们在数字前面补上0的话，那么我们发现，n位所有的十进制数起始就是n个从0到9的全排列。</p>
+<p>也就是说，我们把数字的每一位都从0到9排列一遍，就得到了所有的十进制数。</p>
+</blockquote>
+<p>只要我们在打印的时候，数字排在前面的0不用打印出来而已。</p>
+<ul>
+<li>
+<p>全排列用递归很容易表示，数字的每一位都可能是0~9中的一个数，然后设置下一位。</p>
+</li>
+<li>
+<p>递归结束的条件是我们已经设置了数字的最后一位</p>
+</li>
+</ul>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+//  调试开关
+#define DEBUG
+#define __tmain main
+
+#ifdef DEBUG
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // DEBUG
+
+
+
+class Solutin
+{
+public :
+	void PrintToMaxOfNDigits(int n)
+	{
+		if(n &lt;= 0)
+		{
+			return ;
+		}
+
+		char *number = new char[n + 1];
+		number[n] = '\0';
+
+		//  最地位循环0~9
+		for(int i = 0; i &lt; 10; i++)
+		{
+			debug &lt;&lt;&quot;now list all &quot; &lt;&lt;i &lt;&lt;&quot;in the low position&quot; &lt;&lt;endl;
+			number[0] = i + '0';
+			PrintToMaxOfNDigitsRecursively(number, n, 0);
+		}
+
+		delete[] number;
+	}
+
+	void PrintToMaxOfNDigitsRecursively(char *number, int length, int index)
+	{
+		if(index == length - 1)
+		{
+			debug &lt;&lt;&quot;we find a number&quot; &lt;&lt;endl;
+			PrintNumber(number);
+			return ;
+		}
+
+		//  当前位循环0~9
+		for(int i = 0; i &lt; 10; i++)
+		{
+			number[index + 1] = i + '0';
+			debug &lt;&lt;&quot;now, index = &quot; &lt;&lt;index &lt;&lt;&quot;, digit = &quot; &lt;&lt; number[index + 1] &lt;&lt;endl;
+			PrintToMaxOfNDigitsRecursively(number, length , index + 1);
+		}
+	}
+
+	void PrintNumber(char *number)
+	{
+		int i = 0;
+		int length = strlen(number);
+		for(i = 0; i &lt; length; i++)
+		{
+			if(number[i] != '0')
+			{
+				break;
+			}
+		}
+		if(i != length)         //  开始的0不应该输出
+		{
+			cout &lt;&lt;&amp;number[i] &lt;&lt;endl;
+		}
+
+	}
+};
+
+
+int __tmain( )
+{
+
+
+	int n;
+	Solutin solu;
+
+	while(cin &gt;&gt; n)
+	{
+		solu.PrintToMaxOfNDigits(n);
+	}
+	return 0;
+}
+
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

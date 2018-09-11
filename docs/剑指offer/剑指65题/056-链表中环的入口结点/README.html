@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&amp;tqId=11208&amp;rp=3&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">链表中环的入口结点</a></p>
+<p>九度OJ：未收录</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/056-链表中环的入口结点">056-链表中环的入口结点</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51602910">剑指Offer--056-链表中环的入口结点</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="right">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&amp;tqId=11208&amp;rp=3&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">056-链表中环的入口结点</a></td>
+<td align="center">未收录</td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51602910">剑指Offer--056-链表中环的入口结点</a></td>
+<td align="right"><a href="https://github.com/gatieme/CodingInterviews/tree/master/056-链表中环的入口结点">056-链表中环的入口结点</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>参考</p>
+<p><a href="http://blog.csdn.net/doufei_ccst/article/details/10578315">判断链表中是否有环 —– 有关单链表中环的问题</a></p>
+</blockquote>
+<h1 id="_2">题目描述</h1>
+<hr />
+<blockquote>
+<p>一个链表中包含环，请找出该链表的环的入口结点。</p>
+</blockquote>
+<h1 id="_3">双指针法</h1>
+<hr />
+<p>受到第15题的启发<a href="http://blog.csdn.net/gatieme/article/details/51133817">剑指Offer--015-链表中倒数第k个结点</a>, 我们考虑这样一个事实</p>
+<p>假设链表长度为N, 那么第N链接到了第k个节点形成了环，即我们需要查找到倒数第N-K+1个节点, 那么环中就有N-K+1个节点，这时候我们定义两个指针$P_1$和$P_2$指向链表的头部, 指针$P_1$先在链表中向前移动n-k+1步,到达第n-k+2个节点, 然后两个指针同步向前移动, 当$P_2$走了K-1步到达环的入口的时候, 指针$P_1$正好走了N+1步, 到达了环的入口, 即两个指针会相遇在环的入口处</p>
+<p>那么我们剩下的问题就是如何得到环中节点的数目?</p>
+<p>我们可以使用一快一慢两个指针（比如慢指针一次走一步，　慢指针一次走两步），如果走的过程中发现快指针追上了慢指针, 说明遇见了环，而且相遇的位置一定在环内, 考虑一下环内, 从任何一个节点出现再回到这个节点的距离就是环的长度, 于是我们可以进一步移动慢指针，快指针原地不动, 当慢指针再次回到相遇位置时, 正好在环内走了一圈, 从而我们通过计数就可以获取到环的长度</p>
+<ul>
+<li>
+<p>第一步，找环中相汇点。分别用p1，p2指向链表头部，p1每次走一步，p2每次走二步，直到p1==p2找到在环中的相汇点。</p>
+</li>
+<li>
+<p>第二步，找环的长度。从环中的相汇点开始, p2不动, p1前移，　当再次相遇时，p1刚好绕环一周, 其移动即为环的长度K</p>
+</li>
+<li>
+<p>第三步, 求换的起点, 转换为求环的倒数第N-K个节点，则两指针left和right均指向起始, right先走K步, 然后两个指针开始同步移动, 当两个指针再次相遇时, right刚好绕环一周回到起点, left则刚好走到了起点位置</p>
+</li>
+</ul>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+#ifdef __tmain
+
+struct ListNode
+{
+	int val;
+	struct ListNode *next;
+};
+
+
+#endif // __tmain
+
+#define SLOW_STEP   1
+#define FAST_STEP   2
+
+class Solution
+{
+public:
+
+	/*
+		如果链表中有环, 则返回环中的任意一个节点
+		否则返回NULL
+	 */
+	ListNode* HasCycle(ListNode *pHead)
+	{
+		if(pHead == NULL)
+		{
+			return NULL;
+		}
+
+		ListNode *pSlow = pHead-&gt;next;
+		ListNode *pFast = pSlow-&gt;next;
+		while(pSlow != NULL &amp;&amp; pFast != NULL)
+		{
+			if(pFast == pSlow)
+			{
+				return pSlow;
+			}
+			pSlow = NextNode(pSlow, 1);
+			pFast = NextNode(pFast, 2);
+		}
+
+		return NULL;
+	}
+
+	//  获取到node节点后stpe的节点
+	ListNode* NextNode(ListNode *node, int step)
+	{
+		for(int i = 0; i &lt; step &amp;&amp; node != NULL; i++)
+		{
+			node = node-&gt;next;
+		}
+
+		return node;
+	}
+
+	//  获取到链表中环的长度
+	//  node是一个链表环内节点的指针
+	int GetCycleLength(ListNode *node)
+	{
+		int length = 0;
+		if(node == NULL)
+		{
+			return length;
+		}
+
+		//  考虑一下环内, 从任何一个节点出现再回到这个节点的距离就是环的长度
+		ListNode *currNode = node;
+		ListNode *stepNode = node-&gt;next;
+		for(length = 1; ; length++)
+		{
+			if(stepNode == currNode)
+			{
+				return length;
+			}
+			stepNode = stepNode-&gt;next;
+		}
+		return 0;
+	}
+
+
+	ListNode* EntryNodeOfLoop(ListNode* pHead)
+	{
+		//  先找到链表环中的某一个节点
+		ListNode* meetingNode = HasCycle(pHead);
+		if(meetingNode == NULL)
+		{
+			return NULL;
+		}
+		debug &lt;&lt;&quot;a node in cycle &quot; &lt;&lt;meetingNode-&gt;val &lt;&lt;endl;
+		//  获取到链表中环路的长度
+		int cycleLength = GetCycleLength(meetingNode);
+		debug &lt;&lt;&quot;cycle length = &quot; &lt;&lt;cycleLength &lt;&lt;endl;
+
+		//  找到链表的中环的入口
+		ListNode *leftNode = pHead;
+		ListNode *rightNode = pHead;
+
+		//  右指针先往前走n步
+		rightNode = NextNode(rightNode, cycleLength);
+		while(leftNode != rightNode)
+		{
+			leftNode = leftNode-&gt;next;
+			rightNode = rightNode-&gt;next;
+		}
+
+		return leftNode;
+
+	}
+};
+
+int __tmain( )
+{
+	Solution solu;
+
+	ListNode list[6];
+
+	list[0].val = 1;
+	list[0].next = &amp;list[1];
+
+	list[1].val = 2;
+	list[1].next = &amp;list[2];
+
+	list[2].val = 3;
+	list[2].next = &amp;list[3];
+
+	list[3].val = 4;
+	list[3].next = &amp;list[4];
+
+	list[4].val = 5;
+	list[4].next = &amp;list[5];
+
+	list[5].val = 6;
+	list[5].next = &amp;list[2];
+
+	cout &lt;&lt;solu.EntryNodeOfLoop(list)-&gt;val &lt;&lt;endl;
+
+	return 0;
+}
+</code></pre>
+
+<h1 id="_4">断链法</h1>
+<hr />
+<p>时间复杂度为O（n），两个指针，一个在前面，另一个紧邻着这个指针，在后面。
+两个指针同时向前移动，每移动一次，前面的指针的next指向NULL。
+也就是说：访问过的节点都断开，最后到达的那个节点一定是尾节点的下一个，
+也就是循环的第一个。
+这时候已经是第二次访问循环的第一节点了，第一次访问的时候我们已经让它指向了NULL，
+所以到这结束。</p>
+<p>但是这种方法修改了链表的指向</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	ListNode* EntryNodeOfLoop(ListNode* pHead)
+	{
+		if (pHead == NULL
+		 || pHead-&gt;next == NULL)
+		{
+			return NULL;
+		}
+
+		ListNode* previous = pHead;
+		ListNode* current = pHead-&gt;next;
+		while (current != NULL)
+		{
+			previous-&gt;next = NULL;
+			previous = current;
+			current = current-&gt;next;
+		}
+
+		return previous;
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

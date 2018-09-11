@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&amp;tqId=11166&amp;rp=1&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">调整数组顺序使奇数位于偶数前面</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1516</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/014-调整数组顺序使奇数位于偶数前面">014-调整数组顺序使奇数位于偶数前面</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51133277">剑指Offer--014-调整数组顺序使奇数位于偶数前面</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&amp;tqId=11166&amp;rp=1&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">调整数组顺序使奇数位于偶数前面</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1516">1516-调整数组顺序使奇数位于偶数前面</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51133277">剑指Offer--014-调整数组顺序使奇数位于偶数前面</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+</blockquote>
+<p><strong>样例输入</strong></p>
+<blockquote>
+<p>5
+1 2 3 4 5</p>
+</blockquote>
+<p><strong>样例输出</strong></p>
+<blockquote>
+<p>1 3 5 2 4</p>
+<p>下面我们考虑<strong>算法复杂度</strong>的同时还会考虑其<strong>稳定性</strong>，（排序的稳定型则是指相同元素在数组中的相对位置是否发生变化），这里的稳定性我们理解为，顺序交换后，各个奇数（或者偶数）在数组中的相对位置是否发生变化</p>
+</blockquote>
+<h1 id="_3">暴力解法以及冒泡解法</h1>
+<hr />
+<p>最简单的思路就是从头到尾扫描一遍数组，每遇见一个偶数时，就拿出这个数字，并把位于这个数字之后的所有数字往前挪动一位,然后把当前这个偶数放到最后。</p>
+<p>这样每次遇到一个偶数就要挪动$O(n)$个数字，因此总的时间复杂度是$O(n^2)$</p>
+<p>但是这种方法不仅暴力而且还需要复杂的挪动工作，因此我们对比一下冒泡排序，每次循环前偶后奇就交换</p>
+<p>同时我们设立一个标识，来标识数组是否已经符合要求</p>
+<p>当再次循环时，发现没有要交换的数据，说明数组已经符合要求</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+public:
+	void reOrderArray(vector&lt;int&gt; &amp;array)
+	{
+		if(array.size( ) &lt;= 1)
+		{
+			return ;
+		}
+		bool isSwap = false;
+		for (int i = 0; i &lt; array.size( ); i++)
+		{
+			isSwap = false;
+			for (int j = array.size() - 1; j &gt; i; j--)
+			{
+				if (array[j] % 2 == 1 &amp;&amp; array[j - 1]%2 == 0) //前偶后奇交换
+				{
+					swap(array[j], array[j-1]);
+					isSwap = true;
+				}
+			}
+			if(isSwap == false)
+			{
+				break;
+			}
+		}
+
+
+	}
+};
+
+
+int __tmain( )
+{
+	int array[] = { 1, 2, 3, 4, 5, 6, 7};
+	vector&lt;int&gt; vec(array, array + 7);
+	for(int i = 0; i &lt; 7; i++)
+	{
+		cout &lt;&lt;vec[i] &lt;&lt;&quot; &quot;;
+	}
+	cout &lt;&lt;endl;
+	Solution solu;
+	solu.reOrderArray(vec);
+
+	for(int i = 0; i &lt; 7; i++)
+	{
+		cout &lt;&lt;vec[i] &lt;&lt;&quot; &quot;;
+	}
+	cout &lt;&lt;endl;
+	return 0;
+}
+
+</code></pre>
+
+<p>由于冒泡法比较相邻两个元素，因此奇数或者偶数的相对顺序不变，是稳定的</p>
+<h1 id="_4">辅助数组完成</h1>
+<hr />
+<p>我们也可以利用一个辅助的数组空间来实现</p>
+<ul>
+<li>在原来的数组中遇到偶数就放进新数组中，然后将该偶数从原来数组中删除，当整个遍历结束后，原来数组中只剩下奇数，新的数组总只剩下偶数，最后我们将新的数组追加在原来数组的末尾即可</li>
+</ul>
+<pre><code class="cpp">class Solution
+{
+public:
+	void reOrderArray(vector&lt;int&gt; &amp;array)
+	{
+		if(array.size( ) &lt;= 1)
+		{
+			return ;
+		}
+
+		vector&lt;int&gt; array_temp;
+		vector&lt;int&gt;::iterator ib1, ie1;
+		ib1 = array.begin();
+
+
+		for (; ib1 != array.end();)
+		{            //遇见偶数，就保存到新数组，同时从原数组中删除
+			if (*ib1 % 2 == 0)
+			{
+				array_temp.push_back(*ib1);
+				ib1 = array.erase(ib1);
+			}
+			else{
+				ib1++;
+			}
+
+		}
+		vector&lt;int&gt;::iterator ib2, ie2;
+		ib2 = array_temp.begin();
+		ie2 = array_temp.end();
+
+		for (; ib2 != ie2; ib2++)             //将新数组的数添加到老数组
+		{
+			array.push_back(*ib2);
+		}
+	}
+};
+</code></pre>
+
+<p>这种算法也是稳定的。</p>
+<h1 id="_5">高效但是只完成基本功能的解法</h1>
+<hr />
+<p>由于题目中只要求记奇数在偶数之前，那么我们在扫描这个数组的时候，如果发现一个偶数出现在奇数之前就交换他们的位置，这样一趟后就满足要求了。</p>
+<p>因此我们
+*    维护两个索引或者指针，一个指向数组的第一个元素，并向后移动，一个指向数组的最后一个元素，并向前移动。</p>
+<ul>
+<li>
+<p>如果第一个指针指向的元素是偶数，而第二个指针指向的元素是奇数，说明偶数在奇数前面，那么就交换这两个数。</p>
+</li>
+<li>
+<p>直到两个指针相遇为止</p>
+</li>
+</ul>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+public:
+	void reOrderArray(vector&lt;int&gt; &amp;array)
+	{
+		if(array.size( ) &lt;= 1)
+		{
+			return ;
+		}
+		vector&lt;int&gt;::iterator left = array.begin( );
+		vector&lt;int&gt;::iterator right = array.end( ) - 1;
+
+		// 三种顺序容器中只有deque和vector容器的迭代器支持大小的比较和算术运算。
+
+		while(left &lt; right)
+		//while(left != right)
+		{
+			//system(&quot;PAUSE&quot;);
+
+			//  left向后移动指向第一个偶数
+			while(left &lt; right &amp;&amp; (*left &amp; 0x01) == 1)
+			{
+				left++;
+			}
+
+			// right向前移动指向第一个奇数
+			while(left &lt; right &amp;&amp; (*right &amp;0x01) == 0)
+			{
+				right--;
+			}
+			debug &lt;&lt;&quot;left = &quot; &lt;&lt;*left &lt;&lt;&quot;, right = &quot; &lt;&lt;*right &lt;&lt;endl;
+
+			if(left &lt; right)
+			{
+				swap(*left, *right);
+			}
+		}
+
+	}
+};
+
+
+int __tmain( )
+{
+	int array[] = { 1, 2, 3, 4, 5, 6, 7};
+	vector&lt;int&gt; vec(array, array + 7);
+	for(int i = 0; i &lt; 7; i++)
+	{
+		cout &lt;&lt;vec[i] &lt;&lt;&quot; &quot;;
+	}
+	cout &lt;&lt;endl;
+	Solution solu;
+	solu.reOrderArray(vec);
+
+	for(int i = 0; i &lt; 7; i++)
+	{
+		cout &lt;&lt;vec[i] &lt;&lt;&quot; &quot;;
+	}
+	cout &lt;&lt;endl;
+	return 0;
+}
+
+</code></pre>
+
+<p>很明显，这种算法不能保证相同类型数据的相对位置不变，因此不稳定</p>
+<p>比如要求
+测试用例:</p>
+<blockquote>
+<p>[1,2,3,4,5,6,7]</p>
+</blockquote>
+<p>对应的稳定输出</p>
+<blockquote>
+<p>[1,3,5,7,2,4,6]</p>
+</blockquote>
+<p>我们算法的输出</p>
+<blockquote>
+<p>[1,7,3,5,4,6,2]</p>
+</blockquote>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13&amp;tqId=11193&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">数组中只出现一次的数字</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1351</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/040-数组中只出现一次的数字">040-数组中只出现一次的数字</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51352156">剑指Offer--040-数组中只出现一次的数字</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="center">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13&amp;tqId=11193&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">040-数组中只出现一次的数字</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1351">1351-数组中只出现一次的数字</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51352156">剑指Offer--040-数组中只出现一次的数字</a></td>
+<td align="center"><a href="https://github.com/gatieme/CodingInterviews/tree/master/040-数组中只出现一次的数字">040-数组中只出现一次的数字</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字</p>
+</blockquote>
+<p><strong>样例输入</strong></p>
+<blockquote>
+<p>2 4 3 6 3 2 5 5</p>
+</blockquote>
+<p><strong>样例输出</strong></p>
+<blockquote>
+<p>4 6</p>
+</blockquote>
+<h1 id="_3">分析</h1>
+<hr />
+<p>此题考察的是异或运算的特点：即两个相同的数异或结果为0。</p>
+<p>此题用了两次异或运算特点：</p>
+<ul>
+<li>
+<p>第一次使用异或运算，得到了两个只出现一次的数相异或的结果。</p>
+</li>
+<li>
+<p>因为两个只出现一次的数肯定不同，即他们的异或结果一定不为0，一定有一个位上有1。</p>
+</li>
+</ul>
+<p>另外一个此位上没有1，我们可以根据此位上是否有1，将整个数组重新划分成两部分，</p>
+<p>一部分此位上一定有1，另一部分此位上一定没有1，</p>
+<p>然后分别对每部分求异或，因为划分后的两部分有这样的特点：其他数都出现两次，只有一个数只出现一次。因此，我们又可以运用异或运算，分别得到两部分只出现一次的数。</p>
+<h1 id="_4">代码</h1>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;bitset&gt;
+
+using namespace std;
+
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+class Solution
+{
+public:
+	#define INT_SIZE (sizeof(int) * 8)
+
+	#define IS_BIT(number, index) (((number) &amp; (1 &lt;&lt; (index))) &gt;&gt;index)
+
+	void FindNumsAppearOnce(vector&lt;int&gt; array, int *num1, int *num2)
+	{
+		*num1 = *num2 = 0;
+		if(array.size( ) &lt; 2)
+		{
+			return ;
+		}
+		int XOR = array[0];
+		for(int i = 1; i &lt; array.size( ); i++)
+		{
+			XOR ^= array[i];
+		}
+
+		debug &lt;&lt;bitset&lt;INT_SIZE&gt;(XOR) &lt;&lt;endl;
+
+		///  查找到1的位置
+		int index = 0, temp = 1;
+		for(; index &lt; INT_SIZE; index++)
+		{
+			if((XOR &amp; temp) == temp)
+			{
+				break;
+			}
+			temp &lt;&lt;= 1;
+		}
+		debug &lt;&lt;index &lt;&lt;endl;
+		if(index == INT_SIZE)
+		{
+			debug &lt;&lt;&quot;no two numbers which once&quot; &lt;&lt;endl;
+			return;
+		}
+		debug &lt;&lt;&quot;find 1 in index = &quot; &lt;&lt;index &lt;&lt;endl;
+		debug &lt;&lt;IS_BIT(XOR, index) &lt;&lt;endl;
+		//  于是我们知道那两个只出现一次的数字, 第index位必然不相同
+		//  因此 我们将数组划分成两部分
+		//  一部分index位是0
+		//  另外一部分index位是1
+		*num1 = *num2 = 0;// 也可以等于XOR
+		for(int i = 0; i &lt; array.size( ); i++)
+		{
+			if(IS_BIT(array[i], index) == 1)
+			{
+				*num1 ^= array[i];
+			}
+			else
+			{
+				*num2 ^= array[i];
+			}
+		}
+	}
+};
+
+
+int __tmain( )
+{
+	Solution solu;
+
+	int arr[] = { 2, 4, 3, 6, 3, 2, 5, 5, };
+	vector&lt;int&gt; vec(arr, arr + 8);
+
+	int num1, num2;
+	solu.FindNumsAppearOnce(vec, &amp;num1, &amp;num2);
+	cout &lt;&lt;&quot;RESULT : &quot; &lt;&lt;num1 &lt;&lt;&quot;, &quot; &lt;&lt;num2 &lt;&lt;endl;
+	return 0;
+}
+</code></pre>
+
+<p>找xor中最后一个1的位置的时候，可以用$(XOR &amp; (-XOR))$</p>
+<p>由于计算机内部整数按照补码来存储，补码的表示方法是:</p>
+<ul>
+<li>
+<p>正数的补码就是其本身</p>
+</li>
+<li>
+<p>负数的补码是在其原码（原码就是符号位加上真值的绝对值, 即用第一位表示符号, 其余位表示值.）的基础上, 符号位不变, 其余各位取反, 最后+1. (即在反码的基础上+1)</p>
+</li>
+<li>
+<p>更简单的方法是，符号位不变，从最低位开始，指导遇见第一个1，这个1后面的都不变，前面的所有位依次取反。</p>
+</li>
+</ul>
+<p>因此我们会发现，XOR与-XOR的区别就是最低位起始的第一个1相同，然后前面的bit位置正好相反</p>
+<p>因此XOR &amp; (-XOR)的值正好就是仅有一位为1，而这个位置正好是XOR最低位1的位置</p>
+<p>代码</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	#define INT_SIZE (sizeof(int) * 8)
+
+	#define IS_BIT(number, index) (((number) &amp; (1 &lt;&lt; (index))) &gt;&gt;index)
+
+	void FindNumsAppearOnce(vector&lt;int&gt; array, int *num1, int *num2)
+	{
+		*num1 = *num2 = 0;
+		if(array.size( ) &lt; 2)
+		{
+			return ;
+		}
+		int XOR = array[0];
+		for(int i = 1; i &lt; array.size( ); i++)
+		{
+			XOR ^= array[i];
+		}
+
+		debug &lt;&lt;bitset&lt;INT_SIZE&gt;(XOR) &lt;&lt;endl;
+
+		///  查找到1的位置
+		int flag = XOR &amp; (-XOR);
+		debug &lt;&lt;bitset&lt;INT_SIZE&gt;(flag) &lt;&lt;endl;
+		*num1 = *num2 = XOR;// 也可以等于XOR
+		for(int i = 0; i &lt; array.size( ); i++)
+		{
+			if((array[i] &amp; flag) == flag)
+			{
+				*num1 ^= array[i];
+			}
+			else
+			{
+				*num2 ^= array[i];
+			}
+		}
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

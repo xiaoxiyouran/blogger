@@ -1,0 +1,714 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/e8a1b01a2df14cb2b228b30ee6a92163?tpId=13&amp;tqId=11181&amp;rp=2&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">数组中出现次数超过一半的数字</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1370</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/029-数组中出现次数超过一半的数字">029-数组中出现次数超过一半的数字</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51251311">剑指Offer--029-数组中出现次数超过一半的数字</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="center">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/e8a1b01a2df14cb2b228b30ee6a92163?tpId=13&amp;tqId=11181&amp;rp=2&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">数组中出现次数超过一半的数字</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1370">1370-数组中出现次数超过一半的数字</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51251311">剑指Offer--029-数组中出现次数超过一半的数字</a></td>
+<td align="center"><a href="https://github.com/gatieme/CodingInterviews/tree/master/029-数组中出现次数超过一半的数字">029-数组中出现次数超过一半的数字</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入一个字符串,按字典序打印出该字符串中字符的所有排列</p>
+<p>例如输入字符串abc,</p>
+<p>则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。</p>
+<p>结果请按字母顺序输出。</p>
+<p><strong>注意</strong>
+输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母</p>
+</blockquote>
+<p><strong>样例输入</strong></p>
+<blockquote>
+<p>1 2 3 2 2 2 5 4 2</p>
+</blockquote>
+<p><strong>样例输出</strong></p>
+<blockquote>
+<p>2</p>
+</blockquote>
+<h1 id="_3">排序以后统计个数</h1>
+<hr />
+<p>如果是排序好的数组，那么我们就很容易统计每个数组出现的次数，而题目中并没有说数组是排序好的，因此我们需要先排序（最好的情况下$O(nlogn)$），后统计（一次遍历即可$O(n)$）,因此这种方法的时间复杂度为$O(nlogn)$</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+class Solution
+{
+public:
+	int MoreThanHalfNum_Solution(vector&lt;int&gt; numbers)
+	{
+		if(numbers.size( ) == 0)
+		{
+			return 0;
+		}
+		else if(numbers.size( ) == 1)
+		{
+			return numbers[0];
+		}
+
+		sort(numbers.begin( ), numbers.end( ));
+
+		int res = 0;
+		int count = 1;
+		for(int i = 0; i &lt; numbers.size( ) - 1; i++)
+		{
+			if(numbers[i] == numbers[i + 1])
+			{
+				count++;        //  numbers[i]又在下一个位置i + 1出现了
+			}
+			else                //  i是numbers[i]是最后出现的位置了
+			{
+				debug &lt;&lt;numbers[i] &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+				count = 1;
+
+			}
+			///  最后一个数的个数需要特殊处理下
+#ifdef __tmain
+			if(i == numbers.size( ) - 2)
+			{
+				debug &lt;&lt;numbers[i + 1] &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+			}
+#endif // __tmain
+
+			/// 个数超过数组的一半时候说明已经找到了，就终止
+			if(count &gt; numbers.size( ) / 2)
+			{
+				res = numbers[i];
+				break;
+			}
+		}
+
+		return res;
+	}
+};
+
+
+int __tmain( )
+{
+	int arr1[] = { 5, 5, 2, 2, 3, 3, 5, 5, 5};
+
+	vector&lt;int&gt; vec1(arr1, arr1 + 9);
+
+	Solution solu;
+	cout &lt;&lt;solu.MoreThanHalfNum_Solution(vec1) &lt;&lt;endl;
+
+
+	int arr2[] = { 1, 2 };
+
+	vector&lt;int&gt; vec2(arr2, arr2 + 2);
+	cout &lt;&lt;solu.MoreThanHalfNum_Solution(vec2) &lt;&lt;endl;
+	return 0;
+}
+</code></pre>
+
+<h1 id="partitiononk">基于Partition函数的$O(n)$的查找第K大的数</h1>
+<hr />
+<p>上面基于排序的算法比较保守，因为它没有充分利用<strong>出现次数超过一半</strong>这个条件。</p>
+<p>数组中有一个数字出现的次数超过了数组长度的一半，那么<strong>如果我们把这个数组排序，那么排序之后位于数组中间的那个数字一定就是那个出现次数超过数组长度一半的数字</strong></p>
+<p>也就是说这个数字其实就是统计学上的中位数，即长度为N的数组中的$N/2$大的元素，因此我们的题目最后成为返回数组中第K（$K=Len/2$）大的数。</p>
+<p>因此我们的问题成为<strong>查找一个数组中的K大的元素</strong></p>
+<blockquote>
+<p>参考</p>
+<p><a href="http://blog.csdn.net/xiaoding133/article/details/8037086">【编程之美】读书笔记：寻找最大的K个数</a></p>
+<p><a href="http://blog.chinaunix.net/uid-20196318-id-189514.html">寻找第K大的数 </a></p>
+<p><a href="http://www.cnblogs.com/luxiaoxun/archive/2012/08/06/2624799.html">O(N)的时间寻找最大的K个数</a></p>
+</blockquote>
+<p>这个由很多种方法的，这里我们介绍其中一种分治划分的方法，是基于快速排序算法的</p>
+<p>我们写过<strong>快速排序算法</strong>，其中的Partition()方法是一个最重要的方法，该方法返回一个index，能够保证index位置的数是已排序完成的，在index左边的数都比index所在的数小，在index右边的数都比index所在的数大。那么本题就可以利用这样的思路来解。</p>
+<ol>
+<li>
+<p>通过Partition()返回index，如果index<mark>mid，那么就表明找到了数组的中位数；如果index<mid，表明中位数在[index+1,end]之间；如果index>mid，表明中位数在[start,index-1]之间。知道最后求得index</mark>mid循环结束。</p>
+</li>
+<li>
+<p>根据求得的index，遍历一遍数组，每当出现一个等于index所指向的数时time++，最后判断time是否大于数组长度的一半，如果大于则表明index所指向的数就是所求的数，如果不是，则表明不存在一个数出现的次数超过数组长度的一半。</p>
+</li>
+</ol>
+<pre><code class="cpp">class Solution
+{
+public:
+	int MoreThanHalfNum_Solution(vector&lt;int&gt; numbers)
+	{
+		if(numbers.size( ) == 0)
+		{
+			return 0;
+		}
+		else if(numbers.size( ) == 1)
+		{
+			return numbers[0];
+		}
+
+		int num = FindKth(numbers, 0, numbers.size( ) - 1, numbers.size( ) / 2);
+
+		if(CheckMoerThanHalf(numbers, num) == true)
+		{
+			return num;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	/**
+	 * [Partition 快速排序的划分函数, 返回枢轴(left下标元素)在排序的数组中应该所处的位置,
+	  即下标为left的元素是第几大的元素
+	 * @Author    gatieme
+	 * @DateTime  2016-04-26T11:11:34+0800
+	 * @param     numbers                  [待划分的数组]
+	 * @param     left                     [待划分数据的起始位置]
+	 * @param     right                    [待划分数据的结束位置]
+	 * @return                             [返回枢轴在排序后数组中应该在的位置]
+	 */
+	int Partition(vector&lt;int&gt; &amp;numbers, int left, int right)
+	{
+		int i = left, j = right;
+
+		///  我们选择第一个元素作为基准
+		///  这个也可以随机选择
+		int pivotIndex = left, pivotNum = numbers[pivotIndex];
+
+		debug &lt;&lt;&quot;pivotNum = &quot; &lt;&lt;pivotNum &lt;&lt;endl;
+		while(i &lt; j)
+		{
+			while(i &lt; j &amp;&amp; numbers[j] &gt;= pivotNum)
+			{
+				debug &lt;&lt;&quot;[&quot; &lt;&lt;i &lt;&lt;&quot;, &quot; &lt;&lt;j &lt;&lt;&quot;] &quot; &lt;&lt;numbers[j] &lt;&lt;&quot; &gt;= &quot; &lt;&lt;pivotNum &lt;&lt;endl;
+				j--;
+			}
+			debug &lt;&lt;&quot;now we find i = &quot; &lt;&lt;i &lt;&lt;&quot;, posJ = &quot; &lt;&lt;j &lt;&lt;&quot;, num = &quot; &lt;&lt;numbers[j] &lt;&lt;&quot; &lt; &quot; &lt;&lt;pivotNum &lt;&lt;endl;;
+			numbers[i] = numbers[j];        // 将找到的那个比枢轴小的数，放在枢轴左侧I的位置
+			//swap(numbers[i], numbers[j]); // 也可以使用交换, 但是没有必要, 因为枢轴的位置并没有最后确定
+
+			while(i &lt; j &amp;&amp; numbers[i] &lt;= pivotNum)
+			{
+				debug &lt;&lt;&quot;[&quot; &lt;&lt;i &lt;&lt;&quot;, &quot; &lt;&lt;j &lt;&lt;&quot;] &quot; &lt;&lt;numbers[i] &lt;&lt;&quot; &lt;= &quot; &lt;&lt;pivotNum &lt;&lt;endl;
+				i++;
+			}
+
+			debug &lt;&lt;&quot;now we find j = &quot; &lt;&lt;i &lt;&lt;&quot;, posI = &quot; &lt;&lt;j &lt;&lt;&quot;, num = &quot; &lt;&lt;numbers[i] &lt;&lt;&quot; &gt; &quot; &lt;&lt;pivotNum &lt;&lt;endl;;
+			numbers[j] = numbers[i];        // 将找到的那个比枢轴大的数，放在枢轴右侧J的位置
+			//swap(numbers[i], numbers[j]); // 也可以使用交换, 但是没有必要, 因为枢轴的位置并没有最后确定
+		}
+
+		numbers[i] = pivotNum;              //  最后的位置 i == j 就是枢轴的位置
+
+#ifdef __tmain
+
+		debug &lt;&lt;pivotNum &lt;&lt;&quot; 's post is&quot; &lt;&lt;i &lt;&lt;endl;
+		for(int pos = left; pos &lt;= right; pos++)
+		{
+			debug &lt;&lt;numbers[pos] &lt;&lt;&quot; &quot;;
+		}
+		debug &lt;&lt;endl;
+		//system(&quot;PAUSE&quot;);
+
+#endif // __tmain
+
+		return i;
+	}
+
+	/**
+	 * [FindKth 查找数组中第K大的元素]
+	 * @Author    gatieme
+	 * @DateTime  2016-04-26T11:18:00+0800
+	 * @param     numbers                  [待查找元素所在的数组]
+	 * @param     left                     [数据起始元素的位置]
+	 * @param     right                    [数据终止元素的位置]
+	 * @param     k                        [第K大的元素]
+	 * @return                             [数组中第K大的元素的值]
+	 */
+	int FindKth(vector&lt;int&gt; &amp;numbers, int left, int right, int k)
+	{
+		int res;
+		int pivotIndex = left + 1;
+
+		if(left == right)
+		{
+			debug &lt;&lt;&quot;left == right&quot; &lt;&lt;numbers[left] &lt;&lt;endl;
+			return numbers[left];
+		}
+
+		pivotIndex = Partition(numbers, left, right);
+
+
+		if(pivotIndex &lt; k)          //  当前查找到的比第K个数小
+		{
+			// 第K大的的在pivot之前, 在[pivotIndex + 1, right]之间查找
+			debug &lt;&lt;&quot;K is in [&quot; &lt;&lt;pivotIndex + 1 &lt;&lt;&quot;, &quot; &lt;&lt;right &lt;&lt;&quot;]&quot; &lt;&lt;endl;
+			return FindKth(numbers, pivotIndex + 1, right, k);
+		}
+		else if(pivotIndex &gt; k)     //  当前查找到的比第K个数大
+		{
+			// 第K小的在pivot之前, 在[left, pivotIndex - 1]之间查找
+			debug &lt;&lt;&quot;K is in [&quot; &lt;&lt;left &lt;&lt;&quot;, &quot; &lt;&lt;pivotIndex - 1 &lt;&lt;&quot;]&quot; &lt;&lt;endl;
+			return FindKth(numbers, left, pivotIndex - 1, k);
+		}
+		else      //  这里返回的是其位置
+		{
+			/// return pivotIndex; ///  error
+			debug &lt;&lt;&quot;pivotIndex == k, &quot; &lt;&lt;numbers[pivotIndex] &lt;&lt;endl;
+			return numbers[pivotIndex];
+		}
+	}
+
+
+	/**
+	 * [CheckMoerThanHalf 检查num元素在数组numbers中出现的次数是否超过一半]
+	 * @AuthorHTL
+	 * @DateTime  2016-04-26T11:20:35+0800
+	 * @param     numbers                  [待处理的数组]
+	 * @param     num                      [待查询的元素]
+	 * @return                             [如果元素num在数组numbers中出现的次数超过数组长度的一半则返回true, 否则返回false]
+	 */
+	bool CheckMoerThanHalf(vector&lt;int&gt; numbers, int num)
+	{
+		int count = 0;
+		for(int i = 0; i &lt; numbers.size( ); i++)
+		{
+			if(numbers[i] == num)
+			{
+				count++;
+			}
+		}
+		debug &lt;&lt;&quot;num = &quot; &lt;&lt;num &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+
+		if(count &gt; numbers.size( ) / 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+};
+</code></pre>
+
+<h1 id="-">阵地攻守（特点--它出现的次数比其他所有的数组出现的次数之和还要多）</h1>
+<hr />
+<p>还是充分利用<strong>出现次数超过一半</strong>这个条件</p>
+<blockquote>
+<p>数组中有一个数字出现的次数超过数组长度的一半，也就是说它出现的次数比其他所有数字出现的次数之和还要多</p>
+<p>我们考虑<strong>阵地攻守（镇守阵地），遇见一个友军就抱成团，遇见一个敌军就同归于尽，那么最后战场上剩余的肯定就是人数（出现次数）最多的那个队伍（数字）</strong></p>
+</blockquote>
+<p>采用<strong>阵地攻守</strong>的思想</p>
+<ul>
+<li>
+<p>第一个数字作为第一个士兵，守阵地；count = 1；</p>
+</li>
+<li>
+<p>遇到相同元素，count++; 遇到不相同元素，即为敌人，同归于尽,count--；</p>
+</li>
+<li>
+<p>当遇到count为0的情况，又以新的i值作为守阵地的士兵，继续下去，到最后还留在阵地上的士兵，有可能是主元素。</p>
+</li>
+<li>
+<p>再加一次循环，记录这个士兵的个数看是否大于数组一般即可。</p>
+</li>
+</ul>
+<p>由于我们要找的数字出现的次数比他所有数字出现的次数之和还要多，那么要找的数字肯定是最后一次把次数设为1时对应的数字，因为少的元素都已经阵亡了，战场上仅剩下的一定是人数数目要多的那个队伍</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	int MoreThanHalfNum_Solution(vector&lt;int&gt; numbers)
+	{
+		if(numbers.size( ) == 0)
+		{
+			return 0;
+		}
+		else if(numbers.size( ) == 1)
+		{
+			return numbers[0];
+		}
+
+		int num = numbers[0], count = 1;
+		///  阵地攻守
+		for(int i = 1; i &lt; numbers.size( ); i++)
+		{
+			if(numbers[i] == num)    /// 友军, 计数器增加
+			{
+				count++;
+			}
+			else                    /// 敌军, 一个士兵同归于尽
+			{
+				count--;
+			}
+			debug &lt;&lt;&quot;numbers[i] = &quot; &lt;&lt;numbers[i] &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+			/// 所有士兵已经阵亡
+			if(count == 0)
+			{
+				num = numbers[i];    ///  重新设置镇守阵地的士兵
+				count = 1;
+			}
+		}
+
+		debug &lt;&lt;&quot;find num = &quot; &lt;&lt;num &lt;&lt;endl;
+		///  再加一次循环，记录这个士兵的个数看是否大于数组一般即可
+		count = 0;
+		for(int i = 0; i &lt; numbers.size( ); i++)
+		{
+			if(numbers[i] == num)
+			{
+				count++;
+			}
+		}
+
+		if(count &gt; numbers.size( ) / 2)
+		{
+			debug &lt;&lt;&quot;num = &quot; &lt;&lt;num &lt;&lt;&quot;, count = &quot; &lt;&lt;count &lt;&lt;endl;
+			return num;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+};
+</code></pre>
+
+<p>这个思想有一个简单的实现变种，就是现的次数超过数组长度的一半，表明这个数字出现的次数比其他数字出现的次数的总和还多。</p>
+<p>所以我们可以考虑每次删除两个不同的数，那么在剩下的数中，出现的次数仍然超过总数的一半。通过不断重复这个过程，不断排除掉其它的数，最终找到那个出现次数超过一半的数字。这个方法，</p>
+<blockquote>
+<p>例：数组 a[5]={0,1,2,1,1};
+				 我们要查找的数字为1，操作步骤为：遍历整个数组，然后每次删除不同的两个数字，过程如下：
+			   0 1 2 1 1 =&gt;2 1 1=&gt;1</p>
+</blockquote>
+<p>具体实现：我们在考虑删除两个不同的数字的时候，实际上可以同过计数来实现，而不是物理上真正的删除。 在遍历数组的时候保存两个值：一个是数组中的一个数字，一个是次数。当我们遍历到下一个数字的时候，如果下一个数字和我们之前保存的数字相同，则次数加1。如果下一个数字和我们之前保存的数字不同，则次数减1。如果次数为零，我们需要保存下一个数字，并把次数设为1。由于我们要找的数字出现的次数比其他所有数字出现的次数之和还要多，那么要找的数字肯定是最后一次把次数设为1时对应的数字。</p>
+<h1 id="stlcount">使用STL的count函数统计某个值出现的次数</h1>
+<hr />
+<p>STL的count函数原型如下</p>
+<pre><code class="cpp">template&lt;class InputIterator, class T&gt; inline
+   size_t count(
+	  InputIterator First,
+	  InputIterator Last,
+	  const T&amp; Value
+)
+</code></pre>
+
+<p>algorithm头文件定义了一个count的函数，其功能类似于find。
+这个函数使用一对迭代器和一个值做参数，返回这个值出现次数的统计结果。
+count只能统计某个特定元素出现的次数，不够灵活，因此STL提供了count_if，前两个参数是iterator(迭代器)，表示查找半闭合区间的前后两个位置，第三个参数为一个用户定义的predicate function object，而predicate意思就是说是一个返回值是bool型的仿函数(function object，也称functor)。</p>
+<pre><code class="cpp">template&lt;class _InIt, class _Pr&gt; inline
+typename iterator_traits&lt;_InIt&gt;::difference_type
+count_if(_InIt _First, _InIt _Last, _Pr _Pred);
+</code></pre>
+
+<p>核心代码：</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	int MoreThanHalfNum_Solution(vector&lt;int&gt; numbers)
+	{
+//        return numbers.empty( ) ? 0 : *find_if(numbers.begin( ), numbers.end( ),[numbers](int x)
+//            {
+//                return (count(numbers.begin( ),numbers.end( ), x) * 2) &gt; numbers.size();
+//            });
+
+		if(numbers.size( ) == 0)
+		{
+			return 0;
+		}
+		for(int i = 0 ; i &lt; numbers.size( ); i++)
+		{
+			debug &lt;&lt;&quot;num = &quot; &lt;&lt;numbers[i] &lt;&lt;&quot;, count = &quot; &lt;&lt;count(numbers.begin( ), numbers.end( ), numbers[i]) &lt;&lt;endl;
+			if(count(numbers.begin( ), numbers.end( ), numbers[i]) * 2 &gt; numbers.size( ))
+			{
+				return numbers[i];
+			}
+		}
+		return 0;
+
+
+	}
+};
+</code></pre>
+
+<h1 id="map">使用map来建立数字到出现次数的映射</h1>
+<hr />
+<p>我们可以使用一个map来建立数字-=&gt;出现次数的一个映射，这样最后遍历找到出现次数大于数组长度一半的那个元素即可</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	int MoreThanHalfNum_Solution(vector&lt;int&gt; numbers)
+	{
+		map&lt;int,int&gt; hmap;  //  建立数字到出现次数的映射
+
+		int nsize = numbers.size();
+
+		for(int i = 0 ; i &lt; nsize; i ++)
+		{
+			if(hmap.find(numbers[i]) != hmap.end( ))
+			{
+				hmap[numbers[i]] += 1;
+			}
+			else
+			{
+				hmap[numbers[i]] = 1;
+			}
+		}
+
+
+
+		//  查找到出现次数最多的那个元素
+		for(map&lt;int,int&gt;::iterator it = hmap.begin( );
+			it != hmap.end( );
+			++it)
+		{
+			debug &lt;&lt;it-&gt;first &lt;&lt;&quot;, &quot; &lt;&lt;it-&gt;second &lt;&lt;endl;
+			if(it-&gt;second * 2 &gt; nsize)
+			{
+				return it-&gt;first;
+			}
+		}
+		return 0;
+	}
+};
+</code></pre>
+
+<h1 id="_4">变种以及扩展</h1>
+<hr />
+<p>昨天看到了扩展问题，</p>
+<ul>
+<li><strong>如果有且只有一个的出现最多的那个数字出现的次数是数组长度的一半呢？又或者是一半减1？</strong></li>
+</ul>
+<p>我们还是继续从我们之前的那道超过一半的数来入手，我们的"阵地攻守"的解法是每遇到2个不同的数，就删除，剩下的就是那个出现次数超过一半的数字。</p>
+<p>这个方法对于超过一半的情况可以成立，对于扩展问题就不再行得通了。</p>
+<p>但是他们的本质是相同的，</p>
+<ul>
+<li>
+<p>对于一个长度为2n的数组，如果有个数出现次数超过n,那么至少有1组，连续2个数是重复的相应的，于是"阵地攻守"中每次不同的元素就删除（同归于尽）就可以找到那个元素</p>
+</li>
+<li>
+<p>如果出现的次数为n, 那么至少有一组连续3个数是重复。每3个不重复的数删除一次</p>
+</li>
+<li>
+<p>如果是n-1, 就是一组至少有连续4个数重复。每4个不重复的数删除一次</p>
+</li>
+</ul>
+<blockquote>
+<p>参考</p>
+<p><a href="http://www.cnblogs.com/jy02414216/archive/2011/03/04/1970497.html">编程之美系列之二——寻找出现频率超过一半的数</a></p>
+<p><a href="http://blog.chinaunix.net/uid-26456800-id-3383003.html">微软面试100题(74):数组中出现次数超过长度的一半/一半减一的元素 </a></p>
+</blockquote>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/6ab1d9a29e88450685099d45c9e31e46?tpId=13&amp;tqId=11189&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">两个链表的第一个公共结点</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1505</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/037-两个链表的第一个公共结点">037-两个链表的第一个公共结点</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51330871">剑指Offer--037-两个链表的第一个公共结点</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/6ab1d9a29e88450685099d45c9e31e46?tpId=13&amp;tqId=11189&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">037-两个链表的第一个公共结点</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1505">1505-两个链表的第一个公共结点</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51330871">剑指Offer--037-两个链表的第一个公共结点</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>输入两个链表，找出它们的第一个公共结点。</p>
+</blockquote>
+<h1 id="_3">暴力方法</h1>
+<hr />
+<p>最简单直接的方法就是，对于第一个链表的每个节点，我们依次判断其是不是第二条链表的公共结点</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+#ifdef __tmain
+
+struct ListNode
+{
+public :
+	int val;
+	struct ListNode *next;
+
+};
+#endif
+
+
+class Solution
+{
+public:
+	ListNode* FindFirstCommonNode(ListNode *leftHead, ListNode *rightHead)
+	{
+		ListNode *left = NULL;
+		ListNode *right = NULL;
+
+		//  循环第一个链表的每个结点
+		for(left = leftHead;
+			left != NULL;
+			left = left-&gt;next)
+		{
+			debug &lt;&lt;endl &lt;&lt;left-&gt;val &lt;&lt;&quot; : &quot;;
+
+			//  依次判断其在不在第二条链表中
+			for(right = rightHead;
+				right != NULL;
+				right = right-&gt;next)
+			{
+				debug &lt;&lt;right-&gt;val &lt;&lt;&quot;, &quot;;
+				if(left == right)
+				{
+					break;
+				}
+			}
+			if(left == right)
+			{
+				break;
+			}
+		}
+
+		return left;
+	}
+};
+
+int __tmain( )
+{
+	ListNode common[2];
+	common[0].val = 6;
+	common[0].next = &amp;common[1];
+	common[1].val = 7;
+	common[1].next = NULL;
+
+	ListNode left[3];
+	left[0].val = 1;
+	left[0].next = &amp;left[1];
+	left[1].val = 2;
+	left[1].next = &amp;left[2];
+	left[2].val = 3;
+	left[2].next = &amp;common[0];
+
+	ListNode right[2];
+	right[0].val = 4;
+	right[0].next = &amp;right[1];
+	right[1].val = 5;
+	right[1].next = &amp;common[0];
+
+	Solution solu;
+	ListNode *node = solu.FindFirstCommonNode(left, right);
+	while(node != NULL)
+	{
+		debug &lt;&lt;node-&gt;val &lt;&lt;&quot; &quot;;
+		node = node-&gt;next;
+	}
+	debug &lt;&lt;endl;
+
+	return 0;
+}
+</code></pre>
+
+<h1 id="_4">右对齐两个链表</h1>
+<hr />
+<p>如果两个链表有公共节点，则它们的形状必然是一个Y字形。</p>
+<h2 id="_5">长链表先走，实现右对齐</h2>
+<hr />
+<p>先假设这两个链表的长度相等，则我们可以同步遍历这两个链表，找到公共节点。现在<strong>有两个链表，我们可以先分别求齐长度得其差n，然后遍历长的那个链表n个节点，然后同步遍历这两个链表即可。</strong></p>
+<pre><code class="cpp">class Solution
+{
+public:
+	ListNode* FindFirstCommonNode(ListNode *leftHead, ListNode *rightHead)
+	{
+		ListNode *left = leftHead;
+		ListNode *right = rightHead;
+		int leftLength = 0;
+		int rightLength = 0;
+
+		///  首先计算两个链表的长度
+		leftLength = GetListLength(left);
+		rightLength = GetListLength(right);
+
+		///  对齐两个链表
+		int length = 0;
+
+		if(leftLength &lt; rightLength)
+		{
+			// 右链表长
+			length = rightLength - leftLength;
+			while(right != NULL &amp;&amp; length &gt; 0)
+			{
+				right = right-&gt;next;
+				length--;
+			}
+		}
+		else
+		{
+			// 左链表长
+			length = leftLength - rightLength;
+			while(left != NULL &amp;&amp; length &gt; 0)
+			{
+				left = left-&gt;next;
+				length--;
+			}
+		}
+
+		//  两个指针同步移动即可找到共同的结点
+		while(left != NULL &amp;&amp; right != NULL)
+		{
+			if(left == right)
+			{
+				break;
+			}
+			left = left-&gt;next;
+			right = right-&gt;next;
+		}
+
+		return ((left == right) ? left : NULL);
+	}
+
+	int GetListLength(ListNode *head)
+	{
+		ListNode *node = head;
+		int length = 0;
+		while(node != NULL)
+		{
+			length++;
+			node = node-&gt;next;
+		}
+
+		return length;
+	}
+};
+</code></pre>
+
+<h2 id="_6">将两个链表拼接起来实现右对齐</h2>
+<hr />
+<p>前面那个思路中，长的链表先走一个长度差，从而保证两个链表是右对齐的，但是这种方式，我们需要多次扫面链表，因为链表必须通过扫描才能获取其长度</p>
+<p>但是有没有不需要多次扫描就可将两个链表对齐的方法呢。</p>
+<p>我们可以将两个链表拼接在一起来实现其</p>
+<blockquote>
+<p>left : left-&gt;right</p>
+<p>right : right-&gt;left</p>
+</blockquote>
+<p>这样一来我们的链表就成了长度为$M+N$的两个链表，而公共部分都在最后，而且是对齐的</p>
+<pre><code class="cpp">
+class Solution
+{
+public:
+	ListNode* FindFirstCommonNode(ListNode *leftHead, ListNode *rightHead)
+	{
+		ListNode *left= leftHead;
+		ListNode *right = rightHead;
+
+		debug &lt;&lt;(left == NULL ? -1 : left-&gt;val) &lt;&lt;&quot;, &quot;;
+		debug &lt;&lt;(right == NULL ? -1 : right-&gt;val) &lt;&lt;endl;
+
+
+		while(left != right)
+		{
+
+			left = (left == NULL ? rightHead : left-&gt;next);
+			right = (right == NULL ? leftHead : right-&gt;next);
+			debug &lt;&lt;(left == NULL ? -1 : left-&gt;val) &lt;&lt;&quot;, &quot;;
+			debug &lt;&lt;(right == NULL ? -1 : right-&gt;val) &lt;&lt;endl;
+
+		}
+		return left;
+	}
+};
+</code></pre>
+
+<h2 id="_7">栈的后进先出实现右对齐</h2>
+<hr />
+<p>由于栈是后进先出的，因此我们将两个链表分别入栈，那么栈顶的元素一定是最后一个元素。从而两个链表是右对齐的，两个栈同步弹出，当两个栈顶的节点不相同时候，即是开始合并的前一个节点</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	ListNode* FindFirstCommonNode(ListNode *leftHead, ListNode *rightHead)
+	{
+		ListNode *left = leftHead;
+		ListNode *right = rightHead;
+
+		stack&lt;ListNode *&gt; leftStack;
+		stack&lt;ListNode *&gt; rightStack;
+
+		/// 结点依次入栈
+		while(left != NULL)
+		{
+			//debug &lt;&lt;left-&gt;val &lt;&lt;endl;
+			leftStack.push(left);
+			left = left-&gt;next;
+		}
+
+		while(right != NULL)
+		{
+			//debug &lt;&lt;right-&gt;val &lt;&lt;endl;
+			rightStack.push(right);
+			right = right-&gt;next;
+		}
+
+		///  开始同步弹出元素
+		while(leftStack.empty( ) != true
+		   &amp;&amp; rightStack.empty( ) != true)
+		{
+			left = leftStack.top( );
+			right = rightStack.top( );
+
+			debug &lt;&lt;left-&gt;val &lt;&lt;&quot;, &quot; &lt;&lt;right-&gt;val &lt;&lt;endl;
+
+			///  不相同的元素就是合并的前一个结点
+			if(left != right)
+			{
+				break;
+			}
+			leftStack.pop( );
+			rightStack.pop( );
+		}
+
+		///  不相同元素的下一个结点就是共同结点
+		if(left != right)
+		{
+			return left-&gt;next;
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+};
+</code></pre>
+
+<h1 id="_8">利用高效的数据结构实现查找结点</h1>
+<hr />
+<blockquote>
+<p>当然还有其他思路，我们可以使用一个查找效率高的数据结构，比如hash或者map</p>
+<p>先将第一个链表插入，然后因此判断第二个链表的节点在不在map中，即可查找到第一个共同结点</p>
+</blockquote>
+<p>利用unordered_map,这个模板类是基于hash表实现的，速度与map、hashmap相比较快</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	ListNode* FindFirstCommonNode(ListNode *leftHead, ListNode *rightHead)
+	{
+		unordered_map&lt;ListNode*, bool&gt; umap;
+
+		ListNode* left = leftHead;
+		while (left != NULL)
+		{
+			umap.insert(make_pair(left, 1 ));
+			left = left-&gt;next;
+		}
+
+		ListNode* right = rightHead;
+		while (right)
+		{
+			if (umap.count(right)&gt;0)
+			{
+				return right;
+			}
+			right = right-&gt;next;
+		}
+		return NULL;
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

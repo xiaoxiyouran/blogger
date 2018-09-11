@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec?tpId=13&amp;tqId=11196&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">左旋转字符串</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1362</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/042-左旋转字符串">042-左旋转字符串</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51357308">剑指Offer--042-左旋转字符串</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="right">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/12d959b108cb42b1ab72cef4d36af5ec?tpId=13&amp;tqId=11196&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">042-左旋转字符串</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1362">1362-左旋转字符串</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51357308">剑指Offer--042-左旋转字符串</a></td>
+<td align="right"><a href="https://github.com/gatieme/CodingInterviews/tree/master/042-左旋转字符串">042-左旋转字符串</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>汇编语言中有一种移位指令叫做循环左移（ROL）</p>
+<p>现在有个简单的任务，就是用字符串模拟这个指令的运算结果。
+对于一个给定的字符序列S，请你把其循环左移K位后的序列输出。</p>
+</blockquote>
+<p>例如，字符序列S=”abcXYZdef”,
+要求输出循环左移3位后的结果，即“XYZdefabc”。</p>
+<p>是不是很简单？OK，搞定它！</p>
+<h1 id="_3">直接找到旋转后的对应关系</h1>
+<hr />
+<p>我们可以很明显的发现，将一个字符串循环左移，那么新串和原来串位的对应关系就如下
+<em>    新串i位置的元素，其实是原来串i+n位置的元素，
+</em>    当然i+n如果超过了字符串的长度，就会被循环移位到左侧，即(i+n) % str.size()
+*    另外，如果移位n超过了字符串长度，那么只需要移动n%str.size()位即可</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+class Solution
+{
+public:
+	string LeftRotateString(string str, int n)
+	{
+		if(str.size( ) == 0)
+		{
+			return &quot;&quot;;
+		}
+		/// 012345678
+		/// abcXYZdef
+		/// XYZdefabc
+		/// 012345678
+		///
+		/// res[i] = str[(i + n) % str.size( )];
+		/// res[(i - n + str.size( )) % str.size()] = str[i];
+
+		string res(str);
+		if(n &gt; str.size( ))
+		{
+			n %= str.size( );
+		}
+		debug &lt;&lt;&quot;length = &quot; &lt;&lt;str.size( ) &lt;&lt;&quot;, n = &quot; &lt;&lt;n &lt;&lt;endl;
+		for(int i = 0; i &lt; str.size( ); i++)
+		{
+			debug &lt;&lt;&quot;i = &quot; &lt;&lt;i &lt;&lt;&quot;, ori = &quot; &lt;&lt;((i + n) % str.size( )) &lt;&lt;endl;
+			res[i] = str[(i + n) % str.size( )];
+		}
+
+		return res;
+	}
+
+	string Reverse(string str)
+	{
+		int left = 0, right = str.size( ) - 1;
+
+		while(left &lt; right)
+		{
+			swap(str[left], str[right]);
+			left++;
+			right--;
+		}
+
+		return str;
+	}
+};
+
+
+int __tmain( )
+{
+	Solution solu;
+
+	cout &lt;&lt;solu.LeftRotateString(&quot;abcXYZdef&quot;, 3) &lt;&lt;endl;
+
+	return 0;
+}
+</code></pre>
+
+<h1 id="strstrnnstrsize">新串是str+str串第n位到底n+str.size()的字串</h1>
+<hr />
+<p>这个很好理解，由于是循环移位，那么对于<code>abcXYZdef</code>，考虑他的自连接串<code>abcXYZdefabcXYZdef</code>，新的串正好是链接串的一个子串</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	string LeftRotateString(string str, int n)
+	{
+		/// abcXYZdef
+		/// abcXYZdefabcXYZdef
+		/// 012345678
+		/// 新的串是两倍串第len位起始长度为n字串
+		int length = str.size( );
+
+		if(length == 0)
+		{
+			return &quot;&quot;;
+		}
+		n = n % len;
+		str += str;
+
+		return str.substr(n, len);
+	}
+};
+</code></pre>
+
+<h1 id="_4">通过翻转直线循环移位</h1>
+<hr />
+<p>通过reverse操作
+一个序列abcdefg，如果向左循环移动n位，
+例如3位，则会编程(defg)(abc)，我们把原序列分成两部分，A=(abc)，B=(defg)，原序列为AB，我们要的结果为BA，则可以这么做：(ArBr)r = ((B)r)r((A)r)r=BA
+假设原序列有n位，循环左移i位的过程如下：</p>
+<ol>
+<li>
+<p>reverse(0,i-1);</p>
+</li>
+<li>
+<p>reverse(i,n-1);</p>
+</li>
+<li>
+<p>reverse(1,n-1);</p>
+</li>
+</ol>
+<p>例如原序列：abcdefg，循环左移3位：</p>
+<ol>
+<li>
+<p>abc defg -=&gt; cba defg</p>
+</li>
+<li>
+<p>cba defg -=&gt; cba gfed</p>
+</li>
+<li>
+<p>cba gfed -=&gt; defg abc</p>
+</li>
+</ol>
+<p>代码就非常简单了，而且reverse操作非常简单，效率高也不容易出错，要记住一点就是STL中的迭代器是左闭右开区间，所以reverse操作的第二个参数需要往后移动一位</p>
+<p>使用迭代器的方法</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	string LeftRotateString(string str, int n)
+	{
+		if(str.size( ) == 0)
+		{
+			return &quot;&quot;;
+		}
+		n %= str.size( );
+
+		Reverse(str, 0, n - 1);
+		Reverse(str, n, str.size( ) - 1);
+		Reverse(str, 0, str.size( ) - 1);
+
+		return str;
+	}
+
+	void Reverse(string &amp;str, int left, int right)
+	{
+		while(left &lt; right)
+		{
+			swap(str[left], str[right]);
+
+			left++;
+			right--;
+		}
+	}
+};
+</code></pre>
+
+<p>不使用迭代器</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	string LeftRotateString(string str, int n)
+	{
+		if(str.size( ) == 0)
+		{
+			return &quot;&quot;;
+		}
+		n %= str.size( );
+
+		Reverse(str, 0, n - 1);
+		Reverse(str, n, str.size( ) - 1);
+		Reverse(str, 0, str.size( ) - 1);
+
+		return str;
+	}
+
+	void Reverse(string &amp;str, int left, int right)
+	{
+		while(left &lt; right)
+		{
+			swap(str[left], str[right]);
+
+			left++;
+			right--;
+		}
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

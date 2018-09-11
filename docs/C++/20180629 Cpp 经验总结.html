@@ -2,24 +2,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<title>20180629 C++ 经验总结</title>
-	<meta name="keywords" content="xiaoxiyouran" />
-	<meta name="description" content="xiaoxiyouran's Docs" />
-	<link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="../../packages/css/style.css" rel="stylesheet" />
-	<link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
-	
-	<!-- 右上角的侧边导航栏 -->
-	<link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
-	<script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
-	
-	<!--
-	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
-	-->
-	
-	<!-- To generate the side tree of the document itself. -->
+        <title>20180629 C++ 经验总结</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
   <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
   <style>
   body {
@@ -34,15 +34,15 @@
     color:#333; font-size:12px;
    Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
   }
-  
+
  // table{
  //   border-collapse:collapse;
  // }
 
   //table, td, th{
-  //  border:1px solid black;   
+  //  border:1px solid black;
   //}
-  
+
   .ztree li a.curSelectedNode {
     padding-top: 0px;
     background-color: #FFE6B0;
@@ -79,47 +79,47 @@
 <!-- mermaid 画图 -->
  <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
  <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
- <script src="../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+<!--  <script src="../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
  <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
  <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
  <script>
-	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
-			var mermaid_config = {
-					startOnLoad:true
-			}
-			mermaid.ganttConfig = {
-					titleTopMargin:25,
-					barHeight:20,
-					barGap:4,
-					topPadding:50,
-					leftPadding:75,
-					gridLineStartPadding:35,
-					fontSize:11,
-					numberSectionStyles:3,
-					axisFormatter: [
-							// Within a day
-							["%I:%M", function (d) {
-									return d.getHours();
-							}],
-							// Monday a week
-							["w. %U", function (d) {
-									return d.getDay() == 1;
-							}],
-							// Day within a week (not monday)
-							["%a %d", function (d) {
-									return d.getDay() && d.getDate() != 1;
-							}],
-							// within a month
-							["%b %d", function (d) {
-									return d.getDate() != 1;
-							}],
-							// Month
-							["%m-%y", function (d) {
-									return d.getMonth();
-							}]
-					]
-			};
-	</script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
 
 </head>
 <body>
@@ -129,14 +129,14 @@
    <a href="#"> 目录 </a>
    <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
     您的浏览器不支持iframe，请升级
-   </iframe>  
+   </iframe>
 </div>
 
 <TABLE border=0 height=600px align=left>
   <TR>
     <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
       <ul id="tree" class="ztree">
-        
+
       </ul>
     </TD>
     <TD width=770px align=left valign=top>
@@ -144,7 +144,7 @@
 <!---------------------------------------------------------------------------------------------------------------------------->
 <div class="container">
 <span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
- 
+
 <h1 id="20180629-c">20180629 C++ 经验总结</h1>
 <p>1- 只有 const 可以同时在声明和定义中使用：</p>
 <pre><code class="cpp">// demo.h
@@ -231,7 +231,7 @@ public:
 
 <hr/>
 <div class="footer">
-	Copyright &copy; xiaoxiyouran. All rights reserved.
+        Copyright &copy; xiaoxiyouran. All rights reserved.
 
 </div>
 

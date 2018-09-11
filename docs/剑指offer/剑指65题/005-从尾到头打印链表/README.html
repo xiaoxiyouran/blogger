@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&amp;tqId=11156&amp;rp=1&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">从尾到头打印链表</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1511</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/005-%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8">005-从尾到头打印链表</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51107632">剑指Offer--005-从尾到头打印链表</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&amp;tqId=11156&amp;rp=1&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">从尾到头打印链表</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1511">1511-从尾到头打印链表</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51107632">剑指Offer--005-从尾到头打印链表</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+你也可以选择<strong><a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录--剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p>题目描述</p>
+<blockquote>
+<p>输入一个链表，从尾到头打印链表每个节点的值。 </p>
+</blockquote>
+<p>输入描述:</p>
+<blockquote>
+<p>输入为链表的表头</p>
+</blockquote>
+<p>输出描述:</p>
+<blockquote>
+<p>输出为需要打印的“新链表”的表头</p>
+</blockquote>
+<h2 id="_3">反转链表</h2>
+<hr />
+<p>首先我们想到的就是<strong>反转链表</strong>了,如果把链表反转了，然后再返回头，这样再次遍历的时候就相当于从尾到头打印了。</p>
+<p>但是修改输入数据真的可行么？</p>
+<p>剑指Offer中为我们在面试中提出了如下小提示</p>
+<blockquote>
+<p>在面试时候，如果我们打算修改输入的数据，最好先问问面试官是不是允许修改</p>
+</blockquote>
+<p>通常打印只是一个只读操作，我们肯定不希望输入时候修改链表的内容</p>
+<h2 id="_4">利用栈的后进先出特性</h2>
+<hr />
+<p>单链表的遍历只能从前往后，但是需要从尾往头输出，这不是典型的"先进后出"么，那么我们可以用栈模拟输出</p>
+<p>每经过一个结点的时候，把该结点放到一个栈中。当遍历完整个链表后，再从栈顶开始逐个输出结点的值，此时输出的结点的顺序已经反转过来了。</p>
+<p>代码如下</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+#include &lt;stack&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define dout cout
+
+#else
+
+#define dout 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+
+#ifdef __tmain
+
+struct ListNode
+{
+public :
+	int val;
+	struct ListNode *next;
+
+	/*ListNode(int x) :
+	val(x), next(NULL)
+	{
+	}*/
+};
+
+#endif // __tmain
+
+
+/**
+*  struct ListNode {
+*        int val;
+*        struct ListNode *next;
+*        ListNode(int x) :
+*              val(x), next(NULL) {
+*        }
+*  };
+*/
+class Solution
+{
+public:
+	vector&lt;int&gt; printListFromTailToHead(struct ListNode* head)
+	{
+		ListNode *node = head;
+		stack&lt;int&gt; st;
+		int count = 0;
+		while(node != NULL)
+		{
+			dout &lt;&lt;node-&gt;val &lt;&lt;&quot;in stack&quot; &lt;&lt;endl;
+			st.push(node-&gt;val);
+
+			count++;
+			node = node-&gt;next;
+
+		}
+
+		//  为了效率我们静态vector开辟空间
+		vector&lt;int&gt; res(count);
+		dout &lt;&lt;&quot;count = &quot; &lt;&lt;count &lt;&lt;endl;
+		for(int i = 0; i &lt; count &amp;&amp; st.empty( ) != true; i++)
+		{
+			dout &lt;&lt;st.top() &lt;&lt;&quot;in vector&quot; &lt;&lt;endl;
+			// 如果静态开辟vector不能使用push_back
+			// 否则会在原来数据的基础上增加
+			//res.push_back(st.top( ));
+			res[i] = st.top( );
+			st.pop( );
+
+		}
+
+		return res;
+	}
+};
+
+
+
+
+
+int __tmain( )
+{
+	ListNode list[4];
+	list[0].val = 1;
+	list[0].next = &amp;list[1];
+	list[1].val = 2;
+	list[1].next = &amp;list[2];
+	list[2].val = 3;
+	list[2].next = &amp;list[3];
+	list[3].val = 4;
+	list[3].next = NULL;
+
+
+
+	Solution solu;
+	vector&lt;int&gt; res = solu.printListFromTailToHead(list);
+
+	cout &lt;&lt;&quot;there are &quot; &lt;&lt;res.size( ) &lt;&lt;&quot;datas in vector&quot; &lt;&lt;endl;
+	for(int i = 0; i &lt; res.size( ); i++)
+	{
+		cout &lt;&lt;res[i] &lt;&lt;endl;
+	}
+	return 0;
+}
+
+</code></pre>
+
+<h1 id="_5">递归实现</h1>
+<hr />
+<p>递归在本质上就是一个栈结构，于是很自然地想到用递归来实现。要实现反过来输出链表，每访问到一个结点的时候，先递归输出它后面的结点，再输出该结点自身，这样链表的输出结构就反过来了。</p>
+<p>算法流程如下
+<em>    只要当前节点不为NULL，也就是链表没到头，就一直递归
+</em>    在递归结束时，将元素压入</p>
+<p>这样当递归结束进行返回时，会将递归栈中的数据依次压入vector中，而压入的顺序就是栈中的顺序，即从尾到头</p>
+<pre><code class="c">class Solution
+{
+public:
+	vector&lt;int&gt; printListFromTailToHead(struct ListNode* head)
+	{
+
+		vector&lt;int&gt; res;
+		printListFromTailToHeadRecursion(head, res);
+		return res;
+	}
+
+
+	void printListFromTailToHeadRecursion(struct ListNode* head, vector&lt;int&gt; &amp;res)
+	{
+		if(head != NULL)
+		{
+			printListFromTailToHeadRecursion(head-&gt;next, res);
+			res.push_back(head-&gt;val);
+		}
+	}
+};
+</code></pre>
+
+<p>上面用辅助函数的方法，每次都需要传递一个vector，很麻烦啊，我们可以直接用一个成员变量来存储</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	vector&lt;int&gt; res;
+
+	vector&lt;int&gt; printListFromTailToHead(struct ListNode* head)
+	{
+		if(head != NULL)
+		{
+			printListFromTailToHead(head-&gt;next);
+			res.push_back(head-&gt;val);
+		}
+
+		return res;
+
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

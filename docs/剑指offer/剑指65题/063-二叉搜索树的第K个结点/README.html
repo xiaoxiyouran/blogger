@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>1    链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="1">1    链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a?tpId=13&amp;tqId=11215&amp;rp=4">二叉搜索树的第K个结点</a></p>
+<p>九度OJ：未收录</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/063-二叉搜索树的第K个结点">063-二叉搜索树的第K个结点</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51902530">剑指Offer--063-二叉搜索树的第K个结点</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="right">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a?tpId=13&amp;tqId=11215&amp;rp=4">063-二叉搜索树的第K个结点</a></td>
+<td align="center">未收录</td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51902530">剑指Offer--063-二叉搜索树的第K个结点</a></td>
+<td align="right"><a href="https://github.com/gatieme/CodingInterviews/tree/master/063-二叉搜索树的第K个结点">063-二叉搜索树的第K个结点</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="2">2    题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>给定一颗二叉搜索树，请找出其中的第k大的结点。</p>
+</blockquote>
+<p>例如， 
+	 5 
+	/  \ 
+   3    7 
+   /\     /\
+ 2  4  6 8   中
+按结点数值大小顺序第三个结点的值为4</p>
+<h1 id="3">3  分析</h1>
+<hr />
+<p>二叉搜索树的中序遍历正好是一个递增的序列, 因此中序遍历的第K个结点就是二叉搜索树的第K个节点</p>
+<h1 id="4">4  中序递归版本</h1>
+<hr />
+<pre><code class="c">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+#ifdef  __tmain
+
+struct TreeNode
+{
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x = 0)
+	:val(x), left(NULL), right(NULL) {
+	}
+};
+#endif
+
+class Solution
+{
+	unsigned int count = 0;
+public:
+	TreeNode* KthNode(TreeNode* root, unsigned int K)
+	{
+		if(root == NULL)
+		{
+			return NULL;
+		}
+		TreeNode *ret = NULL;
+
+
+		if((ret = KthNode(root-&gt;left, K)) != NULL)
+		{
+			return ret;
+		}
+		++count;
+		debug &lt;&lt;&quot;count = &quot; &lt;&lt;count &lt;&lt;&quot;, value = &quot; &lt;&lt;root-&gt;val &lt;&lt;endl;
+		if(count == K)
+		{
+			return root;
+		}
+
+		if((ret = KthNode(root-&gt;right, K)) != NULL)
+		{
+			return ret;
+		}
+		return NULL;
+	}
+};
+
+
+int __tmain( )
+{
+	TreeNode tree[7];
+
+	tree[0].val = 5;
+	tree[0].left = &amp;tree[1];
+	tree[0].right = &amp;tree[2];
+
+	tree[1].val = 3;
+	tree[1].left = &amp;tree[3];
+	tree[1].right = &amp;tree[4];
+
+	tree[2].val = 7;
+	tree[2].left = &amp;tree[5];
+	tree[2].right = &amp;tree[6];
+
+	tree[3].val = 2;
+	tree[3].left = NULL;
+	tree[3].right = NULL;
+
+	tree[4].val = 4;
+	tree[4].left = NULL;
+	tree[4].right = NULL;
+
+	tree[5].val = 6;
+	tree[5].left = NULL;
+	tree[5].right = NULL;
+
+	tree[6].val = 8;
+	tree[6].left = NULL;
+	tree[6].right = NULL;
+
+	Solution solu;
+	TreeNode *res = NULL;
+	if((res = solu.KthNode(tree, 3)) != NULL)
+	{
+		cout &lt;&lt;res-&gt;val &lt;&lt;endl;
+	}
+	else
+	{
+		cout &lt;&lt;&quot;null node&quot; &lt;&lt;endl;
+	}
+	return 0;
+}
+</code></pre>
+
+<h1 id="5">5  中序非递归版本</h1>
+<hr />
+<blockquote>
+<p>中序遍历的非递归的算法</p>
+<p>可以参见<a href="http://blog.csdn.net/gatieme/article/details/51163010">二叉树的遍历详解（前序中序后序层次-递归和非递归）</a></p>
+</blockquote>
+<p>根据中序遍历的顺序，对于任一结点，优先访问其左孩子，而左孩子结点又可以看做一根结点，然后继续访问其左孩子结点，直到遇到左孩子结点为空的结点才进行访问，然后按相同的规则访问其右子树。</p>
+<ul>
+<li>
+<p>从根节点开始，开始遍历</p>
+</li>
+<li>
+<p>递归输出直至最左，然后输出（中序先输出左孩子，而中序遍历第一个输出的是其最左叶子节点）</p>
+</li>
+<li>
+<p>当到达最左节点的时候，访问右节点</p>
+</li>
+</ul>
+<p>因此其处理过程如下：</p>
+<ol>
+<li>
+<p>对于任一结点P，</p>
+</li>
+<li>
+<p>若其左孩子不为空，则将P入栈并将P的左孩子置为当前的P，然后对当前结点P再进行相同的处理；</p>
+</li>
+<li>
+<p>若其左孩子为空，则取栈顶元素并进行出栈操作，访问该栈顶结点，然后将当前的P置为栈顶结点的右孩子；</p>
+</li>
+<li>
+<p>直到P为NULL并且栈为空则遍历结束</p>
+</li>
+</ol>
+<pre><code class="c">class Solution
+{
+	unsigned int count = 0;
+public:
+	/*  中序与前序的区别在于
+	 *  前序在递归至最左的时候就会输出递归的节点, 因此先输出根，然后是左
+	 *  但是中序在递归至最左时，弹栈时才输出, 因此先输出最左，再输出根
+	 */
+	TreeNode* KthNode(TreeNode *root, unsigned int K)
+	{
+		if(root == NULL)
+		{
+			debug &lt;&lt;&quot;The tree is NULL...&quot; &lt;&lt;endl;
+			return NULL;
+		}
+
+		stack&lt;TreeNode *&gt; nstack;
+		TreeNode *node = root;
+
+		//  开始遍历整个二叉树
+		while(node != NULL || nstack.empty() != true)
+		{
+			// 不输出当前根节点，但是递归直至当前根节点node的最左端
+			while(node != NULL)
+			{
+				nstack.push(node);
+				node = node-&gt;left;
+			}
+
+			//  此时栈顶的元素是当前最左元素
+			//  它应该被输出
+			if(nstack.empty( ) != true)
+			{
+				node = nstack.top( );
+				debug &lt;&lt;node-&gt;val &lt;&lt;endl;
+				count++;
+				if(count == K)
+				{
+					return node;
+				}
+				nstack.pop( );
+				node = node-&gt;right;
+			}
+		}
+		return NULL;
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

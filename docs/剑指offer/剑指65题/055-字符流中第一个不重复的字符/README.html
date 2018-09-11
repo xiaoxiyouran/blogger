@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/00de97733b8e4f97a3fb5c680ee10720?tpId=13&amp;tqId=11207&amp;rp=3&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">字符流中第一个不重复的字符</a></p>
+<p>九度OJ：未收录</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/055-字符流中第一个不重复的字符">055-字符流中第一个不重复的字符</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51598809">剑指Offer--055-字符流中第一个不重复的字符</a></p>
+</blockquote>
+<p>| 牛客OJ | 九度OJ | CSDN题解 | GitHub代码 |</p>
+<p>| ------------- |:-------------:| -----:| -----:|</p>
+<p>|<a href="http://www.nowcoder.com/practice/00de97733b8e4f97a3fb5c680ee10720?tpId=13&amp;tqId=11207&amp;rp=3&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">055-字符流中第一个不重复的字符</a> | 未收录 | <a href="http://blog.csdn.net/gatieme/article/details/51598809">剑指Offer--055-字符流中第一个不重复的字符</a> | <a href="https://github.com/gatieme/CodingInterviews/tree/master/055-字符流中第一个不重复的字符">055-字符流中第一个不重复的字符</a> |</p>
+<blockquote>
+<p>类似的题目</p>
+<p><a href="http://blog.csdn.net/gatieme/article/details/51598809">剑指Offer--035-第一个只出现一次的字符位置</a></p>
+</blockquote>
+<h1 id="_2">题目描述</h1>
+<hr />
+<blockquote>
+<p>请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符"go"时，第一个只出现一次的字符是"g"。当从该字符流中读出前六个字符“google"时，第一个只出现一次的字符是"l"。</p>
+<p>如果当前字符流没有存在出现一次的字符，返回#字符。</p>
+</blockquote>
+<h1 id="_3">分析</h1>
+<hr />
+<blockquote>
+<p>类似的题目</p>
+<p><a href="http://blog.csdn.net/gatieme/article/details/51598809">剑指Offer--035-第一个只出现一次的字符位置</a></p>
+</blockquote>
+<p>但是第35题只要求我们找到一个字符串中第一个只出现一次字符即可, 但是这道题相当于一个在线算法, 要求我们能对一个源源不断的输入流进行处理</p>
+<p>字符只能一个接着一个从字符流中读取出来, 因此我们可以定义一个数据容器来保存字符在字符流中的位置, 当一个字符第一次从字符流中拂去出来的时候, 把它保存在字符流中的位置保存到容器中。</p>
+<p>当这个字符再次从字符流中被读取出来的时候, 那么它就不是只出现一次的字符, 也就是被忽略了。这时候就把在数据容器里保存的值更新成一个特殊的值即可。</p>
+<p>为了更加高效的解决这个问题, 需要在O(1)的时间内往数据容器里插入一个字符, 以及更新一个字符对应的值。</p>
+<h1 id="_4">代码</h1>
+<hr />
+<pre><code class="cpp">
+#include &lt;iostream&gt;
+
+#include &lt;cstring&gt;
+
+
+
+
+
+using namespace std;
+
+
+
+
+
+//  调试开关
+
+#define __tmain main
+
+
+
+#ifdef __tmain
+
+
+
+#define debug cout
+
+
+
+#else
+
+
+
+#define debug 0 &amp;&amp; cout
+
+
+
+#endif // __tmain
+
+
+
+
+
+class Solution
+
+{
+
+public:
+
+	Solution()
+
+	{
+
+		str = &quot;&quot;;
+
+		memset(count, '\0', sizeof(count));
+
+	}
+
+
+
+	//  Insert one char from stringstream
+
+	void Insert(char ch)
+
+	{
+
+		str += ch;
+
+		count[(int)ch]++;
+
+	}
+
+
+
+	//  Return the first appearence once char in current stringstream
+
+	char FirstAppearingOnce()
+
+	{
+
+		int len = str.size( );
+
+
+
+		for(int i = 0; i &lt; len; i++)
+
+		{
+
+			if(count[(int)str[i]] == 1)
+
+			{
+
+				return str[i];
+
+			}
+
+		}
+
+
+
+		return '#';
+
+	}
+
+
+
+private:
+
+	std::string     str;
+
+	int             count[256];
+
+
+
+
+
+};
+
+
+
+int __tmain( )
+
+{
+
+	Solution solu;
+
+
+
+	solu.Insert('g');
+
+	cout &lt;&lt;solu.FirstAppearingOnce( ) &lt;&lt;endl;
+
+
+
+	solu.Insert('o');
+
+	cout &lt;&lt;solu.FirstAppearingOnce( ) &lt;&lt;endl;
+
+
+
+	solu.Insert('o');
+
+	cout &lt;&lt;solu.FirstAppearingOnce( ) &lt;&lt;endl;
+
+
+
+	solu.Insert('g');
+
+	cout &lt;&lt;solu.FirstAppearingOnce( ) &lt;&lt;endl;
+
+
+
+	solu.Insert('l');
+
+	cout &lt;&lt;solu.FirstAppearingOnce( ) &lt;&lt;endl;
+
+
+
+	solu.Insert('e');
+
+	cout &lt;&lt;solu.FirstAppearingOnce( ) &lt;&lt;endl;
+
+
+
+
+
+	return 0;
+
+}
+
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3?tpId=13&amp;tqId=11197&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">翻转单词顺序列</a></p>
+<p>九度OJ：http://ac.jobdu.com/problem.php?pid=1361</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/042-翻转单词顺序列">042-翻转单词顺序列</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51419097">剑指Offer--042-翻转单词顺序列</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="right">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3?tpId=13&amp;tqId=11197&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking">042-翻转单词顺序列</a></td>
+<td align="center"><a href="http://ac.jobdu.com/problem.php?pid=1361">1361-翻转单词顺序列</a></td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51419097">剑指Offer--042-翻转单词顺序列</a></td>
+<td align="right"><a href="https://github.com/gatieme/CodingInterviews/tree/master/042-翻转单词顺序列">042-翻转单词顺序列</a></td>
+</tr>
+</tbody>
+</table>
+<p><br><strong>您也可以选择<a href="http://blog.csdn.net/gatieme/article/details/51916802">回到目录-剑指Offer--题集目录索引</a></strong></p>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<p>牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，写些句子在本子上。同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，但却读不懂它的意思。例如，“student. a am I”。后来才意识到，这家伙原来把句子单词的顺序翻转了，正确的句子应该是“I am a student.”。Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？</p>
+<p><strong>样例输入</strong></p>
+<blockquote>
+<p>student. a am I</p>
+<p>I'm a Freshman and I like JOBDU!</p>
+</blockquote>
+<p><strong>样例输出</strong></p>
+<blockquote>
+<p>I am a student.</p>
+<p>JOBDU! like I and Freshman a I'm</p>
+</blockquote>
+<h1 id="_3">先翻转所有字符，再逐个单词翻转</h1>
+<hr />
+<p>这道题主要思想就是先翻转所有字符，再逐个单词翻转</p>
+<p>然后是如何查找到每个单词，用指针left和right维护单词的起始位置和结束位置</p>
+<p>如果当前遇到一个空格，说明发现了一个单词</p>
+<p>如果找到了单词的最后，而末尾字符不是空格，说明字符串的末尾也是一个单词</p>
+<h2 id="_4">通过翻转函数来实现</h2>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+class Solution
+{
+public:
+	string ReverseSentence(string str)
+	{
+		if(str.size( ) == 0)
+		{
+			return &quot;&quot;;
+		}
+
+		//  首先翻转整个句子
+		Reverse(str, 0, str.size( ) - 1);
+
+		//  紧接着查找到每个单词, 然后翻转它
+		int left = 0, right = 0;
+		while(right &lt;= str.size( ))
+		{
+			//  当遇见空格的时候说明找到了一个单词
+			//  当走到字符串的最后一个位置, 那么前面如果不是空格, 那么最后也会有一个单词
+			if((str[right] == ' ')
+			|| (right == str.size( ) &amp;&amp; str[right - 1] != ' '))
+			{
+				/*
+				for(int i = left; i &lt; right; i++)
+				{
+					debug &lt;&lt;str[i];
+				}
+				debug &lt;&lt;endl;
+				*/
+
+				Reverse(str, left, right - 1);
+
+				left = right + 1;
+			}
+			right++;
+		}
+
+		return str;
+	}
+
+	void Reverse(string &amp;str, int left, int right)
+	{
+		while(left &lt; right)
+		{
+			swap(str[left], str[right]);
+
+			left++;
+			right--;
+		}
+	}
+
+	void Reverse(string::iterator left, string::iterator right)
+	{
+		while(left &lt; right)
+		{
+			debug &lt;&lt;*left &lt;&lt;&quot;, &quot; &lt;&lt;*right &lt;&lt;endl;
+			swap(*left, *right);
+
+			left++;
+			right--;
+		}
+	}
+};
+
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.ReverseSentence(&quot;student. a am I&quot;) &lt;&lt;endl;
+
+	return 0;
+}
+
+</code></pre>
+
+<h2 id="stl">使用STL的函数库来实现</h2>
+<hr />
+<p>也可以使用STL来实现这些功能</p>
+<pre><code class="cpp">class Solution
+{
+public:
+
+	string ReverseSentence(string str)
+	{
+		if (str.size( ) == 0)
+		{
+			return str;
+		}
+
+		reverse(str.begin(), str.end());
+
+		size_t left = 0;
+		size_t right = 0;
+		while(right != string::npos)
+		{
+			left = str.find_first_not_of(' ', left);  //  第一个非空格字符是单词的起始位置
+			right = str.find_first_of(' ', left);      //  第一个空格位置标识了单词的结束
+
+			//  处理末尾是空格(原字符串开头是空格的情况)
+			//  当最后全是空格的时候，此时可以结束循环
+			if (left == string::npos)
+			{
+				break;
+			}
+			//  如果查找不到空格, 到了字符串的末尾
+			//  此时[degin, str.size( )]是末尾的字符串
+			if (right == string::npos)
+			{
+				reverse(str.begin( ) + left, str.end( ));
+			}
+			else        //  否则[left, end]是一个单词
+			{
+				reverse(str.begin( ) + left, str.begin() + right);
+				left = right + 1;
+			}
+		}
+
+		return str;
+	}
+};
+</code></pre>
+
+<h2 id="_5">用栈的后进先出特性实现翻转</h2>
+<hr />
+<p>当然由于栈是后进先出的，因此我们可以通过栈来实现翻转</p>
+<ul>
+<li>将每个字符依次入栈，那么出现的顺序正好就是逆序</li>
+</ul>
+<pre><code class="cpp">//使用两个栈
+class Solution
+{
+public:
+	string ReverseSentence(string str)
+	{
+		if (str.size() == 0)
+		{
+			return str;
+		}
+
+		string result;
+		stack&lt;char&gt;stk1;
+		stack&lt;char&gt;stk2;
+
+		for (auto i : str)
+		{//把str中的全部压入
+			debug &lt;&lt;i &lt;&lt;endl;
+			//stk1.push(i);
+		}
+		//  通过将字符串压入栈中, 现在出栈顺序正好是入展顺序的逆序
+		//  即我们实现了一次整个字符串的翻转
+
+		//  接下来我们翻转每个单词
+		//  只要不是空格就一直入栈(实现翻转)
+		//  遇见空格的时候，就读取栈中元素(出栈的顺序正好是每个单词的顺序)
+		while (!stk1.empty())
+		{
+			if (stk1.top() != ' ')
+			{   //没有遇到空格 就再弹出 压到第二个栈
+				stk2.push(stk1.top());
+				//debug &lt;&lt;stk1.top( );
+				stk1.pop();
+			}
+			else
+			{   //如果遇到了空格 一个单词结束了  将第二个栈里的弹出
+				while (!stk2.empty())
+				{
+					result += stk2.top();
+					debug &lt;&lt;stk2.top( );
+					stk2.pop();
+				}
+				result += stk1.top();//空格也要加上
+				stk1.pop();//不要忘记！！！
+			}
+		}
+		while (!stk2.empty()) {//此时stk1已经空了 上面的循环进不去了 但是stk2中还有最后一个单词！！！！注意！！！
+			result += stk2.top();
+			stk2.pop();
+		}
+		return result;
+	}
+};
+
+int __tmain( )
+{
+	Solution solu;
+	cout &lt;&lt;solu.ReverseSentence(&quot;student. a am I&quot;) &lt;&lt;endl;
+
+	return 0;
+}
+</code></pre>
+
+<h1 id="_6">从后向前重新组装字符串</h1>
+<hr />
+<blockquote>
+<p>student. a am I</p>
+<p>I am a student.</p>
+</blockquote>
+<p>还有以一种思路就是从后向前，读取到每个单词，就开始顺序的拼接它们</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	string ReverseSentence(string str)
+	{
+		string result;
+		while (str.rfind(&quot; &quot;) != -1)
+		{
+			unsigned long position = str.rfind(&quot; &quot;);
+			string temp = str.substr(position + 1);
+			//debug &lt;&lt;temp &lt;&lt;endl;
+			result = result + temp + ' ';
+			str = str.substr(0, position);
+			debug &lt;&lt;&quot;str = &quot; &lt;&lt;str &lt;&lt;endl;
+		}
+		//debug &lt;&lt;str &lt;&lt;endl;
+		result = result + str;
+
+		return result;
+	}
+};
+</code></pre>
+
+<p>或者</p>
+<pre><code class="cpp">class Solution
+{
+public:
+	string ReverseSentence(string str)
+	{
+		if(str.size( ) == 0)
+		{
+			return str;
+		}
+		string res = &quot;&quot;, tmp = &quot;&quot;;
+		for(unsigned int i = 0; i &lt; str.size(); ++i)
+		{
+			if(str[i] == ' ')       //  发现一个单词
+			{
+				debug &lt;&lt;tmp &lt;&lt;endl;
+				res = &quot; &quot; + tmp + res;      //  顺序的拼接, 前面需要一个空格
+				tmp = &quot;&quot;;
+			}
+			else
+			{
+				tmp += str[i];
+			}
+		}
+		if(tmp.size() != 0)     //  拼接最后一个单子, 前面无需空格
+		{
+			res = tmp + res;
+		}
+		return res;
+	}
+};
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

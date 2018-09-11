@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>1    链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="1">1    链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1?tpId=13&amp;tqId=11216&amp;rp=4">数据流之中的中位数</a></p>
+<p>九度OJ：未收录</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/064-数据流之中的中位数">064-数据流之中的中位数</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51908274">剑指Offer--064-数据流之中的中位数</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="right">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1?tpId=13&amp;tqId=11216&amp;rp=4">064-数据流之中的中位数</a></td>
+<td align="center">未收录</td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51908274">剑指Offer--064-数据流之中的中位数</a></td>
+<td align="right"><a href="https://github.com/gatieme/CodingInterviews/tree/master/064-数据流之中的中位数">064-数据流之中的中位数</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="2">2    题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。</p>
+</blockquote>
+<h1 id="3">3  分析</h1>
+<hr />
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th align="center">数据结构</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>插入的时间效率</th>
+<th align="center">得到的中位数的时间效率</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">没有排序的数组</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>O(1)</td>
+<td align="center">O(n)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">排序的数组</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>O(n)</td>
+<td align="center">O(1)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">排序的链表</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>O(n)</td>
+<td align="center">O(1)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">二叉搜索树</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>平均O(logn), 最差O(n)</td>
+<td align="center">平均O(logn), 最差O(n)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">AVL树</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>O(logn)</td>
+<td align="center">O(1)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">最大堆和最小堆</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>O(logn)</td>
+<td align="center">O(1)</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h1 id="4">4  堆排序策略</h1>
+<hr />
+<p>对于数据流，对应的就是在线算法了，一道很经典的题目就是在1亿个数中找到最大的前100个数，这是一道堆应用题，找最大的前100个数，那么我们就创建一个大小为100的最小化堆，每来一个元素就与堆顶元素比较，因为堆顶元素是目前前100大数中的最小数，前来的元素如果比该元素大，那么就把原来的堆顶替换掉。</p>
+<p>那么对于这一道题呢？如果单纯的把所有元素放到一个数组里，每次查找中位数最快也要O(n)，综合下来是O(n^2)的复杂度。我们可以利用上面例子中的想法，用一个最大堆来维护当前前n/2小的元素，那么每次找中位数只到取出堆顶就可以了。但是，有一个问题，数据要动态增长，有可能之前被替换掉的元素随着元素的增加又跑回来了，所以我们不能单纯得向上题一样把元素丢掉，我们可以再用一个最小化堆来存前n/2大的元素。</p>
+<pre><code class="c">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+
+
+//  调试开关
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+
+class Solution
+{
+protected:
+	vector&lt;int&gt;     m_min; //数组中的后一半元素组成一个最小化堆
+	vector&lt;int&gt;     m_max; //数组中的前一半元素组成一个最大化堆
+
+public:
+	/*  将元素插入的堆中，　
+	 *  为了保证数据平均的分配到两个堆中, 两个堆的数据数目之差不能超过１
+	 *  插入的元素会两个堆元素的平衡, 因此两个堆都必须调整
+	 *
+	 *  比如将元素插在后半段(最小堆)中,
+	 *  则最小堆调整后的堆顶(最小值)需要弹出并压入到前半段中才能保证平衡
+	 *　也就是说,　在最小堆中插入元素, 最后完成调整后将导致最大堆中元素+1
+	 *
+	 *  因此我们可以假定, 0 &lt;= m_min.size( ) - m_max.size( ) &lt;= 1
+	 *  那么
+	 *
+	 *  插入前如果整个数组的元素个数为偶数, 说明两个堆中元素个数相等
+	 *  则最终元素应该插入m_min中,即先把元素插入到m_max中在调整到m_min中
+	 *
+	 *  插入前如果整个数组的元素个数为奇数, 说明m_max元素多了1个
+	 *  则最终元素应该插入m_max中,
+	 *  即先把元素插入到m_min中在调整到m_max中
+	 *  */
+	void Insert(int num)
+	{
+		if(((m_min.size( ) + m_max.size( )) &amp; 1) == 0)
+		{
+			/*  偶数数据的情况下
+			 *  直接将新的数据插入到数组的后半段
+			 *  即在最小堆中插入元素
+			 *
+			 *  此时最小堆中多出一个元素,
+			 *  即最小元素, 将其弹出后, 压入前半段(即最大堆中)
+			 *  */
+			if(m_max.size( ) &gt; 0 &amp;&amp; num &lt; m_max[0])
+			{
+				m_max.push_back(num);
+				push_heap(m_max.begin( ), m_max.end( ), less&lt;int&gt;( ));
+
+				num = m_max[0];
+				pop_heap(m_max.begin(), m_max.end(), less&lt;int&gt;());
+				m_max.pop_back();
+			}
+			m_min.push_back(num); //把前一半找到的最大值放到后一半中
+			push_heap(m_min.begin( ), m_min.end( ), greater&lt;int&gt;( ));
+			debug &lt;&lt;&quot;left = &quot; &lt;&lt;m_max.size( ) &lt;&lt;&quot;, &quot; &lt;&lt;m_min.size( ) &lt;&lt;endl;
+		}
+		else
+		{
+			/*  否则数组中元素是奇数
+			 *  将
+			 *
+			 * */
+			if(m_min.size( ) &gt; 0 &amp;&amp; num &gt; m_min[0])    //  奇数数据的情况下，则在最大堆中插入元素
+			{
+				m_min.push_back(num);
+				push_heap(m_min.begin(), m_min.end(), greater&lt;int&gt;());
+				num=m_min[0];
+				pop_heap(m_min.begin(), m_min.end(), greater&lt;int&gt;());
+				m_min.pop_back();
+			}
+			m_max.push_back(num); //把后一半找到的最大值放到前一半中
+			push_heap(m_max.begin(), m_max.end(), less&lt;int&gt;());
+		}
+	}
+
+	/*  由于假定, 0 &lt;= m_min.size( ) - m_max.size( ) &lt;= 1
+	 *  因此
+	 *  当总元素个数为偶数时, 中位数即(m_max[0] + m_min[0]) / 2
+	 *  当总元素个数为奇数时, 中位数即m_min[0];  */
+	double GetMedian()
+	{
+		int size = m_min.size( ) + m_max.size( );
+		if(size==0) return -1;
+		double median = 0;
+		if((size &amp; 1) != 0)
+		{
+			median = (double) m_min[0];
+		}
+		else
+		{
+			median = (double) (m_max[0] + m_min[0]) / 2;
+		}
+		return median;
+	}
+};
+
+int __tmain( )
+{
+	Solution s;
+	int array[] = {5, 2, 3, 4, 1, 6, 7, 0, 8};
+	vector&lt;int&gt; vec(array, array + 9);
+
+	for (int i = 0; i &lt; vec.size( ); i++)
+	{
+		s.Insert(vec[i]);
+		cout &lt;&lt; s.GetMedian( ) &lt;&lt; endl;
+	}
+	return 0;
+}
+</code></pre>
+
+<h1 id="5-set-multiset">5  哈希set-multiset策略</h1>
+<hr />
+<p>类似的策略, 我们可以采用multiset来实现, set和multiset会根据特定的排序准则，自动将元素进行排序。不同的是后者允许元素重复而前者不允许</p>
+<pre><code class="c">class Solution
+{
+protected :
+	multiset&lt;int&gt;   left;       /*  左半部分  */
+	multiset&lt;int&gt;   right;      /*  右半部分  */
+
+public    :
+
+	void Insert(int n)
+	{
+		int tmp = n;
+		if(((left.size( ) + right.size( )) &amp; 1) == 0)
+		{
+			if (right.empty( ) != true &amp;&amp; n &gt; *right.begin())
+			{
+				right.insert(n);
+				tmp = *right.begin( );
+				right.erase(right.find(tmp));
+			}
+			left.insert(tmp);
+		}
+		else
+		{
+			if (left.empty() != true &amp;&amp; n &lt; *left.rbegin())
+			{
+				left.insert(n);
+				tmp = *left.rbegin();
+				left.erase(left.find(tmp));
+			}
+			right.insert(tmp);
+		}
+
+	}
+
+	double GetMedian( )
+	{
+#ifdef __tmain
+		cout &lt;&lt;&quot;left[&quot; &lt;&lt;left.size( ) &lt;&lt;&quot;] : &quot;;
+		copy(left.begin( ), left.end( ), ostream_iterator&lt;int&gt;(cout,&quot; &quot;));
+		cout &lt;&lt;&quot;right[&quot; &lt;&lt;right.size( ) &lt;&lt;&quot;] : &quot;;
+		copy(right.begin( ), right.end( ), ostream_iterator&lt;int&gt;(cout,&quot; &quot;));
+		cout &lt;&lt;endl;
+#endif
+
+		if(((left.size( ) + right.size( )) &amp; 1) == 0)
+		{
+			debug &lt;&lt;*left.rbegin( ) &lt;&lt;&quot;, &quot; &lt;&lt;*right.begin( ) &lt;&lt;endl;
+			return (double)(*left.rbegin( ) + *right.begin( )) / 2.0;
+		}
+		else
+		{
+			debug &lt;&lt;(double)*left.rbegin( ) &lt;&lt;endl;
+			return (double)*left.rbegin( );
+		}
+	}
+};
+</code></pre>
+
+<p>﻿</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

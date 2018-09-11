@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>链接</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">链接</h1>
+<hr />
+<blockquote>
+<p>牛客OJ：<a href="http://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288?tpId=13&amp;tqId=11213&amp;rp=3&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">把二叉树打印成多行</a></p>
+<p>九度OJ：未收录</p>
+<p>GitHub代码： <a href="https://github.com/gatieme/CodingInterviews/tree/master/060-把二叉树打印成多行">060-把二叉树打印成多行</a></p>
+<p>CSDN题解：<a href="http://blog.csdn.net/gatieme/article/details/51622025">剑指Offer--060-把二叉树打印成多行</a></p>
+</blockquote>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>牛客OJ</th>
+<th align="center">九度OJ</th>
+<th align="right">CSDN题解</th>
+<th align="right">GitHub代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="http://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288?tpId=13&amp;tqId=11213&amp;rp=3&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking">060-把二叉树打印成多行</a></td>
+<td align="center">未收录</td>
+<td align="right"><a href="http://blog.csdn.net/gatieme/article/details/51622025">剑指Offer--060-把二叉树打印成多行</a></td>
+<td align="right"><a href="https://github.com/gatieme/CodingInterviews/tree/master/060-把二叉树打印成多行">060-把二叉树打印成多行</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="_2">题意</h1>
+<hr />
+<p><strong>题目描述</strong></p>
+<blockquote>
+<p>请实现一个函数，用来判断一颗二叉树是不是对称的。</p>
+<p>注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的</p>
+</blockquote>
+<h1 id="_3">分析</h1>
+<hr />
+<p>其实就是层次遍历，这个我们在我之前的一篇博客里面将的很清楚了</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/gatieme/article/details/51163010#t10">二叉树的遍历详解（前序中序后序层次-递归和非递归）</a></p>
+<p><a href="http://blog.csdn.net/gatieme/article/details/51204976">剑指Offer--023-从上往下打印二叉树（层次遍历二叉树）</a></p>
+</blockquote>
+<p>其中调试的时候使用了</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/gatieme/article/details/51108612">剑指Offer--006-重构二叉树</a>来辅助我们通过前序和中序遍历的序列来生成二叉树</p>
+</blockquote>
+<p>直接贴代码，只需要直接将我们层次遍历输出过程，变成将输入压入vector中即可</p>
+<h1 id="_4">代码</h1>
+<hr />
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;deque&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+#define __tmain main
+
+#ifdef __tmain
+
+#define debug cout
+
+#else
+
+#define debug 0 &amp;&amp; cout
+
+#endif // __tmain
+
+
+#define undebug 0 &amp;&amp; cout
+
+
+#ifdef __tmain
+struct TreeNode
+{
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+
+	TreeNode(int x = 0)
+	:val(x), left(NULL), right(NULL)
+	{
+	}
+};
+#endif // __tmain
+
+
+
+class Solution
+{
+	vector&lt; vector&lt;int&gt; &gt;   res;
+	vector&lt;int&gt;             curr;
+public:
+	vector&lt; vector&lt;int&gt; &gt; Print(TreeNode *root)
+	{
+		LevelOrder(root);
+
+		LevelOrderDev(root);
+
+		LevelOrderUsePoint(root);
+
+		LevelOrderUseSize(root);
+
+		LevelOrderUseEnd(root);
+		return this-&gt;res;
+	}
+
+	int PrintLevel(TreeNode *root, int level)
+	{
+		if(root == NULL || level &lt; 0)
+		{
+			return 0;
+		}
+		else if(level == 0)
+		{
+			debug &lt;&lt;root-&gt;val;
+			curr.push_back(root-&gt;val);        /// add for currult in vector
+
+			return 1;
+		}
+		else
+		{
+			return PrintLevel(root-&gt;left, level - 1) + PrintLevel(root-&gt;right, level - 1);
+		}
+	}
+
+	void LevelOrder(TreeNode *root)
+	{
+		curr.clear( );           /// add for currult in vector
+		res.clear( );
+		if(root == NULL)
+		{
+			return;
+		}
+		for(int level = 0; ; level++)
+		{
+			if(PrintLevel(root, level) == 0)
+			{
+				break;
+			}
+			res.push_back(curr);
+			curr.clear( );
+			debug &lt;&lt;endl;
+		}
+	}
+
+	//////////////////////////
+	//////////////////////////
+	void LevelOrderDev(TreeNode *root)
+	{
+		curr.clear( );           /// add for currult in vector
+		res.clear( );
+
+		if(root == NULL)
+		{
+			return ;
+		}
+		deque&lt;TreeNode *&gt; qFirst, qSecond;
+		qFirst.push_back(root);
+
+		while(qFirst.empty( ) != true)
+		{
+			while (qFirst.empty( ) != true)
+			{
+				TreeNode *temp = qFirst.front( );
+				qFirst.pop_front( );
+
+				debug &lt;&lt; temp-&gt;val;
+				curr.push_back(temp-&gt;val);        /// add for currult in vector
+
+
+				if (temp-&gt;left != NULL)
+				{
+					qSecond.push_back(temp-&gt;left);
+				}
+				if (temp-&gt;right != NULL)
+				{
+					qSecond.push_back(temp-&gt;right);
+				}
+			}
+			debug &lt;&lt; endl;
+			res.push_back(curr);
+			curr.clear( );
+
+			qFirst.swap(qSecond);
+
+		}
+	}
+
+
+	//////////////////////////
+	//////////////////////////
+	void LevelOrderUsePoint(TreeNode *root)
+	{
+		curr.clear( );           /// add for currult in vector
+		res.clear( );
+		if(root == NULL)
+		{
+			return ;
+		}
+
+		vector&lt;TreeNode*&gt; vec;
+		vec.push_back(root);
+
+		int cur = 0;
+		int end = 1;
+
+		while (cur &lt; vec.size())
+		{
+			end = vec.size();
+
+			while (cur &lt; end)
+			{
+				debug &lt;&lt; vec[cur]-&gt;val;
+				curr.push_back(vec[cur]-&gt;val);        /// add for currult in vector
+
+				if (vec[cur]-&gt;left != NULL)
+				{
+					vec.push_back(vec[cur]-&gt;left);
+
+				}
+				if (vec[cur]-&gt;right != NULL)
+				{
+					vec.push_back(vec[cur]-&gt;right);
+				}
+				cur++;
+			}
+			res.push_back(curr);
+			curr.clear( );
+			debug &lt;&lt; endl;
+		}
+	}
+
+
+
+	void LevelOrderUseSize(TreeNode *root)
+	{
+		curr.clear( );           /// add for currult in vector
+		res.clear( );
+		if(root == NULL)
+		{
+			return ;
+		}
+
+		int parentSize = 1, childSize = 0;
+		TreeNode *temp = NULL;
+
+		queue&lt;TreeNode *&gt; q;
+		q.push(root);
+		while(q.empty( ) != true)
+		{
+			temp = q.front( );
+			debug &lt;&lt;temp-&gt;val;
+			curr.push_back(temp-&gt;val);        /// add for currult in vector
+
+			q.pop( );
+
+			if (temp-&gt;left != NULL)
+			{
+				q.push(temp-&gt;left);
+
+				childSize++;
+			}
+			if (temp-&gt;right != NULL)
+			{
+				q.push(temp-&gt;right);
+				childSize++;
+			}
+
+			parentSize--;
+			if (parentSize == 0)
+			{
+				parentSize = childSize;
+				childSize = 0;
+				res.push_back(curr);
+				curr.clear( );
+				debug &lt;&lt; endl;
+			}
+
+		}
+	}
+
+
+	void LevelOrderUseEnd(TreeNode *root)
+	{
+		curr.clear( );           /// add for currult in vector
+		res.clear( );
+		if(root == NULL)
+		{
+			return ;
+		}
+
+		queue&lt;TreeNode *&gt; q;
+
+		q.push(root);
+		q.push(NULL);
+
+		while(q.empty( ) != true)
+		{
+			TreeNode* node = q.front();
+			q.pop();
+
+			if (node)
+			{
+				debug &lt;&lt;node-&gt;val;
+				curr.push_back(node-&gt;val);        /// add for currult in vector
+
+				if (node-&gt;left != NULL)
+				{
+					q.push(node-&gt;left);
+				}
+				if (node-&gt;right != NULL)
+				{
+					q.push(node-&gt;right);
+				}
+			}
+			else if (q.empty( ) != true)
+			{
+				q.push(NULL);
+
+				res.push_back(curr);
+				curr.clear( );
+				debug &lt;&lt; endl;
+			}
+		}
+		if(curr.size() != 0)
+		{
+			res.push_back(curr);
+			curr.clear( );
+			cout &lt;&lt;endl;
+		}
+	}
+};
+
+int __tmain( )
+{
+
+
+
+	TreeNode tree[7];
+
+	tree[0].val = 8;
+	tree[0].left = &amp;tree[1];
+	tree[0].right = &amp;tree[2];
+
+
+	tree[1].val = 6;
+	tree[1].left = &amp;tree[3];
+	tree[1].right = &amp;tree[4];
+
+
+	tree[2].val = 6;
+	tree[2].left = &amp;tree[5];
+	tree[2].right = &amp;tree[6];
+
+
+	tree[3].val = 5;
+	tree[3].left = NULL;
+	tree[3].right = NULL;
+
+	tree[4].val = 7;
+	tree[4].left = NULL;
+	tree[4].right = NULL;
+
+	tree[5].val = 7;
+	tree[5].left = NULL;
+	tree[5].right = NULL;
+
+	tree[6].val = 5;
+	tree[6].left = NULL;
+	tree[6].right = NULL;
+
+	Solution solu;
+	vector&lt; vector&lt;int&gt; &gt; res = solu.Print(tree);
+	for(int i = 0; i &lt; res.size( ); i++)
+	{
+		for(int j = 0; j &lt; res[i].size( ); j++)
+		{
+			cout &lt;&lt;res[i][j];
+		}
+		cout &lt;&lt;endl;
+	}
+
+	return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

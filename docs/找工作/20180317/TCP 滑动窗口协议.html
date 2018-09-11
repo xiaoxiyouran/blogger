@@ -2,24 +2,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<title>TCP 滑动窗口协议</title>
-	<meta name="keywords" content="xiaoxiyouran" />
-	<meta name="description" content="xiaoxiyouran's Docs" />
-	<link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="../../../packages/css/style.css" rel="stylesheet" />
-	<link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
-	
-	<!-- 右上角的侧边导航栏 -->
-	<link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
-	<script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
-	
-	<!--
-	<link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
-	-->
-	
-	<!-- To generate the side tree of the document itself. -->
+        <title>TCP 滑动窗口协议</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
   <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
   <style>
   body {
@@ -34,15 +34,15 @@
     color:#333; font-size:12px;
    Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
   }
-  
+
  // table{
  //   border-collapse:collapse;
  // }
 
   //table, td, th{
-  //  border:1px solid black;   
+  //  border:1px solid black;
   //}
-  
+
   .ztree li a.curSelectedNode {
     padding-top: 0px;
     background-color: #FFE6B0;
@@ -79,47 +79,47 @@
 <!-- mermaid 画图 -->
  <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
- <script src="../../../packages/mermaid-7.0.0/dist/dist/mermaid.full.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
  <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
  <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
  <script>
-	//browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
-			var mermaid_config = {
-					startOnLoad:true
-			}
-			mermaid.ganttConfig = {
-					titleTopMargin:25,
-					barHeight:20,
-					barGap:4,
-					topPadding:50,
-					leftPadding:75,
-					gridLineStartPadding:35,
-					fontSize:11,
-					numberSectionStyles:3,
-					axisFormatter: [
-							// Within a day
-							["%I:%M", function (d) {
-									return d.getHours();
-							}],
-							// Monday a week
-							["w. %U", function (d) {
-									return d.getDay() == 1;
-							}],
-							// Day within a week (not monday)
-							["%a %d", function (d) {
-									return d.getDay() && d.getDate() != 1;
-							}],
-							// within a month
-							["%b %d", function (d) {
-									return d.getDate() != 1;
-							}],
-							// Month
-							["%m-%y", function (d) {
-									return d.getMonth();
-							}]
-					]
-			};
-	</script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
 
 </head>
 <body>
@@ -129,14 +129,14 @@
    <a href="#"> 目录 </a>
    <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
     您的浏览器不支持iframe，请升级
-   </iframe>  
+   </iframe>
 </div>
 
 <TABLE border=0 height=600px align=left>
   <TR>
     <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
       <ul id="tree" class="ztree">
-        
+
       </ul>
     </TD>
     <TD width=770px align=left valign=top>
@@ -144,7 +144,7 @@
 <!---------------------------------------------------------------------------------------------------------------------------->
 <div class="container">
 <span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
- 
+
 <h1 id="tcp">TCP 滑动窗口协议</h1>
 <p><strong>什么是滑动窗口协议？</strong>     一图胜千言，看下面的图。简单解释下，发送和接受方都会维护一个数据帧的序列，这个序列被称作窗口。发送方的窗口大小由接受方确定，目的在于控制发送速度，以免接受方的缓存不够大，而导致溢出，同时控制流量也可以避免网络拥塞。下面图中的4,5,6号数据帧已经被发送出去，但是未收到关联的ACK，7,8,9帧则是等待发送。可以看出发送端的窗口大小为6，这是由接受端告知的（事实上必须考虑拥塞窗口cwnd，这里暂且考虑cwnd&gt;rwnd）。此时如果发送端收到4号ACK，则窗口的左边缘向右收缩，窗口的右边缘则向右扩展，此时窗口就向前“滑动了”，即数据帧10也可以被发送。</p>
 <p><a href="http://blog.csdn.net/images/blog_csdn_net/dotjox/slidingwindow.jpg"><img alt="点击看大图" src="http://blog.csdn.net/images/blog_csdn_net/dotjox/slidingwindow.jpg" /></a></p>
@@ -172,7 +172,7 @@
 
 <hr/>
 <div class="footer">
-	Copyright &copy; xiaoxiyouran. All rights reserved.
+        Copyright &copy; xiaoxiyouran. All rights reserved.
 
 </div>
 
