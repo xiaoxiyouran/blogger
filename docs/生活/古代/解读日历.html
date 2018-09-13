@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>解读日历</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">解读日历</h1>
+<p>经常看到日历上今天宜什么，祭什么的，今天来详细了解下。</p>
+<h1 id="ji">冠笄(ji, 第一声)礼</h1>
+<p>冠笄礼是<mark>汉族</mark>重要的人文遗产。</p>
+<p>华夏先祖对于冠礼非常重视，所谓<mark>“冠者礼之始也</mark>”，《<a href="https://baike.baidu.com/item/%E4%BB%AA%E7%A4%BC/5394977">仪礼</a>》将其列为开篇第一礼，绝非偶然。</p>
+<p>先民为跨入成年的青年男女举行这一仪式，是要提示行冠（笄）礼者：从此将由家庭中毫无责任的<mark>“孺子”</mark>转变为正式跨入社会的<mark>成年人</mark>，只有能履践<mark>孝、悌、忠、顺</mark>的德行，才能成为合格的儿子（女儿）、合格的弟弟（妹妹）、合格的公民（对于过去，即合格的臣下）、合格的晚辈，成为各种合格的社会角色。惟其如此，才可以称得上是合格的社会成员人。</p>
+<p>成年礼起源于原始社会，表示男女青年至一定年龄，性已经成熟，可以婚嫁，并从此作为氏族的一个成年人，参加各项活动。成年礼（也称成丁礼）由<mark>氏族长辈</mark>依据传统为青成人<mark>举行一定的仪式</mark>，才能获得承认。</p>
+<p>华夏族的成年礼，为<mark>男子冠礼，女子笄礼</mark>。经书记载，实行于周代。按周制，男子<mark>二十岁</mark>行冠礼，然天子诸侯为早日执掌国政，多提早行礼。传说周文王十二岁而冠，成王<mark>十五岁而冠</mark>。古代冠礼在<mark>宗庙内举行</mark>，日期为<mark>二月</mark>，冠前十天内，受冠者要先<mark>卜筮吉日，十日内无吉日</mark>，则筮选下一旬的吉日。然后将吉日告知亲友。</p>
+<h3 id="_2">男子冠</h3>
+<p>一般15~20岁，并赐字。</p>
+<p>冠礼前三日，又用筮法选择主持冠礼的大宾，并选一位“赞冠”者协助冠礼仪式。行礼时，主人（一般是受冠者之父）、大宾及受冠者都<mark>穿礼服。先加缁布冠，次授以皮弁（bian， 第四声， 低级的武官帽），最后授以爵弁</mark>。每次加冠毕，皆由大宾对受冠者读祝辞。</p>
+<p>祝辞大意谓：<strong>在这美好吉祥的日子，给你加上成年人的服饰；请放弃你少年儿童的志超，造就成年人的情操；保持威仪，培养美德；祝你万寿无疆，大福大禄</strong>。然后，受礼者拜见其母。再由大宾为他取字，周代通常取字称为“伯某甫”（<mark>伯、仲、叔、季</mark>，视排行而定）。然后主人送大宾至庙门外，敬酒，同时以束帛俪皮（帛五匹、鹿皮两张）作报酬，另外再馈赠牲肉。受冠者则改服礼帽礼服去拜见君，又执礼贽（野雉等）拜见乡大夫等。</p>
+<p>若父亲已殁，受冠者则需向父亲神主祭祀，表示在父亲前完成冠礼。祭后拜见伯、叔，然后飨食。此加冠、取字、拜见君长之礼，后世因时因地而有变化，民间自十五岁至二十岁举行，各地不一。清中期以后，多移至娶妇前数日或前一日举行。某些地区自宋代以来，仪式简易，不宴请宾客，仅<mark>在本家或自家范围内</mark>进行。</p>
+<p>《仪礼·士冠礼》贾公彦疏：“诸侯十二而冠也。若天子，亦与诸侯同，十二而冠......《大戴礼》云：‘文王十三生伯邑考’，《左传》云：‘冠而生子，礼也。’”又《仪礼·士冠礼》：“始加（冠）祝曰：‘令月吉日，始加元服，弃尔幼字，顺尔成德。寿考惟祺，介尔景福。’再加曰：‘吉月令辰，乃申尔服，敬尔威仪，淑慎尔德。眉寿万年，永受胡福。’三加曰：‘以岁之正，以月之令。咸加尔服。兄弟具在，以成厥德，黄老无疆，受天之庆。’”</p>
+<h3 id="_3">女子笄</h3>
+<p>笄礼也是古代嘉礼的一种。为汉族女子的成年礼。俗称“上头”、“上头礼”。笄，即<mark>簪子</mark>。自周代起，规定贵族女子在订婚（许嫁）以后<mark>出嫁之前行笄礼</mark>。一般在<mark>十五岁</mark>举行，如果<mark>一直待嫁未许人，则年至二十也行笄礼</mark>。</p>
+<p>受笄即在行笄礼时改变幼年的发式，将头发绾成一个髻，然后<mark>用一块黑布将发髻包住</mark>，随即以簪插定发髻。主行笄礼者为<mark>女性家长</mark>，由约请的女宾为少女的加笄，表示女子成年可以结婚。贵族女子受笄后，一般要在公宫或宗室接受<mark>成人教育</mark>，授以<mark>“妇德、妇容、妇功、妇言”</mark>等，作为媳妇必须具备的待人接物及侍奉舅姑的品德礼貌与女红劳作等技巧本颂。后世改为由少女之母<mark>申以戒辞，教之以礼</mark>，称为<mark>“教茶”</mark>。</p>
+<p>女子年十五岁，则称为<mark>“及笄”</mark>。《仪礼·士婚礼》：“女子许嫁，笄而礼之，称字。”《礼记·内则》中就有“女子……十有五年而笄。”的记载。</p>
+<p><br></p>
+<h2 id="_4">沐浴</h2>
+<p>沐浴：指沐浴斋戒而言。</p>
+<p>沐浴文化在中国文化传统中具有一席之地。据史料记载，早在商周时期，最高统治者的法典中就规定了在登基、继位、祭奠、<mark>开元</mark>等重大活动中，都要戒斋三日、沐浴更衣，“<mark>吏五日得一休沐</mark>”，表明洗浴对官宦仪容仪表之重要，人对天、地之敬重。此后历个朝代莫不如此。至汉唐时代，洗浴文化已趋形成，洗浴方式也越来越多，诸如：<mark>蒸气浴、温泉浴、冷水浴、药浴</mark>等在上层社会普遍流行。不仅如此，洗浴还借鉴、吸收中国传统医学中健身养生的方法与理念，如中医的<mark>热熬、泡足、薰疗、按摩</mark>等方法，均为中国洗浴文化特色的形成融入了新的元素。</p>
+<p><strong>沐浴的象征</strong></p>
+<p>在中国沐浴文化传统中，“<mark>沐浴而朝</mark>”与“<mark>斋戒沐浴以祀上帝</mark>”，不仅是一种隆重的礼仪，而且也是古代人的信仰与精神生活。儒家文化“<mark>有澡身而浴德，与其澡于水，宁澡于德</mark>”之说。孔子的门生曾点把洗澡作为一种至美的人生境界加以赞赏：“<mark>莫春者，春服既成，冠者五六人，童子六七人，浴乎沂，风乎舞雩，咏而归。</mark>”表明中国洗浴文化的传统，不仅在于<mark>发肤之康洁</mark>，而且更讲求<strong>品行之端庄、德行之良好</strong>。</p>
+<p><br></p>
+<h2 id="_5">开市</h2>
+<p><strong>所谓“市”，就是交易的意思，“开市”就是“开始交易”的意思。</strong>开市，旧俗春节期间大小店铺从大年初一起关门，而在正月初五开市。俗以<mark>正月初五为财神圣日</mark>，认为选择这一天开市必将招财进宝。</p>
+<p><br></p>
+<h2 id="jiao">斋醮(jiao, 第四声)</h2>
+<p>请僧道设斋坛，祈祷神佛。在<a href="https://www.baidu.com/s?wd=%E9%81%93%E6%95%99&amp;tn=SE_PcZhidaonwhc_ngpagmjz&amp;rsv_dl=gh_pc_zhidao">道教</a>观内，人们常常可以看到道士们身着金丝银线的道袍，手持各异的法器，吟唱着古老的曲调，在坛场里翩翩起舞，犹如演出一场折子戏，这就是<a href="https://www.baidu.com/s?wd=%E9%81%93%E6%95%99&amp;tn=SE_PcZhidaonwhc_ngpagmjz&amp;rsv_dl=gh_pc_zhidao">道教</a>的<a href="https://www.baidu.com/s?wd=%E6%96%8B%E9%86%AE%E7%A7%91%E4%BB%AA&amp;tn=SE_PcZhidaonwhc_ngpagmjz&amp;rsv_dl=gh_pc_zhidao">斋醮科仪</a>。俗称“道场”，谓之“依科演教”，简称“科教”，也就是<mark>法事</mark></p>
+<p><br></p>
+<h2 id="_6">纳彩</h2>
+<p>引证解释</p>
+<p>古婚礼六礼之一。男方向女方<mark>送求婚礼物</mark>。《仪礼·士昏礼》：“昏礼：下达纳采，用鴈。”贾公彦疏：“纳采，言纳者，以其始相采择，恐女家不许，故言纳。”《汉书·平帝纪》：“﹝元始﹞三年春，诏有司为皇帝纳采安汉公葬女。”</p>
+<p>黄历纳采之后事宜</p>
+<p><strong>“纳采”之后是“问名”</strong>，就是由媒人询问女方的姓名、年庚以及“八字”，通过占卜、算命来看看男女双方会不会相冲相克，以及有没有其他不宜结成夫妻的地方，“问名”也称为“过小帖”或“合八字”。</p>
+<p><strong>“问名”后是“纳吉”</strong>，男方父母将自己儿子的生辰八字交给媒人带给女方，这就是“过大贴”、“换鸾书”，也称为“通书”，实际上有点儿<mark>订婚</mark>的意思。</p>
+<p>接下来的<mark>“纳徵”</mark>对女家来说最实惠，大概意思就是<mark>给彩礼</mark>，彩礼的时代特色鲜明，古时候是给<mark>绢帛之类</mark>，后来是<mark>金银财宝</mark>。</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
