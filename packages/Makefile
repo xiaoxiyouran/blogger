@@ -7,6 +7,7 @@ all:
 	#python main.py ../src/机器学习 ../docs/机器学习
 	# python main.py ../src/算法	../docs/算法	
 	# python main.py ../src/生活	../docs/生活
+	# python main.py ../src/绘画	../docs/绘画
 clean:
 	rm -rf ../docs/*
 	# rd /s ../docs/*

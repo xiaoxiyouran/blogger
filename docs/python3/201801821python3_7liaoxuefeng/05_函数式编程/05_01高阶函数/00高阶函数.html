@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>高阶函数</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">高阶函数</h1>
+<p>高阶函数英文叫Higher-order function。什么是高阶函数？我们以实际代码为例子，一步一步深入概念。</p>
+<h2 id="_2">变量可以指向函数</h2>
+<p>以Python内置的求绝对值的函数<code>abs()</code>为例，调用该函数用以下代码：</p>
+<pre><code class="python">&gt;&gt;&gt; abs(-10)
+10
+</code></pre>
+
+<p>但是，如果只写<code>abs</code>呢？</p>
+<pre><code class="python">&gt;&gt;&gt; abs
+&lt;built-in function abs&gt;     
+</code></pre>
+
+<p>可见，<code>abs(-10)</code>是函数调用，而<code>abs</code>是函数本身。</p>
+<p>要获得函数调用结果，我们可以把结果赋值给变量：</p>
+<pre><code class="python">&gt;&gt;&gt; x = abs(-10)
+&gt;&gt;&gt; x
+10
+</code></pre>
+
+<p>但是，如果把<mark>函数本身赋值给变量</mark>呢？</p>
+<pre><code class="python">&gt;&gt;&gt; f = abs
+&gt;&gt;&gt; f
+&lt;built-in function abs&gt;
+</code></pre>
+
+<p>结论：函数本身也可以赋值给变量，即：<mark>变量可以指向函数(函数指针)</mark>。</p>
+<p>如果一个变量指向了一个函数，那么，可否<mark>通过该变量来调用这个函数</mark>？用代码验证一下：</p>
+<pre><code class="python">&gt;&gt;&gt; f = abs
+&gt;&gt;&gt; f(-10)
+10
+</code></pre>
+
+<p>成功！说明变量<code>f</code>现在已经指向了<code>abs</code>函数本身。直接调用<code>abs()</code>函数和调用变量<code>f()</code>完全相同。</p>
+<p><br></p>
+<h2 id="_3">函数名也是变量</h2>
+<p>那么函数名是什么呢？<mark>函数名其实就是指向函数的变量</mark>！对于<code>abs()</code>这个函数，完全可以把函数名<code>abs</code>看成变量，它指向一个可以计算绝对值的函数！</p>
+<p>如果把<code>abs</code>指向其他对象，会有什么情况发生？</p>
+<pre><code class="shell">&gt;&gt;&gt; abs = 10
+&gt;&gt;&gt; abs(-10)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: 'int' object is not callable
+</code></pre>
+
+<p>把<code>abs</code>指向<code>10</code>后，就无法通过<code>abs(-10)</code>调用该函数了！因为<code>abs</code>这个变量已经不指向求绝对值函数而是指向一个整数<code>10</code>！</p>
+<p>当然实际代码绝对不能这么写，这里是为了说明<mark>函数名也是变量</mark>。要恢复<code>abs</code>函数，请<mark>重启</mark>Python交互环境。</p>
+<p>注：由于<code>abs</code>函数实际上是定义在<code>import builtins</code>模块中的，所以要让修改<code>abs</code>变量的指向在其它模块也生效，要用<code>import builtins; builtins.abs = 10</code>。</p>
+<p><br></p>
+<h2 id="_4">传入函数</h2>
+<p>既然变量可以指向函数，函数的参数能接收变量，那么<mark>一个函数就可以接收另一个函数作为参数</mark>，这种函数就称之为<mark>高阶函数</mark>。</p>
+<p>一个最简单的高阶函数：</p>
+<pre><code class="python">def add(x, y, f):
+	return f(x) + f(y)
+</code></pre>
+
+<p>当我们调用<code>add(-5, 6, abs)</code>时，参数<code>x</code>，<code>y</code>和<code>f</code>分别接收<code>-5</code>，<code>6</code>和<code>abs</code>，根据函数定义，我们可以推导计算过程为：</p>
+<pre><code class="python">x = -5
+y = 6
+f = abs
+f(x) + f(y) ==&gt; abs(-5) + abs(6) ==&gt; 11
+return 11
+</code></pre>
+
+<p>用代码验证一下：</p>
+<pre><code class="python">def add(x, y, f):
+	return f(x) + f(y)
+
+print(add(-5, 6, abs))
+</code></pre>
+
+<p>把函数作为参数传入，这样的函数称为高阶函数，函数式编程就是指这种<mark>高度抽象的编程范式</mark>。</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

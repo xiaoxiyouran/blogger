@@ -1,0 +1,95 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>xi's sidebar</title>
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/default.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Aimara.css">
+	<link rel="stylesheet" type="text/css" href="../../packages/doc_tree/jquery-tree/css/Example.css">
+	<script id="testscript" src="../../packages/doc_tree/jquery-tree/lib/Aimara.js" type="text/javascript" callBack="../.."></script>
+	<script type="text/javascript">
+			window.onload = function() {
+
+				//Initializing Tree
+
+				//Tree Context Menu Structure
+				var contex_menu = {
+					'context1' : {
+						elements : [
+							{
+								text : 'Expand Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.expandSubtree();
+								},
+							},
+							{
+								text : 'Collapse Subtree',
+								icon: 'images/tree.png',
+								action : function(node) {
+									node.collapseSubtree();
+								}
+							}						
+						]
+					}
+				};
+
+				//Creating the tree
+				tree = createTree('div_tree','white',contex_menu);
+
+				// div_log = document.getElementById('div_log');
+
+				//Setting custom events
+				tree.nodeBeforeOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before expand event<br/>';
+				}
+
+				tree.nodeAfterOpenEvent = function(node) {
+					// div_log.innerHTML += node.text + ': After expand event<br/>';
+				}
+
+				tree.nodeBeforeCloseEvent = function(node) {
+					// div_log.innerHTML += node.text + ': Before collapse event<br/>';
+				}
+
+				//Loop to create test nodes    
+    
+    _global_tree_html1 = tree.createNode("<a href = './global_tree.html' target = 'right'>global_tree.html</a>",false,'../../packages/doc_tree/jquery-tree/images/file.png',null,null,'context1');
+
+				//Rendering the tree
+				tree.drawTree();
+			};
+
+			function expand_all() {
+				tree.expandTree();
+			}
+
+			function clear_log() {
+				// document.getElementById('div_log').innerHTML = '';
+			}
+
+			function collapse_all() {
+				tree.collapseTree();
+			}
+		</script>
+	<!--[if IE]>
+		<script src="../../packages/doc_tree/jquery-tree/lib/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+<div class="htmleaf-container">
+		<div class="htmleaf-content">			
+			<button onclick="expand_all()">Expand</button>
+			<button onclick="collapse_all()">Collapse</button>
+			<br>
+			<div id="div_tree"></div>
+		</div>
+		
+</div>
+
+</body>
+</html>    
+    

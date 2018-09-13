@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>玉石画</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">玉石画</h1>
+<p>绘画是一门手艺，贵在坚持。</p>
+<p><img alt="image-20180912201427193" src="image-20180912201427193.png" /></p>
+<p><br></p>
+<h2 id="_2">起笔</h2>
+<p>分步解析</p>
+<p><img alt="image-20180912202104203" src="image-20180912202104203.png" /></p>
+<p>高光怎么突出呢？ 凸出暗部</p>
+<p><img alt="image-20180912202307460" src="image-20180912202307460.png" /></p>
+<p>起稿过程如下：</p>
+<p><img alt="image-20180912202333456" src="image-20180912202333456.png" /></p>
+<p>可塑橡皮，可以将架构擦掉。</p>
+<p><img alt="image-20180912202428821" src="image-20180912202428821.png" /></p>
+<p>硬橡皮不能有水，否则，容易涂黑。</p>
+<h2 id="_3">彩描</h2>
+<p>用彩笔重新勾勒一下：</p>
+<p><img alt="image-20180912202752918" src="image-20180912202752918.png" /></p>
+<p>勾转折， 籫杆不是很直</p>
+<p><img alt="image-20180912202829366" src="image-20180912202829366.png" /></p>
+<p>准备好彩笔</p>
+<p><img alt="image-20180912202903817" src="image-20180912202903817.png" /></p>
+<p>流线型高光。加重后，不能画闷了。</p>
+<p><img alt="image-20180912202943648" src="image-20180912202943648.png" /></p>
+<p>挑绿色</p>
+<p><img alt="image-20180912203059879" src="image-20180912203059879.png" /></p>
+<p>右上方往左下方画， 高光要顺着结构来画。</p>
+<p>加重点是边边角</p>
+<p><img alt="image-20180912203154967" src="image-20180912203154967.png" /></p>
+<p>找高光，鼓鼓的感觉表现出来。</p>
+<p><img alt="image-20180912203255911" src="image-20180912203255911.png" /></p>
+<p>反光，需要加重点</p>
+<p><img alt="image-20180912203342568" src="image-20180912203342568.png" /></p>
+<p>注意线条的虚实变化</p>
+<p><img alt="image-20180912203422300" src="image-20180912203422300.png" /></p>
+<p>虚实变化： 靠近高光的，周围要轻点， 转折的要注意虚实变化。（下笔有轻有重）</p>
+<p><img alt="image-20180912203616239" src="image-20180912203616239.png" /></p>
+<p>加重暗面， 突出高光的， 可以多试试各种颜色</p>
+<p><img alt="image-20180912203650065" src="image-20180912203650065.png" /></p>
+<p>要稍微重的笔，卡一下。 高光的轮廓要描一点</p>
+<p><img alt="image-20180912203716775" src="image-20180912203716775.png" /></p>
+<p>先找暗面</p>
+<p><img alt="image-20180912203928246" src="image-20180912203928246.png" /></p>
+<p>有一个渐变</p>
+<p><img alt="image-20180912203939186" src="image-20180912203939186.png" /></p>
+<p>接触在</p>
+<p>杆上，加阴影，镶嵌在上面吗</p>
+<p><img alt="image-20180912204051592" src="image-20180912204051592.png" /></p>
+<p>上轻下重</p>
+<p><img alt="image-20180912204102539" src="image-20180912204102539.png" /></p>
+<p>第一遍，平涂要轻点， 后面好处理一些</p>
+<p><img alt="image-20180912204143398" src="image-20180912204143398.png" /></p>
+<p>转折的稍微鼓一些</p>
+<p><img alt="image-20180912204246826" src="image-20180912204246826.png" /></p>
+<p>平涂心</p>
+<p><img alt="image-20180912204304335" src="image-20180912204304335.png" /></p>
+<p>用重的笔，一层层排线</p>
+<p><img alt="image-20180912204321714" src="image-20180912204321714.png" /></p>
+<p>换笔，加一些轻的颜色</p>
+<p><img alt="image-20180912204400077" src="image-20180912204400077.png" /></p>
+<p>小明暗，要微弱一些。排线要稳一点，不要很乱。</p>
+<p><img alt="image-20180912204445940" src="image-20180912204445940.png" /></p>
+<p>叠加，加一些重的绿色。</p>
+<p><img alt="image-20180912204540805" src="image-20180912204540805.png" /></p>
+<p>边缘，也要画的重一点，卡边缘。</p>
+<p><img alt="image-20180912204606388" src="image-20180912204606388.png" /></p>
+<p>里面的质感，用绿色叠加</p>
+<p><img alt="image-20180912204655403" src="image-20180912204655403.png" /></p>
+<p>画轮廓</p>
+<p><img alt="image-20180912204807824" src="image-20180912204807824.png" /></p>
+<p>找小转折，排线要细腻，均匀，顺着结构变化，才能，表现出立体感和质感</p>
+<p><img alt="image-20180912204845318" src="image-20180912204845318.png" /></p>
+<p>调子就是线条</p>
+<p><img alt="image-20180912204929418" src="image-20180912204929418.png" /></p>
+<p>找转折</p>
+<p><img alt="image-20180912204952395" src="image-20180912204952395.png" /></p>
+<p><img alt="image-20180912205102358" src="image-20180912205102358.png" /></p>
+<p>越是细节，越要画的细腻一些</p>
+<p><img alt="image-20180912205158034" src="image-20180912205158034.png" /></p>
+<p>靠近籫杆的要重点</p>
+<p><img alt="image-20180912205241342" src="image-20180912205241342.png" /></p>
+<p>靠近暗边的，稍微重些</p>
+<p><img alt="image-20180912205308027" src="image-20180912205308027.png" /></p>
+<p>不要留太多的空隙</p>
+<p><img alt="image-20180912205337239" src="image-20180912205337239.png" /></p>
+<p>多练习，没有捷径</p>
+<p><img alt="image-20180912205409988" src="image-20180912205409988.png" /></p>
+<p>工笔：是国画里的</p>
+<p>转折，遇到光，要加厚度，因为有点点阴影</p>
+<p><img alt="image-20180912205523656" src="image-20180912205523656.png" /></p>
+<p>加重细节</p>
+<p><img alt="image-20180912205602564" src="image-20180912205602564.png" /></p>
+<h2 id="_4">画杆</h2>
+<p>高光</p>
+<p><img alt="image-20180912210012900" src="image-20180912210012900.png" /></p>
+<p>两层结构</p>
+<p><img alt="image-20180912210059177" src="image-20180912210059177.png" /></p>
+<p>转折加重点</p>
+<p><img alt="image-20180912210205042" src="image-20180912210205042.png" /></p>
+<p><img alt="image-20180912210239330" src="image-20180912210239330.png" /></p>
+<p>画完后的效果</p>
+<p><img alt="image-20180912210250663" src="image-20180912210250663.png" /></p>
+<p>祥云</p>
+<p><img alt="image-20180912210317779" src="image-20180912210317779.png" /></p>
+<p>成品， 有高光的，要先加重暗部，然后，高光和暗部相互影响。</p>
+<p>回国加的彩绘笔</p>
+<p><img alt="image-20180912210356090" src="image-20180912210356090.png" /></p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

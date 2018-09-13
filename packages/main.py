@@ -439,7 +439,7 @@ def parse_file(base_url, file, full_path, output_base_url_copy, output_dir, temp
                         print "[skipcopy] " + full_path + " => " + (output_dir + os.path.sep + file)
 
         # 1. 如果输出文件存在，原文件不存在，输出文件删除 2. 输出文件存在，原文件也存在，更新
-    elif os.path.isfile(output_dir + os.path.sep + file):
+        elif os.path.isfile(output_dir + os.path.sep + file):
             unModified = unModified and False
             delete = False;
             if os.path.isfile(output_dir + os.path.sep + file):
@@ -455,11 +455,11 @@ def parse_file(base_url, file, full_path, output_base_url_copy, output_dir, temp
                 print "[updatecopy] " + full_path + " => " + (output_dir + os.path.sep + file)
 
         # 输出文件不存在，从原文件那里创建
-    else:  # 从原文件创建也要保证源文件存在
-        if os.path.isfile(full_path):
-            shutil.copy(full_path, output_dir + os.path.sep + file);  # copy file or directory
-            print "[createcopy] " + full_path + " => " + (output_dir + os.path.sep + file)
-            unModified = unModified and False
+        else:  # 从原文件创建也要保证源文件存在
+            if os.path.isfile(full_path):
+                shutil.copy(full_path, output_dir + os.path.sep + file);  # copy file or directory
+                print "[createcopy] " + full_path + " => " + (output_dir + os.path.sep + file)
+                unModified = unModified and False
     return unModified
 
 

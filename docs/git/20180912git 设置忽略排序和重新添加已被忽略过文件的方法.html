@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>20180912git 设置忽略排序和重新添加已被忽略过文件的方法</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="20180912git">20180912git 设置忽略排序和重新添加已被忽略过文件的方法</h1>
+<h2 id="_1">设置忽略排除</h2>
+<p>在.gitignore文件中设置，比如在laravel框架中我们设置<mark>忽略整个vendor文件夹</mark>：</p>
+<pre><code>/vendor/*
+</code></pre>
+
+<p><mark>星号表示所有</mark>，如果需要这是后续的排除，这里的星号很重要</p>
+<p>设置忽略的文件夹中<mark>有一个文件夹</mark>里面的内容<mark>不需要忽略</mark>:</p>
+<pre><code>!/vendor/laravel/framework/src/Illuminate/Auth/
+</code></pre>
+
+<p><code>!</code> 表示排除的意思，当然如果忽略某个文件就直接指定就行了，比如</p>
+<pre><code>!/vendor/laravel/framework/src/Illuminate/Auth/TokenGuard.php
+</code></pre>
+
+<p>好，设置忽略和设置忽略排除，这里就基本行了.</p>
+<p><br></p>
+<h2 id="_2">重新添加已经被忽略过的文件（夹）</h2>
+<p><mark>重新添加已经被忽略过的文件</mark>时，我们仅仅使用git add是不行的，因为 git仓库中根本没有那个文件，这时候我们需要<mark>加上-f参数来强制添加</mark>到仓库中，然后在提交。比如上面设置了忽略排除的文件TokenGuard.php我们需要重新加入</p>
+<pre><code class="shell">git add -f /vendor/laravel/framework/src/Illuminate/Auth/TokenGuard.php1
+</code></pre>
+
+<p>然后在commit和push就行了</p>
+<p><br></p>
+<h2 id="_3">忽略已经提交过的文件</h2>
+<p>这里说点题外话，有的时候我们需要<mark>忽略掉以前提交过的文件</mark>，因为 git已经索引了该文件所以我们<mark>先要删除掉该文件的缓存</mark>，如文件User.php已经提交过了，现在我们想忽略，这是我们<mark>先在.gitignore中设置该文件为忽略</mark>，然后我们<mark>执行如下命令删除缓存</mark>:</p>
+<pre><code>git rm --cached User.php1
+</code></pre>
+
+<p>然后我们在commit和push就好了。</p>
+<h2 id="_4">参考</h2>
+<p>[1] https://blog.csdn.net/CYXLZZS/article/details/61422214</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

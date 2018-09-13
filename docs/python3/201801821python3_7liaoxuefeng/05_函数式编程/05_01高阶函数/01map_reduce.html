@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>01map_reduce</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="01map_reduce">01map_reduce</h1>
+<p>Python内建了<code>map()</code>和<code>reduce()</code>函数。</p>
+<p>如果你读过Google的那篇大名鼎鼎的论文“<a href="http://research.google.com/archive/mapreduce.html">MapReduce: Simplified Data Processing on Large Clusters</a>”，你就能大概明白map/reduce的概念。</p>
+<h2 id="map">Map</h2>
+<p>我们先看map。<mark><code>map()</code>函数接收两个参数，一个是函数，一个是<code>Iterable</code></mark>，<code>map</code>将传入的函数依次作用到序列的每个元素，并把<mark>结果作为新的<code>Iterator</code>返回</mark>。</p>
+<p>举例说明，比如我们有一个函数f(x)=x2，要把这个函数作用在一个list <code>[1, 2, 3, 4, 5, 6, 7, 8, 9]</code>上，就可以用<code>map()</code>实现如下：</p>
+<pre><code class="ascii">            f(x) = x * x
+
+				  │
+				  │
+  ┌───┬───┬───┬───┼───┬───┬───┬───┐
+  │   │   │   │   │   │   │   │   │
+  ▼  ▼  ▼   ▼  ▼   ▼  ▼  ▼   ▼
+
+[ 1   2   3   4   5   6   7   8   9 ]
+
+  │   │   │   │   │   │   │   │   │
+  │   │   │   │   │   │   │   │   │
+  ▼  ▼  ▼   ▼  ▼   ▼  ▼  ▼   ▼
+
+[ 1   4   9  16  25  36  49  64  81 ]
+</code></pre>
+
+<p>现在，我们用Python代码实现：</p>
+<pre><code class="python">&gt;&gt;&gt; def f(x):
+...     return x * x
+...
+&gt;&gt;&gt; r = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+&gt;&gt;&gt; list(r)
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+
+<p><code>map()</code>传入的第一个参数是<code>f</code>，即函数对象本身。由于结果<code>r</code>是一个<code>Iterator</code>，<mark><code>Iterator</code>是惰性序列</mark>，因此<mark>通过<code>list()</code>函数让它把整个序列都计算出来并返回一个list</mark>。</p>
+<p>你可能会想，不需要<code>map()</code>函数，写一个循环，也可以计算出结果：</p>
+<pre><code class="python">L = []
+for n in [1, 2, 3, 4, 5, 6, 7, 8, 9]:
+	L.append(f(n))
+print(L)
+</code></pre>
+
+<p>的确可以，但是，从上面的循环代码，能一眼看明白“把f(x)作用在list的每一个元素并把结果生成一个新的list”吗？</p>
+<p>所以，<code>map()</code>作为高阶函数，事实上它<mark>把运算规则抽象了</mark>，因此，我们不但可以计算简单的f(x)=x^2，还可以计算任意复杂的函数，比如，<mark>把这个list所有数字转为字符串</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+['1', '2', '3', '4', '5', '6', '7', '8', '9']
+</code></pre>
+
+<p>只需要一行代码。</p>
+<p><br></p>
+<h2 id="reduce">reduce</h2>
+<p>再看<code>reduce</code>的用法。<code>reduce</code>把<mark>一个函数作用在一个序列<code>[x1, x2, x3, ...]</code>上</mark>，这个函数<mark>必须接收两个参数，<code>reduce</code>把结果继续和序列的下一个元素做累积计算</mark>，其效果就是：</p>
+<pre><code class="python">reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)
+</code></pre>
+
+<p>比方说对一个序列求和，就可以用<code>reduce</code>实现：</p>
+<pre><code class="python">&gt;&gt;&gt; from functools import reduce
+&gt;&gt;&gt; def add(x, y):
+...     return x + y
+...
+&gt;&gt;&gt; reduce(add, [1, 3, 5, 7, 9])
+25
+</code></pre>
+
+<p>当然求和运算可以直接用Python内建函数<code>sum()</code>，没必要动用<code>reduce</code>。</p>
+<p>但是如果要把序列<code>[1, 3, 5, 7, 9]</code>变换成整数<code>13579</code>，<code>reduce</code>就可以派上用场：</p>
+<pre><code class="python">&gt;&gt;&gt; from functools import reduce
+&gt;&gt;&gt; def fn(x, y):
+...     return x * 10 + y
+...
+&gt;&gt;&gt; reduce(fn, [1, 3, 5, 7, 9])
+13579
+</code></pre>
+
+<p>这个例子本身没多大用处，但是，如果考虑到<mark>字符串<code>str</code>也是一个序列</mark>，对上面的例子稍加改动，配合<code>map()</code>，我们就可以写出<mark>把<code>str</code>转换为<code>int</code>的函数</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; from functools import reduce
+&gt;&gt;&gt; def fn(x, y):
+...     return x * 10 + y
+...
+&gt;&gt;&gt; def char2num(s):
+...     digits = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+...     return digits[s]
+...
+&gt;&gt;&gt; reduce(fn, map(char2num, '13579'))
+13579
+</code></pre>
+
+<p>整理成一个<code>str2int</code>的函数就是：</p>
+<pre><code class="python">from functools import reduce
+
+DIGITS = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+
+def str2int(s):
+	def fn(x, y):
+		return x * 10 + y
+	def char2num(s):
+		return DIGITS[s]
+	return reduce(fn, map(char2num, s))
+</code></pre>
+
+<p>还可以<mark>用lambda函数进一步简化</mark>成：</p>
+<pre><code class="python">from functools import reduce
+
+DIGITS = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+
+def char2num(s):
+	return DIGITS[s]
+
+def str2int(s):
+	return reduce(lambda x, y: x * 10 + y, map(char2num, s))
+</code></pre>
+
+<p>也就是说，假设Python没有提供<code>int()</code>函数，你完全可以自己写一个把字符串转化为整数的函数，而且只需要几行代码！</p>
+<p>lambda函数的用法在后面介绍。</p>
+<h2 id="_1">练习</h2>
+<p>1- 利用<code>map()</code>函数，把<strong>用户输入的不规范的英文名字，变为首字母大写，其他小写的规范名字</strong>。输入：<code>['adam', 'LISA', 'barT']</code>，输出：<code>['Adam', 'Lisa', 'Bart']</code>：</p>
+<pre><code class="python">############################################################
+# 第一个测试
+def normalize(name):
+	return name[:1].upper() + name[1:].lower()
+
+# 测试:
+L1 = ['adam', 'LISA', 'barT']
+L2 = list(map(normalize, L1))
+print(L2)
+</code></pre>
+
+<p><br></p>
+<p>2- Python提供的<code>sum()</code>函数可以接受一个list并求和，请编写一个<code>prod()</code>函数，可以接受一个list并利用<code>reduce()</code>求积：</p>
+<pre><code class="python">############################################################
+# 第二个测试
+
+def prod(L):
+	return reduce(lambda x, y: x*y, L)
+
+
+print('3 * 5 * 7 * 9 =', prod([3, 5, 7, 9]))
+if prod([3, 5, 7, 9]) == 945:
+	print('测试成功!')
+else:
+	print('测试失败!')
+</code></pre>
+
+<p><br></p>
+<p>3- 利用<code>map</code>和<code>reduce</code>编写一个<code>str2float</code>函数，把字符串<code>'123.456'</code>转换成浮点数<code>123.456</code>：</p>
+<pre><code class="python">def str2float(s):
+	DIGITS = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '.': '.'}
+	lm = list(map(lambda n: DIGITS[n], s))
+
+	i = lm.index('.')
+	lm.pop(i)
+	q = 10 ** (len(lm)-i)
+
+	olm = reduce(lambda x, y: x * 10 + y, lm)
+	olm = olm / q
+	return olm
+
+
+print('str2float(\'123.456\') =', str2float('123.456'))
+if abs(str2float('123.456') - 123.456) &lt; 0.00001:
+	print('测试成功!')
+else:
+	print('测试失败!')
+</code></pre>
+
+<p>方法二：</p>
+<pre><code class="python">Dig = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+def fn(x, y):
+	return 10 * x + y
+def str2num(s):
+	return Dig[s]
+
+i = s.index('.')
+s = s[:i]+s[i + 1:]
+return reduce(fn, map(str2num, s))/(10 ** i)
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
