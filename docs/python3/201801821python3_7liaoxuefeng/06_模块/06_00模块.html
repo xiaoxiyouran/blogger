@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>模块</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">模块</h1>
+<h2 id="_2">什么是模块</h2>
+<p>在计算机程序的开发过程中，随着程序代码越写越多，在一个文件里代码就会越来越长，越来越不容易维护。</p>
+<p>为了编写可维护的代码，我们<mark>把很多函数分组，分别放到不同的文件里</mark>，这样，每个文件包含的代码就相对较少，很多编程语言都采用这种组织代码的方式。在Python中，<mark>一个.py文件就称之为一个模块</mark>（Module）。</p>
+<p><br></p>
+<h2 id="_3">模块的作用</h2>
+<p>使用模块有什么好处？</p>
+<p>最大的好处是大大提高了代码的<mark>可维护性</mark>。其次，编写代码不必从零开始。当一个模块编写完毕，就可以被其他地方引用。我们在编写程序的时候，也经常引用其他模块，包括Python<mark>内置的模块和来自第三方的模块</mark>。</p>
+<p>使用模块还可以<mark>避免函数名和变量名</mark>冲突。相同名字的函数和变量完全可以分别存在不同的模块中，因此，我们自己在编写模块时，不必考虑名字会与其他模块冲突。但是也要注意，尽量不要与内置函数名字冲突。</p>
+<p><br></p>
+<h2 id="_4">内置函数</h2>
+<p>点<a href="http://docs.python.org/3/library/functions.html">这里</a>查看Python的所有内置函数。</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#abs"><code>abs()</code></a></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#delattr"><code>delattr()</code></a></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#hash"><code>hash()</code></a></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-memoryview"><code>memoryview()</code></a></th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-set"><code>set()</code></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#all"><code>all()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-dict"><code>dict()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#help"><code>help()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#min"><code>min()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#setattr"><code>setattr()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#any"><code>any()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#dir"><code>dir()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#hex"><code>hex()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#next"><code>next()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#slice"><code>slice()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#ascii"><code>ascii()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#divmod"><code>divmod()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#id"><code>id()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#object"><code>object()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#sorted"><code>sorted()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#bin"><code>bin()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#enumerate"><code>enumerate()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#input"><code>input()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#oct"><code>oct()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#staticmethod"><code>staticmethod()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#bool"><code>bool()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#eval"><code>eval()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#int"><code>int()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#open"><code>open()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-str"><code>str()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#breakpoint"><code>breakpoint()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#exec"><code>exec()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#isinstance"><code>isinstance()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#ord"><code>ord()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#sum"><code>sum()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-bytearray"><code>bytearray()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#filter"><code>filter()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#issubclass"><code>issubclass()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#pow"><code>pow()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#super"><code>super()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-bytes"><code>bytes()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#float"><code>float()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#iter"><code>iter()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#print"><code>print()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-tuple"><code>tuple()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#callable"><code>callable()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#format"><code>format()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#len"><code>len()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#property"><code>property()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#type"><code>type()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#chr"><code>chr()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-frozenset"><code>frozenset()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-list"><code>list()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#func-range"><code>range()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#vars"><code>vars()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#classmethod"><code>classmethod()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#getattr"><code>getattr()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#locals"><code>locals()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#repr"><code>repr()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#zip"><code>zip()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#compile"><code>compile()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#globals"><code>globals()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#map"><code>map()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#reversed"><code>reversed()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#__import__"><code>__import__()</code></a></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#complex"><code>complex()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#hasattr"><code>hasattr()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#max"><code>max()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><a href="https://docs.python.org/3/library/functions.html#round"><code>round()</code></a></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="_5">包</h2>
+<p>你也许还想到，如果不同的人编写的模块名相同怎么办？为了避免模块名冲突，Python又引入了<mark>按目录来组织模块的方法</mark>，称为包（Package）。</p>
+<p>举个例子，一个<code>abc.py</code>的文件就是一个名字叫<code>abc</code>的模块，一个<code>xyz.py</code>的文件就是一个名字叫<code>xyz</code>的模块。</p>
+<p>现在，假设我们的<code>abc</code>和<code>xyz</code>这两个模块名字与其他模块冲突了，于是我们<mark>可以通过包</mark>来组织模块，避免冲突。方法是<mark>选择一个顶层包名</mark>，比如<code>mycompany</code>，按照如下目录存放：</p>
+<pre><code class="ascii">mycompany
+├─ __init__.py
+├─ abc.py
+└─ xyz.py
+</code></pre>
+
+<p>引入了包以后，只要顶层的包名不与别人冲突，那所有模块都不会与别人冲突。现在，<code>abc.py</code>模块的名字就<mark>变成了<code>mycompany.abc</code>，</mark> 类似的，<code>xyz.py</code>的模块名变成了<code>mycompany.xyz</code>。</p>
+<p>请注意，每一个包目录下面都会有一个<code>__init__.py</code>的文件，这个文件是<mark>必须存在</mark>的，否则，Python就<mark>把这个目录当成普通目录，而不是一个包</mark>。<code>__init__.py</code>可以是空文件，<mark>也可以有Python代码</mark>，因为<code>__init__.py</code>本身就是一个模块，而<mark>它的模块名就是<code>mycompany</code>。</mark></p>
+<p><br></p>
+<h2 id="_6">多层次的包结构</h2>
+<p>类似的，可以有多级目录，组成<mark>多级层次的包结构</mark>。比如如下的目录结构：</p>
+<pre><code class="ascii">mycompany
+ ├─ web
+ │  ├─ __init__.py
+ │  ├─ utils.py
+ │  └─ www.py
+ ├─ __init__.py
+ ├─ abc.py
+ └─ xyz.py
+</code></pre>
+
+<p>文件<code>www.py</code>的<mark>模块名就是<code>mycompany.web.www</code></mark>，两个文件<code>utils.py</code>的模块名分别是<code>mycompany.utils</code>和<code>mycompany.web.utils</code>。</p>
+<p>自己创建模块时要注意命名，<mark>不能和Python自带的模块名称冲突</mark>。例如，系统自带了sys模块，自己的模块就不可命名为sys.py，否则<mark>将无法导入系统自带的sys模块</mark>。</p>
+<p><code>mycompany.web</code>也是一个模块，请指出该模块对应的.py文件： <code>__init.py__</code> </p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

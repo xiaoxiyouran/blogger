@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>返回函数</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">返回函数</h1>
+<h2 id="_2">闭包</h2>
+<p>高阶函数除了可以接受函数作为参数外，还可以<mark>把函数作为结果值返回</mark>。</p>
+<p>我们来实现一个<mark>可变参数的求和</mark>。通常情况下，求和的函数是这样定义的：</p>
+<pre><code class="python">def calc_sum(*args):
+	ax = 0
+	for n in args:
+		ax = ax + n
+	return ax
+</code></pre>
+
+<p>但是，如果<mark>不需要立刻求和</mark>，而是在后面的代码中，<mark>根据需要再计算</mark>怎么办？可以不返回求和的结果，而是<mark>返回求和的函数</mark>：</p>
+<pre><code class="python">def lazy_sum(*args):
+	def sum():
+		ax = 0
+		for n in args:
+			ax = ax + n
+		return ax
+	return sum
+</code></pre>
+
+<p>当我们调用<code>lazy_sum()</code>时，返回的并不是求和结果，而是求和函数：</p>
+<pre><code class="python">&gt;&gt;&gt; f = lazy_sum(1, 3, 5, 7, 9)
+&gt;&gt;&gt; f
+&lt;function lazy_sum.&lt;locals&gt;.sum at 0x101c6ed90&gt;
+</code></pre>
+
+<p>调用函数<code>f</code>时，才真正计算求和的结果：</p>
+<pre><code class="python">&gt;&gt;&gt; f()
+25
+</code></pre>
+
+<p>在这个例子中，我们在函数<code>lazy_sum</code>中又定义了函数<code>sum</code>，并且，内部函数<code>sum</code>可以引用外部函数<code>lazy_sum</code>的参数和局部变量，当<code>lazy_sum</code>返回函数<code>sum</code>时，相关参数和变量都保存在返回的函数中，这种称为<mark>“闭包（Closure）”</mark>的程序结构拥有极大的威力。</p>
+<p>请再注意一点，当我们调用<code>lazy_sum()</code>时，<mark>每次调用都会返回一个新的函数</mark>，即使传入相同的参数：</p>
+<pre><code class="python">&gt;&gt;&gt; f1 = lazy_sum(1, 3, 5, 7, 9)
+&gt;&gt;&gt; f2 = lazy_sum(1, 3, 5, 7, 9)
+&gt;&gt;&gt; f1==f2
+False
+</code></pre>
+
+<p><code>f1()</code>和<code>f2()</code>的调用结果互不影响。</p>
+<p><br></p>
+<h2 id="_3">闭包带循环变量</h2>
+<p>注意到返回的函数在其<mark>定义内部引用了局部变量<code>args</code></mark>，所以，当一个函数返回了一个函数后，其内部的局部变量还被新函数引用，所以，闭包用起来简单，实现起来可不容易。</p>
+<p>另一个需要注意的问题是，返回的函数并没有立刻执行，而是直到调用了<code>f()</code>才执行。我们来看一个例子：</p>
+<pre><code class="python">def count():
+	fs = []
+	for i in range(1, 4):
+		def f():
+			 return i*i
+		fs.append(f)
+	return fs
+
+f1, f2, f3 = count()
+</code></pre>
+
+<p>在上面的例子中，每次循环，都创建了一个新的函数，然后，把创建的3个函数都返回了。</p>
+<p>你可能认为调用<code>f1()</code>，<code>f2()</code>和<code>f3()</code>结果应该是<code>1</code>，<code>4</code>，<code>9</code>，但实际结果是：</p>
+<pre><code class="python">&gt;&gt;&gt; f1()
+9
+&gt;&gt;&gt; f2()
+9
+&gt;&gt;&gt; f3()
+9
+</code></pre>
+
+<p>全部都是<code>9</code>！原因就在于<mark>返回的函数引用了变量<code>i</code>，</mark>但它<mark>并非立刻执行。等到3个函数都返回时，它们所引用的变量<code>i</code>已经变成了<code>3</code>，</mark>因此最终结果为<code>9</code>。</p>
+<p>返回闭包时牢记一点：<mark>返回函数不要引用任何循环变量，或者后续会发生变化的变量</mark>。</p>
+<p>如果<mark>一定要引用循环变量</mark>怎么办？方法是<mark>再创建一个函数，用该函数的参数绑定循环变量当前的值</mark>，无论该循环变量后续如何更改，已绑定到函数参数的值不变：</p>
+<pre><code class="python">def count():
+	def f(j):
+		def g():
+			return j*j
+		return g
+	fs = []
+	for i in range(1, 4):
+		fs.append(f(i)) # f(i)立刻被执行，因此i的当前值被传入f()
+	return fs
+</code></pre>
+
+<p>再看看结果：</p>
+<pre><code class="python">&gt;&gt;&gt; f1, f2, f3 = count()
+&gt;&gt;&gt; f1()
+1
+&gt;&gt;&gt; f2()
+4
+&gt;&gt;&gt; f3()
+9
+</code></pre>
+
+<p>缺点是代码较长，<mark>可利用lambda函数缩短</mark>代码。</p>
+<p><br></p>
+<h2 id="_4">练习</h2>
+<p>利用闭包返回一个计数器函数，每次调用它返回递增整数：</p>
+<p>用了三种方法，都可行：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch05/03.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+# -*- coding: utf-8 -*-
+
+
+
+# def createCounter():
+#     a = 0           # 只在创建闭包的时候调用一次
+#     def counter():
+#         nonlocal a
+#         a += 1
+#         return a
+#     return counter
+
+#
+# def createCounter():
+#     n = [0]
+#     def counter():
+#         n[0] = n[0] + 1     # 列表可以直接用外部变量
+#         return n[0]
+#     return counter
+
+def createCounter():
+	def iter():
+	   n=1
+	   while 1:
+		yield n
+		n=n+1
+	it= iter()
+	def counter():
+		return next(it)
+	return counter
+
+
+# 测试:
+counterA = createCounter()
+print(counterA(), counterA(), counterA(), counterA(), counterA()) # 1 2 3 4 5
+counterB = createCounter()
+if [counterB(), counterB(), counterB(), counterB()] == [1, 2, 3, 4]:
+	print('测试通过!')
+else:
+	print('测试失败!')
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

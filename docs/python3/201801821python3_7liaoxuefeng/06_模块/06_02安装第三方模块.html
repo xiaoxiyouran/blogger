@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>安装第三方模块</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">安装第三方模块</h1>
+<h2 id="pip">Pip</h2>
+<p>在Python中，安装第三方模块，是通过<mark>包管理工具pip</mark>完成的。</p>
+<p>如果你正在使用Mac或Linux，安装<mark>pip本身这个步骤就可以跳过</mark>了。</p>
+<p>如果你正在使用Windows，请参考<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316090478912dab2a3a9e8f4ed49d28854b292f85bb000">安装Python</a>一节的内容，确保安装时勾选了<code>pip</code>和<code>Add python.exe to Path</code>。</p>
+<p>在命令提示符窗口下尝试运行<code>pip</code>，如果Windows提示未找到命令，可以重新运行安装程序添加<code>pip</code>。</p>
+<p>注意：Mac或Linux上有可能并存Python 3.x和Python 2.x，因此对应的<mark>pip命令是<code>pip3</code></mark>。</p>
+<p><br></p>
+<h2 id="pillow">Pillow</h2>
+<p>例如，我们要安装一个第三方库——Python Imaging Library，这是Python下非常强大的处理图像的工具库。不过，PIL目前只支持到Python 2.7，并且有年头没有更新了，因此，基于<mark>PIL的Pillow项目</mark>开发非常活跃，并且<mark>支持最新的Python 3</mark>。</p>
+<p>一般来说，第三方库都会在Python官方的<a href="https://pypi.python.org/">pypi.python.org</a>网站注册，要安装一个第三方库，必须先知道该库的名称，可以在官网或者pypi上搜索，比如Pillow的名称叫<a href="https://pypi.python.org/pypi/Pillow/">Pillow</a>，因此，安装Pillow的命令就是：</p>
+<pre><code class="shell">pip install Pillow
+</code></pre>
+
+<p>耐心等待下载并安装后，就可以使用Pillow了。</p>
+<p><br></p>
+<h2 id="anaconda">Anaconda</h2>
+<p>在使用Python时，我们经常需要用到很多第三方库，例如，<mark>上面提到的Pillow，以及MySQL驱动程序，Web框架Flask，科学计算Numpy</mark>等。用pip<mark>一个一个安装费时费力，还需要考虑兼容性</mark>。我们推荐<mark>直接使用<a href="https://www.anaconda.com/">Anaconda</a></mark>，这是一个<mark>基于Python的数据处理和科学计算平台</mark>，它已经内置了许多非常有用的第三方库，我们装上Anaconda，就相当于把数十个第三方模块自动安装好了，非常简单易用。</p>
+<p>可以从<a href="https://www.anaconda.com/download/">Anaconda官网</a>下载GUI安装包，安装包有500~600M，所以需要耐心等待下载。网速慢的同学请移步<a href="https://pan.baidu.com/s/1kU5OCOB#list/path=%2Fpub%2Fpython">国内镜像</a>。下载后直接安装，Anaconda会把系统Path中的python指向自己自带的Python，并且，Anaconda安装的第三方模块会安装在Anaconda自己的路径下，不影响系统已安装的Python目录。</p>
+<p>安装好Anaconda后，重新打开命令行窗口，输入python，可以看到Anaconda的信息：</p>
+<pre><code class="ascii">┌────────────────────────────────────────────────────────┐
+│Command Prompt - python                           - □ x │
+├────────────────────────────────────────────────────────┤
+│Microsoft Windows [Version 10.0.0]                      │
+│(c) 2015 Microsoft Corporation. All rights reserved.    │
+│                                                        │
+│C:\&gt; python                                             │
+│Python 3.6.3 |Anaconda, Inc.| ... on win32              │
+│Type &quot;help&quot;, ... for more information.                  │
+│&gt;&gt;&gt; import numpy                                        │
+│&gt;&gt;&gt; _                                                   │
+│                                                        │
+│                                                        │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+
+<p>可以尝试<mark>直接<code>import numpy</code></mark>等已安装的第三方模块。</p>
+<p><br></p>
+<h2 id="_2">模块搜索路径</h2>
+<p>当我们试图加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错：</p>
+<pre><code class="python">&gt;&gt;&gt; import mymodule
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+ImportError: No module named mymodule
+</code></pre>
+
+<p>默认情况下，Python解释器<mark>会搜索当前目录</mark>、所有已安装的内置模块和第三方模块，<mark>搜索路径存放在<code>sys</code>模块的<code>path</code>变量</mark>中：</p>
+<pre><code class="shell">&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+['', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python36.zip', '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6', ..., '/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages']
+</code></pre>
+
+<p><br></p>
+<h3 id="_3">添加自定义的搜索路径</h3>
+<p>如果我们要添加自己的搜索目录，有两种方法：</p>
+<h4 id="_4">运行时添加</h4>
+<p>一是直接修改<code>sys.path</code>，添加要搜索的目录：</p>
+<pre><code class="python">import sys
+print(sys.path)
+sys.path.append('../')      # 将上一级目录添加到搜索路径
+print(sys.path)
+
+#
+['/Users/cookie/Desktop/xiaoxiyouran/src/python3/201801821python3_7liaoxuefeng/unmd/tmp_pycharm_project/ch06', '/Applications/PyCharm.app/Contents/helpers/pydev', '/Users/cookie/Desktop/xiaoxiyouran/src/python3/201801821python3_7liaoxuefeng/unmd/tmp_pycharm_project', '/Applications/PyCharm.app/Contents/helpers/pydev', '/Users/cookie/Library/Caches/PyCharm2017.3/cythonExtensions', '/Users/cookie/anaconda2/envs/py35/lib/python35.zip', '/Users/cookie/anaconda2/envs/py35/lib/python3.5', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/plat-darwin', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/lib-dynload', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/Sphinx-1.5.6-py3.5.egg', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/aeosa', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/setuptools-27.2.0-py3.5.egg', '/Applications/PyCharm.app/Contents/helpers/pycharm_matplotlib_backend', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/IPython/extensions']
+['/Users/cookie/Desktop/xiaoxiyouran/src/python3/201801821python3_7liaoxuefeng/unmd/tmp_pycharm_project/ch06', '/Applications/PyCharm.app/Contents/helpers/pydev', '/Users/cookie/Desktop/xiaoxiyouran/src/python3/201801821python3_7liaoxuefeng/unmd/tmp_pycharm_project', '/Applications/PyCharm.app/Contents/helpers/pydev', '/Users/cookie/Library/Caches/PyCharm2017.3/cythonExtensions', '/Users/cookie/anaconda2/envs/py35/lib/python35.zip', '/Users/cookie/anaconda2/envs/py35/lib/python3.5', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/plat-darwin', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/lib-dynload', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/Sphinx-1.5.6-py3.5.egg', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/aeosa', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/setuptools-27.2.0-py3.5.egg', '/Applications/PyCharm.app/Contents/helpers/pycharm_matplotlib_backend', '/Users/cookie/anaconda2/envs/py35/lib/python3.5/site-packages/IPython/extensions', '../']
+
+</code></pre>
+
+<p>这种方法是在运行时修改，运行结束后失效。</p>
+<p><br></p>
+<h4 id="_5">添加系统搜索路径</h4>
+<p>第二种方法是<mark>设置环境变量<code>PYTHONPATH</code></mark>，该环境变量的内容会被自动添加到模块搜索路径中。设置方式与设置Path环境变量类似。注意只需要添加你自己的搜索路径，Python自己本身的搜索路径不受影响。</p>
+<p><br></p>
+<h3 id="_6">查看工作路径</h3>
+<p>1- 查看当前工作目录：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch06/01.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+# -*- coding: utf-8 -*-
+__author__ = 'xi'
+
+import os
+
+if __name__ == '__main__':
+	print(os.getcwd())      # 获得当前工作目录
+
+# /Users/cookie/Desktop/xiaoxiyouran/src/python3/201801821python3_7liaoxuefeng/unmd/tmp_pycharm_project/ch06
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
