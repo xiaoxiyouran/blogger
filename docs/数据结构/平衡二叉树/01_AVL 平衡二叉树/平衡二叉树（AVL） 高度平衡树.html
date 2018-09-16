@@ -7,20 +7,20 @@
         <title>平衡二叉树（AVL） 高度平衡树</title>
         <meta name="keywords" content="xiaoxiyouran" />
         <meta name="description" content="xiaoxiyouran's Docs" />
-        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="../../../packages/css/style.css" rel="stylesheet" />
-        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
 
         <!-- 右上角的侧边导航栏 -->
-        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
-        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
 
         <!--
         <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
         -->
 
         <!-- To generate the side tree of the document itself. -->
-  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
   <style>
   body {
   background-color: white;
@@ -74,13 +74,13 @@
     tex2jax: {inlineMath: [["$","$"]]}
   });
 </script>
- <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
 
 <!-- mermaid 画图 -->
- <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
- <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
-<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
- <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
  <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
  <script>
         //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
@@ -127,7 +127,7 @@
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
    <a href="#"> 目录 </a>
-   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
     您的浏览器不支持iframe，请升级
    </iframe>
 </div>
@@ -157,14 +157,15 @@
 <p>节点的<strong>平衡因子</strong>是它的左子树的高度减去它的右子树的高度（有时相反）。带有平衡因子1、0或 -1的节点被认为是平衡的。带有平衡因子 -2或2的节点被认为是不平衡的，并需要重新平衡这个树。平衡因子可以直接存储在每个节点中，或从可能存储在节点中的子树高度计算出来。</p>
 <h2 id="2-">2- 平衡二叉树的四种旋转情况</h2>
 <p>以下图表以四列表示四种情况，每行表示在该种情况下要进行的操作。在左左和右右的情况下，只需要进行一次旋转操作；在左右和右左的情况下，需要进行两次旋转操作。</p>
-<p><img alt="" src="./AVL" title="树.png" /></p>
+<p><img alt="" src="01.png" /></p>
 <blockquote>
 <p>1.单向右旋：由于在*a的左子树根节点的右子树上插入节点，a的平衡因子由1变为2，向右顺时针旋转。</p>
 <p>2.单向左旋：由于在*a的右子树根节点的右子树上插入节点，a的平衡因子由1变为2，向左顺时针旋转。</p>
 <p>3.先左后右：由于在*a的右子树根节点的右子树上插入节点，a的平衡因子由1变为2，做两次旋转，先左旋转，再右旋转。</p>
 <p>4.先右后左：由于在*a的右子树根节点的左子树上插入节点，a的平衡因子由1变为2，做两次旋转，先右旋转，再左旋转。</p>
 </blockquote>
-<p>​      <strong>精华：</strong></p>
+<pre><code>  **精华：**
+</code></pre>
 <pre><code>    LL：单右转
 
 	RR：单左转
@@ -511,15 +512,15 @@ int main()
 
 <!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
 <!-- 为了优化代码风格 -->
-<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
-<script src="../../../packages/js/bootstrap.min.js" ></script>
-<script src="../../../packages/js/highlight.min.js" ></script>
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
 <script >hljs.initHighlightingOnLoad();</script>
 
 <!-- 以下是为了生成文档的侧边栏 -->
-<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
 
 <SCRIPT type="text/javascript" >
 <!--

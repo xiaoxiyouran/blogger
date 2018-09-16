@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>B tree</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="b-tree">B tree</h1>
+<h2 id="_1">概念</h2>
+<p>注意:之前有看到有很多文章把<strong>B树</strong>和<strong>B-tree</strong>理解成了两种不同类别的树，其实这两个是<strong>同一种树</strong>;</p>
+<p>也可叫成<strong>B 减树</strong> 。</p>
+<p>1、概念：B树和平衡二叉树稍有不同的是B树属于 <strong>多叉树</strong> 又名 <strong>平衡多路查找树</strong>（查找路径不只两个），<strong>数据库索引</strong>技术里大量使用者B树和B+树的数据结构，让我们来看看他有什么特点;</p>
+<p><br></p>
+<h2 id="_2">规则</h2>
+<p>1- 几个规则：</p>
+<p>（1）树种的每个节点最多拥有m个子节点且m&gt;=2,空树除外（注：<strong>m阶</strong>代表一个树节点最多<strong>有多少个查找路径</strong>，m阶=m路,当m=2则是2叉树,m=3则是3叉）；</p>
+<p>（2）除根节点外每个节点的关键字数量大于等于ceil(m/2)-1个小于等于m-1个，<strong>非根节点关键字数必须&gt;=2</strong>;（注：ceil()是个朝正无穷方向取整的函数 如ceil(1.1)结果为2)</p>
+<p>（3）所有叶子节点均在同一层、叶子节点除了包含了关键字和关键字记录的指针外也有指向其子节点的指针只不过其指针地址都为null对应下图最后一层节点的空格子</p>
+<p>（4）如果一个非叶节点有N个子节点，则该节点的关键字数等于N-1;</p>
+<p>（5）所有节点关键字是按递增次序排列，并遵循左小右大原则；</p>
+<p><br></p>
+<p>2- 最后我们用一个图和一个实际的例子来理解B树（这里为了理解方便我就直接用<strong>实际字母的大小来排列</strong>C&gt;B&gt;A）</p>
+<p>3- m 是阶数，是需要手动规定的阶数， 例如5阶（最多5叉树）， 则除了根节点外， 其它节点的关键字数的范围为： $\lceil \frac{m}{2}-1\rceil  \leq 关键字数 \leq m-1$ , 所以关键字数的范围 $2 \leq 关键字数 \leq 4$ .</p>
+<p><img alt="" src="01.jpg" /> </p>
+<p><br></p>
+<h2 id="_3">查询</h2>
+<p>1- B 树的查询流程以查找上图的 D 为例：</p>
+<p>（1）获取根节点的关键字进行比较，当前根节点关键字为J，D要小于J（26个字母顺序），所以往找到指向左边的子节点（二分法规则，左小右大，左边放小于当前节点值的子节点， 右边放大于当前节点值的子节点）；</p>
+<p>（2）拿到关键字 C 和 F ，C&lt;D&lt;F 所以直接找到C和F中间的节点；</p>
+<p>（3）拿到 D 和 E ，因为 D=D 所以直接返回关键字和指针信息（如果树结构里面<strong>没有包含所要查找的节点则返回null</strong>）； </p>
+<p><br></p>
+<h2 id="_4">插入</h2>
+<p>1- 定义一个5阶树（平衡5路查找树;），现在我们要把3、8、31、11、23、29、50、28 这些数字构建出一个5阶树出来; </p>
+<p>遵循规则：</p>
+<p>（1）当前是要组成一个5路查找树，那么此时m=5,关键字数必须大于等于ceil（5/2） -1小于等于5-1（ <strong>关键字数小于cei(5/2) -1就要进行节点合并，大于5-1就要进行节点拆分</strong>, 非根节点关键字数&gt;=2）；</p>
+<p>（2）满足节点本身比左边节点大，比右边节点小的排序规则;</p>
+<p><img alt="" src="02.jpg" /></p>
+<p><br></p>
+<p>2- B树相对于平衡二叉树的不同是，每个节点包含的<strong>关键字增多了</strong>，特别是在B树应用到数据库中的时候，数据库充分<strong>利用了磁盘块的原理</strong>（磁盘数据存储是采用块的形式存储的，每个块的大小为4K，每次IO进行数据读取时，同一个磁盘块的数据可以一次性读取出来）把节点大小限制和<strong>充分使用在磁盘快大小范围</strong>；把树的节点关键字增多后树的层级比原来的二叉树少了，减少数据查找的次数和复杂度;</p>
+<p><br></p>
+<p>3- 举个例：</p>
+<p>一个空的5阶B-树，依次插入关键字序列，6 8 15 16 22 10 18 32 20，插入完成后关键字6所在节点包含的关键字字数为 <strong>3</strong>,  </p>
+<p><img alt="" src="03.jpg" /> </p>
+<p><br></p>
+<h2 id="_5">参考</h2>
+<p>[1]  还有B+ 树 和 B* 树没看完。</p>
+<p>https://zhuanlan.zhihu.com/p/27700617  </p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
