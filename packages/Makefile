@@ -9,7 +9,7 @@ all:
 	# python main.py ../src/生活	../docs/生活
 	# python main.py ../src/绘画	../docs/绘画
 	# python main.py ../src/git	../docs/git
-	python main.py ../src/数据结构	../docs/数据结构
+	python main.py ../src/生活	../docs/生活	
 clean:
 	# rm -rf ../docs/*
 	# rd /s ../docs/*
