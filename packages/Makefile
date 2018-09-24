@@ -15,5 +15,5 @@ clean:
 	# rd /s ../docs/*
 	# rm -rf ../docs/机器学习
 	# rm -rf ../docs/python3
-	rm -rf ../docs/数据结构
+	rm -rf ../docs/生活
 

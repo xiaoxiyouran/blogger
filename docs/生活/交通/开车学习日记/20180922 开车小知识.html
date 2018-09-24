@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>20180922 开车小知识</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="20180922">20180922 开车小知识</h1>
+<h2 id="_1">开车前调整事项</h2>
+<p>1- 上车后，需要调整一下事项：</p>
+<p>按照次序来，先座位， 再耳朵，后天窗；</p>
+<p>2- 座位， 自己调的合适踩刹车和油门即可（左刹右油，不能搞错了）；</p>
+<p>3- 然后根据现在坐姿，调整左右两个耳朵，那么调耳朵，</p>
+<p><strong>先左边</strong>：</p>
+<p>镜子的正中间与后远方的横向水平线齐平； 车身占镜子横向比例的1/4 较好；</p>
+<p>再右边：</p>
+<p>镜子的镜子的正中间与后远方的横向水平线齐平； 车身占镜子横向比例的1/4 ~ 1/2  较好 【方便看清后方来车】；</p>
+<p>4- 调天窗</p>
+<p>天窗一般不用调， 能看到正后方的车即可，一般有时需要看看后方来车；</p>
+<p><img alt="" src="01.jpg" /></p>
+<p><br></p>
+<h2 id="_2">启动和停止</h2>
+<h3 id="_3">停止</h3>
+<p>1- 先说停车</p>
+<p>首先， 肯定要先踩住刹车；</p>
+<p>然后，把档位挂到底（挂挡看表盘即可，切记不要看档位）， 挂P挡；</p>
+<p>拉手刹， 刹车；</p>
+<p>最后按熄火；</p>
+<p>【一定要记住，<strong>先档位， 后手刹</strong>， 特别重要。 手刹是保护作用，所以不管是停还是启动，都是最后一步】</p>
+<p><br></p>
+<p>2- 停车的地方要注意：</p>
+<ul>
+<li>1） 红绿灯前后50米，不能停；</li>
+<li>2） 路崖子涂黄的不能停；</li>
+<li>3） 看着别人能停再停吧。</li>
+</ul>
+<p><img alt="" src="02.jpg" /></p>
+<p><br></p>
+<h3 id="_4">启动</h3>
+<p>1- 按刹车，不多说了；</p>
+<p>2- 启动；</p>
+<p>3- 挂挡D或者R， 可能要倒一下呢；</p>
+<p>4- 按手刹， 然后送刹车就能跑了。</p>
+<p>无论是停止还是启动，都是  <strong><mark>刹档轧</mark></strong>（手札）</p>
+<p><br></p>
+<h2 id="_5">红绿灯停</h2>
+<p>1- 有时候等红绿灯的左转向，要等很长时间，就需要空挡刹车；</p>
+<p>2- 这个比较简单： </p>
+<p>先刹车；</p>
+<p>再挂空挡；</p>
+<p>然后拉手札；</p>
+<p>这样<strong>停住了，脚就可以松了</strong>。</p>
+<p><br></p>
+<p><img alt="" src="03.jpg" /></p>
+<p><br></p>
+<h2 id="_6">红绿灯启动</h2>
+<p>1- 及时看到绿灯后，</p>
+<p>踩刹车，</p>
+<p>要快速挂D挡，要不然后面要滴滴了。</p>
+<p>最后往下按手刹，</p>
+<p>可以跑了。</p>
+<p><br></p>
+<h2 id="_7">红绿灯路口注意事项</h2>
+<p>1- 在红绿灯路口，特别注意，一不小心就被拍到了；</p>
+<p>2- 首先， 需要提前看准车道，有的最左侧，只能左转，如果不小心转到了这里，就只能将错就错了。否则，红绿灯路口的线都是白色实线， 强行转到扣分；</p>
+<p>3- 在进入车道时，要看准，左右没有压实线，否则，拍到扣分；【参考后面，车辆在路口中间】</p>
+<p>4- 红绿灯路口可以<strong>掉头</strong>的两种情形：</p>
+<p>首先，对面<strong>没有禁止掉头</strong>的标志</p>
+<ul>
+<li>1） 无左转向的， 等到<strong>绿灯</strong>，提前打【长左，往<strong>下按重点</strong>，第二档，就是长转向】左转向。 一定要注意： <strong>车头出了斑马线</strong>才能打方向盘左转【人行道是实线，它是不能掉头的】；</li>
+<li>2） 有<strong>左转向</strong>的， 不能等到绿灯， 如果有预左转车道， 你不用转那么远， 出了斑马线， 就可以打转向往回转；</li>
+</ul>
+<p><img alt="" src="07.jpg" /></p>
+<p>5- 红绿灯路口，岔路口，一定要礼让行人。 左右两边，及时摆头；</p>
+<p>6- 脚不离刹车和油门，不要踩错了。</p>
+<p>7- 变道要迅速，提前打灯，然后摆头看， 如果可以，再打方向盘。 一定是<mark>先灯后看，再操作</mark>。</p>
+<p>8- 红绿灯路口， 带拐弯的， 尽量不要踩油门， 脚放刹车上。</p>
+<p>9- 过红绿灯路口， 一定要<mark>多摆头</mark>， 脚在刹车上。</p>
+<p>10- 对面是<strong>绿灯</strong>，可以进入<strong>预左转</strong>车道：</p>
+<p>11- 预左转， 待到对面是<strong>绿灯</strong>， 可以提前<strong>开进预转</strong>车道，提高转弯效率</p>
+<p><img alt="" src="08.jpg" /></p>
+<p>12- 一般自己这边过红绿灯是实线， 对面不是， 所以可以变道。</p>
+<p><img alt="image-20180924154914741" src="image-20180924154914741.png" /></p>
+<p>x</p>
+<p><br></p>
+<h2 id="_8">掉头</h2>
+<p>1- 掉头算是比较复杂的， 提前<mark>打左转向灯</mark>， 在移动的过程中， 快速往某个方向打死。</p>
+<p>要预估能不能转过去；</p>
+<p>2- 是移动的时候， 才能转动方向盘；</p>
+<p>3- 快速回方向盘， 进入对面车道， 尽量<mark>不压线</mark>；</p>
+<p>4-掉头， 车头要出斑马线。</p>
+<p><br></p>
+<h2 id="_9">转弯</h2>
+<p>1- 左转转大弯，  不要打太快了。 右转转小弯； 【<mark>右转还要特别看右侧行人</mark>，因为这时候右转打方向盘的幅度比较大】</p>
+<p>2-  </p>
+<p><br></p>
+<h2 id="_10">不压线</h2>
+<p>1- 要想在红绿灯路口不压线， 必须找准哪个点对应调整车身的位置。</p>
+<p>2- 找到手握方向盘， 左手正前方和车子的交点， 那里有个鼓轮的痕迹。</p>
+<p>那么这点到左侧的距离为d的话， 路边双实线的距离为D时， d 的可调范围保证在【0~D】 之间， 能保证车在路的正中间。</p>
+<p>0： 好像是左轮刚好压线。</p>
+<p>3- 能找准车身的位置了， 其它就不慌了。</p>
+<p><img alt="" src="04.jpg" /></p>
+<p>4- 车辆的宽度: 1.8m x 4.5m</p>
+<p><img alt="" src="10.jpg" /></p>
+<p>高速公路收费站的宽度：<strong>2.5m</strong>;</p>
+<p>5- 各种距离参数</p>
+<p><img alt="image-20180924154047750" src="image-20180924154047750.png" /></p>
+<p>车身的各种距离参数：左脚外有40cm。</p>
+<p><img alt="image-20180924154204785" src="image-20180924154204785.png" /></p>
+<p><br></p>
+<h2 id="_11">正门</h2>
+<p>1- 学校， 酒店这种， 要找到哪边是入口，哪边是出口呢， 一般面对你的， 靠右走即可。</p>
+<p><img alt="" src="05.jpg" /></p>
+<p><br></p>
+<h2 id="-">导航转向-换道</h2>
+<p>1- 导航篇:  </p>
+<p>市内红绿灯100米，200米转好比较好。<strong>100内就要转向</strong>换道了</p>
+<p>50米大概要到路口了</p>
+<p>因为包括20米的路宽。</p>
+<p>【红绿灯<strong>200米内基本只有一个</strong>， 200~400米， 一般是有两个十字路口】</p>
+<p>高架或者高速  <strong>200米要换道</strong>， 准备变道</p>
+<p><strong>服务区</strong>导航<strong>2公里</strong>报，<strong>1公里</strong>有路上<strong>路标指示牌</strong>， <strong>100米内进入</strong>岔路口， 进入服务区。</p>
+<p><br></p>
+<p>2- 高架或高速换道， <strong>60码以内</strong> 都得<strong>快速变道</strong>【先<strong>打灯再变道</strong>】， 因为整体速度都很快</p>
+<p>3- 看到别人<strong>近距离变道， 要减速</strong></p>
+<p>如下图， 看到右侧车辆<strong>打转向灯</strong>/或<strong>突然加速</strong>， 说明要加速转过来，需要踩点刹车，</p>
+<p><img alt="" src="06.jpg" /></p>
+<p>4- 当右侧有卡车打转向，想变道的时候，可以打双闪，禁止别人换道：</p>
+<p><img alt="" src="09.jpg" /></p>
+<p>5- 高速最低限速：<strong>80</strong>码</p>
+<p>匝道的入口、出口都在<strong>右侧</strong>边</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
