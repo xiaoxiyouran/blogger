@@ -1,0 +1,720 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>anaconda介绍安装及使用教程</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="anaconda">anaconda介绍安装及使用教程</h1>
+<p>本文<a href="https://zhuanlan.zhihu.com/p/32925500">参考</a> </p>
+<p><img alt="preview" src="v2-580c7052f0d723fcd8b4d6a2500a6058_r.jpg" /></p>
+<p><center>目录</center></p>
+<h2 id="_1"><strong>〇、序</strong></h2>
+<p>Python是一种面向对象的解释型计算机程序设计语言，其使用，具有跨平台的特点，可以在Linux、macOS以及Windows系统中搭建环境并使用，其编写的代码在不同平台上运行时，几乎不需要做较大的改动，使用者无不受益于它的便捷性。</p>
+<p>此外，Python的强大之处在于它的应用领域范围之广，遍及人工智能、科学计算、Web开发、系统运维、大数据及云计算、金融、游戏开发等。实现其强大功能的前提，就是Python具有数量庞大且功能相对完善的<mark>标准库和第三方库</mark>。通过对库的引用，能够实现对不同领域业务的开发。然而，正是由于库的数量庞大，对于管理这些库以及对库作及时的维护成为既重要但复杂度又高的事情。</p>
+<p><br></p>
+<h2 id="anaconda_1"><strong>什么是Anaconda？</strong></h2>
+<h3 id="_2"><strong>简介</strong></h3>
+<p>Anaconda（<a href="https://link.zhihu.com/?target=https%3A//www.anaconda.com/download/%23macos">官方网站</a>）就是可以便捷获取包且对包能够进行管理，同时对环境可以统一管理的发行版本。Anaconda包含了conda、Python在内的<strong><mark>超过180个科学包</mark></strong>及其依赖项。</p>
+<p><br></p>
+<h3 id="_3"><strong>特点</strong></h3>
+<p>Anaconda具有如下特点：</p>
+<p>▪ 开源</p>
+<p>▪ 安装过程简单</p>
+<p>▪ 高性能使用Python和R语言</p>
+<p>▪ 免费的社区支持</p>
+<p>其特点的实现主要基于Anaconda拥有的：</p>
+<p>▪ conda包</p>
+<p>▪ 环境管理器</p>
+<p>▪ 1,000+开源库</p>
+<p>如果日常工作或学习<strong><mark>并不必要使用1,000多个库</mark></strong>，那么可以考虑安装Miniconda（<a href="https://link.zhihu.com/?target=https%3A//conda.io/miniconda.html">下载界面请戳</a>），这里不过多介绍Miniconda的安装及使用。</p>
+<p><br></p>
+<h3 id="anacondacondapipvirtualenv"><strong>Anaconda、conda、pip、virtualenv的区别</strong></h3>
+<p><strong>① Anaconda</strong></p>
+<p>Anaconda是一个包含180+的科学包及其依赖项的<strong><mark>发行版本</mark></strong>。其包含的科学包包括：conda, numpy, scipy, ipython notebook等。</p>
+<p><br></p>
+<p><strong>② conda</strong></p>
+<p>conda是包及其依赖项和环境的管理工具。</p>
+<p>▪ 适用语言：<mark>Python, R, Ruby, Lua, Scala, Java, JavaScript, C/C++, FORTRAN</mark>。</p>
+<p>▪ 适用平台：Windows, macOS, Linux</p>
+<p>▪ 用途：</p>
+<p>① 快速安装、运行和升级包及其依赖项。</p>
+<p>② 在计算机中便捷地创建、保存、加载和切换环境。</p>
+<blockquote>
+<p>如果你需要的包要求不同版本的Python，你无需切换到不同的环境，因为conda同样是一个环境管理器。仅需要几条命令，你可以创建一个完全独立的环境来运行不同的Python版本，同时继续在你常规的环境中使用你常用的Python版本。——<a href="https://link.zhihu.com/?target=https%3A//conda.io/docs/">Conda官方网站</a></p>
+</blockquote>
+<p>▪ conda<mark>为Python项目而创造</mark>，但可适用于上述的多种语言。</p>
+<p>▪ conda包和环境管理器包含于Anaconda的所有版本当中。</p>
+<p><br></p>
+<p><strong>③ pip</strong></p>
+<p>pip是用于安装和管理软件包的包管理器。</p>
+<p>▪ pip编写语言：Python。</p>
+<p>▪ Python中默认安装的版本：</p>
+<p>① Python 2.7.9及后续版本：默认安装，命令为 <strong>pip</strong></p>
+<p>② Python 3.4及后续版本：默认安装，命令为 <strong>pip3</strong></p>
+<p>▪ pip名称的由来：pip采用的是<strong>递归缩写</strong>进行命名的。其名字被普遍认为来源于2处：</p>
+<p>① “Pip installs Packages”（“pip安装包”）</p>
+<p>② “Pip installs Python”（“pip安装Python”）</p>
+<p><br></p>
+<p><strong>④ virtualenv</strong></p>
+<p>virtualenv是用于创建一个<strong>独立的</strong>Python环境的工具。</p>
+<p>▪ 解决问题：</p>
+<ol>
+<li>当一个程序需要使用Python 2.7版本，而另一个程序需要使用Python 3.6版本，如何同时使用这两个程序？如果将所有程序都安装在系统下的默认路径，如：<strong>/usr/lib/python2.7/site-packages</strong>，当不小心升级了本不该升级的程序时，将会对其他的程序造成影响。</li>
+<li>如果想要安装程序并在程序运行时对其库或库的版本进行修改，都会导致程序的中断。</li>
+<li>在共享主机时，无法在全局 <strong>site-packages</strong> 目录中安装包。</li>
+</ol>
+<p>▪ virtualenv将会为它自己的 <mark><strong>安装目录创建一个环境，这并不与其他virtualenv环境共享库；同时也可以选择性地不连接已安装的全局库</strong></mark>。</p>
+<p><br></p>
+<p><strong>⑤ pip 与 conda 比较</strong></p>
+<p><strong>依赖项检查</strong></p>
+<p>▪ pip：</p>
+<p>① <mark><strong>不一定</strong></mark>会展示所需其他依赖包。</p>
+<p>② 安装包时<strong>或许</strong>会直接忽略依赖项而安装，仅在结果中提示错误。</p>
+<p>▪ conda：</p>
+<p>① <strong>列出所需其他依赖包</strong>。</p>
+<p>② 安装包时<mark>自动安装其依赖项</mark>。</p>
+<p>③ 可以便捷地在包的不同版本中自由切换。</p>
+<p><br></p>
+<p><strong>环境管理</strong></p>
+<p>▪ pip：维护多个环境难度较大。</p>
+<p>▪ conda：<strong><mark>比较方便地在不同环境之间进行切换</mark></strong>，环境管理较为简单。</p>
+<p><br></p>
+<p><strong>对系统自带Python的影响</strong></p>
+<p>▪ pip：在系统自带Python中包的更新/回退版本/卸载将影响其他程序。</p>
+<p>▪ conda：<strong><mark>不会影响系统自带Python</mark></strong>。</p>
+<p><br></p>
+<p><strong>适用语言</strong></p>
+<p>▪ pip：仅适用于Python。</p>
+<p>▪ conda：适用于Python, R, Ruby, Lua, Scala, Java, JavaScript, C/C++, FORTRAN。</p>
+<p><br></p>
+<p><strong>⑥ conda与pip、virtualenv的关系</strong></p>
+<p>▪ conda<strong>结合</strong>了pip和virtualenv的功能。</p>
+<p><br></p>
+<h2 id="anaconda_2"><strong>Anaconda的适用平台及安装条件</strong></h2>
+<p><strong>1. 适用平台</strong></p>
+<p>Anaconda可以在以下系统平台中安装和使用：</p>
+<p>▪ Windows</p>
+<p>▪ macOS</p>
+<p>▪ Linux（x86 / Power8）</p>
+<p><br></p>
+<p><strong>2. 安装条件</strong></p>
+<p>▪ 系统要求：32位或64位系统均可</p>
+<p>▪ 下载文件大小：约500MB</p>
+<p>▪ 所需空间大小：<mark>3GB空间大</mark>小（Miniconda仅需400MB空间即可）</p>
+<p><br></p>
+<h2 id="anaconda_3"><strong>Anaconda的安装步骤</strong></h2>
+<h3 id="macosanaconda"><strong>macOS系统安装Anaconda</strong></h3>
+<p><strong>① 图形界面安装</strong></p>
+<p>\1. 前往<a href="https://link.zhihu.com/?target=https%3A//www.anaconda.com/downloads%23macos">官方下载页面</a>下载。有两个版本可供选择：Python 3.6 和 Python 2.7，我下载的是前者。选择版之后点击“64-Bit Graphical Installer”进行下载。</p>
+<p>\2. 完成下载之后，双击下载文件，在对话框中“Introduction”、“Read Me”、“License”部分可直接点击下一步</p>
+<p>\3. “Destination Select”部分选择“Install for me only”并点击下一步。</p>
+<ul>
+<li>注意：若有错误提示信息“You cannot install Anaconda in this location”则重新选择“Install for me only”并点击下一步。</li>
+</ul>
+<p><img alt="img" src="v2-3b0409ba08ef4b5674e52dddcb397a1a_hd.jpg" /></p>
+<p>\4. “Installation Type”部分，可以点击“Change Install Location”来改变安装位置。标准的安装路径是在用户的家目录下。在这一步我没有改变安装位置。若选择默认安装路径，则直接点击“Install”进行安装。</p>
+<p><img alt="img" src="v2-9ce3fa7e1ff49fe64585f1dabe4d3bd1_hd.jpg" /></p>
+<p>\5. 等待“Installation”部分结束，在“Summary”部分若看到“The installation was completed successfully.”则安装成功，直接点击“Close”关闭对话框。</p>
+<p><img alt="img" src="v2-350eb6c43436428caf84671592024c93_hd.jpg" /></p>
+<p>\6. 在mac的Launchpad中可以找到名为“Anaconda-Navigator”的图标，点击打开。</p>
+<p><img alt="img" src="v2-99e119c78e9e548683a69db8a80b11b1_hd.jpg" /></p>
+<p>\7. 若“Anaconda-Navigator”成功启动，则说明真正成功地安装了Anaconda；如果未成功，请务必仔细检查以上安装步骤。</p>
+<ul>
+<li>提示：“Anaconda-Navigator”中已经包含“Jupyter Notebook”、“Jupyterlab”、“Qtconsole”和“Spyder”。（图中的“<strong>Rstudio</strong>”是我后来安装的，但它默认出现在“Anaconda-Navigator”的启动界面，只需要<strong><mark>点击“Install”</mark></strong>便可安装。）</li>
+<li>Jupyter Notebook有助于我们编写代码、运行代码以及获取代码的运行结果，特点是可以令我们便捷地为代码及其运行结果添加文档的描述、解释和说明。无论是学习还是工作，Jupyter Notebook都是提高效率和学习、工作质量的利器。具体的使用，可以参见我的另一篇<a href="https://zhuanlan.zhihu.com/p/33105153">文章</a></li>
+</ul>
+<p><img alt="img" src="v2-314871dae7ba50c4706cc6e8ef805f30_hd.jpg" /></p>
+<p>\8. 完成安装。</p>
+<p><br></p>
+<p><strong>② 命令行安装</strong></p>
+<p>\1. 前往<a href="https://link.zhihu.com/?target=https%3A//www.anaconda.com/downloads%23macos">官方下载页面</a>下载。有两个版本可供选择：Python 3.6 和 Python 2.7，我下载的是前者。选择版之后点击“64-Bit Command-Line Installer”进行下载。</p>
+<p>\2. 完成下载之后，在mac的Launchpad中找到“其他”并打开“终端”。</p>
+<p>▫ 安装Python 3.6： <strong>bash ~/Downloads/Anaconda3-5.0.1-MacOSX-x86_64.sh</strong></p>
+<p>▫ 安装Python 2.7： <strong>bash ~/Downloads/Anaconda2-5.0.1-MacOSX-x86_64.sh</strong></p>
+<ul>
+<li>
+<p>注意：</p>
+</li>
+<li>
+<p>首词bash也需要输入，无论是否用的Bash shell。</p>
+</li>
+<li>如果你的下载路径是自定义的，那么把该步骤路径中的 <strong>~/Downloads</strong> 替换成你自己的下载路径。</li>
+<li>如果你将第1步下载的 <strong>.sh</strong> 文件重命名了，那么把该步骤路径中的 <strong>Anaconda3-5.0.1-MacOSX-x86_64.sh</strong> 或 <strong>Anaconda2-5.0.1-MacOSX-x86_64.sh</strong> 替换成你重命名后的文件名。</li>
+</ul>
+<p>▫ 强烈建议：<strong>不要</strong>修改文件名。如果重命名，使用<strong>英文</strong>进行命名。</p>
+<p>\3. 安装过程中，看到提示“In order to continue the installation process, please review the license agreement.”（“请浏览许可证协议以便继续安装。”），点击“Enter”查看“许可证协议”。</p>
+<p>\4. 在“许可证协议”界面将屏幕滚动至底，输入“yes”表示同意许可证协议内容。然后进行下一步。</p>
+<p>\5. 安装过程中，提示“Press Enter to confirm the location, Press CTRL-C to cancel the installation or specify an alternate installation directory.”（“按回车键确认安装路径，按'CTRL-C'取消安装或者指定安装目录。”）如果接受默认安装路径，则会显示<strong>PREFIX=/home/<user>/anaconda&lt;2 or 3&gt;</strong> 并且继续安装。安装过程大约需要几分钟的时间。</p>
+<ul>
+<li>建议：直接接受默认安装路径。</li>
+</ul>
+<p>\6. 安装器若提示“Do you wish the installer to prepend the Anaconda install location to PATH in your /home/<user>/.bash_profile ?”（“你希望安装器添加Anaconda安装路径在<strong>/home/<user>/.bash_profile</strong> 文件中吗？”），建议输入“yes”。</p>
+<ul>
+<li>注意：</li>
+</ul>
+<p>① 路径 <strong>/home/<user>/.bash_profile</strong> 中 <strong><user></strong> 即进入到家目录后你的目录名。</p>
+<p>② 如果输入“no”，则需要手动添加路径。添加 <strong>export PATH="/<path to anaconda>/bin:$PATH"</strong> 在 <strong>.bashrc</strong> 或者 <strong>.bash_profile</strong> 中。其中， <strong><path to anaconda></strong> 替换为你真实的Anaconda安装路径。</p>
+<p>\7. 当看到“Thank you for installing Anaconda!”则说明已经成功完成安装。</p>
+<p>\8. 关闭终端，然后再打开终端以使安装后的Anaconda启动。</p>
+<p>\9. 验证安装结果。可选用以下任意一种方法：</p>
+<p>① 在终端中输入命令 <strong>conda list</strong> ，如果Anaconda被成功安装，则会显示已经安装的包名和版本号。</p>
+<p><img alt="img" src="v2-a2fe77424f85efb783dd57c8ae7ded70_hd.jpg" /></p>
+<p>② 在终端中输入 <strong>python</strong> 。这条命令将会启动Python交互界面，如果Anaconda被成功安装并且可以运行，则将会在Python版本号的右边显示“Anaconda custom (64-bit)”。退出Python交互界面则输入 <strong>exit()</strong> 或 <strong>quit()</strong> 即可。</p>
+<p><img alt="img" src="v2-cf03b0152984900a52b7e967cbdcef59_hd.jpg" /></p>
+<p>③ 在终端中输入 <strong>anaconda-navigator</strong> 。如果Anaconda被成功安装，则Anaconda Navigator的图形界面将会被启动。</p>
+<p><br></p>
+<h3 id="windowsanaconda"><strong>Windows系统安装Anaconda</strong></h3>
+<p>\1. 前往<a href="https://link.zhihu.com/?target=https%3A//docs.anaconda.com/anaconda/install/windows">官方下载页面</a>下载。有两个版本可供选择：Python 3.6 和 Python 2.7，选择版之后根据自己操作系统的情况点击“64-Bit Graphical Installer”或“32-Bit Graphical Installer”进行下载。</p>
+<p>\2. 完成下载之后，双击下载文件，启动安装程序。</p>
+<ul>
+<li>注意：</li>
+</ul>
+<p>① 如果在安装过程中遇到任何问题，那么暂时地关闭杀毒软件，并在安装程序完成之后再打开。</p>
+<p>② 如果在安装时选择了“为所有用户安装”，则卸载Anaconda然后重新安装，只为“我这个用户”安装。</p>
+<p>\3. 选择“Next”。</p>
+<p>\4. 阅读许可证协议条款，然后勾选“I Agree”并进行下一步。</p>
+<p>\5. 除非是以管理员身份为所有用户安装，否则仅勾选“Just Me”并点击“Next”。</p>
+<p>\6. 在“Choose Install Location”界面中选择安装Anaconda的目标路径，然后点击“Next”。</p>
+<ul>
+<li>注意：</li>
+</ul>
+<p>① 目标路径中<strong>不能</strong>含有<strong>空格</strong>，同时不能是<strong>“unicode”</strong>编码。</p>
+<p>② 除非被要求以管理员权限安装，否则不要以管理员身份安装。</p>
+<p><img alt="img" src="v2-c2599c8fd177949a7926ffbadb415887_hd.jpg" /></p>
+<p>\7. 在“Advanced Installation Options”中<strong>不要</strong>勾选“Add Anaconda to my PATH environment variable.”（“添加Anaconda至我的环境变量。”）。因为如果勾选，则将会影响其他程序的使用。如果使用Anaconda，则通过打开Anaconda Navigator或者在开始菜单中的“Anaconda Prompt”（类似macOS中的“终端”）中进行使用。</p>
+<p>除非你打算使用多个版本的Anaconda或者多个版本的Python，否则便勾选“Register Anaconda as my default Python 3.6”。</p>
+<p>然后点击“Install”开始安装。如果想要查看安装细节，则可以点击“Show Details”。</p>
+<p><img alt="img" src="v2-9c5b812be9fce180687f4b61a0dc5e9f_hd.jpg" /></p>
+<p>\8. 点击“Next”。</p>
+<p>\9. 进入“Thanks for installing Anaconda!”界面则意味着安装成功，点击“Finish”完成安装。</p>
+<ul>
+<li>注意：如果你不想了解“Anaconda云”和“Anaconda支持”，则可以<strong>不勾选</strong>“Learn more about Anaconda Cloud”和“Learn more about Anaconda Support”。</li>
+</ul>
+<p><img alt="img" src="v2-cc3f1a3a0b9e91dfafcc8e6663aedbcf_hd.jpg" /></p>
+<p>\10. 验证安装结果。可选以下任意方法：</p>
+<p>① “开始 → Anaconda3（64-bit）→ Anaconda Navigator”，若可以成功启动Anaconda Navigator则说明安装成功。</p>
+<p>② “开始 → Anaconda3（64-bit）→ 右键点击Anaconda Prompt → 以管理员身份运行”，在Anaconda Prompt中输入 <strong>conda list</strong> ，可以查看已经安装的包名和版本号。若结果可以正常显示，则说明安装成功。</p>
+<p><br></p>
+<h3 id="linuxanaconda"><strong>Linux系统安装Anaconda</strong></h3>
+<p>\1. 前往<a href="https://link.zhihu.com/?target=https%3A//www.anaconda.com/download/%23linux">官方下载页面</a>下载。有两个版本可供选择：Python 3.6 和 Python 2.7。</p>
+<p>\2. 启动终端，在终端中输入命令 ***md5sum /path/filename<strong><em> 或 ***sha256sum /path/filename</em></strong></p>
+<ul>
+<li>注意：将该步骤命令中的 <strong>*/path/filename</strong>* 替换为文件的实际下载路径和文件名。其中，path是路径，filename为文件名。</li>
+<li>强烈建议：</li>
+</ul>
+<p>① 路径和文件名中不要出现空格或其他特殊字符。</p>
+<p>② 路径和文件名最好以英文命名，不要以中文或其他特殊字符命名。</p>
+<p>\3. 根据Python版本的不同有选择性地在终端输入命令：</p>
+<p>▫ Python 3.6： <strong>bash ~/Downloads/Anaconda3-5.0.1-Linux-x86_64.sh</strong></p>
+<p>▫ Python 2.7： <strong>bash ~/Downloads/Anaconda2-5.0.1-Linux-x86_64.sh</strong></p>
+<ul>
+<li>注意：</li>
+</ul>
+<p>① 首词bash也需要输入，无论是否用的Bash shell。</p>
+<p>② 如果你的下载路径是自定义的，那么把该步骤路径中的 <strong>*~/Downloads</strong>* 替换成你自己的下载路径。</p>
+<p>③ 除非被要求使用root权限，否则均选择“Install Anaconda as a user”。</p>
+<p>\4. 安装过程中，看到提示“In order to continue the installation process, please review the license agreement.”（“请浏览许可证协议以便继续安装。”），点击“Enter”查看“许可证协议”。</p>
+<p>\5. 在“许可证协议”界面将屏幕滚动至底，输入“yes”表示同意许可证协议内容。然后进行下一步。</p>
+<p>\6. 安装过程中，提示“Press Enter to accept the default install location, CTRL-C to cancel the installation or specify an alternate installation directory.”（“按回车键确认安装路径，按'CTRL-C'取消安装或者指定安装目录。”）如果接受默认安装路径，则会显示<strong>PREFIX=/home/<user>/anaconda&lt;2 or 3&gt;</strong> 并且继续安装。安装过程大约需要几分钟的时间。</p>
+<ul>
+<li>建议：直接接受默认安装路径。</li>
+</ul>
+<p>\7. 安装器若提示“Do you wish the installer to prepend the Anaconda&lt;2 or 3&gt; install location to PATH in your /home/<user>/.bashrc ?”（“你希望安装器添加Anaconda安装路径在<strong>/home/<user>/.bashrc</strong> 文件中吗？”），建议输入“yes”。</p>
+<ul>
+<li>注意：</li>
+</ul>
+<p>① 路径 <strong>/home/<user>/.bash_rc</strong> 中 <strong>“<user>”</strong> 即进入到家目录后你的目录名。</p>
+<p>② 如果输入“no”，则需要手动添加路径，否则conda将无法正常运行。</p>
+<p>\8. 当看到“Thank you for installing Anaconda&lt;2 or 3&gt;!”则说明已经成功完成安装。</p>
+<p>\9. 关闭终端，然后再打开终端以使安装后的Anaconda启动。或者直接在终端中输入 <strong>*source ~/.bashrc</strong>* 也可完成启动。</p>
+<p>\10. 验证安装结果。可选用以下任意一种方法：</p>
+<p>① 在终端中输入命令 <strong>condal list</strong> ，如果Anaconda被成功安装，则会显示已经安装的包名和版本号。</p>
+<p>② 在终端中输入 <strong>*python<strong><em> 。这条命令将会启动Python交互界面，如果Anaconda被成功安装并且可以运行，则将会在Python版本号的右边显示“Anaconda custom (64-bit)”。退出Python交互界面则输入 ***exit()</em></strong> 或 </strong>*quit()*** 即可。</p>
+<p>③ 在终端中输入 <strong>anaconda-navigator</strong> 。如果Anaconda被成功安装，则Anaconda Navigator将会被启动。</p>
+<p><br></p>
+<h2 id="conda"><strong>管理conda</strong></h2>
+<h3 id="_4"><strong>写在前面</strong></h3>
+<p>接下来均是以命令行模式进行介绍，Windows用户请打开“Anaconda Prompt”；macOS和Linux用户请打开“Terminal”（“终端”）进行操作。</p>
+<p><br></p>
+<h3 id="conda_1"><strong>验证conda已被安装</strong></h3>
+<pre><code class="shell">conda --version
+</code></pre>
+
+<p>终端上将会以 <mark><strong>conda 版本号</strong></mark> 的形式显示当前安装conda的版本号。如： <strong>conda 3.11.0</strong></p>
+<ul>
+<li>注意：如果出现错误信息，则需核实是否出现以下情况：</li>
+</ul>
+<p>① 使用的用户是否是安装Anaconda时的账户。</p>
+<p>② 是否在安装Anaconda之后重启了终端。</p>
+<p><br></p>
+<h3 id="conda_2"><strong>更新conda至最新版本</strong></h3>
+<pre><code class="shell">conda update conda
+</code></pre>
+
+<p>执行命令后，conda将会对版本进行比较并列出可以升级的版本。同时，也会告知用户其他相关包也会升级到相应版本。</p>
+<p>当较新的版本可以用于升级时，终端会显示 <strong>Proceed ([y]/n)?</strong> ，此时输入 <strong>y</strong> 即可进行升级。</p>
+<p><br></p>
+<h3 id="conda_3"><strong>查看conda帮助信息</strong></h3>
+<pre><code class="shell">conda --help
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">conda -h
+</code></pre>
+
+<p><br></p>
+<p><strong>卸载conda</strong></p>
+<p><strong>① Linux 或 macOS</strong></p>
+<pre><code class="shell">rm -rf ~/anaconda2
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">rm -rf ~/anaconda3
+</code></pre>
+
+<p>即删除Anaconda的安装目录。根据安装的Anaconda版本选择相应的卸载命令。</p>
+<p><br></p>
+<p><strong>② Windows</strong></p>
+<pre><code class="text">控制面板 → 添加或删除程序 → 选择“Python X.X (Anaconda)” → 点击“删除程序”
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>① Python X.X：即Python的版本，如：Python 3.6。</p>
+<p>② Windows 10的删除有所不同。</p>
+<p><br></p>
+<h2 id="_5"><strong>管理环境</strong></h2>
+<p><strong>0. 写在前面</strong></p>
+<p>接下来均是以命令行模式进行介绍，Windows用户请打开“Anaconda Prompt”；macOS和Linux用户请打开“Terminal”（“终端”）进行操作。</p>
+<p><br></p>
+<p><strong>1. 创建新环境</strong></p>
+<pre><code class="text">conda create --name &lt;env_name&gt; &lt;package_names&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>▫ <strong><env_name></strong>即创建的环境名。建议以英文命名，且不加空格，名称两边不加尖括号“&lt;&gt;”。</p>
+<p>▫ <strong><package_names></strong> 即安装在环境中的包名。名称两边不加尖括号“&lt;&gt;”。</p>
+<p>① 如果要安装指定的版本号，则只需要在包名后面以 <strong>*=</strong>* 和版本号的形式执行。如： <strong>conda create --name python2 python=2.7</strong> ，即创建一个名为“python2”的环境，环境中安装版本为2.7的python。</p>
+<p>② 如果要在新创建的环境中创建多个包，则直接在 <strong><package_names></strong> 后以<strong>空格</strong>隔开，添加多个包名即可。如： <strong>conda create -n python3 python=3.5 numpy pandas</strong> ，即创建一个名为“python3”的环境，环境中安装版本为3.5的python，同时也安装了numpy和pandas。</p>
+<p>▫ <strong>--name</strong> 同样可以替换为 <strong>-n</strong> 。</p>
+<ul>
+<li>提示：默认情况下，新创建的环境将会被保存在 <strong>/Users/<user_name>/anaconda3/env</strong> 目录下，其中， <strong>*<user_name></strong>* 为当前用户的用户名。</li>
+</ul>
+<p><br></p>
+<p><strong>2. 切换环境</strong></p>
+<p><strong>① Linux 或 macOS</strong></p>
+<pre><code class="text">source activate &lt;env_name&gt;
+</code></pre>
+
+<p><br></p>
+<p><strong>② Windows</strong></p>
+<pre><code class="text">activate &lt;env_name&gt;
+</code></pre>
+
+<p><br></p>
+<p><strong>③ 提示</strong></p>
+<ol>
+<li>如果创建环境后安装Python时<strong><mark>没有指定Python</mark></strong>的版本，那么将会安装<strong><mark>与Anaconda版本相同的Python版本</mark></strong>，即如果安装Anaconda第2版，则会自动安装Python 2.x；如果安装Anaconda第3版，则会自动安装Python 3.x。</li>
+<li>当成功切换环境之后，在该行行首将以“(env_name)”或“[env_name]”开头。其中，“env_name”为切换到的环境名。如：在macOS系统中执行 <strong>source active python2</strong> ，即切换至名为“python2”的环境，则行首将会以(python2)开头。</li>
+</ol>
+<p><br></p>
+<p><strong>3. 退出环境至root</strong></p>
+<p><strong>① Linux 或 macOS</strong></p>
+<pre><code class="text">source deactivate
+</code></pre>
+
+<p><br></p>
+<p><strong>② Windows</strong></p>
+<pre><code class="text">deactivate
+</code></pre>
+
+<p><br></p>
+<p><strong>③ 提示</strong></p>
+<p>当执行退出当前环境，回到root环境命令后，原本行首以“(env_name)”或“[env_name]”开头的字符将不再显示。</p>
+<p><br></p>
+<p><strong>4. 显示已创建环境</strong></p>
+<pre><code class="shell">conda info --envs
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">conda info -e
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">conda env list
+</code></pre>
+
+<ul>
+<li>例如：</li>
+</ul>
+<p><img alt="img" src="v2-7382ab785e9905d106663f54d9115c38_hd.jpg" /></p>
+<p>结果中星号“*”所在行即为<strong><mark>当前</mark></strong>所在环境。macOS系统中默认创建的环境名为“base”。</p>
+<p><br></p>
+<p><strong>5. 复制环境</strong></p>
+<pre><code class="shell">conda create --name &lt;new_env_name&gt; --clone &lt;copied_env_name&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>① <strong><copied_env_name></strong>即为被复制/克隆环境名。环境名两边不加尖括号“&lt;&gt;”。</p>
+<p>② <strong><new_env_name></strong> 即为复制之后新环境的名称。环境名两边不加尖括号“&lt;&gt;”。</p>
+<p>③ <strong>conda create --name py2 --clone python2</strong> ，即为克隆名为“python2”的环境，克隆后的新环境名为“py2”。此时，环境中将同时存在“python2”和“py2”环境，且两个环境的配置相同。</p>
+<p><br></p>
+<p><strong>6. 删除环境</strong></p>
+<pre><code class="text">conda remove --name &lt;env_name&gt; --all
+</code></pre>
+
+<ul>
+<li>注意： <strong><env_name></strong> 为被删除环境的名称。环境名两边不加尖括号“&lt;&gt;”。</li>
+</ul>
+<p><br></p>
+<h2 id="_6"><strong>管理包</strong></h2>
+<p><strong>1. 查找可供安装的包版本</strong></p>
+<p><strong>① 精确查找</strong></p>
+<pre><code class="text">conda search --full-name &lt;package_full_name&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>① <strong>--full-name</strong> 为精确查找的参数。</p>
+<p>② <strong><package_full_name></strong> 是被查找包的<strong>全名</strong>。包名两边不加尖括号“&lt;&gt;”。</p>
+<ul>
+<li>例如： <strong>conda search --full-name python</strong> 即查找全名为“python”的包有哪些版本可供安装。</li>
+</ul>
+<p><br></p>
+<p><strong>② 模糊查找</strong></p>
+<pre><code class="shell">conda search &lt;text&gt;
+</code></pre>
+
+<ul>
+<li>注意： <strong><text></strong> 是查找含有<strong>此字段</strong>的包名。此字段两边不加尖括号“&lt;&gt;”。</li>
+<li>例如： <strong>conda search py</strong> 即查找含有“py”字段的包，有哪些版本可供安装。</li>
+</ul>
+<p><br></p>
+<p><strong>2. 获取当前环境中已安装的包信息</strong></p>
+<pre><code class="shell">conda list
+</code></pre>
+
+<p>执行上述命令后将在终端显示当前环境已安装包的包名及其版本号。</p>
+<p><br></p>
+<p><strong>3. 安装包</strong></p>
+<p><strong>① 在指定环境中安装包</strong></p>
+<pre><code class="text">conda install --name &lt;env_name&gt; &lt;package_name&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p><strong>① <env_name></strong> 即将包安装的指定环境名。环境名两边不加尖括号“&lt;&gt;”。</p>
+<p><strong>② <package_name></strong> 即要安装的包名。包名两边不加尖括号“&lt;&gt;”。</p>
+<ul>
+<li>例如： <strong>conda install --name python2 pandas</strong> 即在名为“python2”的环境中安装pandas包。</li>
+</ul>
+<p><br></p>
+<p><strong>② 在当前环境中安装包</strong></p>
+<pre><code class="text">conda install &lt;package_name&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>① <strong><package_name></strong> 即要安装的包名。包名两边不加尖括号“&lt;&gt;”。</p>
+<p>② 执行命令后在当前环境中安装包。</p>
+<ul>
+<li>例如： <strong>conda install pandas</strong> 即在当前环境中安装pandas包。</li>
+</ul>
+<p><br></p>
+<p><strong>③ 使用pip安装包</strong></p>
+<p><strong>使用场景</strong></p>
+<p>当使用 <strong>conda install</strong>无法进行安装时，可以使用pip进行安装。例如：see包。</p>
+<p><br></p>
+<p><strong>命令</strong></p>
+<pre><code class="text">pip install &lt;package_name&gt;
+</code></pre>
+
+<ul>
+<li>注意： <strong><package_name></strong> 为指定安装包的名称。包名两边不加尖括号“&lt;&gt;”。</li>
+<li>如： <strong>pip install see</strong> 即安装see包。</li>
+</ul>
+<p><br></p>
+<p><strong>注意</strong></p>
+<ol>
+<li>pip只是包管理器，无法对环境进行管理。因此如果想在指定环境中使用pip进行安装包，则需要先切换到指定环境中，再使用pip命令安装包。</li>
+<li>pip无法更新python，因为pip并不将python视为包。</li>
+<li>pip可以安装一些conda无法安装的包；conda也可以安装一些pip无法安装的包。因此当使用一种命令无法安装包时，可以尝试用另一种命令。</li>
+</ol>
+<p><br></p>
+<p><strong>④ 从http://Anaconda.org安装包</strong></p>
+<p><strong>使用场景</strong></p>
+<p>当使用 <strong>conda install</strong> 无法进行安装时，可以考虑从<a href="https://link.zhihu.com/?target=http%3A//Anaconda.org">http://Anaconda.org</a>中获取安装包的命令，并进行安装。</p>
+<p><br></p>
+<p><strong>→ 注意</strong></p>
+<p>\1. 从<a href="https://link.zhihu.com/?target=http%3A//Anaconda.org">http://Anaconda.org</a>安装包时，无需注册。</p>
+<p>\2. 在<strong>当前环境</strong>中安装来自于<a href="https://link.zhihu.com/?target=http%3A//Anaconda.org">http://Anaconda.org</a>的包时，需要通过输入要安装的包在<a href="https://link.zhihu.com/?target=http%3A//Anaconda.org">http://Anaconda.org</a>中的路径作为获取途径（channel）。查询路径的方式如下：</p>
+<p>① 在浏览器中输入：<a href="https://link.zhihu.com/?target=http%3A//anaconda.org/">http://anaconda.org</a>，或直接点击<a href="https://link.zhihu.com/?target=http%3A//anaconda.org/">Anaconda Cloud</a></p>
+<p>② 在新页面“Anaconda Cloud”的上方搜索框中输入要安装的包名，然后点击右边“放大镜”标志。</p>
+<p><img alt="img" src="v2-0fd2087b1bf3e23002ce8c1daed0a979_hd.jpg" /></p>
+<p>\3. 搜索结果中有数以千计的包可供选择，此时点击“Downloads”可根据下载量进行排序，最上面的为下载最多的包。（图中以搜索bottleneck包为例）</p>
+<p><img alt="img" src="v2-48379009860f0184700505807ea9b7f3_hd.jpg" /></p>
+<p>\4. 选择满足需求的包或下载量最多的包，点击包名。</p>
+<p>\5. 复制“To install this package with conda run:”下方的命令，并粘贴在终端中执行。</p>
+<p><img alt="img" src="v2-8b9cbd08ac2785ab2089e075fa1fb57d_hd.jpg" /></p>
+<p>\6. 完成安装。</p>
+<p>&lt;&gt;br</p>
+<p><strong>4. 卸载包</strong></p>
+<p><strong>① 卸载指定环境中的包</strong></p>
+<pre><code class="text">conda remove --name &lt;env_name&gt; &lt;package_name&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>① <strong><env_name></strong> 即卸载包所在指定环境的名称。环境名两边不加尖括号“&lt;&gt;”。</p>
+<p>② <strong><package_name></strong> 即要卸载包的名称。包名两边不加尖括号“&lt;&gt;”。</p>
+<ul>
+<li>例如： <strong>conda remove --name python2 pandas</strong> 即卸载名为“python2”中的pandas包。</li>
+</ul>
+<p><br></p>
+<p><strong>② 卸载当前环境中的包</strong></p>
+<pre><code class="shell">conda remove &lt;package_name&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>① <strong><package_name></strong> 即要卸载包的名称。包名两边不加尖括号“&lt;&gt;”。</p>
+<p>② 执行命令后即在当前环境中卸载指定包。</p>
+<ul>
+<li>例如： <strong>conda remove pandas</strong> 即在当前环境中卸载pandas包。</li>
+</ul>
+<p><br></p>
+<p><strong>5. 更新包</strong></p>
+<p><strong>① 更新所有包</strong></p>
+<pre><code class="shell">conda update --all
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">conda upgrade --all
+</code></pre>
+
+<ul>
+<li>建议：在安装Anaconda之后执行上述命令更新Anaconda中的所有包至最新版本，便于使用。</li>
+</ul>
+<p><br></p>
+<p><strong>② 更新指定包</strong></p>
+<pre><code class="shell">conda update &lt;package_name&gt;
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">conda upgrade &lt;package_name&gt;
+</code></pre>
+
+<ul>
+<li>注意：</li>
+</ul>
+<p>① <strong><package_name></strong> 为指定更新的包名。包名两边不加尖括号“&lt;&gt;”。</p>
+<p>② 更新多个指定包，则包名以<strong>空格</strong>隔开，向后排列。如： <strong>conda update pandas numpy matplotlib</strong> 即更新pandas、numpy、matplotlib包。</p>
+<p><br></p>
+<h2 id="_7"><strong>参考资料</strong></h2>
+<ol>
+<li>知乎“初学python者自学anaconda的正确姿势是什么？？”<a href="https://www.zhihu.com/question/58033789/answer/254673663?utm_source=wechat_session&amp;utm_medium=social">猴子的回答</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//docs.anaconda.com/_downloads/Anaconda-Starter-Guide-Cheat-Sheet.pdf">Anaconda Cheat Sheet</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//www.anaconda.com/download/%23macos">Anaconda官方网站</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//conda.io/docs/">conda官方网站</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Pip_%28package_manager%29%23External_links">pip维基百科</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//pip.pypa.io/en/stable/">pip官方网站</a></li>
+<li>YouTube视频：<a href="https://link.zhihu.com/?target=https%3A//www.youtube.com/watch%3Fv%3DRXLRIHaabaI">Pip vs Conda: Differences and Comparisons</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//virtualenv.pypa.io/en/stable/">virtualenv官方网站</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//docs.anaconda.com/anaconda/install/mac-os%23macos-graphical-install">macOS系统安装Anaconda的官方教程</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//docs.anaconda.com/anaconda/install/windows">Windows系统安装Anaconda的官方教程</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//docs.anaconda.com/anaconda/install/linux">Linux系统安装Anaconda的官方教程</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//conda.io/docs/user-guide/getting-started.html%23managing-conda">conda官方使用指南</a></li>
+</ol>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
