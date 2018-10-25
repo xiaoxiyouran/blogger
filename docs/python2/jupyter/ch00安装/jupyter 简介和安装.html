@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>jupyter 简介和安装</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="jupyter">jupyter 简介和安装</h1>
+<p>本教程来自<a href="https://zhuanlan.zhihu.com/p/33105153">网址</a></p>
+<p><img alt="img" src="v2-ffad61af265d2f2fa0becd65205d3cc4_hd.jpg" /></p>
+<h2 id="jupyter-notebook"><strong>一、什么是Jupyter Notebook？</strong></h2>
+<p>边编程，边写文档</p>
+<h3 id="1"><strong>1. 简介</strong></h3>
+<blockquote>
+<p>Jupyter Notebook是基于网页的用于交互计算的应用程序。其可被应用于全过程计算：开发、<strong>文档编写</strong>、运行代码和展示结果。——<a href="https://link.zhihu.com/?target=https%3A//jupyter-notebook.readthedocs.io/en/stable/notebook.html">Jupyter Notebook官方介绍</a></p>
+</blockquote>
+<p>简而言之，Jupyter Notebook是以网页的形式打开，可以在网页页面中<strong>直接编写代码</strong>和<strong>运行代码</strong>，代码的<strong>运行结果</strong>也会直接在代码块下显示的程序。如<strong>在编程过程中需要编写说明文档</strong>，可在同一个页面中直接编写，便于作及时的说明和解释。</p>
+<p><br></p>
+<h3 id="2"><strong>2. 组成部分</strong></h3>
+<p><strong>① 网页应用</strong></p>
+<p>网页应用即基于网页形式的、结合了编写<mark>说明文档、数学公式、交互计算和其他富媒体</mark>形式的工具。<strong>简言之，网页应用是可以实现各种功能的<mark>工具</mark>。</strong></p>
+<p><strong>② 文档</strong></p>
+<p>即 Jupyter Notebook 中所有交互计算、编写说明文档、数学公式、图片以及其他富媒体形式的输入和输出，都是以文档的形式体现的。</p>
+<p>这些文档是保存为后缀名为<code>.ipynb</code>的<code>JSON</code>格式文件，不仅便于<mark>版本控制</mark>，也方便与他人<mark>共享</mark>。</p>
+<p>此外，文档还可以导出为：HTML、LaTeX、PDF等格式。</p>
+<p><br></p>
+<h3 id="3-jupyter-notebook"><strong>3. Jupyter Notebook的主要特点</strong></h3>
+<p>① 编程时具有<strong>语法高亮</strong>、缩进、tab补全 的功能。</p>
+<p>② 可直接通过浏览器运行代码，同时在代码块下方展示运行结果。</p>
+<p>③ 以富媒体格式展示计算结果。富媒体格式包括：HTML，LaTeX，PNG，SVG等。</p>
+<p>④ 对代码编写说明文档或语句时，<strong>支持Markdown</strong>语法。</p>
+<p>⑤ 支持使用<strong>LaTeX编写</strong>数学性说明。</p>
+<p><br></p>
+<h2 id="jupyter-notebook_1"><strong>二、安装Jupyter Notebook</strong></h2>
+<h3 id="0"><strong>0. 先试用，再决定</strong></h3>
+<p>如果看了以上对Jupyter Notebook的介绍你还是拿不定主意究竟是否适合你，那么不要担心，你可以先<strong>免安装试用体验</strong>一下，<a href="https://link.zhihu.com/?target=https%3A//try.jupyter.org/">戳这里</a>，然后再做决定。</p>
+<p>值得注意的是，官方提供的同时<strong>试用是有限的</strong>，如果你点击链接之后进入的页面如下图所示，那么不要着急，过会儿再试试看吧。</p>
+<p><img alt="img" src="v2-b33e494528f00be39032485fcafdf942_hd.jpg" /></p>
+<p><center>试用满线.</center></p>
+<p>如果你足够幸运，那么你将看到如下界面，就可以<strong>开始体验</strong>啦。</p>
+<p><img alt="img" src="v2-d07ddde1d96cd3a71a5ecffe738907c2_hd.jpg" /></p>
+<p><center>主界面</center></p>
+<p><img alt="img" src="v2-8fa489d28f5c0aa29e78dc63116b0591_hd.jpg" /></p>
+<p><center>编辑页面</center></p>
+<h3 id="1_1"><strong>1. 安装</strong></h3>
+<p><strong>① 安装前提</strong></p>
+<p>安装Jupyter Notebook的前提是需要安装了Python（3.3版本及以上，或2.7版本）。</p>
+<p><strong>② 使用Anaconda安装</strong></p>
+<p>如果你是小白，那么建议你通过<strong>安装Anaconda</strong>来解决Jupyter Notebook的安装问题，因为Anaconda已经<strong>自动</strong>为你安装了Jupter Notebook及其他工具，还有python中<strong>超过180个科学包及其依赖项</strong>。</p>
+<p>你可以通过进入Anaconda的<a href="https://link.zhihu.com/?target=https%3A//www.anaconda.com/download/%23macos">官方下载页面</a>自行选择下载；如果你对阅读<strong>英文文档</strong>感到头痛，或者对<strong>安装步骤</strong>一无所知，甚至也想快速了解一下<strong>什么是Anaconda</strong>，那么可以前往我的另一篇<a href="https://zhuanlan.zhihu.com/p/32925500">文章</a>, 你想要的，都在里面！</p>
+<p>常规来说，安装了Anaconda发行版时已经自动为你安装了Jupyter Notebook的，但如果<strong>没有自动安装</strong>，那么就在终端（Linux或macOS的“终端”，Windows的“Anaconda Prompt”，以下均简称“终端”）中输入以下命令安装：</p>
+<pre><code class="shell">conda install jupyter notebook
+</code></pre>
+
+<p><strong>③ 使用pip命令安装</strong></p>
+<p>如果你是有经验的Python玩家，想要尝试用pip命令来安装Jupyter
+Notebook，那么请看以下步骤吧！接下来的命令都输入在终端当中的噢！</p>
+<p><strong>1. 把pip升级到最新版本</strong></p>
+<ul>
+<li>Python 3.x</li>
+</ul>
+<pre><code class="shell">pip3 install --upgrade pip
+</code></pre>
+
+<ul>
+<li>Python 2.x</li>
+</ul>
+<pre><code class="shell">pip install --upgrade pip
+</code></pre>
+
+<ul>
+<li>注意：老版本的pip在安装Jupyter Notebook过程中或<strong>面临依赖项无法同步安装</strong>的问题。因此<strong>强烈建议</strong>先把<strong>pip升级到最新</strong>版本。</li>
+</ul>
+<p><strong>2. 安装Jupyter Notebook</strong></p>
+<ul>
+<li>Python 3.x</li>
+</ul>
+<pre><code class="shell">pip3 install jupyter
+</code></pre>
+
+<ul>
+<li>Python 2.x</li>
+</ul>
+<pre><code class="shell">pip install jupyter
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

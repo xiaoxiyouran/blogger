@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>调试</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">调试</h1>
+<p>程序能一次写完并正常运行的概率很小，基本不超过1%。总会有各种各样的bug需要修正。有的bug很简单，看看错误信息就知道，有的bug很复杂，我们需要知道出错时，哪些变量的值是正确的，哪些变量的值是错误的，因此，需要一整套调试程序的手段来修复bug。</p>
+<p>第一种方法简单直接粗暴有效，就是<mark>用<code>print()</code>把可能有问题的变量打印出来</mark>看看：</p>
+<pre><code class="python">def foo(s):
+	n = int(s)
+	print('&gt;&gt;&gt; n = %d' % n)
+	return 10 / n
+
+def main():
+	foo('0')
+
+main()
+</code></pre>
+
+<p>执行后在输出中查找打印的变量值：</p>
+<pre><code class="python">$ python err.py
+&gt;&gt;&gt; n = 0
+Traceback (most recent call last):
+  ...
+ZeroDivisionError: integer division or modulo by zero
+</code></pre>
+
+<p>用<code>print()</code>最大的坏处是将来还得删掉它，想想程序里到处都是<code>print()</code>，运行结果也会包含很多垃圾信息。所以，我们又有第二种方法。</p>
+<p><br></p>
+<h2 id="_2">断言</h2>
+<p><mark>凡是用<code>print()</code>来辅助查看的地方，都可以用断言（assert）来替代</mark>：</p>
+<pre><code class="python">def foo(s):
+	n = int(s)
+	assert n != 0, 'n is zero!'
+	return 10 / n
+
+def main():
+	foo('0')
+</code></pre>
+
+<p><code>assert</code>的意思是，<mark>表达式<code>n != 0</code>应该是<code>True</code>，否则，根据程序运行的逻辑，后面的代码肯定会出错。</mark></p>
+<p><mark>如果断言失败，<code>assert</code>语句本身就会抛出<code>AssertionError</code>：</mark></p>
+<pre><code class="python">$ python err.py
+Traceback (most recent call last):
+  ...
+AssertionError: n is zero!
+</code></pre>
+
+<p>程序中如果到处充斥着<code>assert</code>，和<code>print()</code>相比也好不到哪去。不过，启动Python解释器时可以<mark>用<code>-O</code>参数来关闭<code>assert</code>：</mark></p>
+<pre><code class="python">$ python -O err.py
+Traceback (most recent call last):
+  ...
+ZeroDivisionError: division by zero
+</code></pre>
+
+<p>关闭后，你可以把所有的<code>assert</code>语句当成<code>pass</code>来看。</p>
+<p><br></p>
+<h2 id="logging">logging</h2>
+<p><mark>把<code>print()</code>替换为<code>logging</code>是第3种方式</mark>，和<code>assert</code>比，<code>logging</code>不会抛出错误，而且可以输出到文件：</p>
+<pre><code class="python">import logging
+
+s = '0'
+n = int(s)
+logging.info('n = %d' % n)
+print(10 / n)
+</code></pre>
+
+<p><code>logging.info()</code>就可以输出一段文本。运行，发现除了<code>ZeroDivisionError</code>，没有任何信息。怎么回事？</p>
+<p>别急，在<code>import logging</code>之后添加一行配置再试试：</p>
+<pre><code class="python">import logging
+logging.basicConfig(level=logging.INFO) #得添加 logging 的配置
+</code></pre>
+
+<p>看到输出了：</p>
+<pre><code class="python">$ python err.py
+INFO:root:n = 0
+Traceback (most recent call last):
+  File &quot;err.py&quot;, line 8, in &lt;module&gt;
+	print(10 / n)
+ZeroDivisionError: division by zero
+</code></pre>
+
+<p>这就是<code>logging</code>的好处，它<mark>允许你指定记录信息的级别，有<code>debug</code>，<code>info</code>，<code>warning</code>，<code>error</code>等几个级别</mark>，当我们<mark>指定<code>level=INFO</code>时，<code>logging.debug</code>就不起作用了</mark>。同理，指定<code>level=WARNING</code>后，<code>debug</code>和<code>info</code>就不起作用了。这样一来，你可以放心地输出不同级别的信息，也不用删除，最后统一控制输出哪个级别的信息。</p>
+<p><code>logging</code>的另一个好处是通过简单的配置，<mark>一条语句可以同时输出到不同的地方，比如console和文件</mark>。</p>
+<p><br></p>
+<h2 id="pdb">pdb</h2>
+<p>第4种方式是启动Python的调试器pdb，让程序<mark>以单步方式运行，</mark>可以随时查看运行状态。我们先准备好程序：</p>
+<pre><code class="python"># err.py
+s = '0'
+n = int(s)
+print(10 / n)
+</code></pre>
+
+<p>然后启动：</p>
+<pre><code class="python">$ python -m pdb err.py
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(2)&lt;module&gt;()
+-&gt; s = '0'
+</code></pre>
+
+<p>以参数<code>-m pdb</code>启动后，pdb定位到下一步要执行的代码<code>-&gt; s = '0'</code>。<mark>输入命令<code>l</code>来查看代码</mark>：</p>
+<pre><code>(Pdb) l
+  1     # err.py
+  2  -&gt; s = '0'
+  3     n = int(s)
+  4     print(10 / n)
+</code></pre>
+
+<p>输入<mark>命令<code>n</code>可以单步执行</mark>代码：</p>
+<pre><code class="python">(Pdb) n
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(3)&lt;module&gt;()
+-&gt; n = int(s)
+(Pdb) n
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(4)&lt;module&gt;()
+-&gt; print(10 / n)
+</code></pre>
+
+<p>任何时候都可以<mark>输入命令<code>p 变量名</code>来查看变量</mark>：</p>
+<pre><code class="python">(Pdb) p s
+'0'
+(Pdb) p n
+0
+</code></pre>
+
+<p>输入<mark>命令<code>q</code>结束调试</mark>，退出程序：</p>
+<pre><code class="python">(Pdb) q
+</code></pre>
+
+<p>这种通过pdb在命令行调试的方法理论上是万能的，但实在是太麻烦了，如果有一千行代码，要运行到第999行得敲多少命令啊。还好，我们还有另一种调试方法。</p>
+<p><br></p>
+<h2 id="pdbset_trace">pdb.set_trace()</h2>
+<p>这个方法也是用pdb，但是不需要单步执行，我们<mark>只需要<code>import pdb</code>，然后，在可能出错的地方放一个<code>pdb.set_trace()</code>，就可以设置一个断点</mark>：</p>
+<pre><code class="python"># err.py
+import pdb
+
+s = '0'
+n = int(s)
+pdb.set_trace() # 运行到这里会自动暂停
+print(10 / n)
+</code></pre>
+
+<p>运行代码，程序会<mark>自动在<code>pdb.set_trace()</code>暂停</mark>并进入pdb调试环境，可以<mark>用命令<code>p</code>查看变量，或者用命令<code>c</code>继续运行</mark>：</p>
+<pre><code class="shell">$ python err.py 
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(7)&lt;module&gt;()
+-&gt; print(10 / n)
+(Pdb) p n
+0
+(Pdb) c
+Traceback (most recent call last):
+  File &quot;err.py&quot;, line 7, in &lt;module&gt;
+	print(10 / n)
+ZeroDivisionError: division by zero
+</code></pre>
+
+<p>这个方式比直接启动pdb单步调试效率要高很多，但也高不到哪去。</p>
+<p><br></p>
+<h2 id="ide">IDE</h2>
+<p>如果要比较爽地设置断点、单步执行，就需要一个支持调试功能的IDE。目前比较好的Python IDE有：</p>
+<p>Visual Studio Code：<a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>，需要安装Python插件。</p>
+<p>PyCharm：<a href="http://www.jetbrains.com/pycharm/">http://www.jetbrains.com/pycharm/</a></p>
+<p>另外，<a href="http://www.eclipse.org/">Eclipse</a>加上<a href="http://pydev.org/">pydev</a>插件也可以调试Python程序。</p>
+<p><br></p>
+<h2 id="_3">小结</h2>
+<p>写程序最痛苦的事情莫过于调试，程序往往会以你意想不到的流程来运行，你期待执行的语句其实根本没有执行，这时候，就需要调试了。</p>
+<p>虽然用<strong>IDE调试</strong>起来比较方便，但是最后你会发现，<strong>logging才是终极武器</strong>。</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

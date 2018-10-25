@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>023 求重要城市的数量</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="023">023 求重要城市的数量</h1>
+<h2 id="_1">链接和考点</h2>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>栏目</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>腾讯编程测试</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.09.15</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>graph, tree</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Medi</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="_2">题意</h2>
+<p>小Q所在王国的n个城市， 城市之间有m条单向道路连接起来。</p>
+<p>对于一个城市v， 从城市v出发可以到达的城市数量为x， 从某个城市出发可以达到城市v的城市数量为y， 如果y &gt; x， 则城市v 是一个重要城市（间接可达也算可以到达）。</p>
+<p>小Q希望你能帮他计算一下王国中一共有多少个重要城市。</p>
+<p><strong>输入描述</strong>：</p>
+<blockquote>
+<p>输入包括m+1行，</p>
+<p>第一样包括两个数n和m（1 &lt;= n, m &lt; = 1000）, 分别表示城市数和道路数。</p>
+<p>接下来m行， 每行两个数u， v（1 &lt;= u, v &lt;= n），表示一条从u到v的有向道路，输入中可能包含重边和自环。</p>
+</blockquote>
+<p><strong>输出描述：</strong></p>
+<blockquote>
+<p>输出一个数， 重要节点的个数</p>
+</blockquote>
+<p><strong>输入：</strong></p>
+<pre><code>4 3
+2 1
+3 2
+4 3
+</code></pre>
+
+<p><strong>输出</strong></p>
+<pre><code>2
+</code></pre>
+
+<p><strong>说明</strong>： 城市1和城市2是重要城市。</p>
+<p><br></p>
+<h2 id="_3">分析</h2>
+<p>1-  根据题目，可能包含重边和自环， 会涉及到很复杂的情况， 如下图, 有自环和它环， 2的出度是2，入度是4麽</p>
+<p><img alt="" src="01.jpg" /></p>
+<p><br></p>
+<h2 id="_4">测试</h2>
+<p>A了30%</p>
+<p><br></p>
+<h2 id="_5">参考答案</h2>
+<p>刚开始去掉了重边和自环， 然后求出的一个多图遍历。对每一个点，它都会去遍历其它所有节点到它的入度数。</p>
+<p>C++ 程序：</p>
+<pre><code class="java">//#pragma warning(disable:4786)
+
+#include&lt;map&gt;
+#include&lt;iostream&gt;
+#include &lt;vector&gt;
+#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;iostream&gt;
+#include&lt;functional&gt;
+#include&lt;queue&gt;
+#include&lt;set&gt;
+#include&lt;string&gt;
+#include&lt;unordered_map&gt;
+#include&lt;map&gt;
+#include&lt;array&gt;
+#include&lt;algorithm&gt;
+#include&lt;stack&gt;
+using namespace std;
+
+
+struct node{
+	int value;
+	int out = 0;
+	int input = 0;
+	vector&lt;int&gt; road;
+	node(int val): value(val) {}
+};
+
+
+
+void traverse(vector&lt;node&gt;&amp; all, node* beg, int target, vector&lt;node *&gt;&amp; path, int&amp; res, int &amp; level){
+	if( beg-&gt;value == target &amp;&amp; level !=0){
+		res++;
+		return;
+	}
+
+
+	vector&lt;int&gt;&amp; road = beg-&gt;road;
+	for( int i=0; i &lt; road.size(); i++ ){
+		int index = road[i];
+		node* next = &amp;all[index];
+
+		if( find(path.begin(), path.end(), next) == path.end() ){
+			path.push_back(next);
+			level++;
+			traverse(all, next,  target, path, res, level);
+			level--;
+			path.pop_back();
+		}else if( next-&gt; value == target )  // 最后刚好指向自己，自己是环
+			res++;
+	}
+}
+
+int process_each_node( vector&lt;node&gt;&amp; all, int target ){
+
+	int to = 0;
+	for( int i=0; i &lt; all.size(); i++ ){        // 包括从自己出发
+		node* beg = &amp;all[i];   // begin
+		vector&lt;node *&gt; path;
+		path.push_back(beg);
+		int res = 0;
+		int level = 0;
+		traverse( all,  beg,  target, path, res, level);
+		to += res;
+	}
+	return to;
+}
+
+int main(void)
+{
+
+	int n, m;
+	cin &gt;&gt; n &gt;&gt; m;
+	vector&lt;node&gt; all;           // 存的是路的序号
+	for( int i=0; i &lt; n; i++ ){
+		node tmp(i);
+		all.push_back(tmp);
+	}
+
+//    vector&lt;int &gt; out;
+	for( int i=0; i &lt; m; i++ ) {
+		int sor, des;
+		cin &gt;&gt; sor &gt;&gt; des;
+		if( sor != des ){       // ignore self
+			all[sor-1].out++;
+			vector&lt;int&gt;&amp; t_r = all[sor-1].road;
+			if( find(t_r.begin(), t_r.end(), des-1) == t_r.end() )      // 去掉重复的边
+				all[sor-1].road.push_back(des - 1);
+		}
+
+	}
+
+	for( int i=0; i &lt; n; i++ ){
+		all[i].input = process_each_node( all,  i );
+	}
+
+	int result = 0;
+	for( int i=0; i &lt; n; i++ ){
+		if( all[i].input &gt; all[i].out ){
+			result++;
+		}
+	}
+
+	cout &lt;&lt; result &lt;&lt; endl;
+
+	return 0;
+}
+
+</code></pre>
+
+<p>下面A了一个100%的， 有时间可以参考一下别人做的：</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;set&gt;
+#include &lt;map&gt;
+#include &lt;algorithm&gt;
+#include &lt;string&gt;
+using namespace std;
+
+vector&lt;vector&lt;int&gt;&gt; nums;
+vector&lt;bool&gt; vis;
+vector&lt;int&gt; ny;
+vector&lt;int&gt; nx;
+
+void find_help(int a)
+{
+ for (int i = 0; i &lt; nums[a].size(); i++)
+ {
+  if (vis[nums[a][i]]) continue;
+  ny[nums[a][i]]++;
+  vis[nums[a][i]] = true;
+  find_help(nums[a][i]);
+ }
+}
+
+int main() {
+ nx.clear();
+ ny.clear();
+ nums.clear();
+ int N, M;
+ cin &gt;&gt; N &gt;&gt; M;
+ nx.resize(N + 1, 0);
+ ny.resize(N + 1, 0);
+ nums.resize(N + 1);
+ int x, y;
+ for (int i = 0; i &lt; M; i++) {
+  cin &gt;&gt; x &gt;&gt; y;
+  nums[x].push_back(y);
+ }
+ for (int i = 1; i &lt;= N; i++) {
+  vis.clear();
+  vis.resize(N + 1, false);
+  vis[i] = true;
+  find_help(i);
+  for (int j = 0; j &lt;= N; ++j)
+  {
+   if (vis[j] == true &amp;&amp; j != i)++nx[i];
+  }
+ }
+ int cnt = 0;
+ for (int i = 1; i &lt;= N; i++)
+ {
+  if (ny[i] &gt; nx[i]) ++cnt;
+ }
+ cout &lt;&lt; cnt &lt;&lt; endl;
+ return 0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

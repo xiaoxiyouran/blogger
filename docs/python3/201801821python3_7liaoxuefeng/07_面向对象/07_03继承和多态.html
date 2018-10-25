@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>继承和多态</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">继承和多态</h1>
+<p>在OOP程序设计中，当我们定义一个class的时候，可以从某个现有的class继承，新的class称为子类（Subclass），而被继承的class称为<strong>基类、父类或超类</strong>（Base class、Super class）。</p>
+<p><br></p>
+<h2 id="_2">子类默认继承父类方法</h2>
+<p>比如，我们已经编写了一个名为<code>Animal</code>的class，有一个<code>run()</code>方法可以直接打印：</p>
+<pre><code class="python">class Animal(object):
+	def run(self):
+		print('Animal is running...')
+</code></pre>
+
+<p>当我们需要编写<code>Dog</code>和<code>Cat</code>类时，就可以直接<mark>从<code>Animal</code>类继承</mark>：</p>
+<pre><code class="python">class Dog(Animal):
+	pass
+
+class Cat(Animal):
+	pass
+</code></pre>
+
+<p>对于<code>Dog</code>来说，<code>Animal</code>就是它的父类，对于<code>Animal</code>来说，<code>Dog</code>就是它的子类。<code>Cat</code>和<code>Dog</code>类似。</p>
+<p>继承有什么好处？最大的好处是子类获得了父类的全部功能。由于<code>Animial</code>实现了<code>run()</code>方法，因此，<code>Dog</code>和<code>Cat</code>作为它的子类，什么事也没干，就自动拥有了<code>run()</code>方法：</p>
+<pre><code class="python">dog = Dog()
+dog.run()
+
+cat = Cat()
+cat.run()
+</code></pre>
+
+<p>运行结果如下：</p>
+<pre><code class="python">Animal is running...
+Animal is running...
+</code></pre>
+
+<p>当然，也可以对子类增加一些方法，比如Dog类：</p>
+<pre><code class="python">class Dog(Animal):
+	def run(self):
+		print('Dog is running...')
+
+	def eat(self):
+		print('Eating meat...')
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">子类重载父类方法</h2>
+<p>继承的第二个好处需要我们对代码做一点改进。你看到了，无论是<code>Dog</code>还是<code>Cat</code>，它们<code>run()</code>的时候，显示的都是<code>Animal is running...</code>，符合逻辑的做法是分别显示<code>Dog is running...</code>和<code>Cat is running...</code>，因此，对<code>Dog</code>和<code>Cat</code>类改进如下：</p>
+<pre><code class="python">class Dog(Animal):
+
+	def run(self):
+		print('Dog is running...')
+
+class Cat(Animal):
+	def run(self):
+		print('Cat is running...')
+
+dog = Dog()
+dog.run()
+
+cat = Cat()
+cat.run()
+</code></pre>
+
+<p>再次运行，结果如下：</p>
+<pre><code class="python">Dog is running...
+Cat is running...
+</code></pre>
+
+<p>当子类和父类都存在相同的<code>run()</code>方法时，我们说，子类的<code>run()</code><mark>覆盖了</mark>父类的<code>run()</code>，在代码运行的时候，总是会调用子类的<code>run()</code>。这样，我们就获得了继承的另一个好处：<strong>多态</strong>。</p>
+<p>要理解什么是多态，我们首先要对数据类型再作一点说明。当我们定义一个class的时候，我们实际上就定义了一种数据类型。我们定义的数据类型和Python自带的数据类型，比如str、list、dict没什么两样：</p>
+<pre><code class="python">a = list() # a是list类型
+b = Animal() # b是Animal类型
+c = Dog() # c是Dog类型
+</code></pre>
+
+<p><br></p>
+<h2 id="isinstance">isinstance() 方法</h2>
+<p>判断一个变量是否是某个类型可以用<code>isinstance()</code>判断：</p>
+<pre><code class="python">&gt;&gt;&gt; isinstance(a, list)
+True
+&gt;&gt;&gt; isinstance(b, Animal)
+True
+&gt;&gt;&gt; isinstance(c, Dog)
+True
+</code></pre>
+
+<p>看来<code>a</code>、<code>b</code>、<code>c</code>确实对应着<code>list</code>、<code>Animal</code>、<code>Dog</code>这3种类型。</p>
+<p>但是等等，试试：</p>
+<pre><code class="python">&gt;&gt;&gt; isinstance(c, Animal)
+True
+</code></pre>
+
+<p>看来<code>c</code>不仅仅是<code>Dog</code>，<code>c</code>还是<code>Animal</code>！</p>
+<p>不过仔细想想，这是有道理的，因为<code>Dog</code>是从<code>Animal</code>继承下来的，当我们创建了一个<code>Dog</code>的实例<code>c</code>时，我们认为<code>c</code>的数据类型是<code>Dog</code>没错，但<code>c</code>同时也是<code>Animal</code>也没错，<code>Dog</code>本来就是<code>Animal</code>的一种！</p>
+<p>所以，在继承关系中，如果一个实例的数据类型是某个子类，那它的数据类型也可以被看做是父类。但是，反过来就不行：</p>
+<pre><code class="python">&gt;&gt;&gt; b = Animal()
+&gt;&gt;&gt; isinstance(b, Dog)
+False
+</code></pre>
+
+<p><code>Dog</code>可以看成<code>Animal</code>，但<code>Animal</code>不可以看成<code>Dog</code>。</p>
+<p><br></p>
+<h2 id="_4">函数中使用多态</h2>
+<p>要理解多态的好处，我们还需要再编写一个函数，这个函数接受一个<code>Animal</code>类型的变量：</p>
+<pre><code class="python">def run_twice(animal):
+	animal.run()
+	animal.run()
+</code></pre>
+
+<p>当我们传入<code>Animal</code>的实例时，<code>run_twice()</code>就打印出：</p>
+<pre><code class="python">&gt;&gt;&gt; run_twice(Animal())   # 注意， 这里传入一个对象是需要带括号的
+Animal is running...
+Animal is running...
+</code></pre>
+
+<p>当我们传入<code>Dog</code>的实例时，<code>run_twice()</code>就打印出：</p>
+<pre><code class="python">&gt;&gt;&gt; run_twice(Dog())
+Dog is running...
+Dog is running...
+</code></pre>
+
+<p>当我们传入<code>Cat</code>的实例时，<code>run_twice()</code>就打印出：</p>
+<pre><code class="python">&gt;&gt;&gt; run_twice(Cat())
+Cat is running...
+Cat is running...
+</code></pre>
+
+<p><br></p>
+<h2 id="_5">开闭原则</h2>
+<p>看上去没啥意思，但是仔细想想，现在，如果我们再定义一个<code>Tortoise</code>类型，也从<code>Animal</code>派生：</p>
+<pre><code class="python">class Tortoise(Animal):
+	def run(self):
+		print('Tortoise is running slowly...')
+</code></pre>
+
+<p>当我们调用<code>run_twice()</code>时，传入<code>Tortoise</code>的实例：</p>
+<pre><code class="python">&gt;&gt;&gt; run_twice(Tortoise())
+Tortoise is running slowly...
+Tortoise is running slowly...
+</code></pre>
+
+<p>你会发现，新增一个<code>Animal</code>的子类，<mark>不必对<code>run_twice()</code>做任何修改，实际上，任何依赖<code>Animal</code>作为参数的函数或者方法都可以不加修改地正常运行，原因就在于多态</mark>。</p>
+<p>多态的好处就是，当我们需要传入<code>Dog</code>、<code>Cat</code>、<code>Tortoise</code>……时，我们<mark>只需要接收<code>Animal</code>类型就可以</mark>了，因为<code>Dog</code>、<code>Cat</code>、<code>Tortoise</code>……都是<code>Animal</code>类型，然后，按照<code>Animal</code>类型进行操作即可。由于<code>Animal</code>类型有<code>run()</code>方法，因此，传入的任意类型，只要是<code>Animal</code>类或者子类，就会自动调用实际类型的<code>run()</code>方法，这就是多态的意思：</p>
+<p>对于一个变量，我们只需要知道它是<code>Animal</code>类型，无需确切地知道它的子类型，就可以放心地调用<code>run()</code>方法，而具体调用的<code>run()</code>方法是作用在<code>Animal</code>、<code>Dog</code>、<code>Cat</code>还是<code>Tortoise</code>对象上，由运行时该对象的确切类型决定，这就是多态真正的威力：调用方只管调用，不管细节，而当我们新增一种<code>Animal</code>的子类时，只要确保<code>run()</code>方法编写正确，不用管原来的代码是如何调用的。这就是著名的<mark><strong>“开闭”原则</strong></mark>：</p>
+<ul>
+<li>
+<p>对扩展开放：允许新增<code>Animal</code>子类；</p>
+</li>
+<li>
+<p>对修改封闭：不需要修改依赖<code>Animal</code>类型的<code>run_twice()</code>等函数。</p>
+</li>
+</ul>
+<p>继承还可以一级一级地继承下来，就好比从爷爷到爸爸、再到儿子这样的关系。而任何类，最终都可以追溯到根类object，这些继承关系看上去就像一颗倒着的树。比如如下的继承树：</p>
+<pre><code class="ascii">                ┌───────────────┐
+				│    object     │
+				└───────────────┘
+						│
+		   ┌────────────┴────────────┐
+		   │                         │
+		   ▼                        ▼
+	┌─────────────┐           ┌─────────────┐
+	│   Animal    │           │    Plant    │
+	└─────────────┘           └─────────────┘
+		   │                         │
+	 ┌─────┴──────┐            ┌─────┴──────┐
+	 │            │            │            │
+	 ▼           ▼           ▼            ▼
+┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
+│   Dog   │  │   Cat   │  │  Tree   │  │ Flower  │
+└─────────┘  └─────────┘  └─────────┘  └─────────┘
+</code></pre>
+
+<p><br></p>
+<h2 id="vs">静态语言 vs 动态语言</h2>
+<p>对于静态语言（例如Java）来说，如果需要传入<code>Animal</code>类型，则传入的对象必须是<code>Animal</code>类型或者它的子类，否则，将无法调用<code>run()</code>方法。</p>
+<p>对于Python这样的动态语言来说，则<mark>不一定需要传入<code>Animal</code>类型</mark>。我们只需要保证<mark>传入的对象有一个<code>run()</code>方法</mark>就可以了：</p>
+<pre><code class="python">class Timer(object):
+	def run(self):
+		print('Start...')
+
+def run_twice(animal):      # 只要animal 这个对象里有run() 方法即可
+	animal.run()
+	animal.run()
+</code></pre>
+
+<p>这就是动态语言的“鸭子类型”，它并<mark>不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。</mark></p>
+<p>Python的“file-like object“就是一种鸭子类型。对真正的文件对象，它有一个<code>read()</code>方法，返回其内容。但是，许多对象，只要有<code>read()</code>方法，都被视为“file-like object“。许多函数接收的参数就是“file-like object“，<strong>你不一定要传入真正的文件对象</strong>，完全可以传入任何实现了<code>read()</code>方法的对象。</p>
+<p><br></p>
+<h2 id="_6">多态函数在类内和类外都一样</h2>
+<p>在<code>run_twice()</code>类内,  基于继承拥有鸭子特性：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch07/02_01.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+# -*- coding: utf-8 -*-
+__author__ = 'xi'
+
+class Animal(object):
+	def run(self):
+		print('Animal is running...')
+
+	def run_twice (self):
+		self.run()
+
+class Dog(Animal):
+	def run(self):
+		print('Dog is running...')
+
+class Cat(Animal):
+	def run(self):
+		print('Cat is running...')
+
+
+if __name__ == '__main__':
+	a = Animal()
+	d = Dog()
+	c = Cat()
+
+	a.run_twice()
+	d.run_twice()
+	c.run_twice()
+</code></pre>
+
+<p>结果如下:</p>
+<pre><code class="shell">Animal is running...
+Dog is running...
+Cat is running...
+</code></pre>
+
+<p><br></p>
+<p><code>run_twice()</code> 在类外， 基于函数拥有鸭子特性(主要是python 的<strong>类型不确定</strong>)： </p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch07/02_02.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+# -*- coding: utf-8 -*-
+__author__ = 'xi'
+
+class Animal(object):
+	def run(self):
+		print('Animal is running...')
+
+class Dog(Animal):
+	def run(self):
+		print('Dog is running...')
+
+class Cat(Animal):
+	def run(self):
+		print('Cat is running...')
+
+
+def run_twice (animal):
+	'''
+	全局函数， 演示有run() 方法的鸭子特性
+	:param self:
+	:return: animal
+	'''
+	animal.run()
+
+
+if __name__ == '__main__':
+	a = Animal()
+	d = Dog()
+	c = Cat()
+
+	run_twice(a)
+	run_twice(d)
+	run_twice(c)
+</code></pre>
+
+<p>运行结果同上：</p>
+<pre><code class="shell">Animal is running...
+Dog is running...
+Cat is running...
+</code></pre>
+
+<p><br></p>
+<h2 id="_7">小结</h2>
+<p>继承可以把父类的所有功能都直接拿过来，这样就不必重零做起，子类只需要新增自己特有的方法，也可以把父类不适合的方法覆盖重写。</p>
+<p>动态语言的鸭子类型特点决定了继承不像静态语言那样是必须的。</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

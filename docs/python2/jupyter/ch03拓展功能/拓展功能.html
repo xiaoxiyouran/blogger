@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>拓展功能</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">拓展功能</h1>
+<h2 id="jupyter-notebookcondanb_conda"><strong>关联Jupyter Notebook和conda的环境和包——“nb_conda”☆</strong></h2>
+<h3 id="1"><strong>① 安装</strong></h3>
+<pre><code class="shell">conda install nb_conda
+</code></pre>
+
+<p>执行上述命令能够将你conda创建的环境与Jupyter Notebook相关联，便于你在Jupyter Notebook的使用中，在不同的环境下创建笔记本进行工作。</p>
+<h3 id="2"><strong>② 使用</strong></h3>
+<p>如果安装后，出现“error jupyter An error occurred while retrieving package information” 错误，可以参考error 文件夹下的相关文档。</p>
+<ul>
+<li>可以在Conda类目下<mark>对conda环境和包</mark>进行一系列操作。</li>
+</ul>
+<p><img alt="img" src="v2-75db6aec2cf08a29014679435675f17d_hd.jpg" /></p>
+<p><center>Conda页面注解图</center></p>
+<ul>
+<li>可以在笔记本内的“Kernel”类目里的“Change
+  kernel”切换内核。</li>
+</ul>
+<p><img alt="img" src="v2-6a926273202380b5fd5e51dff7941dfd_hd.jpg" />切换内核</p>
+<h3 id="3"><strong>③ 卸载</strong></h3>
+<pre><code class="shell">conda remove nb_conda
+</code></pre>
+
+<p>执行上述命令即可卸载nb_conda包。</p>
+<h3 id="_2">问题</h3>
+<p>如果出现“EnvironmentLocationNotFound: Not a conda environment: /Users/cookie/anaconda2/envs/anaconda2” 的问题， <a href="https://github.com/Anaconda-Platform/nb_conda/issues/66">参考</a>， </p>
+<p>查看已安装环境 “<em>conda</em> info -e ” </p>
+<pre><code class="shell">subl /Users/cookie/anaconda2/pkgs/nb_conda-2.2.1-py27_0/lib/python2.7/site-packages/nb_conda/envmanager.py 
+</code></pre>
+
+<p>有的是在这个文件夹下：</p>
+<pre><code>anaconda_dir/pkgs/nb_conda-2.2.1-py36h8118bb2_0/lib/python3.6/site-packages/nb_conda/envmanager.py
+</code></pre>
+
+<p><br></p>
+<p>Replace <code>for env in info['envs']]</code> with <code>for env in info['envs'] if env != info['root_prefix']]</code> in <code>nb_conda/envmanager.py</code>.</p>
+<p>好像没什么用。</p>
+<p>跟环境有关，第一个环境没问题， 第二个环境有问题。</p>
+<p><img alt="image-20180925122302341" src="image-20180925122302341.png" /></p>
+<p><br></p>
+<h2 id="markdown"><strong>Markdown生成目录</strong></h2>
+<ul>
+<li>不同于有道云笔记的Markdown编译器，Jupyter Notebook无法为Markdown文档通过特定语法添加目录，因此需要通过<strong>安装扩展</strong>来实现目录的添加。</li>
+</ul>
+<pre><code class="shell">conda install -c conda-forge jupyter_contrib_nbextensions
+</code></pre>
+
+<ul>
+<li>执行上述命令后，启动Jupyter Notebook，你会发现导航栏多了“Nbextensions”的类目，点击“Nbextensions”，勾选“Tableof Contents ⑵”</li>
+</ul>
+<p><img alt="img" src="v2-a7a2f4b1f06aed21df09b6e3b957e191_hd-20180925110114411.jpg" /></p>
+<p><center>Nbextensions页面</center></p>
+<ul>
+<li>之后再在Jupyter Notebook中使用Markdown，点击下图的图标即可使用啦。</li>
+</ul>
+<p><img alt="img" src="v2-dd9b3a1f62c89570a47c7f6d24bf01a1_hd.jpg" /></p>
+<p><center>目录</center></p>
+<p><br></p>
+<h2 id="markdown_1"><strong>Markdown在文中设置链接并定位</strong></h2>
+<p>在使用Markdown编辑文档时，难免会遇到需要在文中设定链接，<strong>定位在文档中的其他位置</strong>便于查看。因为Markdown可以完美的兼容html语法，因此这种功能可以通过html语法当中“a标签”的索引用法来实现。</p>
+<p>语法格式如下：</p>
+<pre><code class="text">[添加链接的正文](#自定义索引词)
+&lt;a id=自定义索引词&gt;跳转提示&lt;/a&gt;
+</code></pre>
+
+<p>注意：</p>
+<ol>
+<li>
+<ol>
+<li>语法格式当中所有的符号均是<strong>英文半角</strong>。</li>
+</ol>
+</li>
+<li>“自定义索引词”最好是英文，较长的词可以用下划线连接。</li>
+<li>“a标签”出现在想要被跳转到的文章位置，html标签除了单标签外均要符合“有头（<code>&lt;a&gt;</code>）必有尾（<code>&lt;/a&gt;</code>）”的原则。头尾之间的“跳转提示”是可有可无的。</li>
+<li>“a标签”中的“id”值即是为正文中添加链接时设定的“自定义索引值”，这里通过“id”的值实现从正文的链接跳转至指定位置的功能。</li>
+</ol>
+<p>例：</p>
+<p><img alt="img" src="01.gif" /></p>
+<p><center>有跳转提示语</center></p>
+<p><img alt="img" src="02.gif" /></p>
+<p><center>无跳转提示语</center></p>
+<p><br></p>
+<h2 id="_3"><strong>加载指定网页源代码</strong></h2>
+<h3 id="1_1"><strong>① 使用场景</strong></h3>
+<p>想要在Jupyter Notebook中直接<strong>加载指定网站</strong>的源代码到笔记本中。</p>
+<h3 id="2_1"><strong>② 方法</strong></h3>
+<p>执行以下命令:</p>
+<pre><code class="markdown">%load URL
+</code></pre>
+
+<p>其中，URL为指定网站的地址。</p>
+<h3 id="3_1"><strong>③ 例</strong></h3>
+<p><img alt="img" src="03.gif" /></p>
+<p><center>加载网络代码</center></p>
+<p><br></p>
+<h2 id="python"><strong>加载本地Python文件</strong></h2>
+<h3 id="1_2"><strong>① 使用场景</strong></h3>
+<p>想在Jupyter Notebook中<strong>加载本地的Python文件</strong>并执行文件代码。</p>
+<p><br></p>
+<h3 id="2_2"><strong>② 方法</strong></h3>
+<p>执行以下命令：</p>
+<pre><code class="shell">%load Python文件的绝对路径
+</code></pre>
+
+<p><br></p>
+<h3 id="3_2"><strong>③ 注意</strong></h3>
+<ol>
+<li>Python文件的后缀为“.py”。</li>
+<li>“%load”后跟的是Python文件的<strong><mark>绝对路径</mark></strong>。</li>
+<li>输入命令后，可以<mark>按<code>CTRL 回车</code>来执行命令。第</mark>一次执行，是将本地的Python文件内容加载到单元格内。此时，Jupyter Notebook会自动<mark>将“%load”命令注释掉</mark>（即在前边加井号“#”），以便在执行已加载的文件代码时不重复执行该命令；第二次执行，则是<mark>执行已加载文件</mark>的代码。</li>
+</ol>
+<h3 id="4"><strong>④ 例</strong></h3>
+<p><img alt="img" src="07.gif" /></p>
+<p><center>加载本地Python文件</center></p>
+<p><br></p>
+<h2 id="python_1"><strong>直接运行本地Python文件</strong></h2>
+<h3 id="1_3"><strong>① 使用场景</strong></h3>
+<p>不想在Jupyter Notebook的单元格中加载本地Python文件，想要直接运行。</p>
+<p><br></p>
+<h3 id="2_3"><strong>② 方法</strong></h3>
+<p>执行命令：</p>
+<pre><code class="shell">%run Python文件的绝对路径
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">!python3 Python文件的绝对路径
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">!python Python文件的绝对路径
+</code></pre>
+
+<p><br></p>
+<h3 id="3_3"><strong>③ 注意</strong></h3>
+<ol>
+<li>Python文件的后缀为“.py”。</li>
+<li>“%run”后跟的是Python文件的<mark><strong>绝对路径</strong></mark>。</li>
+<li>“!python3”用于执行Python
+   3.x版本的代码。</li>
+<li>“!python”用于执行Python
+   2.x版本的代码。</li>
+<li>“!python3”和“!python”属于 <code>!shell命令</code> 语法的使用，即在Jupyter Notebook中执行shell命令的语法。</li>
+<li>输入命令后，可以按 <code>control return</code> 来执行命令，执行过程中将不显示本地Python文件的内容，直接显示运行结果。</li>
+</ol>
+<p><br></p>
+<h3 id="4_1"><strong>④ 例</strong></h3>
+<p><img alt="img" src="08.gif" /></p>
+<p><center>运行本地Python文件</center></p>
+<p><br></p>
+<h2 id="jupyter-notebook"><strong>在Jupyter Notebook中获取当前位置</strong></h2>
+<h3 id="1_4"><strong>① 使用场景</strong></h3>
+<p>想要在Jupyter Notebook中获取当前所在位置的<strong>绝对路径。</strong></p>
+<p><br></p>
+<h3 id="2_4"><strong>② 方法</strong></h3>
+<pre><code class="text">%pwd
+</code></pre>
+
+<p>或</p>
+<pre><code class="text">!pwd
+</code></pre>
+
+<p><br></p>
+<h3 id="3_4"><strong>③ 注意</strong></h3>
+<ol>
+<li>获取的位置是当前Jupyter Notebook中创建的笔记本所在位置，且该位置为<strong>绝对路径</strong>。</li>
+<li>“!pwd”属于 <code>!shell命令</code> 语法的使用，即在Jupyter
+   Notebook中执行shell命令的语法。</li>
+</ol>
+<p><br></p>
+<h3 id="4_2"><strong>④ 例</strong></h3>
+<p><img alt="" src="09.gif" /></p>
+<p><center>获取当前位置的绝对路径</center></p>
+<p><br></p>
+<h2 id="jupyter-notebookshell"><strong>在Jupyter Notebook使用shell命令</strong></h2>
+<h3 id="1_5"><strong>① 方法一——在笔记本的单元格中</strong></h3>
+<p><strong>⑴ 语法</strong></p>
+<pre><code class="text">!shell命令
+</code></pre>
+
+<ul>
+<li>在Jupyter Notebook中的笔记本单元格中用英文<mark>感叹号“!”后接shell命令</mark>即可执行shell命令。</li>
+</ul>
+<p><br></p>
+<p><strong>⑵ 例</strong></p>
+<p><img alt="" src="10.gif" /></p>
+<p><center>Shell命令的使用</center></p>
+<p><br></p>
+<h3 id="2-jupyter-notebook"><strong>② 方法二——在Jupyter Notebook中新建终端</strong></h3>
+<p><strong>⑴ 启动方法</strong></p>
+<p>在Jupyter Notebook主界面，即“File”界面中点击“New”；在“New”下拉框中点击“Terminal”即新建了终端。此时终端位置是在你的家目录，可以通过<code>pwd</code>命令查询当前所在位置的绝对路径。</p>
+<p><br></p>
+<p><strong>⑵ 关闭方法</strong></p>
+<p>在Jupyter Notebook的“Running”界面中的“Terminals”类目中可以看到正在运行的终端，点击后边的“Shutdown”即可关闭终端。</p>
+<p><br></p>
+<p><strong>⑶ 例</strong></p>
+<p><img alt="" src="11.gif" /></p>
+<p><center>笔记本中的终端使用</center></p>
+<p><br></p>
+<h2 id="_4"><strong>隐藏笔记本输入单元格</strong></h2>
+<h3 id="1_6"><strong>① 使用场景</strong></h3>
+<p>在Jupyter Notebook的笔记本中无论是编写文档还是编程，都有输入（In []）和输出（Out []）。当我们<strong><mark>编写的代码或文档使用的单元格较多</mark></strong>时，有时我们<strong>只想关注输出的内容</strong>而暂时不看输入的内容，这时就需要隐藏输入单元格而只显示输出单元格。</p>
+<h3 id="2_5"><strong>② 方法一</strong></h3>
+<p><strong>⑴ 代码</strong></p>
+<pre><code class="shell">from IPython.display import display
+from IPython.display import HTML
+import IPython.core.display as di # Example: di.display_html('&lt;h3&gt;%s:&lt;/h3&gt;' % str, raw=True)
+
+# 这行代码的作用是：当文档作为HTML格式输出时，将会默认隐藏输入单元格。
+di.display_html('&lt;script&gt;jQuery(function() {if (jQuery(&quot;body.notebook_app&quot;).length == 0) { jQuery(&quot;.input_area&quot;).toggle(); jQuery(&quot;.prompt&quot;).toggle();}});&lt;/script&gt;', raw=True)
+
+# 这行代码将会添加“Toggle code”按钮来切换“隐藏/显示”输入单元格。
+di.display_html('''&lt;button onclick=&quot;jQuery('.input_area').toggle(); jQuery('.prompt').toggle();&quot;&gt;Toggle code&lt;/button&gt;''', raw=True)
+</code></pre>
+
+<p>在笔记本第一个单元格中输入以上代码，然后执行，即可在该文档中使用<strong>“隐藏/显示”输入单元格</strong>功能。</p>
+<ul>
+<li>缺陷：此方法<strong>不能</strong>很好的适用于Markdown单元格。</li>
+</ul>
+<p>⑵ 例</p>
+<p><img alt="img" src="12.gif" /></p>
+<p><center>方法一：隐藏/显示输入单元格</center></p>
+<h3 id="3_5"><strong>③ 方法二</strong></h3>
+<p><strong>⑴ 代码</strong></p>
+<pre><code class="text">from IPython.display import HTML
+
+HTML('''&lt;script&gt;
+code_show=true; 
+function code_toggle() {
+if (code_show){
+$('div.input').hide();
+} else {
+$('div.input').show();
+}
+code_show = !code_show
+} 
+$( document ).ready(code_toggle);
+&lt;/script&gt;
+&lt;form action=&quot;javascript:code_toggle()&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;Click here to toggle on/off the raw code.&quot;&gt;&lt;/form&gt;''')
+</code></pre>
+
+<p>在笔记本第一个单元格中输入以上代码，然后执行，即可在该文档中使用“隐藏/显示”输入单元格功能。</p>
+<ul>
+<li>缺陷：此方法不能很好的适用于Markdown单元格。</li>
+</ul>
+<p><strong>⑵ 例</strong></p>
+<p><img alt="img" src="13.gif" /></p>
+<p><center>方法二：隐藏/显示输入单元格</center></p>
+<p><br></p>
+<h2 id="_5"><strong>魔术命令</strong></h2>
+<p>由于目前暂时用不到过多的魔术命令，因此暂时先参考<a href="https://link.zhihu.com/?target=http%3A//ipython.readthedocs.io/en/stable/interactive/magics.html">官网的文档</a>。</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

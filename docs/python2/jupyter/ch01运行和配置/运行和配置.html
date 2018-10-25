@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>运行和配置</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">运行和配置</h1>
+<h2 id="0"><strong>0. 帮助</strong></h2>
+<p>如果你有任何jupyter notebook命令的疑问，可以考虑查看官方帮助文档，命令如下：</p>
+<pre><code class="shell">jupyter notebook --help
+</code></pre>
+
+<p>或</p>
+<pre><code class="shell">jupyter notebook -h
+</code></pre>
+
+<p><br></p>
+<h2 id="1"><strong>1. 启动</strong></h2>
+<p><strong>① 默认端口启动</strong></p>
+<p>在终端中输入以下命令：</p>
+<pre><code class="bash">jupyter notebook
+</code></pre>
+
+<p>执行命令之后，在终端中将会显示一系列notebook的服务器信息，同时浏览器将会自动启动Jupyter Notebook。</p>
+<p>启动过程中终端显示内容如下：</p>
+<pre><code class="shell">$ jupyter notebook
+[I 08:58:24.417 NotebookApp] Serving notebooks from local directory: /Users/catherine
+[I 08:58:24.417 NotebookApp] 0 active kernels
+[I 08:58:24.417 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/
+[I 08:58:24.417 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+</code></pre>
+
+<ul>
+<li>注意：之后在Jupyter Notebook的所有操作，都请保持终端<strong>不要关闭</strong>，因为一旦关闭终端，就会断开与本地服务器的链接，你将无法在Jupyter Notebook中进行其他操作啦。</li>
+</ul>
+<p>浏览器地址栏中默认地将会显示：<code>http://localhost:8888</code>。其中，“localhost”指的是本机，“8888”则是端口号。</p>
+<p><img alt="img" src="v2-3e14e522a5634717c566006702ca681e_hd.jpg" />URL</p>
+<p>如果你<mark><strong>同时</strong></mark>启动了多个Jupyter Notebook，由于默认端口“8888”被占用，因此地址栏中的数字将从“8888”起，每多启动一个Jupyter Notebook数字就加1，如“8889”、“8890”……</p>
+<p><br></p>
+<p><strong>② 指定端口启动</strong></p>
+<p>如果你想自定义端口号来启动Jupyter Notebook，可以在终端中输入以下命令：</p>
+<pre><code class="shell">jupyter notebook --port &lt;port_number&gt;
+</code></pre>
+
+<p>其中，“<port_number>”是自定义端口号，直接以数字的形式写在命令当中，数字两边不加尖括号“&lt;&gt;”。如：<code>jupyter notebook --port 9999</code>，即在端口号为“9999”的服务器启动Jupyter Notebook。</p>
+<p><br></p>
+<p><strong>③ 启动服务器但不打开浏览器</strong></p>
+<p>如果你只是想启动Jupyter Notebook的服务器但不打算立刻进入到主页面，那么就无需立刻启动浏览器。在终端中输入：</p>
+<pre><code class="shell">jupyter notebook --no-browser
+</code></pre>
+
+<p>此时，将会在终端显示启动的服务器信息，并在服务器启动之后，显示出打开浏览器页面的链接。当你需要启动浏览器页面时，只需要<mark>复制链接</mark>，并粘贴在浏览器的地址栏中，轻按回车变转到了你的Jupyter Notebook页面。</p>
+<p><img alt="img" src="v2-e43d4ba2c2a8c2cdcb6da3afeb0e1bca_hd.jpg" /></p>
+<p>例图中由于在完成上面内容时我同时启动了多个Jupyter Notebook，因此显示我的“8888”端口号被占用，最终分配给我的是“8889”。</p>
+<p><br></p>
+<h2 id="2"><strong>2. 主页面</strong></h2>
+<h3 id="1_1"><strong>① 主页面内容</strong></h3>
+<p>当执行完启动命令之后，浏览器将会进入到Notebook的主页面，如下图所示。</p>
+<p><img alt="img" src="v2-32443bb8f73158ef24acd0c0bdf93ce5_hd.jpg" /></p>
+<p><center>默认主页面</center></p>
+<p>如果你的主页面里边的文件夹跟我的不同，或者你在疑惑为什么首次启动里边就已经有这么多文件夹，不要担心，这里边的文件夹全都是你的<mark>家目录</mark>里的目录文件。你可以在终端中执行以下2步来查看：</p>
+<p>① <code>cd</code> 或 <code>cd -</code> 或 <code>cd ~</code> 或<code>cd /Users/&lt;user_name&gt;</code></p>
+<ul>
+<li>这个命令将会进入你的家目录。</li>
+<li>“<user_name>” 是用户名。用户名两边不加尖括号“&lt;&gt;”。</li>
+</ul>
+<p>② <code>ls</code></p>
+<ul>
+<li>这个命令将会展示你家目录下的文件。</li>
+</ul>
+<p><br></p>
+<h3 id="2-jupyter-notebook"><strong>② 设置Jupyter Notebook文件存放位置</strong></h3>
+<p>如果你不想把今后在Jupyter Notebook中编写的所有文档都直接保存在家目录下，那你需要<mark>修改</mark>Jupyter Notebook的<mark>文件存放路径</mark>。</p>
+<p><strong>⑴ 创建文件夹/目录</strong></p>
+<ul>
+<li>Windows用户在想要存放Jupyter Notebook文件的<strong>磁盘</strong>中<strong>新建文件夹</strong>并为该文件夹命名；双击进入该文件夹，然后复制地址栏中的路径。</li>
+<li>Linux/macOS用户在想要存放Jupyter Notebook文件的位置<strong>创建目录</strong>并为目录命名，命令为：<code>mkdir &lt;directory_name&gt;</code>；进入目录，命令为：<code>cd &lt;directory_name&gt;</code>；查看目录的路径，命令为：<code>pwd</code>；复制该路径。</li>
+<li>注意：“<directory_name>”是自定义的目录名。目录名两边不加尖括号“&lt;&gt;”。</li>
+</ul>
+<p><br></p>
+<p><strong>⑵ 配置文件路径</strong></p>
+<ul>
+<li>一个便捷获取配置文件所在路径的命令：</li>
+</ul>
+<pre><code class="shell">jupyter notebook --generate-config
+</code></pre>
+
+<ul>
+<li>注意： 这条命令虽然可以用于<mark>查看配置文件所在的路径</mark>，但主要用途是是否将这个路径下的配置文件<strong>替换</strong>为<strong>默认配置文件</strong>。 如果你是第一次查询，那么<strong>或许</strong>不会出现下图的提示；若文件已经存在或被修改，使用这个命令之后会出现询问“Overwrite /Users/raxxie/.jupyter/jupyter_notebook_config.py with default config? [y/N]”，即“用默认配置文件覆盖此路径下的文件吗？”，如果按“y”，则完成覆盖，那么之前所做的修改都将失效；如果只是<strong>为了查询路径，那么一定要输入“N”</strong>。</li>
+</ul>
+<p><img alt="img" src="v2-da0d33d371c00fe08985cbce2b23bcc7_hd.jpg" /></p>
+<p><center>配置文件所在路径</center></p>
+<p>常规的情况下，Windows和Linux/macOS的配置文件所在路径和配置文件名如下所述：</p>
+<ul>
+<li>Windows系统的配置文件路径：<code>C:\Users\&lt;user_name&gt;\.jupyter\</code></li>
+<li>Linux/macOS系统的配置文件路径：<code>/Users/&lt;user_name&gt;/.jupyter/</code> 或 <code>~/.jupyter/</code></li>
+<li>配置文件名：<code>jupyter_notebook_config.py</code></li>
+</ul>
+<p>注意：</p>
+<p>① “<user_name>”为你的用户名。用户名两边不加尖括号“&lt;&gt;”。</p>
+<p>② Windows和Linux/macOS系统的配置文件存放路径其实是相同的，只是系统不同，表现形式有所不同而已。</p>
+<p>③ Windows和Linux/macOS系统的配置文件也是相同的。文件名以“.py”结尾，是Python的可执行文件。</p>
+<p>④ 如果你不是通过一步到位的方式前往配置文件所在位置，而是一层一层进入文件夹/目录的，那么当你进入<mark>家目录</mark>后，用<code>ls</code>命令会发现找不到“.jupyter”文件夹/目录。这是因为凡是以“.”开头的目录都是隐藏文件，你可以通过<code>ls -a</code>命令查看当前位置下所有的隐藏文件。</p>
+<p><br></p>
+<p><strong>⑶ 修改配置文件</strong></p>
+<ul>
+<li>Windows系统的用户可以使用文档编辑工具或IDE打开“jupyter_notebook_config.py”文件并进行编辑。常用的文档编辑工具和IDE有记事本、Notepad++、vim、Sublime
+  Text、PyCharm等。其中，vim是没有图形界面的，是一款学习曲线<mark>较为陡峭的编辑器</mark>，其他工具在此不做使用说明，因为上手相对简单。通过vim修改配置文件的方法请继续往下阅读。</li>
+<li>Linux/macOS系统的用户建议直接通过终端调用vim来对配置文件进行修改。具体操作步骤如下：</li>
+</ul>
+<p><br></p>
+<p><strong>⒜ 打开配置文件</strong></p>
+<p>打开终端，输入命令：</p>
+<pre><code class="shell">vim ~/.jupyter/jupyter_notebook_config.py
+</code></pre>
+
+<p><img alt="img" src="v2-ec79adec540c62b244bd44df41f6c0ae_hd.jpg" /></p>
+<p><center>命令详解</center></p>
+<p>执行上述命令后便进入到配置文件当中了。</p>
+<p><br></p>
+<p><strong>⒝ 查找关键词</strong></p>
+<p>进入配置文件后<mark>查找关键词“c.NotebookApp.notebook_dir”</mark>。查找方法如下：</p>
+<p>进入配置文件后不要按其他键，用<strong>英文半角</strong>直接输入<code>/c.NotebookApp.notebook_dir</code>，这时搜索的关键词已在文档中高亮显示了，按回车，光标从底部切换到文档正文中被查找关键词的首字母。</p>
+<p><br></p>
+<p><strong>⒞ 编辑配置文件</strong></p>
+<p>按<strong>小写i</strong>进入编辑模式，底部出现“--INSERT--”说明成功进入编辑模式。使用方向键把光标定位在<strong>第二个单引号</strong>上（光标定位在哪个字符，就在这个字符前开始输入），把“⑴ 创建文件夹/目录”步骤中复制的路径粘贴在此处。</p>
+<p><br></p>
+<p><strong>⒟ 取消注释</strong></p>
+<p>把该行行首的<strong>井号（#）</strong>删除。因为配置文件是Python的可执行文件，在Python中，井号（#）表示注释，即在编译过程中不会执行该行命令，所以为了使修改生效，需要删除井号（#）。</p>
+<p>如，<strong>我的配置</strong>：【相当于设置了jupyter 打开的<strong>主界面</strong>】</p>
+<pre><code class="shell">## The directory to use for notebooks and kernels.
+c.NotebookApp.notebook_dir = u'/Users/cookie/Desktop/python_machine_learning'
+</code></pre>
+
+<p><br></p>
+<p><strong>⒠ 保存配置文件</strong></p>
+<p>先按<code>esc</code>键，从编辑模式退出，回到命令模式。</p>
+<p>再用<strong>英文半角</strong>直接输入<code>:wq</code>，回车即成功保存且退出了配置文件。</p>
+<p>注意：</p>
+<ul>
+<li><strong>冒号（:）</strong> 一定要有，且也是<strong>英文半角</strong>。</li>
+<li>w：保存。</li>
+<li>q：退出。</li>
+</ul>
+<p><br></p>
+<p><strong>⒡ 验证</strong></p>
+<p>在终端中输入命令<code>jupyter notebook</code>打开Jupyter Notebook，此时你会看到一个清爽的界面，恭喜！</p>
+<p><img alt="img" src="v2-8d185cb051aea662a829e88ba486dbc4_hd.jpg" /></p>
+<p><center>配置后主页面</center></p>
+<p><br></p>
+<p><strong>⒢ 注意</strong></p>
+<ul>
+<li>以上所有命令均以<strong>英文半角</strong>格式输入，若有报错，请严格检查这两个条件，<strong>英文</strong>且<strong>半角</strong>。</li>
+<li>这里仅介绍了vim编辑器修改配置文件的方法，没有对vim编辑器的详细使用进行讲解，所以无需了解vim编辑器的具体使用方法，只需要按照上述步骤一定可以顺利完成修改！</li>
+<li>推荐有时间和经历时学习一下<strong><mark>vim编辑器的使用</mark></strong>。这款强大的编辑器将会成为你未来工作中的利器。</li>
+</ul>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>文档测试</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">文档测试</h1>
+<p>如果你经常阅读Python的官方文档，可以看到很多文档都有示例代码。比如<a href="https://docs.python.org/3/library/re.html">re模块</a>就带了很多示例代码：</p>
+<pre><code class="python">&gt;&gt;&gt; import re
+&gt;&gt;&gt; m = re.search('(?&lt;=abc)def', 'abcdef')
+&gt;&gt;&gt; m.group(0)
+'def'
+</code></pre>
+
+<p>可以把这些示例代码在Python的交互式环境下输入并执行，结果与文档中的示例代码显示的一致。</p>
+<p>这些代码与其他说明可以写在注释中，然后，由一些工具来自动生成文档。既然这些代码本身就可以粘贴出来直接运行，那么，可不可以<mark>自动执行写在注释中的这些代码</mark>呢？</p>
+<p>答案是肯定的。</p>
+<p>当我们编写注释时，如果写上这样的注释：</p>
+<pre><code class="python">def abs(n):
+	'''
+	Function to get absolute value of number.
+
+	Example:
+
+	&gt;&gt;&gt; abs(1)
+	1
+	&gt;&gt;&gt; abs(-1)
+	1
+	&gt;&gt;&gt; abs(0)
+	0
+	'''
+	return n if n &gt;= 0 else (-n)
+</code></pre>
+
+<p>无疑更明确地告诉函数的调用者该函数的期望输入和输出。</p>
+<p>并且，Python<mark>内置的“文档测试”（doctest）模块可以直接提取注释中的代码</mark>并执行测试。</p>
+<p>doctest严格按照Python交互式命令行的输入和输出来判断测试结果是否正确。只有测试异常的时候，可以用<code>...</code>表示中间一大段烦人的输出。</p>
+<p>让我们用doctest来测试上次编写的<code>Dict</code>类：</p>
+<pre><code class="python"># mydict2.py
+class Dict(dict):
+	'''
+	Simple dict but also support access as x.y style.
+
+	&gt;&gt;&gt; d1 = Dict()
+	&gt;&gt;&gt; d1['x'] = 100
+	&gt;&gt;&gt; d1.x
+	100
+	&gt;&gt;&gt; d1.y = 200
+	&gt;&gt;&gt; d1['y']
+	200
+	&gt;&gt;&gt; d2 = Dict(a=1, b=2, c='3')
+	&gt;&gt;&gt; d2.c
+	'3'
+	&gt;&gt;&gt; d2['empty']
+	Traceback (most recent call last):
+		...
+	KeyError: 'empty'
+	&gt;&gt;&gt; d2.empty
+	Traceback (most recent call last):
+		...
+	AttributeError: 'Dict' object has no attribute 'empty'
+	'''
+	def __init__(self, **kw):
+		super(Dict, self).__init__(**kw)
+
+	def __getattr__(self, key):
+		try:
+			return self[key]
+		except KeyError:
+			raise AttributeError(r&quot;'Dict' object has no attribute '%s'&quot; % key)
+
+	def __setattr__(self, key, value):
+		self[key] = value
+
+if __name__=='__main__':
+	import doctest
+	doctest.testmod()
+</code></pre>
+
+<p>运行<code>python mydict2.py</code>：</p>
+<pre><code class="shell">$ python mydict2.py
+</code></pre>
+
+<p>什么输出也没有。这说明我们编写的doctest运行都是正确的。如果程序有问题，比如把<code>__getattr__()</code>方法注释掉，再运行就会报错：</p>
+<pre><code class="python">$ python mydict2.py
+**********************************************************************
+File &quot;/Users/michael/Github/learn-python3/samples/debug/mydict2.py&quot;, line 10, in __main__.Dict
+Failed example:
+	d1.x
+Exception raised:
+	Traceback (most recent call last):
+	  ...
+	AttributeError: 'Dict' object has no attribute 'x'
+**********************************************************************
+File &quot;/Users/michael/Github/learn-python3/samples/debug/mydict2.py&quot;, line 16, in __main__.Dict
+Failed example:
+	d2.c
+Exception raised:
+	Traceback (most recent call last):
+	  ...
+	AttributeError: 'Dict' object has no attribute 'c'
+**********************************************************************
+1 items had failures:
+   2 of   9 in __main__.Dict
+***Test Failed*** 2 failures.
+</code></pre>
+
+<p>注意到最后3行代码。<mark>当模块正常导入时，doctest不会被执行。只有在命令行直接运行时，才执行doctest</mark>。所以，不必担心doctest会在非测试环境下执行。</p>
+<p><br></p>
+<h2 id="_2">练习</h2>
+<p>对函数<code>fact(n)</code>编写doctest并执行：</p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+
+def fact(n):
+	'''
+	Calculate 1*2*...*n
+
+	&gt;&gt;&gt; fact(1)
+	1
+	&gt;&gt;&gt; fact(10)
+	?
+	&gt;&gt;&gt; fact(-1)
+	?
+	'''
+	if n &lt; 1:
+		raise ValueError()
+	if n == 1:
+		return 1
+	return n * fact(n - 1)
+
+if __name__ == '__main__':
+	import doctest
+	doctest.testmod()
+</code></pre>
+
+<p>完成如下：</p>
+<p>异常的第一行和最后一行必须有， 中间可用 <code>...</code> 表示：</p>
+<p>注：Traceback 后面得有空格。</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch09/04.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+__author__ = 'xi'
+
+def fact(n):
+	'''
+	Calculate 1*2*...*n
+
+	&gt;&gt;&gt; fact(1)
+	1
+	&gt;&gt;&gt; fact(10)
+	3628800
+	&gt;&gt;&gt; fact(-1)
+	Traceback (most recent call last):
+	...
+	ValueError
+	'''
+	if n &lt; 1:
+		raise ValueError()
+	if n == 1:
+		return 1
+	return n * fact(n - 1)
+
+if __name__ == '__main__':
+	import doctest
+	doctest.testmod()
+
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

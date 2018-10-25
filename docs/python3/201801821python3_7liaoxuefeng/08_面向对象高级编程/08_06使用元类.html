@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>使用元类</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">使用元类</h1>
+<h2 id="type">type()</h2>
+<p>动态语言和静态语言最大的不同，就是<mark>函数和类的定义，不是编译时定义的，而是运行时动态创建</mark>的。</p>
+<p>比方说我们要定义一个<code>Hello</code>的class，就写一个<code>hello.py</code>模块：</p>
+<pre><code class="python">class Hello(object):
+	def hello(self, name='world'):
+		print('Hello, %s.' % name)
+</code></pre>
+
+<p>当Python解释器载入<code>hello</code>模块时，就会<mark>依次执行该模块的所有语句</mark>，执行结果就是动态创建出一个<code>Hello</code>的class对象，测试如下：</p>
+<pre><code class="python">&gt;&gt;&gt; from hello import Hello
+&gt;&gt;&gt; h = Hello()
+&gt;&gt;&gt; h.hello()
+Hello, world.
+&gt;&gt;&gt; print(type(Hello))
+&lt;class 'type'&gt;
+&gt;&gt;&gt; print(type(h))
+&lt;class 'hello.Hello'&gt;
+</code></pre>
+
+<p><code>type()</code>函数可以查看一个类型或变量的类型<mark>，<code>Hello</code>是一个class，它的类型就是<code>type</code>，</mark>而<code>h</code>是一个实例，它的类型就是class <code>Hello</code>。</p>
+<p>我们说class的定义是运行时动态创建的，而<mark>创建class的方法就是使用<code>type()</code>函数</mark>。</p>
+<p><code>type()</code>函数既<mark>可以返回一个对象的类型，又可以创建出新的类型</mark>，比如，我们可以通过<code>type()</code>函数创建出<code>Hello</code>类，而无需通过<code>class Hello(object)...</code>的定义：</p>
+<pre><code class="python">&gt;&gt;&gt; def fn(self, name='world'): # 先定义函数
+...     print('Hello, %s.' % name)
+...
+&gt;&gt;&gt; Hello = type('Hello', (object,), dict(hello=fn)) # 创建Hello class
+&gt;&gt;&gt; h = Hello()
+&gt;&gt;&gt; h.hello()
+Hello, world.
+&gt;&gt;&gt; print(type(Hello))
+&lt;class 'type'&gt;
+&gt;&gt;&gt; print(type(h))
+&lt;class '__main__.Hello'&gt;
+</code></pre>
+
+<p>要创建一个class对象，<code>type()</code>函数依次传入3个参数：</p>
+<ol>
+<li>class的名称；</li>
+<li>继承的父类集合，注意Python<mark>支持多重继承，如果只有一个父类，别忘了tuple的单元素写法</mark>；</li>
+<li>class的方<mark>法名称与函数绑定</mark>，这里我们把函数<code>fn</code>绑定到方法名<code>hello</code>上。</li>
+</ol>
+<p>通过<code>type()</code>函数创建的类和直接写class是完全一样的，因为Python解释器遇到class定义时，<mark>仅仅是扫描一下class定义的语法，然后调用<code>type()</code>函数创建出class</mark>。</p>
+<p>正常情况下，我们都用<code>class Xxx...</code>来定义类，但是，<code>type()</code>函数也允许我们动态创建出类来，也就是说，<mark>动态语言本身支持运行期动态创建类</mark>，这和静态语言有非常大的不同，要在静态语言运行期创建类，必须构造源代码字符串再调用编译器，或者借助一些工具生成字节码实现，本质上都是动态编译，会非常复杂。</p>
+<p><br></p>
+<h2 id="metaclass">metaclass</h2>
+<p>除了使用<code>type()</code>动态创建类以外，要<mark>控制类的创建行为，还可以使用metaclass</mark>。</p>
+<p>metaclass，直译为元类，简单的解释就是：</p>
+<p>当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。</p>
+<p>但是如果我们想创建出类呢？那就必须根据metaclass创建出类，所以：<mark>先定义metaclass，然后创建类</mark>。</p>
+<p>连接起来就是<mark>：先定义metaclass，就可以创建类，最后创建实例</mark>。</p>
+<p>所以，metaclass允许你创建类或者修改类。换句话说，你可以<mark>把类看成是metaclass创建出来的“实例”</mark>。</p>
+<p>metaclass是Python面向对象里最难理解，也是最难使用的<mark>魔术代码</mark>。正常情况下，你不会碰到需要使用metaclass的情况，所以，以下内容看不懂也没关系，因为基本上你不会用到。</p>
+<p>我们先看一个简单的例子，这个metaclass可以给我们自定义的MyList增加一个<code>add</code>方法：</p>
+<p>定义<code>ListMetaclass</code>，按照默认习惯，metaclass的<mark>类名总是以Metaclass结尾</mark>，以便清楚地表示这是一个metaclass：</p>
+<pre><code class="python"># metaclass是类的模板，所以必须从`type`类型派生：
+class ListMetaclass(type):
+	def __new__(cls, name, bases, attrs):
+		attrs['add'] = lambda self, value: self.append(value)
+		return type.__new__(cls, name, bases, attrs)
+</code></pre>
+
+<p>有了ListMetaclass，我们在定义类的时候还要<mark>指示使用ListMetaclass来定制类</mark>，传入关键字参数<code>metaclass</code>：</p>
+<pre><code class="python">class MyList(list, metaclass=ListMetaclass):
+	pass
+</code></pre>
+
+<p>当我们传入关键字参数<code>metaclass</code>时，魔术就生效了，它指示Python解释器在创建<code>MyList</code>时，<mark>要通过<code>ListMetaclass.__new__()</code>来创建</mark>，在此，我们<mark>可以修改类的定义</mark>，比如，加上新的方法，然后，返回修改后的定义。</p>
+<p><code>__new__()</code>方法接收到的参数依次是：</p>
+<ol>
+<li>当前<mark>准备创建的类的对象</mark>；</li>
+<li><mark>类的名字</mark>；</li>
+<li>类<mark>继承的</mark>父类集合；</li>
+<li>类的<mark>方法集合</mark>。</li>
+</ol>
+<p>测试一下<code>MyList</code>是否可以调用<code>add()</code>方法：</p>
+<pre><code class="python">&gt;&gt;&gt; L = MyList()
+&gt;&gt;&gt; L.add(1)
+&gt;&gt; L
+[1]
+</code></pre>
+
+<p>而普通的<code>list</code>没有<code>add()</code>方法：</p>
+<p>```python </p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>L2 = list()
+L2.add(1)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'list' object has no attribute 'add'</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<pre><code>
+动态修改有什么意义？直接在`MyList`定义中写上`add()`方法不是更简单吗？正常情况下，确实应该直接写，通过metaclass修改纯属变态。
+
+但是，总会遇到需要==通过metaclass修改类定义的。ORM==就是一个典型的例子。
+
+ORM全称“Object Relational Mapping”，即对象-关系映射，就是把==关系数据库的一行映射为一个对象，也就是一个类对应一个表==，这样，写代码更简单，不用直接操作SQL语句。
+
+要编写一个ORM框架，所有的类都只能动态定义，因为==只有使用者才能根据表的结构定义出对应的类==来。
+
+让我们来尝试编写一个ORM框架。
+
+编写底层模块的第一步，就是先把调用接口写出来。比如，使用者如果使用这个ORM框架，==想定义一个`User`类来操作对应的数据库表`User==`，我们期待他写出这样的代码：
+
+```python
+class User(Model):
+	# 定义类的属性到列的映射：
+	id = IntegerField('id')
+	name = StringField('username')
+	email = StringField('email')
+	password = StringField('password')
+
+# 创建一个实例：
+u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+# 保存到数据库：
+u.save()
+</code></pre>
+
+<p>其中，父类<code>Model</code>和属性类型<code>StringField</code>、<code>IntegerField</code>是<mark>由ORM框架提供的，剩下的魔术方法比如<code>save()</code>全部由metaclass自动完成</mark>。虽然metaclass的编写会比较复杂，但ORM的使用者用起来却异常简单。</p>
+<p>现在，我们就按上面的接口来实现该ORM。</p>
+<p>首先来定义<code>Field</code>类，它负责保存数据库表的字段名和字段类型：</p>
+<pre><code class="python">class Field(object):
+
+	def __init__(self, name, column_type):
+		self.name = name
+		self.column_type = column_type
+
+	def __str__(self):
+		return '&lt;%s:%s&gt;' % (self.__class__.__name__, self.name)
+</code></pre>
+
+<p>在<code>Field</code>的基础上，进一步定义各种类型的<code>Field</code>，比如<code>StringField</code>，<code>IntegerField</code>等等：</p>
+<pre><code class="python">class StringField(Field):
+
+	def __init__(self, name):
+		super(StringField, self).__init__(name, 'varchar(100)')
+
+class IntegerField(Field):
+
+	def __init__(self, name):
+		super(IntegerField, self).__init__(name, 'bigint')
+</code></pre>
+
+<p>下一步，就是编写最复杂的<code>ModelMetaclass</code>了：</p>
+<pre><code class="python">class ModelMetaclass(type):
+
+	def __new__(cls, name, bases, attrs):
+		if name=='Model':
+			return type.__new__(cls, name, bases, attrs)
+		print('Found model: %s' % name)
+		mappings = dict()
+		for k, v in attrs.items():
+			if isinstance(v, Field):
+				print('Found mapping: %s ==&gt; %s' % (k, v))
+				mappings[k] = v
+		for k in mappings.keys():
+			attrs.pop(k)
+		attrs['__mappings__'] = mappings # 保存属性和列的映射关系
+		attrs['__table__'] = name # 假设表名和类名一致
+		return type.__new__(cls, name, bases, attrs)
+</code></pre>
+
+<p>以及基类<code>Model</code>：</p>
+<pre><code class="python">class Model(dict, metaclass=ModelMetaclass):
+
+	def __init__(self, **kw):
+		super(Model, self).__init__(**kw)
+
+	def __getattr__(self, key):
+		try:
+			return self[key]
+		except KeyError:
+			raise AttributeError(r&quot;'Model' object has no attribute '%s'&quot; % key)
+
+	def __setattr__(self, key, value):
+		self[key] = value
+
+	def save(self):
+		fields = []
+		params = []
+		args = []
+		for k, v in self.__mappings__.items():
+			fields.append(v.name)
+			params.append('?')
+			args.append(getattr(self, k, None))
+		sql = 'insert into %s (%s) values (%s)' % (self.__table__, ','.join(fields), ','.join(params))
+		print('SQL: %s' % sql)
+		print('ARGS: %s' % str(args))
+</code></pre>
+
+<p>当用户定义一个<code>class User(Model)</code>时，Python解释器首先在当前类<code>User</code>的定义中查找<code>metaclass</code>，如果没有找到，就继续在父类<code>Model</code>中查找<code>metaclass</code>，找到了，就使用<code>Model</code>中定义的<code>metaclass</code>的<code>ModelMetaclass</code>来创建<code>User</code>类，也就是说，<mark>metaclass可以隐式地继承到子类</mark>，但子类自己却感觉不到。</p>
+<p>在<code>ModelMetaclass</code>中，一共做了几件事情：</p>
+<ul>
+<li>
+<p>1、排除掉对<code>Model</code>类的修改；</p>
+</li>
+<li>
+<p>2、在当前类（比如<code>User</code>）中查找定义的类的所有属性，如果找到一个Field属性，就把它保存到一个<code>__mappings__</code>的dict中，同时从类属性中删除该Field属性，否则，容易造成运行时错误（实例的属性会遮盖类的同名属性）；</p>
+</li>
+<li>
+<p>3、把表名保存到<code>__table__</code>中，这里简化为表名默认为类名。</p>
+</li>
+</ul>
+<p>在<code>Model</code>类中，就可以<mark>定义各种操作数据库的方法，比如<code>save()</code>，<code>delete()</code>，<code>find()</code>，<code>update</code>等等</mark>。</p>
+<p>我们实现了<code>save()</code>方法，<mark>把一个实例保存到数据库中</mark>。因为有表名，属性到字段的映射和属性值的集合，就可以构造出<code>INSERT</code>语句。</p>
+<p>编写代码试试：</p>
+<pre><code class="python">u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+u.save()
+</code></pre>
+
+<p>输出如下：</p>
+<pre><code class="python">Found model: User
+Found mapping: email ==&gt; &lt;StringField:email&gt;
+Found mapping: password ==&gt; &lt;StringField:password&gt;
+Found mapping: id ==&gt; &lt;IntegerField:uid&gt;
+Found mapping: name ==&gt; &lt;StringField:username&gt;
+SQL: insert into User (password,email,username,id) values (?,?,?,?)
+ARGS: ['my-pwd', 'test@orm.org', 'Michael', 12345]
+</code></pre>
+
+<p>可以看到，<code>save()</code>方法已经打印出了<mark>可执行的SQL语句，以及参数列表</mark>，只需要真正连接到数据库，执行该SQL语句，就可以完成真正的功能。</p>
+<p>不到100行代码，我们就通过metaclass实现了一个精简的ORM框架，是不是非常简单？</p>
+<p><br></p>
+<p>整个示例如下：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch08/04.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+# -*- coding: utf-8 -*-
+__author__ = 'xi'
+
+
+class Field(object):
+	# 保存数据库表的字段名和字段类型
+	def __init__(self, name, column_type):
+		self.name = name
+		self.column_type = column_type
+
+	def __str__(self):
+		return '&lt;%s:%s&gt;' % (self.__class__.__name__, self.name)
+
+
+class StringField(Field):
+	'''
+	继承自 Field
+	'''
+	def __init__(self, name):
+		super(StringField, self).__init__(name, 'varchar(100)')
+
+class IntegerField(Field):
+	'''
+	继承自Field
+	'''
+	def __init__(self, name):
+		super(IntegerField, self).__init__(name, 'bigint')
+
+
+class ModelMetaclass(type):
+	'''
+	元类 继承自 type
+	'''
+	def __new__(cls, name, bases, attrs):
+		if name=='Model':                   # 排除掉对 Model 类的修改
+			return type.__new__(cls, name, bases, attrs)
+
+		print('Found model: %s' % name)
+
+		mappings = dict()
+		for k, v in attrs.items():  # 找到想要的属性
+			if isinstance(v, Field):
+				print('Found mapping: %s ==&gt; %s' % (k, v))
+				mappings[k] = v
+
+		for k in mappings.keys():   # 将这些属性弹出
+			attrs.pop(k)
+
+
+		attrs['__mappings__'] = mappings    # 保存属性和列的映射关系， 将属性用 __mapping__ 字典包装， 放回
+		attrs['__table__'] = name           # 假设表名和类名一致， 新添加的表名属性
+		return type.__new__(cls, name, bases, attrs)        # 重新创建类
+
+
+class Model(dict, metaclass=ModelMetaclass):
+	'''
+	用户的基类
+	'''
+	def __init__(self, **kw):
+		super(Model, self).__init__(**kw)
+
+	def __getattr__(self, key):
+		try:
+			return self[key]
+		except KeyError:
+			raise AttributeError(r&quot;'Model' object has no attribute '%s'&quot; % key)
+
+	def __setattr__(self, key, value):
+		self[key] = value
+
+	def save(self):
+		fields = []
+		params = []
+		args = []
+		for k, v in self.__mappings__.items():              # 在元类中， 这些属性被重新放进了 __mappings__ 列表中
+			fields.append(v.name)
+			params.append('?')
+			args.append(getattr(self, k, None))
+		sql = 'insert into %s (%s) values (%s)' % (self.__table__, ','.join(fields), ','.join(params))
+		print('SQL: %s' % sql)
+		print('ARGS: %s' % str(args))
+
+class User(Model):
+	# 定义类的属性到列的映射：
+	id = IntegerField('id')
+	name = StringField('username')
+	email = StringField('email')
+	password = StringField('password')
+
+
+
+if __name__ == '__main__':
+	# 测试:
+	# 创建一个实例：
+	u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+	# 保存到数据库：
+	u.save()
+
+
+# Found model: User
+# Found mapping: email ==&gt; &lt;StringField:email&gt;
+# Found mapping: id ==&gt; &lt;IntegerField:id&gt;
+# Found mapping: password ==&gt; &lt;StringField:password&gt;
+# Found mapping: name ==&gt; &lt;StringField:username&gt;
+# SQL: insert into User (email,id,password,username) values (?,?,?,?)
+# ARGS: ['test@orm.org', 12345, 'my-pwd', 'Michael']
+
+</code></pre>
+
+<p>在调用<code>u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')</code> 前， 有这么几步：</p>
+<ul>
+<li>1) Model 类调用<code>ModelMetaclass</code> 创建类；</li>
+<li>2) 子类 User 也<strong>隐形</strong>继承了 <code>ModelMetaclass</code> 类， 会动态创建， 重新包装Filed（或者继承自它的）属性， 并放进 <code>__mappings__</code> 字典中；</li>
+<li>3） User 继承自Model类， 也继承了里面的 <code>save()</code> 方法；</li>
+</ul>
+<p><br></p>
+<h2 id="_2">小结</h2>
+<p>metaclass是Python中非常具有魔术性的对象，它可以<strong>改变类创建时的行为</strong>。这种强大的功能使用起来务必小心.</p>
+<p><br></p>
+<h2 id="_3">练习</h2>
+<p>将类自定义属性的名字改成大写：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch08/05.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+__author__ = 'xi'
+
+
+
+print(&quot;-&quot;*10)
+class UpperAttrMetaclass(type):
+	print(&quot;1============&quot;)
+	def __new__(cls, name, bases, dct):
+		print(&quot;2============&quot;)
+		attrs = ((name, value) for name, value in dct.items() if not name.startswith('__'))
+		uppercase_attr  = dict((name.upper(), value) for name, value in attrs)  # 把自定义的属性名字大写
+		return type.__new__(cls, name, bases, uppercase_attr)
+
+class Foo(metaclass=UpperAttrMetaclass):
+	print(&quot;3============&quot;)
+	bar = 'bip'
+
+print(&quot;-&quot;*10)
+print(hasattr(Foo, 'bar'))
+# 输出: False
+print(hasattr(Foo, 'BAR'))
+print(dir(Foo))
+
+</code></pre>
+
+<p>结果如下所示：</p>
+<pre><code class="shell">----------
+1============
+3============
+2============
+----------
+False
+True
+['BAR', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__']
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

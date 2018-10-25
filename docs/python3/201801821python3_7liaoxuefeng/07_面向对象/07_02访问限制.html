@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>访问限制</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">访问限制</h1>
+<p>在Class内部，可以有属性和方法，而外部代码可以通过直接调用实例变量的方法来操作数据，这样，就隐藏了内部的复杂逻辑。</p>
+<p>但是，从前面Student类的定义来看，外部代码还是可以自由地修改一个实例的<code>name</code>、<code>score</code>属性：</p>
+<pre><code class="python">&gt;&gt;&gt; bart = Student('Bart Simpson', 59)
+&gt;&gt;&gt; bart.score
+59
+&gt;&gt;&gt; bart.score = 99
+&gt;&gt;&gt; bart.score
+99
+</code></pre>
+
+<p><br></p>
+<h2 id="_2">不被外部访问</h2>
+<p>如果要让内部属性不被外部访问，可以把属性的名称前<mark>加上两个下划线<code>__</code></mark>，在Python中，实例的变量名如果以<code>__</code>开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问，所以，我们把Student类改一改：</p>
+<pre><code class="python">class Student(object):
+
+	def __init__(self, name, score):
+		self.__name = name
+		self.__score = score
+
+	def print_score(self):
+		print('%s: %s' % (self.__name, self.__score))
+</code></pre>
+
+<p>改完后，对于外部代码来说，没什么变动，但是已经<mark>无法从外部访问</mark><code>实例变量.__name</code>和<code>实例变量.__score</code>了：</p>
+<pre><code class="python">&gt;&gt;&gt; bart = Student('Bart Simpson', 59)
+&gt;&gt;&gt; bart.__name
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'Student' object has no attribute '__name'
+</code></pre>
+
+<p>这样就确保了外部代码不能随意修改对象内部的状态，这样通过访问限制的保护，代码更加健壮。</p>
+<p><br></p>
+<h2 id="getter">getter 方法</h2>
+<p>但是如果外部代码要获取name和score怎么办？可以给Student类增加<mark><code>get_name</code>和<code>get_score</code></mark>这样的方法：</p>
+<pre><code class="python">class Student(object):
+	...
+
+	def get_name(self):
+		return self.__name
+
+	def get_score(self):
+		return self.__score
+</code></pre>
+
+<p><br></p>
+<h2 id="setter">setter 方法</h2>
+<p>如果又要允许外部代码修改score怎么办？可以再给Student类增加<code>set_score</code>方法：</p>
+<pre><code class="python">class Student(object):
+	...
+
+	def set_score(self, score):
+		self.__score = score
+</code></pre>
+
+<p>你也许会问，原先那种直接通过<code>bart.score = 99</code>也可以修改啊，为什么要定义一个方法大费周折？因为<mark>在方法中，可以对参数做检查</mark>，避免传入无效的参数：</p>
+<pre><code class="python">class Student(object):
+	...
+
+	def set_score(self, score):
+		if 0 &lt;= score &lt;= 100:
+			self.__score = score
+		else:
+			raise ValueError('bad score')
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">特殊变量</h2>
+<p>需要注意的是，在Python中，变量名类似<code>__xxx__</code>的，也就是<mark>以双下划线开头，并且以双下划线结尾</mark>的，是特殊变量，特殊变量是可以直接访问的，不是private变量，所以，不能用<code>__name__</code>、<code>__score__</code>这样的变量名。</p>
+<p>有些时候，你会看到以一个下划线开头的实例变量名，比如<mark><code>_name</code>，这样的实例变量外部是可以访问的，但是，按照约定俗成的规定</mark>，当你看到这样的变量时，意思就是，“虽然我可以被访问，但是，请把我视为私有变量，不要随意访问”。</p>
+<p><br></p>
+<h2 id="_4">仍然可访问的私有变量</h2>
+<p>双下划线开头的实例变量是不是一定不能从外部访问呢？其实也不是。不能直接访问<code>__name</code>是因为Python解释器对外把<code>__name</code>变量改成了<code>_Student__name</code>，所以，仍然可以通过<code>_Student__name</code>来访问<code>__name</code>变量：</p>
+<pre><code class="shell">&gt;&gt;&gt; bart._Student__name
+'Bart Simpson'
+</code></pre>
+
+<p>但是<mark>强烈建议你不要这么干</mark>，因为<mark>不同版本的Python解释器可能会把<code>__name</code>改成不同的变量名</mark>。</p>
+<p>总的来说就是，Python本身没有任何机制阻止你干坏事，一切全靠自觉。</p>
+<p><br></p>
+<h2 id="_5">外部代码新增的变量</h2>
+<p>最后注意下面的这种<em>错误写法</em>：</p>
+<pre><code class="shell">&gt;&gt;&gt; bart = Student('Bart Simpson', 59)
+&gt;&gt;&gt; bart.get_name()
+'Bart Simpson'
+&gt;&gt;&gt; bart.__name = 'New Name' # 设置__name变量！
+&gt;&gt;&gt; bart.__name
+'New Name'
+</code></pre>
+
+<p>表面上看，外部代码“成功”地设置了<code>__name</code>变量，但实际上这个<code>__name</code>变量和class内部的<code>__name</code>变量<em>不是</em>一个变量！内部的<code>__name</code>变量已经被Python解释器自动改成了<code>_Student__name</code>，而<mark>外部代码给<code>bart</code>新增了一个<code>__name</code>变量</mark>。不信试试：</p>
+<pre><code class="shell">&gt;&gt;&gt; bart.get_name() # get_name()内部返回self.__name
+'Bart Simpson'
+</code></pre>
+
+<p><br></p>
+<h2 id="_6">练习</h2>
+<p>请把下面的<code>Student</code>对象的<code>gender</code>字段对外隐藏起来，用<code>get_gender()</code>和<code>set_gender()</code>代替，并检查参数有效性：</p>
+<pre><code class="python">class Student(object):
+	def __init__(self, name, gender):
+		self.name = name
+		self.gender = gender
+
+
+if __name__ == '__main__':
+	# 测试:
+	bart = Student('Bart', 'male')
+	if bart.get_gender() != 'male':
+		print('测试失败!')
+	else:
+		bart.set_gender('female')
+		if bart.get_gender() != 'female':
+			print('测试失败!')
+		else:
+			print('测试成功!')
+</code></pre>
+
+<p>改完后：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch07/01.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+# -*- coding: utf-8 -*-
+__author__ = 'xi'
+
+class Student(object):
+	def __init__(self, name, gender):
+		self.name = name
+		self.__gender = gender
+
+	def get_gender(self):
+		return self.__gender
+
+	def set_gender(self, gender):
+		if gender == &quot;female&quot; or &quot;male&quot;:
+			self.__gender = gender;
+
+		else:
+			raise ValueError(&quot;bad gender&quot;)
+
+
+if __name__ == '__main__':
+	# 测试:
+	bart = Student('Bart', 'male')
+	if bart.get_gender() != 'male':
+		print('测试失败!')
+	else:
+		bart.set_gender('female')
+		if bart.get_gender() != 'female':
+			print('测试失败!')
+		else:
+			print('测试成功!')
+
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

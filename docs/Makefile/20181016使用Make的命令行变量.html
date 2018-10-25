@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>20181016使用Make的命令行变量</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="20181016make">20181016使用Make的命令行变量</h1>
+<p>有了<a href="http://tonybai.com/2011/05/18/set-up-ci-environment-with-buildbot/">BuildBot</a>搭建的持续集成环境还远未结束，具体的构建脚本还得自己来写。我们用的是Make工具，对应要编写的脚本就是Makefile。</p>
+<p>Make是日常代码构建常用的工具，尤其是绝大多数C和C++项目都会将Make作为首选构建工具。平时多数情况大家都是直接敲入make命令便开始了构建过程，很少有人为make传入什么参数的（调试Makefile的情况除外）。但是有些时候自定义的 <mark>Make命令行变量</mark> 还是很有用处的，特别是在将Make与持续集成环境集成的时候。</p>
+<p>实际上这个话题是源于我在搭建持续集成环境时遇到的一个实际问题。我们的产品的目标之一就是支持在不同平台上运行。这样我们需要在不同平台下都能进行构建，这也要求我们的Makefile可以<mark>自适应多种环境</mark>。以前的产品没有多平台运行的需求，其Makefile的实现也就没有考虑到这一点。在做平台移植的过程中，我们对Makefile脚本做了调整，不过虽然其可以满足在多平台上Build的要求，但是在某些情况下Build前需手工修改Makefile中的某些开关变量，比如是<mark>进行64bit编译还是32bit编译</mark>等。</p>
+<p>这样的Makefile是不能用于持续集成环境下的多平台构建的，因为是<mark>自动构建</mark>，我们无法在中间进行人工干预。这时我们就需要借助Make命令行变量的帮助来解决这一问题了。举一个简单的例子，看下面的C源文件和对应的Makefile：</p>
+<pre><code class="shell">/* foo.c */
+int main() {
+	printf(&quot;sizeof(long) = %d\n&quot;, sizeof(long));
+}
+
+#
+# Makefile
+#
+
+CMODE = 64-bit
+
+ifeq ($(CMODE), 64-bit)
+	CFLAGS += -m64
+endif
+
+all:
+	gcc $(CFLAGS) -o foo foo.c   
+</code></pre>
+
+<p>显然Makefile中CMODE的取值不同，编译出的foo执行的结果就不同。但我们确有这样的需求，我们需要通过控制CMODE的值来决定Build结果。我们不想改动Makefile，我们可以通过Make的命令行变量设置来解决这个问题。我们只需<mark>在执行make时传入"CMODE=32-bit"这个参数即</mark>可让Build过程按照非64位方式进行。</p>
+<p>一般的<mark>带命令行变量的make命令格式是：<code>make [variable1=value1 variable2=value2 ... ... ]</code></mark>。make命令行中传入的变量会覆盖Makefile文件中定义的<strong><mark>同名的并且没有使用override修饰</mark></strong>的变量。命令行上的变量的赋值也可以用<strong>支持直接展开的 :=赋值符号</strong>。</p>
+<p>有了这种方法，我们就可以在BuildBot的build factory实例化时传入带参数的step了，即可以<strong>通过不同参数来控制在各个平台上的自动构建</strong>了。</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../packages/js/bootstrap.min.js" ></script>
+<script src="../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

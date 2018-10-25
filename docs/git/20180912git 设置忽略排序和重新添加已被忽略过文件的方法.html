@@ -171,7 +171,12 @@
 <p><br></p>
 <h2 id="_3">忽略已经提交过的文件</h2>
 <p>这里说点题外话，有的时候我们需要<mark>忽略掉以前提交过的文件</mark>，因为 git已经索引了该文件所以我们<mark>先要删除掉该文件的缓存</mark>，如文件User.php已经提交过了，现在我们想忽略，这是我们<mark>先在.gitignore中设置该文件为忽略</mark>，然后我们<mark>执行如下命令删除缓存</mark>:</p>
+<p>删除文件：</p>
 <pre><code>git rm --cached User.php1
+</code></pre>
+
+<p>删除文件夹</p>
+<pre><code class="shell">git rm -r --cached folder
 </code></pre>
 
 <p>然后我们在commit和push就好了。</p>

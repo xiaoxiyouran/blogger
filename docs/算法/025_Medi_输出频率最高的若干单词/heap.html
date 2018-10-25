@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>025 输出频率最高的若干单词</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="025">025 输出频率最高的若干单词</h1>
+<h2 id="_1">链接和考点</h2>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>栏目</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>详细</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>拼多多编程测试</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>2018.09.21</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>考点</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>heap</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>难度</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Medi</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2 id="_2">题意</h2>
+<p>给定一个英文段落（1 &lt;= length &lt;= 1000）, 找出其中出现频率最多的“若干”单词。每个单词仅包含字母，且大小写不敏感。段落中除了包含字母、空格外， 仅包含 <code>!-?,:;.</code>等标点。输入保证“至少”有一个结果， 要求结果单词均以小写形式输出，各单词按字母顺序输出，以空格分割。</p>
+<p><strong>输入描述</strong>：</p>
+<blockquote>
+<p>输入一行，一个非空字符串，表示一个英文段落</p>
+</blockquote>
+<p><strong>输出描述：</strong></p>
+<blockquote>
+<p>输出一行，包含出现次数最多的单词以字母顺序输出以空格分隔。</p>
+</blockquote>
+<p>示例1 输入输出示例仅供调试，后台判断数据一般不包含示例。</p>
+<p><strong>输入：</strong></p>
+<pre><code>i buy an apple watch from the aPple store, by the way I also like eating apple. I
+</code></pre>
+
+<p><strong>输出</strong></p>
+<pre><code>apple:3
+i:3
+</code></pre>
+
+<p><br></p>
+<h2 id="_3">分析</h2>
+<p>1-  输出频次最高的，有可能有多个单词，频次都是最高的且一样，这种题一般用堆解决。</p>
+<p>朋友用hashmap A了95%；</p>
+<p><br></p>
+<h2 id="_4">测试</h2>
+<p>A了？ ，没来的及测试就提交了</p>
+<p><br></p>
+<h2 id="_5">参考答案</h2>
+<p>C++ 程序：</p>
+<pre><code class="cpp">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;iostream&gt;
+#include&lt;functional&gt;
+#include&lt;queue&gt;
+#include&lt;set&gt;
+#include&lt;string&gt;
+#include&lt;unordered_map&gt;
+#include&lt;map&gt;
+#include&lt;array&gt;
+#include&lt;algorithm&gt;
+#include&lt;stack&gt;
+#include &quot;GlobalHead.h&quot;
+using namespace std;
+
+using namespace std;
+typedef int ElemType;
+
+void get_eachWord(string&amp; in, int&amp; start, int&amp; next, int&amp; fir, int&amp; las){
+	fir = start;
+	for(int i=start; i&lt;in.size();i++){
+		if( i == start ){
+			while (in[i] == ' ' || in[i] == '!' || in[i] == '-' || in[i] == '?' || in[i] == ',' ||
+				   in[i] == ':' || in[i] == ';' || in[i] == '.' )
+				i++;
+			fir = i;
+		}
+
+		if( in[i] == ' ' || in[i] == '!' || in[i] == '-' || in[i] == '?' || in[i] == ',' ||
+			in[i] == ':' || in[i] == ';' || in[i] == '.' ){
+			las = i;
+			break;
+		}
+
+		if( i == in.size()-1 ){
+			las = i+1;    // 最后一个
+		}
+	}
+
+	next = las + 1;     // next; 跳过空格后，新的开始 
+}
+
+
+/* 自定义数据类型：包含一个整数、一个浮点数 */
+typedef struct DoubleIndex
+{
+	string                 id;             // index
+	int                   val;            // value
+	DoubleIndex(){}
+	DoubleIndex(string _id, int _val): id(_id), val(_val){}
+	/* 切记定义运算符重载 */
+	bool operator &lt; (const DoubleIndex &amp;b) const {
+//        if( val == b.val )
+//            return id &lt; b.id;
+//        else
+			return val &lt; b.val; }
+	bool operator &gt; (const DoubleIndex &amp;b) const {
+//        if( val == b.val )
+//            return id &lt; b.id;
+//        else
+			return val &gt; b.val; }
+} DoubleIndex;
+
+/* 比较函数 */
+bool CompareDoubleIndex(const DoubleIndex &amp;a, const DoubleIndex &amp;b){
+	if( a.val == b.val )
+		return a.id &lt; b.id;
+	else
+		return a.val &gt; b.val;
+}
+
+vector&lt;DoubleIndex&gt; list;
+unordered_map&lt;string, int&gt; pos;     // store the positiion
+void process_each_word( string&amp; word ){
+	if( pos.find(word) == pos.end() ){
+		pos[word] = list.size();
+		DoubleIndex tmp(word, 1);
+		list.push_back(tmp);
+	}else{
+		list[pos[word]].val++;
+	}
+}
+
+//主函数
+int main()
+{
+	string in;
+	getline(cin, in);
+	int next = 0, start = 0, fir = 0, las = 0;
+	while( next &lt; in.size()  ){
+		get_eachWord( in, start, next,  fir,  las);
+		start = next;
+		string word = in.substr(fir, las-fir);
+		transform(word.begin(), word.end(), word.begin(), ::tolower);
+//        cout &lt;&lt; word &lt;&lt; endl;
+		process_each_word(word);
+	}
+
+	make_heap(list.begin(), list.end(), CompareDoubleIndex);
+
+	sort_heap(list.begin(), list.end(), CompareDoubleIndex);        // 这里必须传入自定义的函数，否则排序无效，我去
+
+	for(auto iter=list.begin();iter!=list.end();++iter){
+		cout&lt;&lt;(*iter).id &lt;&lt; &quot;:&quot; &lt;&lt; (*iter).val&lt;&lt;endl;
+		if( (iter+1) != list.end() &amp;&amp; (iter+1)-&gt;val != iter-&gt;val  ) // 下一个和当前不同，那肯定比当前少，就不输出了
+			break;
+
+	}
+	cout&lt;&lt;endl;
+
+	return  0;
+}
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

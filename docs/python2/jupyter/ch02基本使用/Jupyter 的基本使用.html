@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>Jupyter 的基本使用</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="jupyter">Jupyter 的基本使用</h1>
+<h2 id="jupyter-notebook"><strong>Jupyter Notebook的基本使用</strong></h2>
+<h2 id="1-files"><strong>1. Files页面</strong></h2>
+<p><img alt="img" src="v2-cb526cea874c6b91198a742766c44c70_hd.jpg" /></p>
+<p><center>Files页面</center></p>
+<p>此时你的界面当中应该还没有“Conda”和“Nbextensions”类目。不要着急，这两个类目将分别在“五、拓展功能”中的“<a href="https://zhuanlan.zhihu.com/p/33105153/edit#conda">1.关联Jupyter Notebook和conda的环境和包——‘nb_conda’</a>”和“<a href="https://zhuanlan.zhihu.com/p/33105153/edit#nbextensions">2.Markdown生成目录</a>”中安装。</p>
+<p>Files页面是用于<strong>管理和创建文件</strong>相关的类目。</p>
+<p>对于现有的文件，可以通过勾选文件的方式，对选中文件进行复制、重命名、移动、下载、查看、编辑和删除的操作。</p>
+<p>同时，也可以根据需要，在“New”下拉列表中选择想要创建文件的环境，进行创建“ipynb”格式的笔记本、“txt”格式的文档、终端或文件夹。如果你创建的环境没有在下拉列表中显示，那么你需要依次前往“五、拓展功能”中的“<a href="https://zhuanlan.zhihu.com/p/33105153/edit#conda">1.关联Jupyter Notebook和conda的环境和包——‘nb_conda’</a>”和“<a href="https://zhuanlan.zhihu.com/p/33105153/edit#ipykernel">六、增加内核——‘ipykernel’</a>”中解决该问题。</p>
+<h3 id="1"><strong>① 笔记本的基本操作</strong></h3>
+<p><img alt="preview" src="v2-3c250ee0349ff76d869ed80d456487cc_r.jpg" /></p>
+<p><center>笔记本页面注解图</center></p>
+<p>上图展示的是笔记本的基本结构和功能。根据图中的注解已经可以解决绝大多数的使用问题了！</p>
+<p>工具栏的使用如图中的注解一样直观，在此不过多解释。需要特别说明的是“单元格的状态”，有<strong><mark>Code，Markdown</mark></strong>，Heading，Raw NBconvert。其中，最常用的是前两个，分别是代码状态，Markdown编写状态。Jupyter Notebook已经取消了Heading状态，即标题单元格。取而代之的是<mark>Markdown的一级至六级标题</mark>。而Raw NBconvert目前极少用到，此处也不做过多讲解。</p>
+<p>菜单栏涵盖了笔记本的所有功能，即便是工具栏的功能，也都可以在菜单栏的类目里找到。然而，并不是所有功能都是常用的，比如Widgets，Navigate。Kernel类目的使用，主要是对内核的操作，比如中断、重启、连接、关闭、切换内核等，由于我们在<mark>创建笔记本时已经选择了内核</mark>，因此切换内核的操作便于我们在使用笔记本时切换到我们想要的内核环境中去。由于其他的功能相对比较常规，根据图中的注解来尝试使用笔记本的功能已经非常便捷，因此不再做详细讲解。</p>
+<p><br></p>
+<h3 id="2"><strong>② 笔记本重命名的两种方式</strong></h3>
+<p><strong>⑴ 笔记本内部重命名</strong></p>
+<p>在使用笔记本时，可以直接在其内部进行重命名。在左上方“Jupyter”的图标旁有程序默认的标题“Untitled”，<mark>点击“Untitled”</mark>然后在弹出的对话框中输入自拟的标题，点击“Rename”即完成了重命名。</p>
+<p><strong>⑵ 笔记本外部重命名</strong></p>
+<p>若在使用笔记本时忘记了重命名，且已经保存并退出至“Files”界面，则在<mark>“Files”界面勾选需要重命名</mark>的文件，点击“Rename”然后直接输入自拟的标题即可。</p>
+<p><strong>⑶ 演示</strong></p>
+<p><img alt="" src="01.gif" /></p>
+<p><center>笔记本重命名演示图</center></p>
+<p><br></p>
+<h2 id="2-running"><strong>2. Running页面</strong></h2>
+<p>Running页面主要展示的是当前正在运行当中的终端和“ipynb”格式的笔记本。若想要<strong>关闭</strong>已经打开的<mark>终端和“ipynb”</mark>格式的笔记本，仅仅关闭其页面是无法彻底退出程序的，需要在<strong><mark>Running页面点击其对应的“Shutdown”</mark></strong>。更多关闭方法可以查阅“八、关闭和退出”中的“<a href="https://zhuanlan.zhihu.com/p/33105153/edit#quit">1.关闭笔记本和终端</a>”。</p>
+<p><img alt="" src="02.gif" /></p>
+<p><center>Running页面功能演示图</center></p>
+<p><br></p>
+<h2 id="3-clusters"><strong>3. Clusters页面</strong></h2>
+<blockquote>
+<p>Clusters tab is now provided by IPython parallel. See '<a href="https://link.zhihu.com/?target=https%3A//github.com/ipython/ipyparallel">IPython parallel</a>' for
+installation details.</p>
+</blockquote>
+<p>Clusters类目现在已由IPython parallel对接，且由于现阶段<mark>使用频率较低</mark>，因此在此不做详细说明，想要了解更多可以访问<a href="https://link.zhihu.com/?target=https%3A//github.com/ipython/ipyparallel">IPython parallel的官方网站</a>。</p>
+<p><br></p>
+<h2 id="4-conda"><strong>4. Conda页面</strong></h2>
+<p>Conda页面主要是Jupyter Notebook与Conda关联之后对Conda环境和包进行直接操作和管理的页面工具。详细信息请直接查阅“五、拓展功能”中的“<a href="https://zhuanlan.zhihu.com/p/33105153/edit#conda">1.关联Jupyter Notebook和conda的环境和包——‘nb_conda’</a>”。这是目前使用Jupyter Notebook的<strong>必备环节</strong>，因此请务必查阅。</p>
+<p><br></p>
+<h2 id="5-nbextensions"><strong>5. Nbextensions页面</strong></h2>
+<p>Nbextensions页面提供了多个Jupyter Notebook的插件，使其功能更加强大。该页面中主要使用的插件有nb_conda，nb_present，Table of Contents(2)。这些功能我们无需完全掌握，也无需安装所有的扩展功能，根据本文档提供的学习思路，我们只需要安装Talbe of Contents(2)即可，该功能可<strong><mark>为Markdown文档提供目录导航</mark></strong>，便于我们编写文档。该安装指导请查阅“五、拓展功能”中的“<a href="https://zhuanlan.zhihu.com/p/33105153/edit#nbextensions">2.Markdown生成目录</a>”。</p>
+<p><img alt="img" src="v2-a7a2f4b1f06aed21df09b6e3b957e191_hd.jpg" /></p>
+<p><center>Nbextensions页面</center></p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

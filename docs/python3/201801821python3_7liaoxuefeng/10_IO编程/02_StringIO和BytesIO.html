@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>StringIO和BytesIO</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="stringiobytesio">StringIO和BytesIO</h1>
+<h2 id="stringio">StringIO</h2>
+<p>很多时候，数据读写不一定是文件，也可以<mark>在内存中读写</mark>。</p>
+<p>StringIO顾名思义就是<mark>在内存中读写str</mark>。</p>
+<p>要把str写入StringIO，我们需要先创建一个StringIO，然后，像文件一样写入即可：</p>
+<pre><code class="python">&gt;&gt;&gt; from io import StringIO
+&gt;&gt;&gt; f = StringIO()
+&gt;&gt;&gt; f.write('hello')
+5
+&gt;&gt;&gt; f.write(' ')
+1
+&gt;&gt;&gt; f.write('world!')
+6
+&gt;&gt;&gt; print(f.getvalue())
+hello world!
+</code></pre>
+
+<p><mark><code>getvalue()</code>方法用于获得写入后的str</mark>。</p>
+<p>要读取StringIO，可以<mark>用一个str初始化StringIO，然后，像读文件一样读取</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; from io import StringIO
+&gt;&gt;&gt; f = StringIO('Hello!\nHi!\nGoodbye!')
+&gt;&gt;&gt; while True:
+...     s = f.readline()
+...     if s == '':
+...         break
+...     print(s.strip())
+...
+Hello!
+Hi!
+Goodbye!
+</code></pre>
+
+<p><br></p>
+<h2 id="bytesio">BytesIO</h2>
+<p>StringIO操作的只能是str，如果<mark>要操作二进制数据，就需要使用BytesIO</mark>。</p>
+<p>BytesIO实现了<mark>在内存中读写bytes</mark>，我们创建一个BytesIO，然后写入一些bytes：</p>
+<pre><code class="python">&gt;&gt;&gt; from io import BytesIO
+&gt;&gt;&gt; f = BytesIO()
+&gt;&gt;&gt; f.write('中文'.encode('utf-8'))
+6
+&gt;&gt;&gt; print(f.getvalue())
+b'\xe4\xb8\xad\xe6\x96\x87'
+</code></pre>
+
+<p>请注意，写入的不是str，而是<strong>经过UTF-8编码的bytes</strong>。</p>
+<p>和StringIO类似，<mark>可以用一个bytes初始化BytesIO，然后，像读文件一样读取</mark>：</p>
+<pre><code class="python">&gt;&gt;&gt; from io import BytesIO
+&gt;&gt;&gt; f = BytesIO(b'\xe4\xb8\xad\xe6\x96\x87')
+&gt;&gt;&gt; f.read()
+b'\xe4\xb8\xad\xe6\x96\x87'
+</code></pre>
+
+<p><br></p>
+<h2 id="_1">练习</h2>
+<pre><code class="python">from io import StringIO;
+
+f = StringIO();
+f.write('Hello World');
+s = f.readline();
+print s;
+</code></pre>
+
+<p>上面这种方法无论如何都读不出f的内容,使用readlines和循环也不行</p>
+<p>上面是文中介绍的先初始化一个stringIO流,然后readline读取内容,这样就可以</p>
+<p>为什么会这样呢?</p>
+<p>是因为the stream position的原因，当你用：</p>
+<pre><code class="python">d = StringIO('Hello World')
+</code></pre>
+
+<p>其stream position为0（可以通过d.tell()获得），而后执行</p>
+<pre><code class="python">d.readline()
+</code></pre>
+
+<p>stream position移动到11.因此在执行此方法时，返回的是空字符串。</p>
+<p>类似的，使用</p>
+<pre><code class="python">f = StringIO()
+</code></pre>
+
+<p>stream position也为0，而执行</p>
+<pre><code class="python">f.write('Hello World')
+</code></pre>
+
+<p>stream position就移动到11了，因此你再执行readline时返回的依旧是空字符串，若你需要返回'Hello World'可以通过</p>
+<pre><code class="python">f.seek(0)
+</code></pre>
+
+<p>调整stream position即可。</p>
+<p>完整测试如下：</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch10/02.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+__author__ = 'xi'
+
+from io import StringIO
+
+if __name__ == '__main__':
+	# 测试:
+	# 创建一个实例：
+	d = StringIO('Hello World')
+	print(d.tell())         # 0
+	print(d.readline())     # Hello World
+
+	print(d.tell())         # 11
+
+	f = StringIO()
+	f.write('Hello World')
+	print(f.tell())         # 11
+	f.seek(0)
+	print(f.readline())     # Hello World
+
+</code></pre>
+
+<p><br></p>
+<h2 id="_2">总结</h2>
+<p>StringIO和BytesIO</p>
+<p>stringIO 比如说，这时候，你需要对获取到的数据进行操作，但是你并不想把数据写到本地硬盘上，这时候你就可以用stringIO</p>
+<pre><code class="python">
+from io import StringIO
+from io import BytesIO
+def outputstring():
+	return 'string \nfrom \noutputstring \nfunction'
+
+s = outputstring()
+
+# 将函数返回的数据在内存中读
+sio = StringIO(s)
+# 可以用StringIO本身的方法
+print(sio.getvalue())
+# 也可以用file-like object的方法
+s = sio.readlines()
+for i in s:
+	print(i.strip())
+
+
+# 将函数返回的数据在内存中写
+sio = StringIO()
+sio.write(s)
+# 可以用StringIO本身的方法查看
+s=sio.getvalue()
+print(s)
+</code></pre>
+
+<p>如果你用file-like object的方法查看的时候，你会发现数据为空</p>
+<pre><code class="python">sio = StringIO()
+sio.write(s)
+for i in sio.readlines():
+	print(i.strip())
+</code></pre>
+
+<p>这时候我们需要修改下文件的指针位置</p>
+<p>我们发现可以打印出内容了</p>
+<pre><code class="python">sio = StringIO()
+sio.write(s)
+sio.seek(0,0)
+print(sio.tell())
+for i in sio.readlines():
+	print(i.strip())
+</code></pre>
+
+<p>这就涉及到了两个方法seek 和 tell</p>
+<p>tell 方法获取当前文件读取指针的位置</p>
+<p>seek 方法，用于移动文件读写指针到指定位置,有两个参数，<strong>第一个offset: 偏移量，需要向前或向后的字节数，正为向后，负为向前；第二个whence: 可选值，默认为0，表示文件开头，1表示相对于当前的位置，2表示文件末尾</strong></p>
+<p>用seek方法时，需注意，如果<strong>你打开的文件没有用'b'的方式打开，则offset无法使用负值哦</strong></p>
+<p>stringIO 只能操作str，如果要操作二进制数据，就需要用到BytesIO</p>
+<p>上面的sio<strong>无法用seek从当前位置向前移动</strong>，这时候，我们用'b'的方式写入数据，就可以向前移动了</p>
+<pre><code class="python">bio = BytesIO()
+bio.write(s.encode('utf-8'))
+print(bio.getvalue())
+bio.seek(-36,1)
+print(bio.tell())
+for i in bio.readlines():
+	print(i.strip())
+</code></pre>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

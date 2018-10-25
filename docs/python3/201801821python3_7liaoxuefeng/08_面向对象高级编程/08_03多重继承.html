@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>多重继承</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="_1">多重继承</h1>
+<p>继承是面向对象编程的一个重要的方式，因为通过继承，子类就可以扩展父类的功能。</p>
+<p>回忆一下<code>Animal</code>类层次的设计，假设我们要实现以下4种动物：</p>
+<ul>
+<li>Dog - 狗狗；</li>
+<li>Bat - 蝙蝠；</li>
+<li>Parrot - 鹦鹉；</li>
+<li>Ostrich - 鸵鸟。</li>
+</ul>
+<p>如果按照哺乳动物和鸟类归类，我们可以设计出这样的类的层次：</p>
+<pre><code class="ascii">                ┌───────────────┐
+				│    Animal     │
+				└───────────────┘
+						│
+		   ┌────────────┴────────────┐
+		   │                         │
+		   ▼                         ▼
+	┌─────────────┐           ┌─────────────┐
+	│   Mammal    │           │    Bird     │
+	└─────────────┘           └─────────────┘
+		   │                         │
+	 ┌─────┴──────┐            ┌─────┴──────┐
+	 │            │            │            │
+	 ▼           ▼            ▼           ▼
+┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
+│   Dog   │  │   Bat   │  │ Parrot  │  │ Ostrich │
+└─────────┘  └─────────┘  └─────────┘  └─────────┘
+</code></pre>
+
+<p>但是如果按照“能跑”和“能飞”来归类，我们就应该设计出这样的类的层次：</p>
+<pre><code class="ascii">                ┌───────────────┐
+				│    Animal     │
+				└───────────────┘
+						│
+		   ┌────────────┴────────────┐
+		   │                         │
+		   ▼                         ▼
+	┌─────────────┐           ┌─────────────┐
+	│  Runnable   │           │   Flyable   │
+	└─────────────┘           └─────────────┘
+		   │                         │
+	 ┌─────┴──────┐            ┌─────┴──────┐
+	 │            │            │            │
+	 ▼            ▼            ▼            ▼
+┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
+│   Dog   │  │ Ostrich │  │ Parrot  │  │   Bat   │
+└─────────┘  └─────────┘  └─────────┘  └─────────┘
+</code></pre>
+
+<p>如果要把上面的两种分类都包含进来，我们就得设计更多的层次：</p>
+<ul>
+<li>哺乳类：能跑的哺乳类，能飞的哺乳类；</li>
+<li>鸟类：能跑的鸟类，能飞的鸟类。</li>
+</ul>
+<p>这么一来，类的层次就复杂了：</p>
+<pre><code class="ascii">                ┌───────────────┐
+				│    Animal     │
+				└───────────────┘
+						│
+		   ┌────────────┴────────────┐
+		   │                         │
+		   ▼                         ▼
+	┌─────────────┐           ┌─────────────┐
+	│   Mammal    │           │    Bird     │
+	└─────────────┘           └─────────────┘
+		   │                         │
+	 ┌─────┴──────┐            ┌─────┴──────┐
+	 │            │            │            │
+	 ▼            ▼            ▼            ▼
+┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
+│  MRun   │  │  MFly   │  │  BRun   │  │  BFly   │
+└─────────┘  └─────────┘  └─────────┘  └─────────┘
+	 │            │            │            │
+	 │            │            │            │
+	 ▼            ▼            ▼            ▼
+┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
+│   Dog   │  │   Bat   │  │ Ostrich │  │ Parrot  │
+└─────────┘  └─────────┘  └─────────┘  └─────────┘
+</code></pre>
+
+<p>如果要再增加“宠物类”和“非宠物类”，这么搞下去，类的数量会呈指数增长，很明显这样设计是不行的。</p>
+<p><br></p>
+<h2 id="_2">多重继承</h2>
+<p>正确的做法是采用<strong>多重继承</strong>。首先，主要的类层次仍按照哺乳类和鸟类设计：</p>
+<pre><code class="python">class Animal(object):
+	pass
+
+# 大类:
+class Mammal(Animal):
+	pass
+
+class Bird(Animal):
+	pass
+
+# 各种动物:
+class Dog(Mammal):
+	pass
+
+class Bat(Mammal):
+	pass
+
+class Parrot(Bird):
+	pass
+
+class Ostrich(Bird):
+	pass
+</code></pre>
+
+<p>现在，我们要给动物再加上<code>Runnable</code>和<code>Flyable</code>的功能，只需要先定义好<code>Runnable</code>和<code>Flyable</code>的类：</p>
+<pre><code class="python">class Runnable(object):
+	def run(self):
+		print('Running...')
+
+class Flyable(object):
+	def fly(self):
+		print('Flying...')
+</code></pre>
+
+<p>对于需要<code>Runnable</code>功能的动物，就多继承一个<code>Runnable</code>，例如<code>Dog</code>：</p>
+<pre><code class="python">class Dog(Mammal, Runnable):
+	pass
+</code></pre>
+
+<p>对于需要<code>Flyable</code>功能的动物，就多继承一个<code>Flyable</code>，例如<code>Bat</code>：</p>
+<pre><code class="python">class Bat(Mammal, Flyable):
+	pass
+</code></pre>
+
+<p>通过多重继承，<mark>一个子类就可以同时获得多个父类的所有功能</mark>。</p>
+<p><br></p>
+<h2 id="mixin">MixIn</h2>
+<p>在设计类的继承关系时，通常，主线都是单一继承下来的，例如，<code>Ostrich</code>继承自<code>Bird</code>。但是，如果需要“混入”额外的功能，通过多重继承就可以实现，比如，让<code>Ostrich</code>除了继承自<code>Bird</code>外，再同时继承<code>Runnable</code>。这种设计通常称之为<mark>MixIn(就是多继承的思想)</mark>。</p>
+<p>为了更好地看出继承关系，我们把<code>Runnable</code>和<code>Flyable</code>改为<code>RunnableMixIn</code>和<code>FlyableMixIn</code>。类似的，你还可以定义出肉食动物<code>CarnivorousMixIn</code>和植食动物<code>HerbivoresMixIn</code>，让某个动物同时拥有好几个MixIn：</p>
+<pre><code class="python">class Dog(Mammal, RunnableMixIn, CarnivorousMixIn):
+	pass
+</code></pre>
+
+<p>MixIn的目的就是给一个类增加多个功能，这样，在设计类的时候，我们优先考虑<strong>通过多重继承</strong>来<strong>组合</strong>多个MixIn的功能，而不是设计多层次的复杂的继承关系。</p>
+<p>Python自带的很多库也使用了MixIn。举个例子，Python自带了<code>TCPServer</code>和<code>UDPServer</code>这两类网络服务，而要同时服务多个用户就必须使用多进程或多线程模型，这两种模型由<code>ForkingMixIn</code>和<code>ThreadingMixIn</code>提供。通过<strong>组合</strong>，我们就可以创造出合适的服务来。</p>
+<p>比如，编写一个多进程模式的TCP服务，定义如下：</p>
+<pre><code class="python">class MyTCPServer(TCPServer, ForkingMixIn):
+	pass
+</code></pre>
+
+<p>编写一个多线程模式的UDP服务，定义如下：</p>
+<pre><code class="python">class MyUDPServer(UDPServer, ThreadingMixIn):
+	pass
+</code></pre>
+
+<p>如果你打算搞一个更先进的协程模型，可以编写一个<code>CoroutineMixIn</code>：</p>
+<pre><code class="python">class MyTCPServer(TCPServer, CoroutineMixIn):
+	pass
+</code></pre>
+
+<p>这样一来，我们不需要复杂而庞大的继承链，只要选择<mark>组合不同的类的功能</mark>，就可以快速构造出所需的子类。</p>
+<p><br></p>
+<h2 id="_3">小结</h2>
+<p>由于Python允许使用多重继承，因此，MixIn就是一种常见的设计。</p>
+<p>只允许<mark>单一继承的语言（如Java）不能使用MixIn的设计</mark>。</p>
+<p><br></p>
+<h2 id="_4">多重继承的顺序</h2>
+<p>当有多个类拥有同一个方法， 并在后面的一个类多重继承时， 用的是哪一个方法呢？</p>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+'''
+filename: ch08/02.py
+message: notes for liaoxuefeng in learning pyhon 3.7
+'''
+
+# -*- coding: utf-8 -*-
+__author__ = 'xi'
+
+
+
+class flyable(object):
+	def fly(self):
+		print('I can fly')
+
+class runnable(object):
+	def run(self):
+		print('i can run')
+	def fly(self):
+		print('I can\'t fly')
+
+class dog(runnable,flyable):
+	def run(self):
+		print('dog can run')
+
+
+
+if __name__ == '__main__':
+	dog1 = dog()
+	dog1.run()
+	dog1.fly()  # 用的是  runnable 中的 fly() 方法
+
+# dog can run
+# I can't fly
+</code></pre>
+
+<p>多重继承的顺序可以参考这篇<a href="https://kevinguo.me/2018/01/19/python-topological-sorting/">文章</a> </p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    

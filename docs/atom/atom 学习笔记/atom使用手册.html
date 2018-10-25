@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>atom 的使用手册</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="atom">atom 的使用手册</h1>
+<p><br></p>
+<h2 id="_1">安装包</h2>
+<p>这个安装比sublime还简单：cmd+, ; 然后在install选项卡搜索插件即可， 还能看说明文档；</p>
+<p><br></p>
+<h2 id="_2">命令面板</h2>
+<p>1- command+p: 快速搜索
+2- command+,: 打开设置</p>
+<p>3- command + O: 打开文件</p>
+<p><img alt="image-20181021210144837" src="image-20181021210144837.png" /></p>
+<p>安装命令行后， <code>atom file.txt</code> 就能打开文件；</p>
+<p><code>atom 目录</code> 打开文档树；</p>
+<p>Ctrl + P: 光标上一行；</p>
+<p>Ctrl + N: 光标下一行；</p>
+<p>Ctrl + B: 光标向左；</p>
+<p>Ctrl + F: 光标向右；</p>
+<p>Alt + F: 移到下一个单词的开头；</p>
+<p>Alt+ H：删除光标前一个单词</p>
+<p>command + —&gt;: 移到一行的末尾 ；</p>
+<p>Ctrl + A: 移到行头；</p>
+<p>Ctrl + G： 跳到指定行；</p>
+<p>cmd+\: 显示/隐藏目录树</p>
+<p><br></p>
+<h2 id="_3">打开终端</h2>
+<p>像你说的使用快捷键打开终端的package我用的是<a href="https://atom.io/packages/atom-terminal">atom-terminal 1.0K</a>，
+默认的快捷键：
+于<mark>当前目录打开终端是<code>ctrl-shift-t</code>;</mark> 
+于project目录打开终端是<code>alt-shift-t</code>。</p>
+<p><br></p>
+<h2 id="_4">查看函数声明的文件</h2>
+<p>不同语言可选用的插件不一样
+有的语言有支持较好的插件，比如go可以考虑<a href="https://atom.io/packages/go-plus">go-plus 80</a>,这个会安装相关的一些插件,跳转也是语义级别支持</p>
+<p>有的语言<mark>没有语义支持的插件</mark>，可以考虑<a href="https://atom.io/packages/atom-ctags">atom-ctags 233</a>
+熟悉vim的就知道了，这个也是<mark>基于ctags来做跳转</mark>的</p>
+<p>ctags 用命令就是： <code>ctags -R .</code> ， 末尾的 <code>.</code> 表示当前目录</p>
+<p><br></p>
+<h3 id="_5">方案一</h3>
+<p>1- 先安装 symbol-gen</p>
+<p>然后用 cmd + alt + g: 在当前目录下生成 <code>.tags</code> 文件；</p>
+<p>Cmd + shift + r: 跳转；</p>
+<p>2-  安装 symbol-view</p>
+<p>If your project has a <code>tags</code>/<code>.tags</code>/<code>TAGS</code>/<code>.TAGS</code> file at the root then following are supported:</p>
+<table style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>
+<thead>
+<tr>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Command</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Description</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Keybinding (Linux)</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Keybinding (macOS)</th>
+<th style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Keybinding (Windows)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>symbols-view:toggle-file-symbols</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Show all symbols in current file</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ctrl-r</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>cmd-r</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ctrl-r</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>symbols-view:toggle-project-symbols</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Show all symbols in the project</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ctrl-shift-r</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><strong>cmd-shift-r</strong></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ctrl-shift-r</td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>symbols-view:go-to-declaration</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Jump to the symbol under the cursor</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ctrl-alt-down</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>cmd-alt-down</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+</tr>
+<tr>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'><code>symbols-view:return-from-declaration</code></td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>Return from the jump</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>ctrl-alt-up</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'>cmd-alt-up</td>
+<td style='border: 1px solid black; border-collapse:collapse;  border-spacing:0;'></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>3- go-definition： 不太好用啊 </p>
+<p>右键：goto definition 或者  <code>cmd + alt + enter</code> </p>
+<p><a href="https://blog.csdn.net/wowotuo/article/details/78447704">参考</a> </p>
+<p><br></p>
+<p>跳转快捷键的参考：</p>
+<pre><code class="json">'atom-text-editor[data-grammar~=&quot;php&quot;]:not([mini])':
+  'ctrl-]': 'atom-ctags:go-to-declaration'
+  'ctrl-t': 'atom-ctags:return-from-declaration'
+
+'atom-text-editor[data-grammar~=&quot;go&quot;]:not([mini])':
+  'ctrl-]': 'golang:godef'
+  'ctrl-t': 'golang:godef-return'
+
+'atom-text-editor[data-grammar~=&quot;python&quot;]:not([mini])':
+  'ctrl-]': 'autocomplete-python:go-to-definition'
+
+'atom-text-editor[data-grammar~=&quot;perl&quot;]:not([mini])':
+  'ctrl-]': 'atom-ctags:go-to-declaration'
+  'ctrl-t': 'atom-ctags:return-from-declaration'
+</code></pre>
+
+<p>其它参考： https://www.zhihu.com/question/32242183</p>
+<p><br></p>
+<h2 id="_6">插件</h2>
+<p>1- atom-shell-commands</p>
+<p><br></p>
+<h2 id="_7">设置</h2>
+<p>确认下 打勾的， Tab Length 即可；</p>
+<p><img alt="image-20181021205335484" src="image-20181021205335484.png" /></p>
+<p><br></p>
+<h2 id="_8">参考</h2>
+<p>1- https://mba811.gitbooks.io/mac-dev/content/Atom/</p>
+<p>2- 这是一个比较全的参考： https://www.jeffjade.com/2016/03/03/2016-03-02-how-to-use-atom/</p>
+<p>和 sublime 有对比；</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
