@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>collections</title>
+        <meta name="keywords" content="xiaoxiyouran" />
+        <meta name="description" content="xiaoxiyouran's Docs" />
+        <link href="../../../../packages/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../../../../packages/css/style.css" rel="stylesheet" />
+        <link href="../../../../packages/css/monokai_sublime.min.css" rel="stylesheet">
+
+        <!-- 右上角的侧边导航栏 -->
+        <link rel="stylesheet" href="../../../../packages/hock_side_bar/css/sidebar.css"> <!--初始化文件-->
+        <script src="../../../../packages/hock_side_bar/js/sidebar.js"></script> <!--rem适配js-->
+
+        <!--
+        <link href="<?php echo $base_url?>/css/bootstrap-theme.min.css" rel="stylesheet" />
+        -->
+
+        <!-- To generate the side tree of the document itself. -->
+  <link rel="stylesheet" href="../../../../packages/generate_header_sidebar/css/zTreeStyle/zTreeStyle.css" type="text/css">
+  <style>
+  body {
+  background-color: white;
+  margin:0; padding:0;
+  // text-align: center;
+  overflow: scroll;
+  }
+  div, p, table, th, td {
+    list-style:none;
+    margin:8px; padding:0;
+    color:#333; font-size:12px;
+   Font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, Heiti, “黑体”, sans-serif;
+  }
+
+ // table{
+ //   border-collapse:collapse;
+ // }
+
+  //table, td, th{
+  //  border:1px solid black;
+  //}
+
+  .ztree li a.curSelectedNode {
+    padding-top: 0px;
+    background-color: #FFE6B0;
+    color: black;
+    height: 16px;
+    border: 1px #FFB951 solid;
+    opacity: 0.8;
+  }
+  .ztree{
+    overflow: auto;
+    height:100%;
+    min-height: 200px;
+    top: 0px;
+  }
+  </style>
+
+<!--
+  For Latex formula
+-->
+<!--
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\(","\)"]]}
+  });
+</script>
+-->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+ <script type="text/javascript" src="../../../../packages/MathJax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+<!-- mermaid 画图 -->
+ <link rel="stylesheet" href="../../../../packages/mermaid-7.0.0/dist/mermaid.forest.css"/>
+ <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.js"></script>
+<!--  <script src="../../../../packages/mermaid-7.0.0/dist/mermaid.full.js"></script> -->
+ <!-- <scrpt src="../../../../packages/mermaid-7.0.0/node_modules/d3/d3.js"></scrpt> -->
+ <!-- <script>mermaid.initialize({startOnLoad:true});</script>  -->
+ <script>
+        //browserify --entry src/mermaid.js -u d3 -o ./dist/mermaid.brow.slim.js
+                        var mermaid_config = {
+                                        startOnLoad:true
+                        }
+                        mermaid.ganttConfig = {
+                                        titleTopMargin:25,
+                                        barHeight:20,
+                                        barGap:4,
+                                        topPadding:50,
+                                        leftPadding:75,
+                                        gridLineStartPadding:35,
+                                        fontSize:11,
+                                        numberSectionStyles:3,
+                                        axisFormatter: [
+                                                        // Within a day
+                                                        ["%I:%M", function (d) {
+                                                                        return d.getHours();
+                                                        }],
+                                                        // Monday a week
+                                                        ["w. %U", function (d) {
+                                                                        return d.getDay() == 1;
+                                                        }],
+                                                        // Day within a week (not monday)
+                                                        ["%a %d", function (d) {
+                                                                        return d.getDay() && d.getDate() != 1;
+                                                        }],
+                                                        // within a month
+                                                        ["%b %d", function (d) {
+                                                                        return d.getDate() != 1;
+                                                        }],
+                                                        // Month
+                                                        ["%m-%y", function (d) {
+                                                                        return d.getMonth();
+                                                        }]
+                                        ]
+                        };
+        </script>
+
+</head>
+<body>
+<!-- 右上角的悬浮 sidebar  -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+   <a href="#"> 目录 </a>
+   <iframe id="ha" src=" ../../global_sidebar.html" name='left' frameborder="0" scrolling="auto" width="400"  height="100%">
+    您的浏览器不支持iframe，请升级
+   </iframe>
+</div>
+
+<TABLE border=0 height=600px align=left>
+  <TR>
+    <TD width=260px align=left valign=top style="BORDER-RIGHT: #999999 1px dashed">
+      <ul id="tree" class="ztree">
+
+      </ul>
+    </TD>
+    <TD width=770px align=left valign=top>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<div class="container">
+<span style="font-size:20px;cursor:pointer;z-index: 9999; position: fixed; right: 0px; top: 0px;" onclick="openNav()">&#9776; 目录</span>
+
+<h1 id="collections">collections</h1>
+<p>collections是Python内建的一个集合模块，提供了许多有用的集合类。</p>
+<p><br></p>
+<h2 id="namedtuple">namedtuple</h2>
+<p>我们知道<code>tuple</code>可以表示<mark>不变集合</mark>，例如，一个点的二维坐标就可以表示成：</p>
+<pre><code class="python">&gt;&gt;&gt; p = (1, 2)
+</code></pre>
+
+<p>但是，看到<code>(1, 2)</code>，很难看出这个<code>tuple</code>是用来表示一个坐标的。</p>
+<p>定义一个class又小题大做了，这时，<code>namedtuple</code>就派上了用场：</p>
+<pre><code class="python">&gt;&gt;&gt; from collections import namedtuple
+&gt;&gt;&gt; Point = namedtuple('Point', ['x', 'y'])
+&gt;&gt;&gt; p = Point(1, 2)
+&gt;&gt;&gt; p.x
+1
+&gt;&gt;&gt; p.y
+2
+</code></pre>
+
+<p><mark><code>namedtuple</code>是一个函数，它用来创建一个自定义的<code>tuple</code>对象，并且规定了<code>tuple</code>元素的个数，并可以用属性而不是索引来引用<code>tuple</code>的某个元素。</mark></p>
+<p>这样一来，我们用<code>namedtuple</code>可以很方便地<mark>定义一种数据类型，它具备tuple的不变性，又可以根据属性来引用</mark>，使用十分方便。</p>
+<p>可以验证创建的<code>Point</code>对象是<code>tuple</code>的一种子类：</p>
+<pre><code class="python">&gt;&gt;&gt; isinstance(p, Point)
+True
+&gt;&gt;&gt; isinstance(p, tuple)
+True
+</code></pre>
+
+<p>类似的，如果要用坐标和半径表示一个圆，也可以用<code>namedtuple</code>定义：</p>
+<pre><code class="python"># namedtuple('名称', [属性list]):
+Circle = namedtuple('Circle', ['x', 'y', 'r'])
+</code></pre>
+
+<p><br></p>
+<h2 id="deque">deque</h2>
+<p>使用<code>list</code>存储数据时，按索引访问元素很快，但是插入和删除元素就很慢了，因为<code>list</code>是线性存储，数据量大的时候，插入和删除效率很低。</p>
+<p>deque是为了高效实现插入和删除操作的<mark>双向列表</mark>，适合用于队列和栈：</p>
+<pre><code class="python">&gt;&gt;&gt; from collections import deque
+&gt;&gt;&gt; q = deque(['a', 'b', 'c'])
+&gt;&gt;&gt; q.append('x')
+&gt;&gt;&gt; q.appendleft('y')
+&gt;&gt;&gt; q
+deque(['y', 'a', 'b', 'c', 'x'])
+</code></pre>
+
+<p><code>deque</code>除了实现list的<code>append()</code>和<code>pop()</code>外，还支持<code>appendleft()</code>和<code>popleft()</code>，这样就可以非常高效地往头部添加或删除元素。</p>
+<p><br></p>
+<h2 id="defaultdict">defaultdict</h2>
+<p>使用<code>dict</code>时，如果引用的Key不存在，就会抛出<code>KeyError</code>。如果<mark>希望key不存在时，返回一个默认值</mark>，就可以用<code>defaultdict</code>：</p>
+<pre><code class="python">&gt;&gt;&gt; from collections import defaultdict
+&gt;&gt;&gt; dd = defaultdict(lambda: 'N/A')
+&gt;&gt;&gt; dd['key1'] = 'abc'
+&gt;&gt;&gt; dd['key1'] # key1存在
+'abc'
+&gt;&gt;&gt; dd['key2'] # key2不存在，返回默认值
+'N/A'
+</code></pre>
+
+<p>注意默认值是调用函数返回的，而函数在创建<code>defaultdict</code>对象时传入。</p>
+<p><mark>除了在Key不存在时返回默认值，<code>defaultdict</code>的其他行为跟<code>dict</code>是完全一样</mark>的。</p>
+<p><b4></p>
+<h2 id="ordereddict">OrderedDict</h2>
+<p>使用<code>dict</code>时，Key是无序的。在对<code>dict</code>做迭代时，我们无法确定Key的顺序。</p>
+<p>如果<mark>要保持Key的顺序，可以用<code>OrderedDict</code>：</mark></p>
+<pre><code class="python">&gt;&gt;&gt; from collections import OrderedDict
+&gt;&gt;&gt; d = dict([('a', 1), ('b', 2), ('c', 3)])
+&gt;&gt;&gt; d # dict的Key是无序的
+{'a': 1, 'c': 3, 'b': 2}
+&gt;&gt;&gt; od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+&gt;&gt;&gt; od # OrderedDict的Key是有序的
+OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+</code></pre>
+
+<p>注意，<code>OrderedDict</code>的Key会<mark>按照插入的顺序排列，不是Key本身排序：</mark></p>
+<pre><code class="python">&gt;&gt;&gt; od = OrderedDict()
+&gt;&gt;&gt; od['z'] = 1
+&gt;&gt;&gt; od['y'] = 2
+&gt;&gt;&gt; od['x'] = 3
+&gt;&gt;&gt; list(od.keys()) # 按照插入的Key的顺序返回
+['z', 'y', 'x']
+</code></pre>
+
+<p><code>OrderedDict</code>可以实现<mark>一个FIFO（先进先出）的dict，当容量超出限制时，先删除最早添加的Key</mark>：</p>
+<pre><code class="python">from collections import OrderedDict
+
+class LastUpdatedOrderedDict(OrderedDict):
+
+	def __init__(self, capacity):
+		super(LastUpdatedOrderedDict, self).__init__()
+		self._capacity = capacity
+
+	def __setitem__(self, key, value):
+		containsKey = 1 if key in self else 0
+		if len(self) - containsKey &gt;= self._capacity:
+			last = self.popitem(last=False)
+			print('remove:', last)
+		if containsKey:
+			del self[key]
+			print('set:', (key, value))
+		else:
+			print('add:', (key, value))
+		OrderedDict.__setitem__(self, key, value)
+</code></pre>
+
+<p><br></p>
+<h2 id="chainmap">ChainMap</h2>
+<p><code>ChainMap</code>可以把一组<code>dict</code>串起来并组成一个逻辑上的<code>dict</code>。<mark><code>ChainMap</code>本身也是一个dict，但是查找的时候，会按照顺序在内部的dict<strong>依次查找</strong> 【这个依次查找很重要】。</mark></p>
+<p>什么时候使用<code>ChainMap</code>最合适？举个例子：应用程序往往都需要传入参数，参数可以通过命令行传入，可以通过环境变量传入，还可以有默认参数。我们可以<mark>用<code>ChainMap</code>实现参数的优先级查找，即先查命令行参数，如果没有传入，再查环境变量，如果没有，就使用默认参数。</mark></p>
+<p>下面的代码演示了如何查找<code>user</code>和<code>color</code>这两个参数：</p>
+<pre><code class="python">from collections import ChainMap
+import os, argparse
+
+# 构造缺省参数:
+defaults = {
+	'color': 'red',
+	'user': 'guest'
+}
+
+# 构造命令行参数:
+parser = argparse.ArgumentParser()
+parser.add_argument('-u', '--user')
+parser.add_argument('-c', '--color')
+namespace = parser.parse_args()
+command_line_args = { k: v for k, v in vars(namespace).items() if v }
+
+# 组合成ChainMap:
+combined = ChainMap(command_line_args, os.environ, defaults)    # 字典的集合
+
+# 打印参数:
+print('color=%s' % combined['color'])
+print('user=%s' % combined['user'])
+</code></pre>
+
+<p>没有任何参数时，打印出默认参数：</p>
+<pre><code class="sh">$ python3 use_chainmap.py 
+color=red
+user=guest
+</code></pre>
+
+<p>当传入命令行参数时，优先使用命令行参数：</p>
+<pre><code class="sh">$ python3 use_chainmap.py -u bob
+color=red
+user=bob
+</code></pre>
+
+<p>同时传入命令行参数和环境变量，命令行参数的优先级较高：</p>
+<pre><code class="sh">$ user=admin color=green python3 use_chainmap.py -u bob
+color=green
+user=bob
+</code></pre>
+
+<p><br></p>
+<h2 id="counter">Counter</h2>
+<p><code>Counter</code>是一个<mark>简单的计数器</mark>，例如，统计字符出现的个数：</p>
+<pre><code>&gt;&gt;&gt; from collections import Counter
+&gt;&gt;&gt; c = Counter()
+&gt;&gt;&gt; for ch in 'programming':
+...     c[ch] = c[ch] + 1       # 按照键值统计个数， 觉得像是一个hashmap
+...
+&gt;&gt;&gt; c
+Counter({'g': 2, 'm': 2, 'r': 2, 'a': 1, 'i': 1, 'o': 1, 'n': 1, 'p': 1})
+</code></pre>
+
+<p><code>Counter</code>实际上<mark>也是<code>dict</code>的一个子类</mark>，上面的结果可以看出，字符<code>'g'</code>、<code>'m'</code>、<code>'r'</code>各出现了两次，其他字符各出现了一次。</p>
+<p><br></p>
+<h2 id="_1">小结</h2>
+<p><code>collections</code>模块提供了一些有用的集合类，可以根据需要选用。</p>
+<p><br></p>
+<h2 id="1">问题1</h2>
+<p>看了评论，大家对：</p>
+<pre><code>if len(self) - containsKey &gt;= self._capacity:
+</code></pre>
+
+<p>不是很理解： 其实我感觉是为了代码更安全更严谨吧，实际上如果只是实现FIFO，这些逻辑本身就是多余的。 直接用就可以了</p>
+<pre><code>if len(self) &gt;= self._capacity:
+</code></pre>
+
+<p>解答：</p>
+<p>如果没有这段代码，但同时把<code>del self[key]</code>去掉，是可以重复设置的，不然就报错了。
+这段代码的意义在于：超过容量设置属性需要把最新设置的属性删除，而<strong>重复设值是把已有的key值先删除（这个删除值不一定就是最先进入的值）</strong>，所以需要区分。</p>
+<hr/>
+
+<p>解答2：</p>
+<p>他们说的都是片面的，这段是这个思路，如果我包含这个键的时候我删除再加进来就可以了，没有必要判断长度来删除其他的键，而不包含且长度达到最大的时候是需要移除一个的，所以直接</p>
+<pre><code class="python"> if containsKey:
+			del self[key]
+			print('set:', (key, value))
+		else:
+			if len(self) &gt;= self._capacity:
+				last = self.popitem(last=False)
+				print('remove:', last)
+			print('add:', (key, value))
+</code></pre>
+
+<p>就可以了.</p>
+<p><br></p>
+<p>解答3：</p>
+<h4 id="36dict"><a href="https://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0015369817135186acb8669b3f5425e8f7d56be8e50800b000">3.6开始不是dict默认有序了</a></h4>
+<p>The order-preserving aspect of this new implementation is considered an implementation detail and should not be relied upon (this may change in the future, but it is desired to have this new dict implementation in the language for a few releases before changing the language spec to mandate order-preserving semantics for all current and future Python implementations; this also helps preserve backwards-compatibility with older versions of the language where random iteration order is still in effect, e.g. Python 3.5).</p>
+<p><a href="https://docs.python.org/3.6/whatsnew/3.6.html#new-dict-implementation">https://docs.python.org/3.6/whatsnew/3.6.html#new-dict-implementation</a></p>
+<p><br></p>
+<h2 id="2">问题2</h2>
+<p>借楼问一下popitem括号里的last=false是啥意思？</p>
+<pre><code class="python">class fifo_dict(OrderedDict):
+	def __init__(self, capacity):
+		super().__init__()
+		self.__capacity = capacity
+
+	def __setitem__(self, k, v):
+		# 如果当前key没有存在于当前字典并且长度已经抵达容量阈值, 则删除F
+		if k not in self and len(self) &gt;= self.__capacity:
+			last = self.popitem(last=False)
+			print('remove:', last)
+
+		super().__setitem__(k, v)
+</code></pre>
+
+<p>解答：</p>
+<ul>
+<li>last = true: 采用LIFO；</li>
+<li>last = flase: 采用FIFO</li>
+</ul>
+<p>在补充一点,首先这里的popitem,并不是单纯的dict的那个方法，{}.popitem(last=False)是会报错的。这里的popitem是OrderedDict里的方法，用help(OrderedDict.popitem)可以查到。希望能帮到大家！</p>
+<p><br></p>
+<h2 id="3">问题3</h2>
+<p>直接调用Counter('programming')也可以，看了下官方文档，元素作key，出现次数是value。所以c[ch]的初始值都是0吗？</p>
+<pre><code class="python">from collections import Counter
+c = Counter()
+for ch in 'programming':
+...     c[ch] = c[ch] + 1
+...
+c
+Counter({'g': 2, 'm': 2, 'r': 2, 'a': 1, 'i': 1, 'o': 1, 'n': 1, 'p': 1})
+</code></pre>
+
+<p><br></p>
+<h2 id="4">问题4</h2>
+<p>如下程序中：</p>
+<pre><code class="python">from collections import OrderedDict
+
+class LastUpdatedOrderedDict(OrderedDict):
+  def __init__(self,capacity):
+	super(LastUpdatedOrderedDict,self).__init__()
+	self._capacity = capacity
+
+  def __setitem__(self,key,value):
+	#如果key在dict中存在containsKey为1，不存在containsKey为0
+	containsKey = 1 if key in self else 0
+	'''
+	如果当前元素不在dict中，此时dict的长度已经大于等于自身容量时需要将第一个元素删除
+	如果当前元素存在于dict中，此时dict的长度已经大于等于自身容量，但减去1就不满足该条件了
+	所以这种情况下会将原来存在的元素给覆盖掉而不是去删除第一个元素。
+	'''
+	if len(self) - containsKey &gt;= self._capacity:
+	  last = self.popitem(last=False)
+	  print('remove',last)
+	if containsKey:
+	  #del self[key]
+	  print('set:',(key,value))
+	else:
+	  print('add:',(key,value))
+
+	OrderedDict.__setitem__(self,key,value)
+
+if __name__=='__main__':
+  luod = LastUpdatedOrderedDict(3)
+  luod['x'] = 1
+  luod['x'] = 2
+  luod['a'] = 1
+  luod['b'] = 2
+  luod['c'] = 3
+</code></pre>
+
+<p>请问为什么<strong>init</strong>下面有个 <code>super(LastUpdatedOrderedDict,self).__init__()</code>，以及最后一行的<code>OrderedDict.__setitem__(self,key,value)</code>，这两个地方能解答一下吗?</p>
+<p>super是获取父类的方法，相当于 <code>OrderedDict.__init__()</code> ;</p>
+<p><code>OrderedDict.__setitem__(key, value)</code>就是将<code>（key,value）</code>添加到Dict中，这也是继承了父类的方法。</p>
+
+
+<hr/>
+<div class="footer">
+        Copyright &copy; xiaoxiyouran. All rights reserved.
+
+</div>
+
+</div> <!-- /container -->
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+
+        </TD>
+  </TR>
+</TABLE>
+
+<!-- 请注意，以下两个部分的代码执行是有顺序的，必须严格按照这个顺序来。另外，放在底部是为了优化界面，使加载速度更快 -->
+<!-- 为了优化代码风格 -->
+<script src="../../../../packages/js/jquery-1.9.1.min.js" ></script>
+<script src="../../../../packages/js/bootstrap.min.js" ></script>
+<script src="../../../../packages/js/highlight.min.js" ></script>
+<script >hljs.initHighlightingOnLoad();</script>
+
+<!-- 以下是为了生成文档的侧边栏 -->
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="../../../../packages/generate_header_sidebar/src/ztree_toc.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+  $('#tree').ztree_toc({
+    is_auto_number : true,
+    use_head_anchor: true
+  });
+});
+//-->
+</SCRIPT>
+
+</body>
+</html>
+    
